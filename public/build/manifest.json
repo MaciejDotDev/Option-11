@@ -1,0 +1,131 @@
+{
+  "_Col-65b66c1b.js": {
+    "file": "assets/Col-65b66c1b.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "_Form-b81456ab.js": {
+    "file": "assets/Form-b81456ab.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Col-65b66c1b.js"
+    ]
+  },
+  "_Row-d7decc15.js": {
+    "file": "assets/Row-d7decc15.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/assets/Kraken_logo.png": {
+    "file": "assets/Kraken_logo-340c0701.png",
+    "src": "resources/assets/Kraken_logo.png"
+  },
+  "resources/assets/basket-icon.png": {
+    "file": "assets/basket-icon-078f84e0.png",
+    "src": "resources/assets/basket-icon.png"
+  },
+  "resources/assets/bike-category.png": {
+    "file": "assets/bike-category-87304ff2.png",
+    "src": "resources/assets/bike-category.png"
+  },
+  "resources/assets/bikeHelmet.png": {
+    "file": "assets/bikeHelmet-5fe04b34.png",
+    "src": "resources/assets/bikeHelmet.png"
+  },
+  "resources/assets/clothes-category.png": {
+    "file": "assets/clothes-category-ea897824.png",
+    "src": "resources/assets/clothes-category.png"
+  },
+  "resources/assets/equipment-category.png": {
+    "file": "assets/equipment-category-e52f649e.png",
+    "src": "resources/assets/equipment-category.png"
+  },
+  "resources/assets/featuredBike1.png": {
+    "file": "assets/featuredBike1-8dad9e61.png",
+    "src": "resources/assets/featuredBike1.png"
+  },
+  "resources/assets/main-img.png": {
+    "file": "assets/main-img-10ddffb2.png",
+    "src": "resources/assets/main-img.png"
+  },
+  "resources/assets/vintageBike.png": {
+    "file": "assets/vintageBike-5c3f4363.png",
+    "src": "resources/assets/vintageBike.png"
+  },
+  "resources/fonts/Koulen-Regular.ttf": {
+    "file": "assets/Koulen-Regular-9d037a49.ttf",
+    "src": "resources/fonts/Koulen-Regular.ttf"
+  },
+  "resources/js/Pages/Auth/Login.jsx": {
+    "file": "assets/Login-17cac3fd.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Form-b81456ab.js",
+      "_Col-65b66c1b.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Auth/Login.jsx"
+  },
+  "resources/js/Pages/Auth/Register.jsx": {
+    "file": "assets/Register-f97d83d7.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Form-b81456ab.js",
+      "_Row-d7decc15.js",
+      "_Col-65b66c1b.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Auth/Register.jsx"
+  },
+  "resources/js/Pages/Dashboard.jsx": {
+    "file": "assets/Dashboard-b4ab41c4.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Dashboard.jsx"
+  },
+  "resources/js/Pages/Welcome.jsx": {
+    "assets": [
+      "assets/bike-category-87304ff2.png",
+      "assets/clothes-category-ea897824.png",
+      "assets/equipment-category-e52f649e.png",
+      "assets/main-img-10ddffb2.png",
+      "assets/featuredBike1-8dad9e61.png",
+      "assets/vintageBike-5c3f4363.png",
+      "assets/bikeHelmet-5fe04b34.png"
+    ],
+    "file": "assets/Welcome-c59d93d9.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Col-65b66c1b.js",
+      "_Row-d7decc15.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Welcome.jsx"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-8eaad029.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.jsx": {
+    "assets": [
+      "assets/Kraken_logo-340c0701.png",
+      "assets/Koulen-Regular-9d037a49.ttf"
+    ],
+    "css": [
+      "assets/app-8eaad029.css"
+    ],
+    "dynamicImports": [
+      "resources/js/Pages/Auth/Login.jsx",
+      "resources/js/Pages/Auth/Register.jsx",
+      "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/Welcome.jsx"
+    ],
+    "file": "assets/app-00b80386.js",
+    "isEntry": true,
+    "src": "resources/js/app.jsx"
+  }
+}
