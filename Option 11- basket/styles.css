@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #17191b;
+    color: white;
+    font-family: 'Koulen', sans-serif;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px; 
+  }
+  
+  h1 {
+    text-align: center;
+    font-family: 'Koulen', sans-serif;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .basket {
+    border-radius: 20px;
+    border: 1px solid #1b2c33;
+    padding: 10px;
+    background-color: #1b2c33;
+    margin-bottom: 20px;
+  }
+  
+  .item {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+  }
+  
+  .item-details {
+    flex-grow: 1;
+  }
+  
+  .total {
+    text-align: right;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .checkout-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .checkout-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically */
+    background-color: #333;
+    
+    padding: 10px;
+    color: white;
+  }
+  
+  .nav-links {
+    font-family: 'Koulen', sans-serif;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-left: 0;
+  }
+  
+  .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .nav-link:hover {
+    background: #0d0a0a;
+    border-radius: 5px;
+  }
+  
+  .nav-logo {
+    font-family: 'Koulen', sans-serif;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    margin-right: auto; /* Pushes the logo to the left */
+  }
+  
+  .kraken-logo {
+    margin-right: 10px; /* Adjust margin to position the logo */
+    max-width: 6vw;
+  }
+  
+  .basket-icon {
+    max-width: 2.5rem;
+  }
+
+  .footer {
+    background-color: #333;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-center {
+    text-align: center;
+  }

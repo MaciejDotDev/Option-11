@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Basket</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class='navbar'>
+    
+      <a class='nav-logo' href='/'>
+        Option 11
+        <img src='kraken-logo.png' alt='Kraken Logo' class='kraken-logo' />
+      </a>
+      
+      <div id='responsive-navbar-nav'>
+        <ul class='nav-links'>
+          <li><a class='nav-link' href='#bikes'>Bikes</a></li>
+          <li><a class='nav-link' href='#clothing'>Clothing</a></li>
+          <li><a class='nav-link' href='#accessories'>Accessories</a></li>
+          
+          <li>
+            <a class='nav-link' href='#memes'>
+              <img src='basket-icon.png' alt='Basket Icon' class='basket-icon' />
+            </a>
+          </li>
+          <li>
+            <a class='nav-link text-black bg-info rounded-2 px-4' href='#memes'>My Account</a>
+          </li>
+        </ul>
+      </div>
+    
+  </nav>
+      
+  <div class="container">
+    <h1>Shopping Basket</h1>
+    <div class="basket">
+      <div class="item">
+        <img src="product1.jpg" alt="Product Image">
+        <div class="item-details">
+          <h2>Product 1</h2>
+          <p>Price: $25.00</p>
+          <p>Quantity: 2</p>
+          <p>Total: $50.00</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="product2.jpg" alt="Product Image">
+        <div class="item-details">
+          <h2>Product 2</h2>
+          <p>Price: $30.00</p>
+          <p>Quantity: 1</p>
+          <p>Total: $30.00</p>
+        </div>
+      </div>
+
+      <!-- Add more items as needed -->
+
+      <div class="total">
+        <h2>Total Amount:</h2>
+        <p>$80.00</p>
+      </div>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <footer class="footer text-white text-center p-4">
+    <div class="container">
+      <p>&copy; 2023 Option 11. All rights reserved.</p>
+      <p>Address: 123 Too Many Options Street, Birmingham, England</p>
+      <p>Email: option11@nootheroption.com | Phone: +44 04206996911</p>
+      <button class="btn btn-outline-light mt-3" id="scrollToTop" title="Scroll to Top">
+        ^ Back to Top
+      </button>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  
+</body>
+</html>
