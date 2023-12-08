@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Option 11 - Track Orders">
+    <meta name="author" content="Option 11 - Isa Jamil">
+    <meta name="generator" content="Hugo 0.72.0">
+    <title>Track Your Order</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" 
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" 
+        crossorigin="anonymous">
+
+    <style>
+        .container {
+            max-width: 960px;
+        }
+
+        body {
+        background-color: #17191b; /* Set the background color */
+        color: white; /* Set the text color to white */
+        }
+
+        .site-header a,
+        .site-header a:hover {
+        color: white; /* Ensure text in the header is white */
+        }
+
+        .link-secondary {
+        color: white; /* Change the color of the footer links to white */
+        }
+
+        .link-secondary:hover {
+        color: #ccc; /* Optional: Change the color of the links on hover for better visibility */
+        }
+
+        .site-header a {
+            color: #727272;
+            transition: color .15s ease-in-out;
+        }
+
+        .site-header a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .spacing {
+            margin-top: 150px;
+        }
+
+        @media (min-width: 768px) {
+            .flex-md-equal>* {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2" href="#" aria-label="Product">
+            </a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Bikes</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Clothing</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Contact Us</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Log In</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2 class="text-center">Track Your Order</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="orderNumber" class="form-label">Order Number</label>
+                        <input type="text" class="form-control" id="orderNumber" placeholder="Enter your order number">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Track Order</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Order Details Section -->
+        <div class="row mt-5 spacing">
+            <div class="col-md-8 mx-auto">
+                <h3 class="text-center">Order Details</h3>
+                <!-- Placeholder for Order Details -->
+                <div id="orderDetails">
+                    <!-- Dynamic order details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container py-5 spacing">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">&copy; 2023</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#">Homepage</a></li>
+                    <li><a class="link-secondary" href="#">Products</a></li>
+                    <li><a class="link-secondary" href="#">Log In</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" 
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" 
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Option 11 - Repair Booking">
+    <meta name="author" content="Option 11 - Isa Jamil">
+    <meta name="generator" content="Hugo 0.72.0">
+    <title>Repair Booking</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" 
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" 
+        crossorigin="anonymous">
+
+    <style>
+        .container {
+            max-width: 960px;
+        }
+
+        body {
+        background-color: #17191b;
+        color: white; /* This will set the text color to white for the entire body */
+    }
+
+    .site-header a,
+    .site-header a:hover {
+        color: white; /* This will ensure that the text in the site header is also white */
+    }
+
+    .link-secondary {
+        color: white; /* This will change the color of the links in the footer to white */
+    }
+
+    .link-secondary:hover {
+        color: #ccc; /* Optional: Change the color of the links on hover for better visibility */
+    }
+
+        .site-header a {
+            color: #727272;
+            transition: color .15s ease-in-out;
+        }
+
+        .site-header a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .spacing {
+            margin-top: 150px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2" href="#" aria-label="Product">
+            </a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Bikes</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Clothing</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Contact Us</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Log In</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2 class="text-center">Repair Booking</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="userName" placeholder="Enter your name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="userEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="userAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="userAddress" placeholder="Enter your address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="repairType" class="form-label">Repair Type</label>
+                        <select class="form-select" id="repairType">
+                            <option selected>General Maintenance</option>
+                            <option value="1">Flat Tire</option>
+                            <option value="2">Brake Repair</option>
+                            <option value="3">Gear Adjustment</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container py-5 spacing">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">&copy; 2023</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#">Homepage</a></li>
+                    <li><a class="link-secondary" href="#">Products</a></li>
+                    <li><a class="link-secondary" href="#">Log In</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" 
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" 
+        crossorigin="anonymous"></script>
+</body>
+</html>
