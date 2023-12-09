@@ -40,6 +40,7 @@ const NavBar = ({auth}) => {
                         >
                             Clothing
                         </Nav.Link>
+
                         <Nav.Link
                             className="nav-link text-white"
                             href={route('accessoryProducts')}
