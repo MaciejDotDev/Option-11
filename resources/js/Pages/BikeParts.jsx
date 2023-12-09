@@ -1,21 +1,21 @@
 // Desc: BikeParts page for the user to view all bike parts
-//we use react because we are using react components
+// We use react because we are using react components
 import React from "react";
-//we use inertia link to link to other pages
+// We use inertia link to link to other pages
 import { InertiaLink } from '@inertiajs/inertia-react';
-//we import the bike component
-import Bike from '../components/Bike';
-//we import the authenticated layout to use the navbar
+// We import the bikepart component to use in the page
+import BikePart from "@/Components/BikePart";  // Updated import name
+// We import the authenticated layout to use the navbar
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-//we import the navbar component to use the navbar lol
+// We import the navbar component to use the navbar
 import NavBar from "@/Components/NavBar";
 
-//In react we use a function to create a component which can be a page or a component
-//in this case this is a page , so we create a function called BikeParts
-//in the page bikeparts we pass in the props auth and bikeparts which we get from the controller, to use in the page
+// In React, we use a function to create a component, which can be a page or a component
+// In this case, this is a page, so we create a function called BikeParts
+// In the page bikeparts, we pass in the props auth and bikeparts, which we get from the controller, to use in the page
 
-const BikePart = ({ bikePart }) => {
+const BikeParts = ({ auth, bikeParts }) => {
 
     return (
         <div>
@@ -29,6 +29,5 @@ const BikePart = ({ bikePart }) => {
     );
 }
 
-//we export the component so we can use it in other pages
-export default BikePart;
-
+// We export the component so we can use it in other pages
+export default BikeParts;

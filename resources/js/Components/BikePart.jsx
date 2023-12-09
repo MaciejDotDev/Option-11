@@ -15,3 +15,5 @@ const BikePart = ({ bikePart }) => {
         </div>
     );
 }
+
+export default BikePart;

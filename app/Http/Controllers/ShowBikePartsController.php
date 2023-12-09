@@ -24,23 +24,10 @@ class ShowBikePartsController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-
-
-
-
-
-//public function showAll() {
-
-//    $bikes = Bikes::all();
-//    return Inertia::render('Bikes',['bikes' => $bikes]);
-//}
-
-// ShowBikesController.php
-
-public function showAll() {
-    $bikeparts = BikePart::all();
-    return Inertia::render('BikeProducts',['bikes' => $bikeparts]);
-}
+    public function showAll() {
+        $bikeparts = BikePart::all();
+        return Inertia::render('BikeParts', ['bikeParts' => $bikeparts]); // Corrected the key to 'bikeParts'
+    }
 
 
 public function addBasket(Request $request) {

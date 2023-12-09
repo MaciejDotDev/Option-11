@@ -5,6 +5,7 @@ use App\Http\Controllers\ManageAccount;
 use App\Http\Controllers\ManageBasketController;
 use App\Http\Controllers\ShowBikesController;
 use App\Http\Controllers\ShowBikePartsController;
+use App\Http\Controllers\ShowRepairKitsController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -48,9 +49,11 @@ Route::post('update', [ManageAccount::class, 'update'])->name('update');
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 
-Route::get('BikeParts', [ShowBikePartsController::class, 'showAll'])->name('BikeParts');
+Route::get('/BikeParts', [ShowBikePartsController::class, 'showAll'])->name('BikeParts');
 
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
+
+Route::get('/RepairKits', [ShowRepairKitsController::class, 'showAll'])->name('repairKits');
 
 Route::get('testPage', function () {
     return Inertia::render('TestPage');

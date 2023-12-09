@@ -42,6 +42,6 @@ class ShowAccessoriesController extends Controller
         $basket->status = 'open';
         $basket->save();
 
-        return Redirect::route('AccessoryProducts'); // Update to 'AccessoryProducts'
+        return Redirect::route('AccessoryProducts');
     }
 }
