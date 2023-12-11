@@ -1,0 +1,136 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #17191b;
+    color: white;
+    font-family: 'Koulen', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px; 
+    flex: 1;
+  }
+  
+  h1 {
+    text-align: center;
+    font-family: 'Koulen', sans-serif;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .checkout {
+    border-radius: 20px;
+    border: 1px solid #1b2c33;
+    padding: 10px;
+    background-color: #1b2c33;
+    margin-bottom: 20px;
+  }
+  
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically */
+    background-color: #333;
+    
+    padding: 10px;
+    color: white;
+  }
+  
+  .nav-links {
+    font-family: 'Koulen', sans-serif;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-left: 0;
+  }
+  
+  .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .nav-link:hover {
+    background: #0d0a0a;
+    border-radius: 5px;
+  }
+  
+  .nav-logo {
+    font-family: 'Koulen', sans-serif;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    margin-right: auto; /* Pushes the logo to the left */
+  }
+  
+  .kraken-logo {
+    margin-right: 10px; /* Adjust margin to position the logo */
+    max-width: 6vw;
+  }
+  
+  .basket-icon {
+    max-width: 2.5rem;
+  }
+
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px; /* Decrease padding */
+    margin-top: auto;
+    font-size: 14px;
+  }
+  
+  
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  label, input, button {
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  input, button {
+    padding: 8px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
