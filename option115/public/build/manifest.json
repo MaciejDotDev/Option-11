@@ -1,0 +1,43 @@
+{
+  "resources/js/app.js": {
+    "assets": [
+      "assets/Kraken_logo-340c0701.png",
+      "assets/bike-category-87304ff2.png",
+      "assets/clothes-category-ea897824.png",
+      "assets/equipment-category-e52f649e.png",
+      "assets/main-img-10ddffb2.png"
+    ],
+    "file": "assets/app-8eb410c7.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/components/assets/Kraken_logo.png": {
+    "file": "assets/Kraken_logo-340c0701.png",
+    "src": "resources/js/components/assets/Kraken_logo.png"
+  },
+  "resources/js/components/assets/basket-icon.png": {
+    "file": "assets/basket-icon-078f84e0.png",
+    "src": "resources/js/components/assets/basket-icon.png"
+  },
+  "resources/js/components/assets/bike-category.png": {
+    "file": "assets/bike-category-87304ff2.png",
+    "src": "resources/js/components/assets/bike-category.png"
+  },
+  "resources/js/components/assets/clothes-category.png": {
+    "file": "assets/clothes-category-ea897824.png",
+    "src": "resources/js/components/assets/clothes-category.png"
+  },
+  "resources/js/components/assets/equipment-category.png": {
+    "file": "assets/equipment-category-e52f649e.png",
+    "src": "resources/js/components/assets/equipment-category.png"
+  },
+  "resources/js/components/assets/main-img.png": {
+    "file": "assets/main-img-10ddffb2.png",
+    "src": "resources/js/components/assets/main-img.png"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-041e359a.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}
