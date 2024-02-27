@@ -3,12 +3,12 @@ import krakenLogo from "../../assets/Kraken_logo.png";
 import basketIcon from "../../assets/basket-icon.png";
 
 const AdminNavbar = ({ auth, openModal }) => {
-    
+
 
     return (
         <Navbar className="navbar" collapseOnSelect expand="lg" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand className="nav-logo fs-1"  href={route('adminDashboard')}>
+                <Navbar.Brand className="nav-logo fs-1" href={route('adminDashboard')}>
                     Admin
                     <Image src={krakenLogo} rounded fluid className="kraken-logo" />
                 </Navbar.Brand>
@@ -29,7 +29,7 @@ const AdminNavbar = ({ auth, openModal }) => {
                         </Nav.Link>
                         <Nav.Link
                             className="text-grey  "
-                            href="/contactus"
+                            href="/addproduct"
                         >
                             Add Product
                         </Nav.Link>
@@ -39,8 +39,8 @@ const AdminNavbar = ({ auth, openModal }) => {
                         >
                             Remove/Edit Product
                         </Nav.Link>
-                   
-                        
+
+
                     </Nav>
                 </Navbar.Collapse>
             </Container>
