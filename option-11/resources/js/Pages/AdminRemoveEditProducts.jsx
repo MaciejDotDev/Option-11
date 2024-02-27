@@ -6,35 +6,87 @@ import InputError from "@/Components/InputError";
 
 import AdminNavbar from "@/Pages/AdminNavbar";
 
-const AdminAddProducts = ({ auth }) => {
+const AdminRemoveEditProducts = ({ auth }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        productName: '',
-        productDescription: '',
-        productQuantity: '',
-        productPrice: '',
-        productImageLink: '',
+        productId: "",
+        productSearchName: "",
+        productName: "",
+        productDescription: "",
+        productQuantity: "",
+        productPrice: "",
     });
 
     useEffect(() => {
         return () => {
-            reset(
-                'productName',
-                'productDescription',
-                'productQuantity',
-                'productPrice',
-                'productImageLink'
-            );
+            reset("productId", "productSearchName", "productName", "productDescription", "productQuantity", "productPrice");
         };
     }, []);
 
+    // I made these so that if the admin types in one, the other cannot be active.
+    const isProductIdNotEmpty = !!data.productId.trim();
+    const isProductSearchNameNotEmpty = !!data.productSearchName.trim();
+
     const submit = (e) => {
         e.preventDefault();
+
     };
 
     return (
         <div>
             <AdminNavbar auth={auth} />
-            <h2 className="text-light h2 text-center pt-3">Add Product</h2>
+            <h2 className="text-light h2 text-center pt-3">Remove/Edit Product</h2>
+            <Container className="d-flex justify-content-center mt-4">
+                <Form className="rounded" onSubmit={submit}>
+                    <Row className="align-items-center justify-content-center">
+                        <Col md={6}>
+                            <Form.Group controlId="formBasicProductId" className="mb-3">
+                                <Form.Label className="text-white">Product ID</Form.Label>
+                                <Form.Control
+                                    id="productId"
+                                    name="productId"
+                                    value={data.productId}
+                                    className="mt-1 block w-full"
+                                    autoComplete="productId"
+                                    onChange={(e) => setData("productId", e.target.value)}
+                                    required
+                                    disabled={isProductSearchNameNotEmpty}
+                                    style={{
+                                        backgroundColor: isProductSearchNameNotEmpty ? 'inherit' : '#e9e9e9',
+                                    }}
+                                />
+                                <InputError message={errors.productId} className="mt-2" />
+                            </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                            <Form.Group controlId="formBasicProductSearchName" className="mb-3">
+                                <Form.Label className="text-white">Product Name</Form.Label>
+                                <Form.Control
+                                    id="productSearchName"
+                                    name="productSearchName"
+                                    value={data.productSearchName}
+                                    className="mt-1 block w-full"
+                                    autoComplete="productSearchName"
+                                    onChange={(e) => setData("productSearchName", e.target.value)}
+                                    required
+                                    disabled={isProductIdNotEmpty}
+                                    style={{
+                                        backgroundColor: isProductIdNotEmpty ? 'inherit' : '#e9e9e9',
+                                    }}
+                                />
+                                <InputError message={errors.productSearchName} className="mt-2" />
+                            </Form.Group>
+                        </Col>
+                        <Button
+                            variant="primary"
+                            type="submit"
+                            className="ms-4 mt-2 d-block w-50"
+                            disabled={processing}
+                        >
+                            Search
+                        </Button>
+                    </Row>
+                </Form>
+            </Container>
 
             <Container className="d-flex justify-content-center mt-4">
                 <Form className="rounded" onSubmit={submit}>
@@ -122,51 +174,24 @@ const AdminAddProducts = ({ auth }) => {
                     </Row>
 
                     <Row className="mb-4">
-                        <Col md={6}>
-                            <Form.Group controlId="formBasicProductImageLink" className="mb-3">
-                                <Form.Label className="text-white">Product Image Link</Form.Label>
-                                <Form.Control
-                                    id="productImageLink"
-                                    name="productImageLink"
-                                    value={data.productImageLink}
-                                    className="form-control-lg"
-                                    autoComplete="productImageLink"
-                                    onChange={(e) => setData("productImageLink", e.target.value)}
-                                    required
-                                    style={{ width: '20rem' }}
-                                />
-                                <InputError
-                                    message={errors.productImageLink}
-                                    className="mt-2"
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row className="mb-4 d-flex justify-content-center">
-                        <Col md={6}>
-                            <Form.Group controlId="formBasicProductImage" className="mb-3">
-                                <Form.Label className="text-white">Product Image</Form.Label>
-                                <Form.Control
-                                    type="file"
-                                    id="productImage"
-                                    name="productImage"
-                                    onChange={(e) => handleImageChange(e)}
-                                    accept="image/*"
-                                    required
-                                />
-                                <InputError message={errors.productImage} className="mt-2" />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row className="mb-4 d-flex justify-center">
                         <Col className="mt-2" md={6}>
                             <Button
                                 variant="primary"
                                 type="submit"
-                                className=""
+                                className=" mt-2"
                                 disabled={processing}
                             >
-                                Add Product
+                                Update Product
+                            </Button>
+                        </Col>
+                        <Col className="mt-2" md={6}>
+                            <Button
+                                variant="danger"
+                                type="submit"
+                                className="mt-2"
+                                disabled={processing}
+                            >
+                                Remove Product
                             </Button>
                         </Col>
                     </Row>
@@ -176,4 +201,4 @@ const AdminAddProducts = ({ auth }) => {
     );
 };
 
-export default AdminAddProducts;
+export default AdminRemoveEditProducts;

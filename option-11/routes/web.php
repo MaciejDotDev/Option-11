@@ -18,6 +18,7 @@ use App\Http\Controllers\ShowOrdersController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminEditUsersController;
 use App\Http\Controllers\AdminAddProductsController;
+use App\Http\Controllers\AdminRemoveEditProductsController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\UserController;
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['admin']], function () {
     
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
     Route::get('/addProducts', [AdminAddProductsController::class, 'showAddProductsPage']);
+    Route::get('/removeEditProducts', [AdminRemoveEditProductsController::class, 'showRemoveEditProductsPage']);
 
     Route::get('/adminEditUsers', [AdminEditUsersController::class, 'show'])->name('adminEditUsers');
     Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
