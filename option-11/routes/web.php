@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminEditUsersController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminEditOrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,7 +51,9 @@ Route::get('/updateAccount', function () {
     return Inertia::render('UpdateAccount');
 })->middleware(['auth', 'verified'])->name('updateAccount');
 
-
+Route::get('/removeProduct', function () {
+    return Inertia::render('RemoveEditProduct');
+});
 
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
@@ -105,6 +108,10 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('users/export/', [UserController::class, 'export']);
 
+    Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
+
+   
+ 
 
 
 
@@ -144,7 +151,7 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'],'/deleteProduct','App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
 
     Route::match(['get', 'post'],'/orderHistory','App\Http\Controllers\OrdersController@showAll')->name('orderHistory');
-
+    Route::post('/basket/action', [ManageBasketController::class, 'addRemItem'])->name('basketAction');
    
 
 

@@ -85,7 +85,7 @@ const Login = ({ handleClose, auth }) => {
                             type="email"
                             name="email"
                             value={data.email}
-                            placeholder="hell"
+                          
                             className="block w-full mt-1"
                             autoComplete="username"
                             onChange={(e) => setData("email", e.target.value)}
