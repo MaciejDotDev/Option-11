@@ -47,11 +47,16 @@ class ShowAccessoriesController extends Controller
         if ($validateInput) {
 
 
+
+
+
              
         $finditem =  Basket::where('userid', auth()->user()->userid)->first();
         $basket = new Basket();
 
-        if ($finditem  ==  null) { 
+        $noRecords = false;
+
+        if ($finditem  ==  null || $noRecords) { 
 
 
             $basket = new Basket();
@@ -87,19 +92,7 @@ class ShowAccessoriesController extends Controller
 
 
         } else { 
-            $basket = new Basket();
-            $basket->userid =  auth()->user()->userid;
-            $basket->accessoryid = request('accessoryid_hidden');
-            $basket->quantity =request('quantity');
-            
-            $bike = Accessory::where('accessoryid',$basket->accessoryid)->first();
-            $basket->totalprice = $basket->quantity * $bike->price;
-            $bike->stockquantity = $bike->stockquantity -  $basket->quantity;
-        
-            $basket->status = 'open';
-            $basket->save();
-    
-            return redirect()->back()->with('success', "Item successfully added to basket!");
+            $noRecords =  true;
 
         }
 
