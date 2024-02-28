@@ -110,7 +110,8 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             left={
                                                                 item.quantity >=
                                                                 10
-                                                                    ? "1.4rem"
+                                                                    ? item.quantity >=
+                                                                    20 ? "1.5rem" : "1.5rem"
                                                                     : "1rem"
                                                             }
                                                             bottom="23px"
