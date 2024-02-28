@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminEditUsersController;
 use App\Http\Controllers\AdminAddProductsController;
 use App\Http\Controllers\AdminRemoveEditProductsController;
 use App\Http\Controllers\AdminReportsController;
+use App\Http\Controllers\AdminEditOrderController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\UserController;
@@ -101,6 +102,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/addProducts', [AdminAddProductsController::class, 'showAddProductsPage']);
     Route::get('/removeEditProducts', [AdminRemoveEditProductsController::class, 'showRemoveEditProductsPage']);
     Route::get('/reports', [AdminReportsController::class, 'showAdminReportsPage']);
+
+    Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
+
+    
 
     Route::get('/adminEditUsers', [AdminEditUsersController::class, 'show'])->name('adminEditUsers');
     Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
