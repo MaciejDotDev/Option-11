@@ -22,23 +22,29 @@ const AdminNavbar = ({ auth, openModal }) => {
                             <NavDropdown.Item href={route('products')}>Reports</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link
-                            className="text-grey  "
+                            className="text-grey "
                             href={route("adminEditUsers")}
                         >
                             Manage users
                         </Nav.Link>
                         <Nav.Link
-                            className="text-grey  "
+                            className="text-grey "
                             href="/contactus"
                         >
                             Add Product
                         </Nav.Link>
                         <Nav.Link
-                            className="text-grey  "
+                            className="text-grey "
                             href="/aboutus"
                         >
                             Remove/Edit Product
                         </Nav.Link>
+                        <Nav.Link
+                                    className="px-4 text-black bg-info rounded-2 "
+                                    href="/adminLogout"
+                                >
+                                    Logout
+                                </Nav.Link>
                    
                         
                     </Nav>

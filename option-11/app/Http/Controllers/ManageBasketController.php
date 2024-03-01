@@ -25,16 +25,20 @@ use Illuminate\Support\Facades\Redirect;
 
 class ManageBasketController extends Controller
 {
-    //
+    protected $bikes;
+    protected  $basket;
+
 
     public function search()
     {
-        $basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
 
-        $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
 
-        $bikes = [];
-        foreach ($basket as $item) {
+
+        $this->basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
+
+
+        $this->bikes = [];
+        foreach ($this->basket as $item) {
 
             $bike = Bikes::where('bikeid', $item->bikeid)->first();
             $bikePart = BikePart::where('bikepartsid', $item->bikepartsid)->first();
@@ -44,67 +48,124 @@ class ManageBasketController extends Controller
             if ($bike) {
 
 
-                $bikes[] = $bike;
+                $this->bikes[] = $bike;
             } else if ($bikePart) {
 
-                $bikes[] = $bikePart;
+                $this->bikes[] = $bikePart;
             } else if ($clothes) {
 
 
-                $bikes[] = $clothes;
+                $this->bikes[] = $clothes;
             } else if ($repairkits) {
 
 
-                $bikes[] = $repairkits;
+                $this->bikes[] = $repairkits;
             } else if ($accessory) {
 
 
-                $bikes[] = $accessory;
+                $this->bikes[] = $accessory;
             }
         }
 
+        $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
 
-        return Inertia::render('Basket', ['basket' => $basket, 'totalprice' => $totalPrice, 'bikes' => $bikes]);
+
+        return Inertia::render('Basket', ['basket' => $this->basket, 'totalprice' => $totalPrice, 'bikes' => $this->bikes]);
     }
 
+
+    public function update($basket)
+    {
+
+        $basket1 = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
+
+
+
+
+
+        foreach ($basket1 as $item) {
+
+            $bikes = Bikes::where('bikeid', $item->bikeid)->first();
+            $bikePart = BikePart::where('bikepartsid', $item->bikepartsid)->first();
+            $clothes = Clothes::where('clothingid', $item->clothingid)->first();
+            $repairkits = RepairKit::where('repairkitsid', $item->repairkitsid)->first();
+            $accessory = Accessory::where('accessoryid', $item->accessoryid)->first();
+
+            if ($bikes) {
+
+
+                $basket->totalprice = $basket->quantity * $bikes->price;
+            } else if ($bikePart) {
+
+                $basket->totalprice = $basket->quantity * $bikePart->price;
+            } else if ($clothes) {
+
+                $basket->totalprice = $basket->quantity * $clothes->price;
+            } else if ($repairkits) {
+
+
+                $basket->totalprice = $basket->quantity * $repairkits->price;
+            } else if ($accessory) {
+
+
+                $basket->totalprice = $basket->quantity * $repairkits->accessory;
+            }
+        }
+    }
 
     public function addRemItem(Request $request)
     {
 
-//When adding or removing items need to change ht price
-        if ($request->action == "add") {
+        //When adding or removing items need to change ht price
 
+        if ($request->action == "delete") {
 
             $basket = Basket::where('basketid', $request->basketid)->first();
 
+
+            $basket->delete();
+
             
-            $basket->totalprice = $basket->totalprice + $request->totalprice;
+
+            return Redirect::route('basket');
+
+        } else if ($request->action == "add") {
+
+
+            $basket = Basket::where('basketid', $request->input('basketid'))->first();
+
+
+
             $basket->quantity =  $basket->quantity + 1;
 
-            
-
-
+            $this->update($basket);
             $basket->save();
 
-            return redirect()->back();
+            return Redirect::route('basket');
         } else if ($request->action == "remove") {
 
-            $basket = Basket::where('basketid', $request->basketid)->first();
+            $basket = Basket::find($request->basketid);
 
             if ($basket->quantity <= 1) {
 
-            
 
-                $basket->delete();
-                return redirect('basket');
+
+
+
+
+
+
+                return    $this->deleteProduct($request);
             } else {
 
-                $basket->totalprice = $basket->totalprice - $request->totalprice;
+
                 $basket->quantity =  $basket->quantity - 1;
+
+                $this->update($basket);
 
 
                 $basket->save();
-                return redirect('basket');
+                return Redirect::route('basket');
             }
         }
     }
@@ -114,11 +175,11 @@ class ManageBasketController extends Controller
 
 
         $basket = Basket::where('userid', auth()->user()->userid)->get();
-        $basketid = $request->input('basketid');
+        $basketid = $request->basketid;
 
         $basketFind = Basket::where('basketid', $basketid);
 
         $basketFind->delete();
-        return redirect('basket');
+        return $this->search();
     }
 }

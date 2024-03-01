@@ -10,10 +10,6 @@ const DashboardCard = ({ cardName, children }) => {
         }
     };
 
-
-
-   
-
     return (
         <div className="dashboardcard">
             <div
@@ -22,15 +18,24 @@ const DashboardCard = ({ cardName, children }) => {
                     (dropdownstate ? "expand" : "closed")
                 }
             >
-                <div className="card-title dashboard"  onClick={() => { setOpen() }}>
-                   <p >  {cardName} </p>
+                <div
+                    className="card-title dashboard"
+                    onClick={() => {
+                        setOpen();
+                    }}
+                >
+                    <p> {cardName} </p>
                 </div>
-                
+                {/* to modify below add an arraow and change the div */}
+                <div
+                    style={{
+                      
+                    }}
+                >
+         
+                </div>
 
                 <div className="card-open">{children}</div>
-
-            
-                
             </div>
         </div>
     );

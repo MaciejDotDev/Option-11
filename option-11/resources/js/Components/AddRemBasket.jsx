@@ -25,8 +25,11 @@ const AddRemBasket = ({
 
     const handleSubmit  = (e) => {
         e.preventDefault();
-
+    
         post(route("basketAction"));
+         //might want to change this so it requires not  a reload
+       
+
     };
 
     return (

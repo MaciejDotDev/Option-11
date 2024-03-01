@@ -111,6 +111,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
 
+    Route::match(['get', 'post'],'/adminLogout', [AdminLoginController::class, 'destroy'])
+    ->name('adminLogout');
+
 
 
 

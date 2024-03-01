@@ -57,7 +57,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                     </h2>
 
                                                     <p>
-                                                        Price: £
+                                                        Price: 
                                                         {item.totalprice}
                                                     </p>
                                                     <p>Quantity: </p>
@@ -133,7 +133,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             type="submit"
                                                             className="text-red-500 hover:underline"
                                                         >
-                                                            Remove
+                                                            Remove 
                                                         </button>
                                                     </form>
                                                 </div>
@@ -145,7 +145,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                         <h2 className="h2basket">
                                             Total Amount:
                                         </h2>
-                                        <p>£{totalprice}</p>
+                                        <p>{totalprice}</p>
                                     </div>
 
                                     <button

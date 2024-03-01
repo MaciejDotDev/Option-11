@@ -45,11 +45,13 @@ class AdminLoginController extends Controller
         ]);
     }
 
-    public function destroy() {
-        Auth::logout();
+    public function destroy(Request $request) {
+        Auth::guard('admin')->logout();
 
-        return redirect('/adminLogin')->with([
-            'type' => 'success', 'message' => 'You are logged out.',
-        ]);
+        $request->session()->forget('guard.admin');
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

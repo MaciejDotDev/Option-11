@@ -72,9 +72,9 @@ class UsersExport implements FromCollection, Responsable
         $avarage2022 = array_sum($amountUsers2022)/12;
 
         $avarage2023 = array_sum($amountUsers2023)/12;
-
+        $stringNumber = strval((($avarage2023 - $avarage2022) / $avarage2022) * 100);
       
-        $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2022],["Avarage user account creation"],[$avarage2022],["Amount of created accounts in $lastYear"], [$currentYear],[$months],[$amountUsers2023], ["Avarage user account creation"],[$avarage2023], ["Ammount of accounts increase"], [(($avarage2023 - $avarage2022) / $avarage2022) * 100]);
+        $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2022],["Avarage user account creation"],[$avarage2022],["Amount of created accounts in $lastYear"], [$months],[$amountUsers2023], ["Avarage user account creation"],[$avarage2023], ["Ammount of accounts increase betweeen  $currentYear and  $lastYear"], ["$stringNumber%"]);
 
        
 
