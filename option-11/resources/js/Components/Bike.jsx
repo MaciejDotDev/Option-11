@@ -92,14 +92,14 @@ const Bike = ({ bikes, auth, openModal }) => {
                 </Card.Body>
                 <Card.Footer>
                     {auth.user ? (
-                        <Button type="submit" variant="dark">
+                        <Button type="submit" variant="outline-dark">
                             Add to basket
                         </Button>
                     ) : (
                         <Button
                             type="submit"
                             onClick={onClickPreventDefault}
-                            variant="dark"
+                            variant="outline-dark"
                         >
                             Add to basket
                         </Button>
