@@ -21,7 +21,7 @@ export default function Checkout({ auth, baskIcon }) {
       
 
         // If all validations pass, proceed to submit the form
-        post("/addPayment", data, {
+        post("/session", data, {
             headers: {
                 'X-CSRF-Token': csrf_token,
             }

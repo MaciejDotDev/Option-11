@@ -37,34 +37,28 @@ class PaymentDetails extends Controller
        
 
         
-            $validateInput = $request->validate([
-                'cardNumber' => 'required',
-                'expiryDate' => 'required',
-                'cvv' => 'required',
-                
-        
-            ]);
-        
-        
-        
-           
-        
-           
-        
+        \Stripe\Stripe::setApiKey(config('stripe.sk'));
 
-        
-                $payment = new Payment();
-                $payment->userid =  auth()->user()->userid;
-                $payment->cardNumber = Crypt::encrypt(request('cardNumber'));
-                $payment->expiryDate = Crypt::encrypt(request('expiryDate'));
-                $payment->cvv = Crypt::encrypt(request('cvv'));
-             
-                $payment->save();
-           
-                return redirect('makeOrder');
-        
-           
-                // ManageAccount.php
+        $session = \Stripe\Checkout\Session::create([
+            'line_items'  => [
+                [
+                    'price_data' => [
+                        'currency'     => 'gbp',
+                        'product_data' => [
+                            'name' => 'gimme money!!!!',
+                        ],
+                        'unit_amount'  => 500,
+                    ],
+                    'quantity'   => 1,
+                ],
+            ],
+            'mode'        => 'payment',
+            'success_url' =>  "http://localhost:8000/",
+            'cancel_url'  => "http://localhost:8000/",
+          #
+        ]);
+
+        return redirect()->away($session->url);
           
 
       
