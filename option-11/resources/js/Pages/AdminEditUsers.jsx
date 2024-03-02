@@ -16,6 +16,7 @@ const AdminEditUsers = ({ users }) => {
         setSearchInput(e.target.value);
     };
 
+    // Combining the users firstname and last name into a string, and checking if it matches the search input.
     const filteredUsers = users.filter((user) =>
         `${user.firstname} ${user.lastname}`
             .toLowerCase()

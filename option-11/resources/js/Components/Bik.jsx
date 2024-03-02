@@ -2,31 +2,18 @@ import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
-import { Card, Button } from "react-bootstrap";
-
-import mountainBike from "../../assets/bike-products/mountain-bike-1.jpg";
-
 const Bike = ({ bikes, auth, openModal }) => {
     const { flash } = usePage().props;
-
-    // Create a state object to store quantities for each bike
-    const [bikeQuantities, setBikeQuantities] = useState({});
-
     const { data, setData, post, processing, errors, reset } = useForm({
         bikeid_hidden: "",
         quantity: "",
     });
 
-    // Will modify the quantity selected for each bike based on ID.
     const [selectedBikeId, setSelectedBikeId] = useState("");
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasket", {
-            ...data,
-            quantity: bikeQuantities[data.bikeid_hidden],
-        });
-        // console.log(data.quantity);
+        post("/addBasket", data);
     };
 
     const onClickPreventDefault = (e) => {
@@ -34,37 +21,29 @@ const Bike = ({ bikes, auth, openModal }) => {
         e.preventDefault();
     };
 
-    // State object that will store the quantity the user selects for each bike.
-    const handleQuantityChange = (bikeId, quantity) => {
-        // console.log(quantity);
-        // console.log(typeof quantity);
-        setBikeQuantities({ ...bikeQuantities, [bikeId]: quantity });
-        setData("quantity", quantity);
-    };
-
     const bikeList = bikes.map((bike) => (
         <div
             key={bike.bikeid}
-            className="col-lg-4 col-md-6 mb-4"
+            className={`col-md-6 mb-4 ${
+                selectedBikeId === bike.bikeid ? "selected-bike" : ""
+            }`}
             onClick={() => {
                 setSelectedBikeId(bike.bikeid);
                 setData("bikeid_hidden", bike.bikeid);
             }}
         >
-            {/* <Card style={{ width: "28rem" }}> */}
-            <Card>
-                <Card.Img variant="top" src={mountainBike} />
-                <Card.Body>
-                    <Card.Title className="text-center h4">
+            <div className="card">
+                <div className="card-body">
+                    <h5 className="card-title text-center h4">
                         {bike.productname}
-                    </Card.Title>
-                    <Card.Text>{bike.description}</Card.Text>
-                    <Card.Text>
+                    </h5>
+                    <p className="card-text">{bike.description}</p>
+                    <p className="card-text">
                         <strong>Price:</strong> £{bike.price}
-                    </Card.Text>
-                    <Card.Text>
+                    </p>
+                    <p className="card-text">
                         <strong>Category:</strong> {bike.category}
-                    </Card.Text>
+                    </p>
                     <div className="form-group">
                         <label htmlFor={`quantity_${bike.bikeid}`}>
                             Quantity
@@ -74,13 +53,10 @@ const Bike = ({ bikes, auth, openModal }) => {
                             className="form-control"
                             min="0"
                             type="number"
-                            value={bikeQuantities[bike.bikeid]}
-                            name={`quantity_${bike.bikeid}`}
+                            value={data.quantity}
+                            name="quantity"
                             onChange={(e) =>
-                                handleQuantityChange(
-                                    bike.bikeid,
-                                    parseInt(e.target.value)
-                                )
+                                setData("quantity", e.target.value)
                             }
                         />
                         <InputError
@@ -89,23 +65,26 @@ const Bike = ({ bikes, auth, openModal }) => {
                         />
                         <p className="text-black">{flash.message}</p>
                     </div>
-                </Card.Body>
-                <Card.Footer>
+                </div>
+                <div className="card-footer">
                     {auth.user ? (
-                        <Button type="submit" variant="dark">
-                            Add to basket
-                        </Button>
-                    ) : (
-                        <Button
+                        <button
                             type="submit"
-                            onClick={onClickPreventDefault}
-                            variant="dark"
+                            className="btn btn-dark text-dark"
                         >
                             Add to basket
-                        </Button>
+                        </button>
+                    ) : (
+                        <button
+                            type="submit"
+                            onClick={onClickPreventDefault}
+                            className="btn btn-dark text-dark"
+                        >
+                            Add to basket
+                        </button>
                     )}
-                </Card.Footer>
-            </Card>
+                </div>
+            </div>
         </div>
     ));
 
