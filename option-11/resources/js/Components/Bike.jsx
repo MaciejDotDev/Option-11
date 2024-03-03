@@ -6,7 +6,7 @@ import { Card, Button } from "react-bootstrap";
 
 import mountainBike from "../../assets/bike-products/mountain-bike-1.jpg";
 
-const Bike = ({ bikes, auth, openModal }) => {
+const Bike = ({ bikes, auth, openModal, filter }) => {
     const { flash } = usePage().props;
 
     // Create a state object to store quantities for each bike
@@ -15,6 +15,15 @@ const Bike = ({ bikes, auth, openModal }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         bikeid_hidden: "",
         quantity: "",
+    });
+
+    // Apply filter based on the selected option
+    const filteredBikes = bikes.filter((bike) => {
+        if (filter === "All Bikes") {
+            return true; // Show all bikes
+        } else {
+            return bike.category === filter; // Show bikes that match the selected category
+        }
     });
 
     // Will modify the quantity selected for each bike based on ID.
@@ -42,7 +51,7 @@ const Bike = ({ bikes, auth, openModal }) => {
         setData("quantity", quantity);
     };
 
-    const bikeList = bikes.map((bike) => (
+    const bikeList = filteredBikes.map((bike) => (
         <div
             key={bike.bikeid}
             className="col-lg-4 col-md-6 mb-4"
