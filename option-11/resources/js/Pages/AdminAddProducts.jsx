@@ -124,37 +124,22 @@ const AdminAddProducts = ({ auth }) => {
                     <Row className="mb-4">
                         <Col md={6}>
                             <Form.Group controlId="formBasicProductImageLink" className="mb-3">
-                                <Form.Label className="text-white">Product Image Link</Form.Label>
+                                <Form.Label className="text-white">Product Image Path/Link</Form.Label>
                                 <Form.Control
                                     id="productImageLink"
                                     name="productImageLink"
+                                    placeholder="e.g. ../../assets/[folder name]/[img]"
                                     value={data.productImageLink}
                                     className="form-control-lg"
                                     autoComplete="productImageLink"
                                     onChange={(e) => setData("productImageLink", e.target.value)}
                                     required
-                                    style={{ width: '20rem' }}
+                                    style={{ width: '25rem' }}
                                 />
                                 <InputError
                                     message={errors.productImageLink}
                                     className="mt-2"
                                 />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row className="mb-4 d-flex justify-content-center">
-                        <Col md={6}>
-                            <Form.Group controlId="formBasicProductImage" className="mb-3">
-                                <Form.Label className="text-white">Product Image</Form.Label>
-                                <Form.Control
-                                    type="file"
-                                    id="productImage"
-                                    name="productImage"
-                                    onChange={(e) => handleImageChange(e)}
-                                    accept="image/*"
-                                    required
-                                />
-                                <InputError message={errors.productImage} className="mt-2" />
                             </Form.Group>
                         </Col>
                     </Row>
