@@ -24,12 +24,12 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
 
     const repairKitList = repairKit.map((kit) => (
         <div
-            key={kit.repairkitsid}
-            className={`col-md-6 mb-4 ${selectedRepairKit === kit.repairkitsid ? "selected-repair-kit" : ""
+            key={kit.productid}
+            className={`col-md-6 mb-4 ${selectedRepairKit === kit.productid ? "selected-repair-kit" : ""
                 }`}
             onClick={() => {
-                setSelectedRepairKit(kit.repairkitsid);
-                setData("repairkitsid_hidden", kit.repairkitsid);
+                setSelectedRepairKit(kit.productid);
+                setData("repairkitsid_hidden", kit.productid);
             }}
         >
             <div className="card">
@@ -46,9 +46,9 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
                         <strong>Compatible with:</strong> {kit.CompatibleWithType}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${kit.repairkitsid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${kit.productid}`}>Quantity</label>
                         <input
-                            id={`quantity_${kit.repairkitsid}`}
+                            id={`quantity_${kit.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

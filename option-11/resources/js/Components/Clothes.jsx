@@ -23,12 +23,12 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
 
     const clothesList = clothes.map((clothing) => (
         <div
-            key={clothing.clothingid}
-            className={`col-md-6 mb-4 ${selectedClothes === clothing.clothingid ? "selected-clothing" : ""
+            key={clothing.productid}
+            className={`col-md-6 mb-4 ${selectedClothes === clothing.productid ? "selected-clothing" : ""
                 }`}
             onClick={() => {
-                setSelectedClothes(clothing.clothingid);
-                setData("clothingid_hidden", clothing.clothingid);
+                setSelectedClothes(clothing.productid);
+                setData("clothingid_hidden", clothing.productid);
             }}
         >
             <div className="card">
@@ -39,9 +39,9 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
                         <strong>Price:</strong> £{clothing.price}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${clothing.clothingid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${clothing.productid}`}>Quantity</label>
                         <input
-                            id={`quantity_${clothing.clothingid}`}
+                            id={`quantity_${clothing.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

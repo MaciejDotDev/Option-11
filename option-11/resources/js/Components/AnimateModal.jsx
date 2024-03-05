@@ -5,7 +5,7 @@ import Login from '@/Pages/Auth/Login'; // Import your Modal component
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import NavBar from "@/Components/NavBar";
 
-const AnimateModal = ({ auth, children,baskIcon }) => {
+const AnimateModal = ({ auth, children,baskIcon,canResetPassword }) => {
 
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -31,7 +31,7 @@ const AnimateModal = ({ auth, children,baskIcon }) => {
              {childrenWithProps}
               <AnimatePresence initial={false} mode='wait'>
         {modalOpen && (
-          <Login modalOpen={modalOpen} handleClose={closeModal} />
+          <Login modalOpen={modalOpen} handleClose={closeModal} canResetPassword={canResetPassword} />
         )}
       </AnimatePresence>
 

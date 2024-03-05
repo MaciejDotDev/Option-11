@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('ordersid')->unsigned();
             $table->unsignedBigInteger('userid');
-            $table->foreign('userid')->references('userid')->on('users')->onDelete('cascade');
+            $table->foreign('userid')->references('userid')->on('users');
             $table->unsignedBigInteger('basketid');
             $table->foreign('basketid')->references('basketid')->on('baskets')->onDelete('cascade');
             $table->string('trackingcode')->nullable();
             $table->unsignedBigInteger('payment_id');
-            $table->foreign('payment_id')->references('payment_id')->on('payments')->onDelete('cascade');
+            $table->foreign('payment_id')->references('payment_id')->on('payments');
 
 
             $table->unsignedBigInteger('addressid')->nullable();
-            $table->foreign('addressid')->references('addressid')->on('address')->onDelete('cascade');
+            $table->foreign('addressid')->references('addressid')->on('address');
             $table->decimal('totalprice',8, 2);
             $table->enum('status', ['paid', 'dispatched', 'delivered']);
             $table->timestamps();

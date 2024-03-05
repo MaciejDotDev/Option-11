@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminEditOrderController;
+use App\Http\Controllers\ReviewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,9 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
+        'canResetPassword' => Route::has('password.request'),
         'phpVersion' => PHP_VERSION,
+        'status' => session('status')
     ]);
 });
 
@@ -56,6 +59,9 @@ Route::get('/removeProduct', function () {
     return Inertia::render('RemoveEditProduct');
 });
 
+Route::get('/reviews', [ReviewsController::class,'showAll'])->name('reviews'); // to add to teh middleware later
+
+Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview'); 
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 
@@ -145,7 +151,7 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'], '/addBasketPart', 'App\Http\Controllers\ShowBikePartsController@addBasket')->name('addBasketPart');
     Route::match(['get', 'post'], '/addBasketRepairkit', 'App\Http\Controllers\ShowRepairKitsController@addBasket')->name('addBasketRepairkit');
     Route::match(['get', 'post'], '/addBasketAccessory', 'App\Http\Controllers\ShowAccessoriesController@addBasket')->name('addBasketAccessory');
-    Route::post('/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
+    Route::match(['get', 'post'],'/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
     Route::match(['get', 'post'], '/addBasketClothing', 'App\Http\Controllers\ShowClothingController@addBasket')->name('addBasketClothing');
 
     Route::match(['get', 'post'], '/makeOrder', 'App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');

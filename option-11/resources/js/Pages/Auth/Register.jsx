@@ -29,11 +29,11 @@ const Register = ({auth,openModal}) => {
 
     return (
         <div>
-           <AnimateModal auth={auth}>  
+
 
             <Container
                 className="d-flex align-items-center justify-content-center "
-                style={{ minHeight: "75vh" }}
+                style={{ minHeight: "100vh" }}
             >
                 <Form
                     className="p-5 rounded shadow-sm bg-dark text-light"
@@ -181,15 +181,18 @@ const Register = ({auth,openModal}) => {
                             </Form.Group>
                         </Col>
                     </Row>
+                   
 
                     <div className="flex items-center justify-end mt-4">
+                        
                         <Link
                          href={route("login")}
                            
-                            className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                         className="text-center link-info"
                         >
                             Already registered?
                         </Link>
+                        {/* above should open a new page for login not a modal */}
                      
                         <Button
                             variant="primary"
@@ -200,9 +203,16 @@ const Register = ({auth,openModal}) => {
                             Register
                         </Button>
                     </div>
+                    <Link
+                         href="/"
+                           
+                            className="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Go back
+                        </Link>
                 </Form>
             </Container>
-            </AnimateModal>
+         
         </div>
     );
 };

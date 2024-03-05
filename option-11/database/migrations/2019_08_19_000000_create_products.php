@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::create('accessories', function (Blueprint $table) {
-        $table->bigIncrements('accessoryid')->unsigned();
+    Schema::create('products', function (Blueprint $table) {
+        $table->bigIncrements('productid')->unsigned();
         $table->string('productname');
         $table->decimal('price', 8, 2);
         $table->string('description');
         $table->string('imageURL');
-        $table->string('category');
+    
+        $table->unsignedBigInteger('categoryid');
+        $table->foreign('categoryid')->references('categoryid')->on('categories');
         $table->integer('stockquantity');
-        $table->char('size');
-        $table->char('colour');
         $table->timestamps();
+        
     });
 }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accessories');
+        Schema::dropIfExists('bikes');
     }
 };

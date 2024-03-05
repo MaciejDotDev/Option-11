@@ -8,8 +8,6 @@ import Login from "@/Pages/Auth/Login";
 import AnimateModal from "@/Components/AnimateModal";
 import AddRemBasket from "@/Components/AddRemBasket";
 export default function Basket({ auth, basket, totalprice, bikes }) {
-
-  
     const { data, setData, post } = useForm({
         basketid: null,
     });
@@ -57,11 +55,12 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                     </h2>
 
                                                     <p>
-                                                        Price: 
+                                                        Price: £
                                                         {item.totalprice}
                                                     </p>
                                                     <p>Quantity: </p>
                                                     <div
+                                                        key={item.basketid}
                                                         style={{
                                                             width: "1rem",
                                                             height: "1rem",
@@ -76,6 +75,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                         }}
                                                     >
                                                         <AddRemBasket
+                                                            key={item.basketid}
                                                             item={item.quantity}
                                                             itemid={
                                                                 item.basketid
@@ -85,9 +85,10 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             right="1.4rem"
                                                             top="22px"
                                                             symbol="-"
-                                                            totalprice={bikes[index].price}
-
-                                                          
+                                                            totalprice={
+                                                                bikes[index]
+                                                                    .price
+                                                            }
                                                         ></AddRemBasket>
 
                                                         <p
@@ -111,13 +112,18 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                                 item.quantity >=
                                                                 10
                                                                     ? item.quantity >=
-                                                                    20 ? "1.5rem" : "1.5rem"
+                                                                      20
+                                                                        ? "1.5rem"
+                                                                        : "1.5rem"
                                                                     : "1rem"
                                                             }
                                                             bottom="23px"
-                                                            symbol="+"                                                           
+                                                            symbol="+"
                                                             paddingTop="0.1rem"
-                                                            totalprice={bikes[index].price}
+                                                            totalprice={
+                                                                bikes[index]
+                                                                    .price
+                                                            }
                                                         ></AddRemBasket>
                                                     </div>
 
@@ -133,7 +139,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             type="submit"
                                                             className="text-red-500 hover:underline"
                                                         >
-                                                            Remove 
+                                                            Remove
                                                         </button>
                                                     </form>
                                                 </div>
@@ -141,22 +147,24 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                         </div>
                                     ))}
 
-                                    <div className="total">
-                                        <h2 className="h2basket">
-                                            Total Amount:
-                                        </h2>
-                                        <p>{totalprice}</p>
+                                    <div style={{}}>
+                                        <div className="total">
+                                            <h2 className="h2basket">
+                                                Total Amount:
+                                            </h2>
+                                            <p>£{totalprice}</p>
+                                        </div>
+                                        
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                Inertia.visit(route("addPayment"))
+                                            }
+                                            className="checkout-btn"
+                                        >
+                                            Go to Checkout
+                                        </button>
                                     </div>
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            Inertia.visit(route("checkout"))
-                                        }
-                                        className="checkout-btn"
-                                    >
-                                        Go to Checkout
-                                    </button>
                                 </div>
                             ) : (
                                 <p style={{ fontSize: "25px" }}>

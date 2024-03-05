@@ -7,30 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 use App\Models\User;
-use App\Models\Bikes;
-class Basket extends Model
+use App\Models\Products;
+class BasketItem extends Model
 {
  
-    protected $primaryKey = 'basketid';
+    protected $primaryKey = 'basket_itemid';
     protected $connection = 'mysql';
 
 
-    public function user()
+ 
+    public function products()
     {
-        return $this->belongsTo(User::class, 'userid');
-    }
-
-    public function bike()
-    {
-        return $this->belongsTo(Bikes::class, 'basket_itemid');
+        return $this->belongsTo(Products::class, 'productid');
     }
 
     protected $fillable = [
-        'basketid',
-        'userid',
-        'bikeid',
+    
+  
+    
         'quantity',
         'totalprice',
+        'productid',
         'status',
 
         

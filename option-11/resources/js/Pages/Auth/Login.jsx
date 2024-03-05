@@ -5,7 +5,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import NavBar from "@/Components/NavBar";
 import Backdrop from "@/Components/Backdrop";
 
-const Login = ({ handleClose, auth }) => {
+const Login = ({ handleClose, auth,canResetPassword }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -54,7 +54,7 @@ const Login = ({ handleClose, auth }) => {
         >
             <motion.div
                 className="d-flex align-items-center justify-content-center "
-                style={{ minHeight: "35vh" }}
+                style={{ minHeight: "55vh" }}
                 onClick={(e) => e.stopPropagation()}
                 variants={dropIn}
                 initial="hidden"
@@ -130,7 +130,7 @@ const Login = ({ handleClose, auth }) => {
                         >
                             Not Registered? Click here to sign-up!
                         </Link>
-
+                        
                         <Button
                             variant="primary"
                             type="submit"
@@ -140,6 +140,14 @@ const Login = ({ handleClose, auth }) => {
                             Log in
                         </Button>
                     </div>
+                    {canResetPassword && (
+                        <Link
+                            href={route('password.request')}
+                            className="text-center link-info"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
                 </Form>
                 
              </Container>

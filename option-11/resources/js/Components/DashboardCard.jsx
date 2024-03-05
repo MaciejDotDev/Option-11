@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { SlArrowDown } from "react-icons/sl";
 const DashboardCard = ({ cardName, children }) => {
     const [dropdownstate, setDropdownopen] = useState(false);
 
@@ -20,22 +21,37 @@ const DashboardCard = ({ cardName, children }) => {
             >
                 <div
                     className="card-title dashboard"
-                    onClick={() => {
-                        setOpen();
-                    }}
+                   
+                 
+                    
                 >
                     <p> {cardName} </p>
-                </div>
-                {/* to modify below add an arraow and change the div */}
-                <div
-                    style={{
-                      
-                    }}
-                >
-         
+                 
+                   
                 </div>
 
+                
+                <div
+                className={
+                    "arrowContainer " +
+                    (dropdownstate ? "open" : "closed")
+                }
+           
+                onClick={() => {
+                    setOpen();
+                }}
+
+
+            >
+                
+             
+          <SlArrowDown fontSize="30px"/>
+                </div>
+                {/* to modify below add an arraow and change the div */}
+               
                 <div className="card-open">{children}</div>
+              
+
             </div>
         </div>
     );

@@ -7,23 +7,16 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Accessory extends Model
+class Categories extends Model
 {
     use HasFactory;
 
-    protected $table = 'accessories';
-    public $timestamps = false;
-    protected $primaryKey = 'accessoryid';
+    protected $table = 'categories';
+ 
+    protected $primaryKey = 'categoryid';
     protected $connection = 'mysql';
     protected $fillable = [
-        'productname',
-        'description',
-        'price',
-        'stockquantity',
-        'imageURL',
-        'category',
-        'size',
-        'colour',
-        'accessoryid',
+        'name',
+    
     ];
 }

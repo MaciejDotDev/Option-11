@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\RepairKit;
+use App\Models\Products;
+use App\Models\Categories;
 use App\Models\Basket;
 
 use Illuminate\Http\Request;
@@ -29,80 +30,90 @@ class ShowRepairKitsController extends Controller
     //it works by using Inertia render to get the jsx page and then passing the repair kit jsx object to the page as an array
     public function showAll()
     {
-        $repairkits = RepairKit::all();
+        
+        $categories = Categories::where('name','repairkit')->first();
+
+        $repairkits = Products::where('categoryid',$categories->categoryid)->get();
         return Inertia::render('RepairKits', ['repairKit' => $repairkits]); // Corrected the key to 'repairKits'
     }
 
 
     public function addBasket(Request $request)
     {
-
+    
+        //to validate if item already exists inside the database, as well as a plus or minus button to increase quantity
+    
         $validateInput = $request->validate([
-            'quantity' => 'numeric|required|not_in:0|max:10',
-
-
-
+            'quantity' => 'required|not_in:0',
+            
+            
+    
         ]);
-
+     
         if ($validateInput) {
-
-
-            $finditem =  Basket::where('userid', auth()->user()->userid)->first();
-            $basket = new Basket();
-
-            if ($finditem  ==  null) {
-
-            
+    
+    
+    
+    
+    
+             
+        $finditem =  Basket::where('userid', auth()->user()->userid)->first();
+        $basket = new Basket();
+    
+        $noRecords = false;
+    
+        $stopLoop = true;
+    
+        while ($stopLoop) {
+            if ($finditem  ==  null || $noRecords) { 
+    
+    
+                $basket = new Basket();
                 $basket->userid =  auth()->user()->userid;
-                $basket->repairkitsid = request('repairkitsid_hidden');
-                $basket->quantity = request('quantity');
-
-                $bike = RepairKit::where('repairkitsid', $basket->repairkitsid)->first();
-                $basket->totalprice = $basket->quantity * $bike->price;
-
-                /// needs to change this to only apply during transaction but check first if its in stock anyway
-      
-
-                $basket->status = 'open';
-                $basket->save();
-          
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-            }
-
-      
-            $record = Basket::where('userid', auth()->user()->userid)->where('repairkitsid',  request('repairkitsid_hidden'))->first();
-
-
-            if ($record) {
-
-                $record->quantity = request('quantity') + $record->quantity;
-
-                $record->save();
-
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-
-               
-
-
-
-
-            } else {
-
+                $basket->productid = request('repairkitsid_hidden');
+                $basket->quantity =request('quantity');
                 
-            
-                $basket->userid =  auth()->user()->userid;
-                $basket->repairkitsid = request('repairkitsid_hidden');
-                $basket->quantity = request('quantity');
-
-                $bike = RepairKit::where('repairkitsid', $basket->repairkitsid)->first();
+                $bike = Products::where('productid',$basket->productid)->first();
                 $basket->totalprice = $basket->quantity * $bike->price;
                 $bike->stockquantity = $bike->stockquantity -  $basket->quantity;
-
+            
                 $basket->status = 'open';
                 $basket->save();
-
+                $stopLoop = false;
                 return redirect()->back()->with('success', "Item successfully added to basket!");
+        
             }
+        
+            $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('repairkitsid_hidden'))->first();
+        
+        
+            if ($record) {
+        
+                $record->quantity = request('quantity') + $record->quantity;
+        
+                $record->save();
+                $stopLoop = false;
+                return redirect()->back()->with('success', "Item successfully added to basket!");
+        
+               
+        
+        
+        
+        
+            } else { 
+                $noRecords =  true;
+        
+            }
+    
+        }
+    
+        
+    
+    
+    
+    
+    
+        
         }
     }
 }

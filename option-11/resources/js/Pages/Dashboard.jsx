@@ -4,6 +4,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
+
 export default function Dashboard({ auth, baskIcon }) {
     const handleDeleteConfirmation = (e) => {
         if (window.confirm("Are you sure you wish to delete your account?")) {

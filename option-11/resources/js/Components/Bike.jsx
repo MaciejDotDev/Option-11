@@ -24,13 +24,13 @@ const Bike = ({ bikes,  auth, openModal }) => {
 
     const bikeList = bikes.map((bike) => (
         <div
-            key={bike.bikeid}
+            key={bike.productid}
             className={`col-md-6 mb-4 ${
-                selectedBikeId === bike.bikeid ? "selected-bike" : ""
+                selectedBikeId === bike.productid ? "selected-bike" : ""
             }`}
             onClick={() => {
-                setSelectedBikeId(bike.bikeid);
-                setData("bikeid_hidden", bike.bikeid);
+                setSelectedBikeId(bike.productid);
+                setData("bikeid_hidden", bike.productid);
             }}
         >
             <div className="card">
@@ -46,11 +46,11 @@ const Bike = ({ bikes,  auth, openModal }) => {
                         <strong>Category:</strong> {bike.category}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${bike.bikeid}`}>
+                        <label htmlFor={`quantity_${bike.productid}`}>
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${bike.bikeid}`}
+                            id={`quantity_${bike.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

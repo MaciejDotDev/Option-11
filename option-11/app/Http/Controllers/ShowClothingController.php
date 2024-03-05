@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Clothes;
+use App\Models\Products;
+use App\Models\Categories;
 use App\Models\Basket;
 
 use Illuminate\Http\Request;
@@ -28,80 +29,88 @@ class ShowClothingController extends Controller
 
     public function showAll()
     {
-        $clothes = Clothes::all();
+        $categories = Categories::where('name','clothing')->first();
+
+        $clothes = Products::where('categoryid',$categories->categoryid)->get();
         return Inertia::render('Clothing', ['clothes' => $clothes]);
     }
-    public function addBasket(Request $request) {
-
+    public function addBasket(Request $request)
+    {
+    
+        //to validate if item already exists inside the database, as well as a plus or minus button to increase quantity
+    
         $validateInput = $request->validate([
-            'quantity' => 'numeric|required|not_in:0|max:10',
+            'quantity' => 'required|not_in:0',
             
             
     
         ]);
      
         if ($validateInput) {
-
     
-            $finditem =  Basket::where('userid', auth()->user()->userid)->first();
-            $basket = new Basket();
-
-            if ($finditem  ==  null) {
-
-   
-                $basket->userid =  auth()->user()->userid;
-                $basket->clothingid = request('clothingid_hidden');
-                $basket->quantity =request('quantity');
-                
-                $bike = Clothes::where('clothingid',$basket->clothingid)->first();
-                $basket->totalprice = $basket->quantity * $bike->price;
-               
-                $basket->status = 'open';
-                $basket->save();
-
-        
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-
-            }
-
-            $record = Basket::where('userid', auth()->user()->userid)->where('clothingid',  request('clothingid_hidden'))->first();
-
-
-            if ($record) {
-
-                $record->quantity = request('quantity') + $record->quantity;
-
-                $record->save();
-
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-
-               
-
-
-
-
-            } else {
-
+    
+    
+    
+    
              
+        $finditem =  Basket::where('userid', auth()->user()->userid)->first();
+        $basket = new Basket();
+    
+        $noRecords = false;
+    
+        $stopLoop = true;
+    
+        while ($stopLoop) {
+            if ($finditem  ==  null || $noRecords) { 
+    
+    
+                $basket = new Basket();
                 $basket->userid =  auth()->user()->userid;
-                $basket->clothingid = request('clothingid_hidden');
+                $basket->productid = request('clothingid_hidden');
                 $basket->quantity =request('quantity');
                 
-                $bike = Clothes::where('clothingid',$basket->clothingid)->first();
+                $bike = Products::where('productid',$basket->productid)->first();
                 $basket->totalprice = $basket->quantity * $bike->price;
                 $bike->stockquantity = $bike->stockquantity -  $basket->quantity;
             
                 $basket->status = 'open';
                 $basket->save();
-        
+                $stopLoop = false;
                 return redirect()->back()->with('success', "Item successfully added to basket!");
+        
             }
- 
-
-       
-
+        
+            $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('clothingid_hidden'))->first();
+        
+        
+            if ($record) {
+        
+                $record->quantity = request('quantity') + $record->quantity;
+        
+                $record->save();
+                $stopLoop = false;
+                return redirect()->back()->with('success', "Item successfully added to basket!");
+        
+               
+        
+        
+        
+        
+            } else { 
+                $noRecords =  true;
+        
+            }
+    
         }
-
-}
+    
+        
+    
+    
+    
+    
+    
+        
+        }
+    }
    
 }

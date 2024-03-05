@@ -25,12 +25,12 @@ const Accessory = ({ accessories,auth, openModal }) => {
 
     const accessoryList = accessories.map((accessory) => (
         <div
-            key={accessory.accessoryid}
-            className={`col-md-6 mb-4 ${selectedAccessory === accessory.accessoryid ? "selected-accessory" : ""
+            key={accessory.productid}
+            className={`col-md-6 mb-4 ${selectedAccessory === accessory.productid ? "selected-accessory" : ""
                 }`}
             onClick={() => {
-                setSelectedAccessory(accessory.accessoryid);
-                setData("accessoryid_hidden", accessory.accessoryid);
+                setSelectedAccessory(accessory.productid);
+                setData("accessoryid_hidden", accessory.productid);
             }}
         >
             <div className="card">
@@ -51,9 +51,9 @@ const Accessory = ({ accessories,auth, openModal }) => {
                         <strong>Colour:</strong> {accessory.colour}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${accessory.accessoryid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${accessory.productid}`}>Quantity</label>
                         <input
-                            id={`quantity_${accessory.accessoryid}`}
+                            id={`quantity_${accessory.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

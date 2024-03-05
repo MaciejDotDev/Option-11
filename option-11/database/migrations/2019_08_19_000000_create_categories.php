@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::create('bikes', function (Blueprint $table) {
-        $table->bigIncrements('bikeid')->unsigned();
-        $table->string('productname');
-        $table->decimal('price', 8, 2);
-        $table->string('description');
-        $table->string('imageURL');
-        $table->string('category');
-        $table->integer('stockquantity');
+    Schema::create('categories', function (Blueprint $table) {
+        $table->bigIncrements('categoryid')->unsigned();
+        $table->string('name');
+      
+        $table->timestamps();
         
     });
 }

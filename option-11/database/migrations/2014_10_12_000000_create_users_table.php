@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->unsignedBigInteger('addressid')->nullable();
-            $table->foreign('addressid')->references('addressid')->on('address')->onDelete('cascade');;
+            $table->foreign('addressid')->references('addressid')->on('address')->onDelete('cascade');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phonenumber');

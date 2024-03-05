@@ -37,7 +37,7 @@ class PaymentDetails extends Controller
        
 
         
-        \Stripe\Stripe::setApiKey(config('stripe.sk'));
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $session = \Stripe\Checkout\Session::create([
             'line_items'  => [
@@ -53,12 +53,12 @@ class PaymentDetails extends Controller
                 ],
             ],
             'mode'        => 'payment',
-            'success_url' =>  "http://localhost:8000/",
-            'cancel_url'  => "http://localhost:8000/",
+            'success_url' =>  route('dashboard'),
+            'cancel_url'  => route('dashboard'),
           #
         ]);
-
-        return redirect()->away($session->url);
+        return Inertia::location($session->url);
+ 
           
 
       

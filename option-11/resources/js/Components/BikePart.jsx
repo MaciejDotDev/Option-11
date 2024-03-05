@@ -28,8 +28,8 @@ const BikePart = ({ bikePart,auth,openModal }) => {
             className={`col-md-6 mb-4 ${selectedBikePartId === part.bikepartsid
                 }`}
             onClick={() => {
-                setSelectedBikePartId(part.bikepartsid);
-                setData("bikepartid_hidden", part.bikepartsid);
+                setSelectedBikePartId(part.productid);
+                setData("bikepartid_hidden", part.productid);
             }}
         >
             <div className="card">

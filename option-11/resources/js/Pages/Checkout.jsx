@@ -21,11 +21,7 @@ export default function Checkout({ auth, baskIcon }) {
       
 
         // If all validations pass, proceed to submit the form
-        post("/session", data, {
-            headers: {
-                'X-CSRF-Token': csrf_token,
-            }
-        });
+        post("/addPayment");
         
     };
 
@@ -39,6 +35,7 @@ export default function Checkout({ auth, baskIcon }) {
 
              
                 </div>
+                
             </AnimateModal>
         </body>
     );
