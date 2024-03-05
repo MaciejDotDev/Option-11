@@ -64,7 +64,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
                             message={errors.quantity}
                             className="mt-2"
                         />
-                        <p className="text-black">{flash.message}</p>
+                        <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
                     </div>
                 </div>
                 <div className="card-footer">

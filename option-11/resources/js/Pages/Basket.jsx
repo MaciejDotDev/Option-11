@@ -147,7 +147,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                         </div>
                                     ))}
 
-                                    <div style={{}}>
+                                    <div style={{width: "100%"}}>
                                         <div className="total">
                                             <h2 className="h2basket">
                                                 Total Amount:

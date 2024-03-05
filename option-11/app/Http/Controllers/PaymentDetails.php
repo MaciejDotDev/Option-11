@@ -21,7 +21,8 @@ class PaymentDetails extends Controller
      
 
         if(is_null($basket)) {
-            return Inertia::render('Welcome');
+            return redirect()->back();
+
         }else {
             return Inertia::render('Checkout');
         }
@@ -36,6 +37,7 @@ class PaymentDetails extends Controller
         
        
 
+        $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
         
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
@@ -47,14 +49,15 @@ class PaymentDetails extends Controller
                         'product_data' => [
                             'name' => 'gimme money!!!!',
                         ],
-                        'unit_amount'  => 500,
+                        'unit_amount'  => round($totalPrice *100,1),
                     ],
                     'quantity'   => 1,
+                    
                 ],
             ],
             'mode'        => 'payment',
             'success_url' =>  route('dashboard'),
-            'cancel_url'  => route('dashboard'),
+            'cancel_url'  => route('basket'),
           #
         ]);
         return Inertia::location($session->url);
