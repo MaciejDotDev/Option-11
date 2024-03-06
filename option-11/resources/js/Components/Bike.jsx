@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card, Button } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
 
-import mountainBike from "../../assets/bike-products/mountain-bike-1.jpg";
-
-const Bike = ({ bikes, auth, openModal, filter }) => {
+const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
 
     // Create a state object to store quantities for each bike
@@ -19,11 +18,14 @@ const Bike = ({ bikes, auth, openModal, filter }) => {
 
     // Apply filter based on the selected option
     const filteredBikes = bikes.filter((bike) => {
-        if (filter === "All Bikes") {
-            return true; // Show all bikes
-        } else {
-            return bike.category === filter; // Show bikes that match the selected category
-        }
+        const categoryFilter =
+            filter === "All Bikes" || bike.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (bike.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                bike.price <= parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
     });
 
     // Will modify the quantity selected for each bike based on ID.
@@ -99,7 +101,7 @@ const Bike = ({ bikes, auth, openModal, filter }) => {
                         <p className="text-black">{flash.message}</p>
                     </div>
                 </Card.Body>
-                <Card.Footer>
+                <Card.Footer className=" flex gap-3">
                     {auth.user ? (
                         <Button type="submit" variant="outline-dark">
                             Add to basket
@@ -113,6 +115,13 @@ const Bike = ({ bikes, auth, openModal, filter }) => {
                             Add to basket
                         </Button>
                     )}
+                    <InertiaLink
+                        // href={route("productDetails", { id: bike.bikeid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
                 </Card.Footer>
             </Card>
         </div>
@@ -122,7 +131,7 @@ const Bike = ({ bikes, auth, openModal, filter }) => {
         <div>
             <form onSubmit={submit}>
                 <div className="container">
-                    <div className="row">{bikeList}</div>
+                    <div className="row mt-14">{bikeList}</div>
                 </div>
             </form>
         </div>

@@ -5,7 +5,7 @@ import { InertiaLink } from "@inertiajs/inertia-react";
 import Bike from "../components/Bike";
 import Bik from "@/Components/Bik";
 
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 
 import React, { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -14,9 +14,9 @@ import Login from "@/Pages/Auth/Login";
 import AnimateModal from "@/Components/AnimateModal";
 
 const BikeProducts = ({ auth, bikes }) => {
-
     // State for bikes filtering process, with default value set to all bikes.
     const [filter, setFilter] = useState("All Bikes");
+    const [priceFilter, setPriceFilter] = useState("All Prices");
 
     // // Check to see if the filter state updates correctly.
     // useEffect(() => {
@@ -25,6 +25,10 @@ const BikeProducts = ({ auth, bikes }) => {
 
     const handleFilterChange = (e) => {
         setFilter(e.target.value);
+    };
+
+    const handlePriceFilterChange = (e) => {
+        setPriceFilter(e.target.value);
     };
 
     return (
@@ -39,12 +43,20 @@ const BikeProducts = ({ auth, bikes }) => {
                         redefine the ride.
                     </p>
 
-                    <section className="filters-section flex justify-center gap-2">
+                    <section className="filters-section flex justify-center gap-10 pb-3">
                         <form class="max-w-sm">
-                            <label for="bike-filters" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter Bikes</label>
-                            <select id="bike-filters"
+                            <label
+                                for="bike-filters"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                Filter Bikes
+                            </label>
+                            <select
+                                id="bike-filters"
                                 value={filter}
-                                onChange={handleFilterChange} class=" cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                onChange={handleFilterChange}
+                                class=" cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
                                 <option selected>All Bikes</option>
                                 <option value="Mountain">Mountain Bikes</option>
                                 <option value="Electric">Electric Bikes</option>
@@ -53,24 +65,36 @@ const BikeProducts = ({ auth, bikes }) => {
                             </select>
                         </form>
 
-                        <form class="max-w-sm">
-                            <label for="price-filters" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter Prices</label>
-                            <select id="price-filters"
-                                value={filter}
-                                onChange={handleFilterChange} class=" cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>All Prices</option>
+                        <form className="max-w-sm">
+                            <label
+                                htmlFor="price-filters"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                Filter Prices
+                            </label>
+                            <select
+                                id="price-filters"
+                                value={priceFilter}
+                                onChange={handlePriceFilterChange}
+                                className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
+                                <option value="All Prices">All Prices</option>
                                 <option value="0-500">£0 to £500</option>
                                 <option value="500-1000">£500 to £1000</option>
-                                <option value="1000-1500">£1000 to £1500</option>
+                                <option value="1000-1500">
+                                    £1000 to £1500
+                                </option>
                                 <option value="1500plus">£1500 +</option>
                             </select>
                         </form>
                     </section>
-
-
-
                 </div>
-                <Bike bikes={bikes} auth={auth} filter={filter} />
+                <Bike
+                    bikes={bikes}
+                    auth={auth}
+                    filter={filter}
+                    priceFilter={priceFilter}
+                />
 
                 <div className="text-center mt-4">
                     <InertiaLink
