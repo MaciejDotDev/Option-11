@@ -1,9 +1,11 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
-const Accessory = ({ accessories,auth, openModal }) => {
-    const { flash } = usePage().props
+import { usePage } from "@inertiajs/react";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
+
+const Accessory = ({ accessories, auth, openModal }) => {
+    const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         accessoryid_hidden: "",
         quantity: "",
@@ -16,42 +18,45 @@ const Accessory = ({ accessories,auth, openModal }) => {
         post("/addBasketAccessory", data);
     };
 
-    const onClickPreventDefault= (e) => {
+    const onClickPreventDefault = (e) => {
         openModal();
         e.preventDefault();
-        
-      };
-     
+    };
 
     const accessoryList = accessories.map((accessory) => (
-        <div
-            key={accessory.accessoryid}
-            className={`col-md-6 mb-4 ${selectedAccessory === accessory.accessoryid ? "selected-accessory" : ""
+        <Col key={accessory.accessoryid} md={6} className="mb-4">
+            <Card
+                className={`text-center ${
+                    selectedAccessory === accessory.accessoryid
+                        ? "selected-accessory"
+                        : ""
                 }`}
-            onClick={() => {
-                setSelectedAccessory(accessory.accessoryid);
-                setData("accessoryid_hidden", accessory.accessoryid);
-            }}
-        >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title text-center h4">{accessory.productname}</h5>
-                    <p className="card-text">{accessory.description}</p>
-                    
-                    <p className="card-text">
+                onClick={() => {
+                    setSelectedAccessory(accessory.accessoryid);
+                    setData("accessoryid_hidden", accessory.accessoryid);
+                }}
+            >
+                <Card.Body>
+                    <Card.Title className="h4">
+                        {accessory.productname}
+                    </Card.Title>
+                    <Card.Text>{accessory.description}</Card.Text>
+                    <Card.Text>
                         <strong>Price:</strong> £{accessory.price}
-                    </p>
-                    <p className="card-text">
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Category:</strong> {accessory.category}
-                    </p>
-                    <p className="card-text">
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Size:</strong> {accessory.size}
-                    </p>
-                    <p className="card-text">
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Colour:</strong> {accessory.colour}
-                    </p>
+                    </Card.Text>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${accessory.accessoryid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${accessory.accessoryid}`}>
+                            Quantity
+                        </label>
                         <input
                             id={`quantity_${accessory.accessoryid}`}
                             className="form-control"
@@ -59,37 +64,40 @@ const Accessory = ({ accessories,auth, openModal }) => {
                             type="number"
                             value={data.quantity}
                             name="quantity"
-                            onChange={(e) => setData("quantity", e.target.value)}
+                            onChange={(e) =>
+                                setData("quantity", e.target.value)
+                            }
                         />
-                        <p className="text-black">{flash.message}</p>
-                        <InputError message={errors.quantity} className="mt-2" />
+                        <InputError
+                            message={errors.quantity}
+                            className="mt-2"
+                        />
                     </div>
-                </div>
-                <div className="card-footer">
-                   
+                </Card.Body>
+                <Card.Footer>
                     {auth.user ? (
-                     
-                     <button type="submit" className="btn btn-dark text-dark">
-                     Add to basket
-                 </button>
-                          
-                        ) : (
-                          
-                            <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
+                        <Button type="submit" variant="dark">
                             Add to basket
-                        </button>
-                        )}
-                </div>
-            </div>
-        </div>
+                        </Button>
+                    ) : (
+                        <Button
+                            type="submit"
+                            onClick={onClickPreventDefault}
+                            variant="dark"
+                        >
+                            Add to basket
+                        </Button>
+                    )}
+                </Card.Footer>
+            </Card>
+        </Col>
     ));
 
     return (
         <form onSubmit={submit}>
-            <div className="container">
-                <div className="row">{accessoryList} </div>
-                
-            </div>
+            <Container>
+                <Row>{accessoryList}</Row>
+            </Container>
         </form>
     );
 };

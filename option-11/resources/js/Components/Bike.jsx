@@ -62,7 +62,7 @@ const Bike = ({ bikes, auth, openModal, filter }) => {
         >
             {/* <Card style={{ width: "28rem" }}> */}
             <Card>
-                <Card.Img variant="top" src={mountainBike} />
+                <Card.Img variant="top" src={bike.imageURL} />
                 <Card.Body>
                     <Card.Title className="text-center h4">
                         {bike.productname}
