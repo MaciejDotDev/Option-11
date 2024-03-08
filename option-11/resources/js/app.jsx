@@ -23,7 +23,7 @@ createInertiaApp({
             <>
             <App {...props} />
 
-
+            <Footer {...props} />
                 
             </>
         );
