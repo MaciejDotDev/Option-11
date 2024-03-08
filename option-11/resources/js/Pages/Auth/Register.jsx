@@ -115,7 +115,7 @@ const Register = ({auth,openModal}) => {
                                 <Form.Label>Phone number </Form.Label>
                                 <Form.Control
                                     id="phonenumber"
-                                    type="number"
+                                    type="text"
                                     name="phonenumber"
                                     value={data.phonenumber}
                                     className="block w-full mt-1"
