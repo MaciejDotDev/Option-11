@@ -38,10 +38,7 @@ class UsersExport implements FromCollection, Responsable
     {
         $data = collect();
 
-        if (!Order::exists()) {
-
-            return $data;
-        }
+      
         $amountUsers2024 = [];
         $amountUsers2023 = [];
 
@@ -76,12 +73,19 @@ class UsersExport implements FromCollection, Responsable
         }
 
 
-       
+        
 
         
         $avarage2024 = array_sum($amountUsers2024)/12;
 
         $avarage2023 = array_sum($amountUsers2023)/12;
+
+        if ($avarage2024 == 0 || $avarage2023  == 0) {
+
+            $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2024],["Amount of created accounts in $lastYear"], [$months],[$amountUsers2023]);
+            return $data;
+        }
+
       
         $stringNumber = strval((($avarage2024 - $avarage2023) / $avarage2023) * 100);
       

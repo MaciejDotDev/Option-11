@@ -137,6 +137,8 @@ export default function Dashboard({ auth, baskIcon }) {
                         </DashboardCard>
                     </div>
                 </div>
+
+                
             </AnimateModal>
         </>
     );

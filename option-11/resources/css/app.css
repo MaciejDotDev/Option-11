@@ -166,6 +166,7 @@ body {
     width: clamp(200px,70%,1000px);
     margin: 0 auto;
     padding: 2px;
+    padding-bottom: 7rem;
 }
 
 .basketContainer {
@@ -359,6 +360,7 @@ body {
     
     display: flex;
     justify-content: center;
+  
     
 }
 
@@ -378,7 +380,7 @@ body {
 .arrowContainer.closed {
  
    
-  
+
     transition: all 500ms ease-in-out;
 }
 
@@ -407,6 +409,7 @@ div.expand {
     margin: 0 auto;
     width: 100%;
     text-align: left;
+    padding-bottom: 15rem;
 }
 .dashboard-groups {
     display: flex;

@@ -175,14 +175,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                     </div>
                 </body>
 
-                <button
-                    className="mt-3 btn btn-outline-light"
-                    id="scrollToTop"
-                    title="Scroll to Top"
-                    style={{ display: "block", margin: "0 auto" }}
-                >
-                    ^ Back to Top
-                </button>
+             
             </AnimateModal>
         </>
     );

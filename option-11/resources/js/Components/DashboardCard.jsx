@@ -31,11 +31,11 @@ const DashboardCard = ({ cardName, children }) => {
                 >
                     <FaCaretDown
                     className="arrowIcon"
-                        fontSize="30px"
+                        fontSize="40px"
                         style={{
                             transform: dropdownstate
                                 ? "rotate(180deg)"
-                                : "translate(0px, 30px)",
+                                : "translate(0px, 25px)",
                             transition: "all 400ms ease-in-out",
                             cursor: "pointer",
                         }}
