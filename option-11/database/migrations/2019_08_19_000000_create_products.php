@@ -15,11 +15,10 @@ return new class extends Migration
         $table->bigIncrements('productid')->unsigned();
         $table->string('productname');
         $table->decimal('price', 8, 2);
-        $table->string('description');
+        $table->text('description');
         $table->string('imageURL');
-    
         $table->unsignedBigInteger('categoryid');
-        $table->foreign('categoryid')->references('categoryid')->on('categories');
+        $table->foreign('categoryid')->references('categoryid')->on('categories')->onDelete('cascade');
         $table->integer('stockquantity');
         $table->timestamps();
         

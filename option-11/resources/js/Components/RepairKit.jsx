@@ -24,20 +24,20 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
 
     const repairKitList = repairKit.map((kit) => (
         <div
-            key={kit.productid}
-            className={`col-md-6 mb-4 ${selectedRepairKit === kit.productid ? "selected-repair-kit" : ""
+            key={kit.products.productid}
+            className={`col-md-6 mb-4 ${selectedRepairKit === kit.products.productid ? "selected-repair-kit" : ""
                 }`}
             onClick={() => {
-                setSelectedRepairKit(kit.productid);
-                setData("repairkitsid_hidden", kit.productid);
+                setSelectedRepairKit(kit.products.productid);
+                setData("repairkitsid_hidden", kit.products.productid);
             }}
         >
             <div className="card">
                 <div className="card-body">
-                    <h5 className="text-center card-title h4">{kit.productname}</h5>
-                    <p className="card-text">{kit.description}</p>
+                    <h5 className="text-center card-title h4">{kit.products.productname}</h5>
+                    <p className="card-text">{kit.products.description}</p>
                     <p className="card-text">
-                        <strong>Price:</strong> £{kit.price}
+                        <strong>Price:</strong> £{kit.products.price}
                     </p>
                     <p className="card-text">
                         <strong>Category:</strong> {kit.category}
@@ -46,9 +46,9 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
                         <strong>Compatible with:</strong> {kit.CompatibleWithType}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${kit.productid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${kit.products.productid}`}>Quantity</label>
                         <input
-                            id={`quantity_${kit.productid}`}
+                            id={`quantity_${kit.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"
@@ -56,7 +56,7 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
                             name="quantity"
                             onChange={(e) => setData("quantity", e.target.value)}
                         />
-                        <p className="text-black">{flash.message}</p>
+                           <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
                         <InputError message={errors.quantity} className="mt-2" />
                     </div>
                 </div>

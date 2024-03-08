@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Products;
 use App\Models\Categories;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Clothes;
+use App\Models\Bikes;
 use App\Models\Basket;
 use Inertia\Inertia;
 
@@ -39,9 +39,9 @@ public function showAll() {
 
 
    
-    $categories = Categories::where('name','bike')->first();
+ 
 
-    $bikes = Products::where('categoryid',$categories->categoryid)->get();
+    $bikes =  Bikes::with('products')->get();
 
 
     return Inertia::render('BikeProducts',['bikes' => $bikes]);

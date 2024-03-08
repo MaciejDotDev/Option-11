@@ -25,12 +25,10 @@ const AdminEditUsers = ({ users }) => {
             <td scope="row">{formattedDate} {formattedTime}</td>
     
             <td scope="row">
-                <a href={route("adminUpdateShow", { userid: user.userid })}>
-                    Edit User |
+                <a href={route("adminViewUser", { userid: user.userid })}>
+                    View User
                 </a>{" "}
-                <a href={route("adminDeleteUsers", { userid: user.userid })}>
-                    Delete user
-                </a>{" "}
+             
             
             </td>
         </tr>

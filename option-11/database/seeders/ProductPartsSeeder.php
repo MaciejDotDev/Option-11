@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\BikePart;
+use App\Models\Products;
+use App\Models\Categories;
 class ProductPartsSeeder extends Seeder
 {
     /**
@@ -13,13 +15,22 @@ class ProductPartsSeeder extends Seeder
     public function run(): void
     {
     
+        $categories = Categories::where('name','bikepart')->first(); // go optimmise later on to use hasmany or hasone in the model
 
+        $accessories = Products::where('categoryid', $categories->categoryid)->get();
+
+        $uniqueid = [];
+        foreach ($accessories as $item) {
+
+            $uniqueid[] = $item->productid;
+
+        
+
+
+        }
+      
         BikePart::create([
-            'productname' => 'Bike Chain',
-            'description' => 'A durable chain for smooth cycling.',
-            'price' => rand(15, 40),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_chain.jpg',
+            'productid' => $uniqueid[0],
             'category' => 'Chain',
             'color' => 'Silver',
             'size' => 'Standard',
@@ -27,11 +38,7 @@ class ProductPartsSeeder extends Seeder
         ]);
 
         BikePart::create([
-            'productname' => 'Bike Pedals',
-            'description' => 'Quality pedals for a comfortable ride.',
-            'price' => rand(20, 50),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_pedals.jpg',
+            'productid' => $uniqueid[1],
             'category' => 'Pedals',
             'color' => 'Black',
             'size' => 'Standard',
@@ -39,11 +46,7 @@ class ProductPartsSeeder extends Seeder
         ]);
 
         BikePart::create([
-            'productname' => 'Handlebar Grips',
-            'description' => 'Comfortable grips for better control.',
-            'price' => rand(10, 30),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'handlebar_grips.jpg',
+            'productid' => $uniqueid[2],
             'category' => 'Grips',
             'color' => 'Red',
             'size' => 'Standard',
@@ -51,11 +54,7 @@ class ProductPartsSeeder extends Seeder
         ]);
 
         BikePart::create([
-            'productname' => 'Bike Saddle',
-            'description' => 'An ergonomic saddle for a smooth ride.',
-            'price' => rand(30, 70),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_saddle.jpg',
+            'productid' => $uniqueid[3],
             'category' => 'Saddle',
             'color' => 'Brown',
             'size' => 'Standard',
@@ -63,11 +62,8 @@ class ProductPartsSeeder extends Seeder
         ]);
 
         BikePart::create([
-            'productname' => 'Bike Lights Set',
-            'description' => 'A set of lights for safety during night rides.',
-            'price' => rand(15, 40),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_lights.jpg',
+            'productid' => $uniqueid[4],
+          
             'category' => 'Lights',
             'color' => 'White',
             'size' => 'Standard',

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Categories;
 use App\Models\Products;
+use Illuminate\Support\Facades\DB;
 class CategorySeeder extends Seeder
 {
     /**
@@ -13,26 +14,18 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Categories::create([
-            'name' => 'bike',
-         
-        ]);
 
-        Categories::create([
-            'name' => 'accessory',
-        ]);
+        $categories = ['bike','accessory','bikepart','repairkit','clothing'];
 
-        Categories::create([
-            'name' => 'bikepart',
-        ]);
+        foreach (range(0, 4) as $index) {
+            DB::table('categories')->insert([
+                'categoryid'=> $index+1,
+                'name' => $categories[$index],
+            ]);
+        }
 
-        Categories::create([
-            'name' => 'repairkit',
-        ]);
-        Categories::create([
-            'name' => 'clothing',
-        ]);
 
+       
      
     }
 }

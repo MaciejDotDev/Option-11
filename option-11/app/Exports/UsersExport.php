@@ -21,7 +21,7 @@ class UsersExport implements FromCollection, Responsable
     * It's required to define the fileName within
     * the export class when making use of Responsable.
     */
-    private $fileName = 'invoices.xlsx';
+    private $fileName = 'users.xlsx';
     
     /**
     * Optional Writer Type
@@ -37,6 +37,11 @@ class UsersExport implements FromCollection, Responsable
     public function collection()
     {
         $data = collect();
+
+        if (!Order::exists()) {
+
+            return $data;
+        }
         $amountUsers2024 = [];
         $amountUsers2023 = [];
 
@@ -44,6 +49,8 @@ class UsersExport implements FromCollection, Responsable
 
         $currentYear = Carbon::now()->year;
         $lastYear = Carbon::now()->year - 1;
+
+
 
         for ($m=1; $m<=12; $m++) {
             $months[] = date('F', mktime(0,0,0,$m, 1, date('Y')));
@@ -75,10 +82,7 @@ class UsersExport implements FromCollection, Responsable
         $avarage2024 = array_sum($amountUsers2024)/12;
 
         $avarage2023 = array_sum($amountUsers2023)/12;
-        if ( $avarage2023 == 0 || $avarage2023 == 0) {
-
-            return $data;
-        } 
+      
         $stringNumber = strval((($avarage2024 - $avarage2023) / $avarage2023) * 100);
       
         $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2024],["Avarage user account creation"],[$avarage2024],["Amount of created accounts in $lastYear"], [$months],[$amountUsers2023], ["Avarage user account creation"],[$avarage2023], ["Ammount of accounts increase betweeen  $currentYear and  $lastYear"], ["$stringNumber%"]);

@@ -17,9 +17,10 @@ use App\Http\Controllers\ShowRepairBookingController;
 use App\Http\Controllers\ShowOrdersController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminEditUsersController;
+use App\Http\Controllers\AdminEditProductsController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminReportsController;
 use App\Http\Controllers\AdminEditOrderController;
 use App\Http\Controllers\ReviewsController;
 
@@ -55,13 +56,9 @@ Route::get('/updateAccount', function () {
     return Inertia::render('UpdateAccount');
 })->middleware(['auth', 'verified'])->name('updateAccount');
 
-Route::get('/removeProduct', function () {
-    return Inertia::render('RemoveEditProduct');
-});
 
-Route::get('/reviews', [ReviewsController::class,'showAll'])->name('reviews'); // to add to teh middleware later
 
-Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview'); 
+
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 
@@ -102,19 +99,34 @@ Route::get('/Orders', [ShowOrdersController::class, 'showAll'])->name('orders');
 Route::group(['middleware' => ['admin']], function () {
 
 
+    Route::get('/addProduct', function () {
+        return Inertia::render('AdminAddProduct');
+    })->name('addProduct');
 
+    Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
+    
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
 
-    Route::get('/adminEditUsers', [AdminEditUsersController::class, 'show'])->name('adminEditUsers');
+    Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
+    Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');
+   
+    Route::match(['get', 'post'],'/remEditProduct', [AdminEditProductsController::class, 'userManageAction'])->name('remEditProduct');
+    
     Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
 
-    Route::get('/adminUpdateShow{userid}', [AdminEditUsersController::class, 'updateShow'])->name('adminUpdateShow');
+    Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
+
+  
+
+    Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
 
     Route::get('/adminExport{dbName}', [CsvExporter::class, 'export'])->name('adminExport');
 
-    Route::get('users/export/', [UserController::class, 'export']);
-
+    Route::get('users/export/', [AdminReportsController::class, 'exportUsers']);
+    Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
     Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
+    Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
+    
 
     Route::match(['get', 'post'],'/adminLogout', [AdminLoginController::class, 'destroy'])
     ->name('adminLogout');
@@ -140,7 +152,7 @@ Route::group(['middleware' => ['admin.guest']], function () {
 
 
 });
-
+Route::get('/reviews', [ReviewsController::class,'showAll'])->name('reviews'); // to add to teh middleware later
 
 Route::middleware('auth')->group(function () {
 
@@ -156,7 +168,9 @@ Route::middleware('auth')->group(function () {
 
     Route::match(['get', 'post'], '/makeOrder', 'App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');
 
+ 
 
+    Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview'); 
     Route::match(['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
 
     Route::match(['get', 'post'], '/orderHistory', 'App\Http\Controllers\OrdersController@showAll')->name('orderHistory');

@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->bigIncrements('reviewid')->unsigned();
-            $table->unsignedBigInteger('userid')->nullable();
-            $table->foreign('userid')->references('userid')->on('users')->nullOnDelete();
+        Schema::create('repairkits', function (Blueprint $table) {
+            $table->bigIncrements('repairkitsid')->unsigned();
             $table->unsignedBigInteger('productid');
             $table->foreign('productid')->references('productid')->on('products')->onDelete('cascade');
-            $table->string('title');
-            $table->text('description');
-            $table->integer('stars');
-
+            $table->string('category');
+            $table->string('CompatibleWithType');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('repairkits');
     }
 };

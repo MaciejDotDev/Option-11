@@ -24,23 +24,23 @@ const Bike = ({ bikes,  auth, openModal }) => {
 
     const bikeList = bikes.map((bike) => (
         <div
-            key={bike.productid}
+            key={bike.products.productid}
             className={`col-md-6 mb-4 ${
-                selectedBikeId === bike.productid ? "selected-bike" : ""
+                selectedBikeId === bike.products.productid ? "selected-bike" : ""
             }`}
             onClick={() => {
-                setSelectedBikeId(bike.productid);
-                setData("bikeid_hidden", bike.productid);
+                setSelectedBikeId(bike.products.productid);
+                setData("bikeid_hidden", bike.products.productid);
             }}
         >
             <div className="card">
                 <div className="card-body">
                     <h5 className="card-title text-center h4">
-                        {bike.productname}
+                        {bike.products.productname}
                     </h5>
-                    <p className="card-text">{bike.description}</p>
+                    <p className="card-text">{bike.products.description}</p>
                     <p className="card-text">
-                        <strong>Price:</strong> £{bike.price}
+                        <strong>Price:</strong> £{bike.products.price}
                     </p>
                     <p className="card-text">
                         <strong>Category:</strong> {bike.category}
@@ -50,7 +50,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${bike.productid}`}
+                            id={`quantity_${bike.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"
@@ -91,6 +91,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
 
     return (
         <div>
+            
             <form onSubmit={submit}>
                 <div className="container">
                     <div className="row">{bikeList}</div>

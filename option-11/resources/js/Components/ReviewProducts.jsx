@@ -4,17 +4,17 @@ import InputError from "@/Components/InputError";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { AiFillStar, AiOutlineForm } from "react-icons/ai";
 
-export default function ReviewProducts({ reviews, starsAvg, commentsCount }) {
+export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,openModal }) {
     const [reviewform, setReviewForm] = useState(false);
 
     const [starNum, setStarNum] = useState(0);
 
-    function isInt(num) {
-        if (!starsAvg % 1 === 0 && num + 1 >= starsAvg) {
-            return num > starsAvg ? "inset(0 50% 0 50%)" : "inset(0 50% 0 0%)";
-        }
-    }
-
+   
+    const onClickPreventDefault= (e) => {
+        openModal();
+        e.preventDefault();
+        
+      };
     const rate = () => {
         const numbers = [1, 2, 3, 4, 5]; // Assuming you have an array of numbers
         return numbers.map((number) => (
@@ -46,7 +46,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount }) {
                         margin: "20px 1px",
                         marginTop: "1px",
                         marginBottom: "1px",
-                        clipPath: isInt(number, starsAvg),
+                       
                     }}
                 />
             </div>
@@ -95,7 +95,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount }) {
                                 textAlign: "right",
                             }}
                         >
-                            {formattedDate}
+                            {formattedDate} {formattedTime}
                         </p>
                         <h5 class="card-title">{review.title}</h5>
 
@@ -126,11 +126,20 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount }) {
         e.preventDefault();
 
         post(route("createReview"));
+        return () => {
+            reset("stars", "title", "description");
+        };
     };
 
+
+
     return (
+
+       
         <div className="review-container">
-            <div>
+            {commentsCount >= 1 ? (
+                          <div>
+                            <div>
                 <div
                     style={{
                         paddingTop: "2rem",
@@ -164,8 +173,9 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount }) {
             </div>
             <div class="review">
                 <h5 class="card-title reviewTitle">Reviews</h5>
-
-                <button
+                {auth.user ? (
+                            <>
+                               <button
                     type="button"
                     class="btn btn-dark"
                     style={{
@@ -265,10 +275,47 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount }) {
                             </form>
                         </div>
                     </div>
-                </div>
+                </div>  
+                            </>
+                        ) : (
+                            <button
+                            type="button"
+                            class="btn btn-dark"
+                            style={{
+                                fontSize: "0.8rem",
+                                borderRadius: "0.3rem",
+                                color: "white",
+                            }}
+                            onClick={onClickPreventDefault}
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                }}
+                            >
+                                <AiOutlineForm
+                                    style={{
+                                        marginRight: "0.5rem",
+                                        marginTop: "0.2rem",
+                                    }}
+                                />{" "}
+                                Write a review
+                            </div>
+                        </button>
+                        )}  
+              
 
                 {listItems}
             </div>
+                          </div>
+                          ) : (
+                            <div>
+
+                            <h5 class="card-title reviewTitle" style={{textAlign:"center"}}>No reviews yet</h5>
+                            </div>
+                            
+                          )}  
+            
         </div>
     );
 }

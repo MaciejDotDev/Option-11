@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
 use Illuminate\Support\Facades\Redirect;
-
 use App\Models\Basket;
+use App\Models\BikePart;
 use Inertia\Inertia;
 
 class ShowBikePartsController extends Controller
@@ -27,9 +27,7 @@ class ShowBikePartsController extends Controller
      */
     public function showAll() {
 
-        $categories = Categories::where('name','bikepart')->first();
-
-        $bikeparts = Products::where('categoryid',$categories->categoryid)->get();
+        $bikeparts =  BikePart::with('products')->get();
     
         return Inertia::render('BikeParts', ['bikePart' => $bikeparts]); // Corrected the key to 'bikeParts'
     }

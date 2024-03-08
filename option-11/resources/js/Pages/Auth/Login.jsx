@@ -28,7 +28,7 @@ const Login = ({ handleClose, auth,canResetPassword }) => {
             },
         },
         exit: {
-            y: "1vh",
+            y: "-1vh",
             opacity: 0,
         },
     };
@@ -140,14 +140,14 @@ const Login = ({ handleClose, auth,canResetPassword }) => {
                             Log in
                         </Button>
                     </div>
-                    {canResetPassword && (
+            
                         <Link
                             href={route('password.request')}
                             className="text-center link-info"
                         >
                             Forgot your password?
                         </Link>
-                    )}
+                   
                 </Form>
                 
              </Container>

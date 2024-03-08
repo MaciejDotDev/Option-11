@@ -16,6 +16,8 @@ class Products extends Model
     {
         return $this->belongsTo(Categories::class, 'categoryid');
     }
+
+ 
     protected $fillable = [
         'productname',
         'description',

@@ -36,9 +36,10 @@ class ReviewsController extends Controller
 
 
 public function showAll() {
-    $reviews = Reviews::all();
+    $reviews = Reviews::orderBy('created_at', 'DESC')
+    ->get();
 
-    $stars = Reviews::where('productid',5)->get();
+    $stars = Reviews::where('productid',13)->get();
 
 
     $starTotal = [];
@@ -48,7 +49,11 @@ public function showAll() {
         $starTotal[] =  $item->stars;
 
     }
-   
+   if ($starTotal == null) 
+   {
+
+    return Inertia::render('Test',['reviews' => $reviews]);
+   }
     $starsAvg  = round(array_sum($starTotal)/ $stars->count(),1);
 
     $commentsCount = $stars->count();
@@ -89,13 +94,13 @@ if ($validateInput){
 
   
 
-        $project = new Reviews();
-        $project->userid =  auth()->user()->userid; 
-        $project->title = $request->title;
-        $project->description =$request->description;
-        $project->stars =$request->stars;
-        $project->productid = 5;
-        $project->save();
+        $review = new Reviews();
+        $review->userid =  auth()->user()->userid; 
+        $review->title = $request->title;
+        $review->description =$request->description;
+        $review->stars =$request->stars;
+        $review->productid = 5;
+        $review->save();
         return redirect()->route('reviews');
 
 

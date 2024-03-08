@@ -16,7 +16,7 @@ const Test = ({ auth, reviews,starsAvg,commentsCount }) => {
     <div>
        <AnimateModal auth={auth} >
 
-        <ReviewProducts reviews={reviews} starsAvg={starsAvg} commentsCount={commentsCount} ></ReviewProducts>
+        <ReviewProducts reviews={reviews} starsAvg={starsAvg} commentsCount={commentsCount} auth={auth} ></ReviewProducts>
      
   
 

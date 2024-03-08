@@ -15,15 +15,15 @@ return new class extends Migration
             $table->bigIncrements('ordersid')->unsigned();
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('userid')->on('users');
-            $table->unsignedBigInteger('basketid');
-            $table->foreign('basketid')->references('basketid')->on('baskets')->onDelete('cascade');
+
+            $table->unsignedBigInteger('orderitemid');
+            $table->foreign('orderitemid')->references('orderitemid')->on('orderitem');
             $table->string('trackingcode')->nullable();
-            $table->unsignedBigInteger('payment_id');
-            $table->foreign('payment_id')->references('payment_id')->on('payments');
 
 
             $table->unsignedBigInteger('addressid')->nullable();
             $table->foreign('addressid')->references('addressid')->on('address');
+
             $table->decimal('totalprice',8, 2);
             $table->enum('status', ['paid', 'dispatched', 'delivered']);
             $table->timestamps();

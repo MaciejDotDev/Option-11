@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Clothes extends Model
-{   public $timestamps = false;
-    protected $primaryKey = 'clothingid';
+class Bikes extends Model
+{  
+    protected $primaryKey = 'bikeid';
     protected $connection = 'mysql';
     public function products()
     {
@@ -20,6 +20,7 @@ class Clothes extends Model
         'productid',
         'category',
         'colour',
+        'size',
     ];
 
   

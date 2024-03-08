@@ -37,6 +37,7 @@ class ManageBasketController extends Controller
         $this->bikes = [];
         foreach ($this->basket as $item) {
 
+            
             $this->bikes[] = Products::where('productid', $item->productid)->first();
         }
 

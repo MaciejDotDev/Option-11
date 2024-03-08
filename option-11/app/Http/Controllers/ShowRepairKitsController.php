@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Products;
 use App\Models\Categories;
 use App\Models\Basket;
-
+use App\Models\RepairKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -31,9 +31,7 @@ class ShowRepairKitsController extends Controller
     public function showAll()
     {
         
-        $categories = Categories::where('name','repairkit')->first();
-
-        $repairkits = Products::where('categoryid',$categories->categoryid)->get();
+        $repairkits =  RepairKit::with('products')->get();
         return Inertia::render('RepairKits', ['repairKit' => $repairkits]); // Corrected the key to 'repairKits'
     }
 

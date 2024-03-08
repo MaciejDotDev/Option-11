@@ -6,14 +6,15 @@ import InputError from "@/Components/InputError";
 
 import AdminNavbar from "@/Pages/AdminNavbar";
 
-const RemoveEditProduct = ({ auth }) => {
+const RemoveEditProduct = ({ auth,products }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        productId: "",
-        productSearchName: "",
-        productName: "",
-        productDescription: "",
-        productQuantity: "",
-        productPrice: "",
+        productid: products.productid,
+        productname: products.productname,
+        productdescription: products.description,
+        action: "",
+        productprice: products.price,
+        category: products.products.name,
+        
     });
 
     useEffect(() => {
@@ -23,11 +24,11 @@ const RemoveEditProduct = ({ auth }) => {
     }, []);
 
     // I made these so that if the admin types in one, the other cannot be active.
-    const isProductIdNotEmpty = !!data.productId.trim();
-    const isProductSearchNameNotEmpty = !!data.productSearchName.trim();
+
 
     const submit = (e) => {
         e.preventDefault();
+        post(route("remEditProduct"));
 
     };
 
@@ -35,59 +36,8 @@ const RemoveEditProduct = ({ auth }) => {
         <div>
             <AdminNavbar auth={auth} />
             <h2 className="pt-3 text-center text-light h2">Remove/Edit Product</h2>
-            <Container className="mt-4 d-flex justify-content-center">
-                <Form className="rounded" onSubmit={submit}>
-                    <Row className="align-items-center justify-content-center">
-                        <Col md={6}>
-                            <Form.Group controlId="formBasicProductId" className="mb-3">
-                                <Form.Label className="text-white">Product ID</Form.Label>
-                                <Form.Control
-                                    id="productId"
-                                    name="productId"
-                                    value={data.productId}
-                                    className="block w-full mt-1"
-                                    autoComplete="productId"
-                                    onChange={(e) => setData("productId", e.target.value)}
-                                    required
-                                    disabled={isProductSearchNameNotEmpty}
-                                    style={{
-                                        backgroundColor: isProductSearchNameNotEmpty ? 'inherit' : '#e9e9e9',
-                                    }}
-                                />
-                                <InputError message={errors.productId} className="mt-2" />
-                            </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                            <Form.Group controlId="formBasicProductSearchName" className="mb-3">
-                                <Form.Label className="text-white">Product Name</Form.Label>
-                                <Form.Control
-                                    id="productSearchName"
-                                    name="productSearchName"
-                                    value={data.productSearchName}
-                                    className="block w-full mt-1"
-                                    autoComplete="productSearchName"
-                                    onChange={(e) => setData("productSearchName", e.target.value)}
-                                    required
-                                    disabled={isProductIdNotEmpty}
-                                    style={{
-                                        backgroundColor: isProductIdNotEmpty ? 'inherit' : '#e9e9e9',
-                                    }}
-                                />
-                                <InputError message={errors.productSearchName} className="mt-2" />
-                            </Form.Group>
-                        </Col>
-                        <Button
-                            variant="primary"
-                            type="submit"
-                            className="mt-2 ms-4 d-block w-50"
-                            disabled={processing}
-                        >
-                            Search
-                        </Button>
-                    </Row>
-                </Form>
-            </Container>
-
+          
+            <div key={products.productid}>
             <Container className="mt-4 d-flex justify-content-center">
                 <Form className="rounded" onSubmit={submit}>
                     <Row>
@@ -95,16 +45,16 @@ const RemoveEditProduct = ({ auth }) => {
                             <Form.Group controlId="formBasicProductName" className="mb-3">
                                 <Form.Label className="text-white">Product Name</Form.Label>
                                 <Form.Control
-                                    id="productName"
-                                    name="productName"
-                                    value={data.productName}
+                                    id="productname"
+                                    name="productname"
+                                    value={data.productname}
                                     className="mt-1 form-control-lg"
                                     autoComplete="productName"
-                                    onChange={(e) => setData("productName", e.target.value)}
+                                    onChange={(e) => setData("productname", e.target.value)}
                                     required
                                     style={{ width: '20rem' }}
                                 />
-                                <InputError message={errors.productName} className="mt-2" />
+                                <InputError message={errors.productname} className="mt-2" />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -115,58 +65,57 @@ const RemoveEditProduct = ({ auth }) => {
                                 <Form.Label className="text-white">Product Description</Form.Label>
                                 <Form.Control
                                     as="textarea"
-                                    id="productDescription"
-                                    name="productDescription"
-                                    value={data.productDescription}
+                                    id="productdescription"
+                                    name="productdescription"
+                                    value={data.productdescription}
                                     className="form-control-lg"
-                                    autoComplete="productDescription"
-                                    onChange={(e) => setData("productDescription", e.target.value)}
+                                    autoComplete="productdescription"
+                                    onChange={(e) => setData("productdescription", e.target.value)}
                                     required
                                     style={{ width: '20rem' }}
                                 />
                                 <InputError
-                                    message={errors.productDescription}
+                                    message={errors.productdescription}
                                     className="mt-2"
                                 />
                             </Form.Group>
                         </Col>
                     </Row>
-
                     <Row>
-                        <Col md={6}>
-                            <Form.Group controlId="formBasicProductQuantity" className="mb-3">
-                                <Form.Label className="text-white">Product Quantity</Form.Label>
-                                <Form.Control
-                                    id="productQuantity"
-                                    name="productQuantity"
-                                    value={data.productQuantity}
-                                    className="form-control-lg"
-                                    autoComplete="productQuantity"
-                                    onChange={(e) => setData("productQuantity", e.target.value)}
-                                    required
-                                    style={{ width: '10rem' }}
-                                />
-                                <InputError
-                                    message={errors.productQuantity}
-                                    className="mt-2"
-                                />
-                            </Form.Group>
-                        </Col>
+                            <Col md={6}>
+                                <Form.Select className="form-control-lg"   onChange={(e) =>
+                                            setData(
+                                                "category",
+                                                e.target.value
+                                            )
+                                        }
+                                        value={data.category}>
+                                    <option>Category</option>
+                                    <option value="bike">Bike</option>
+                                    <option value="accessory">Accessory</option>
+                                    <option value="bikepart">Bike Part</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="repairkit">Repair kit</option>
+                                </Form.Select>
+                            </Col>
+                        </Row>
+                    <Row>
+                       
                         <Col md={6}>
                             <Form.Group controlId="formBasicProductPrice" className="mb-3">
                                 <Form.Label className="text-white">Product Price</Form.Label>
                                 <Form.Control
-                                    id="productPrice"
-                                    name="productPrice"
-                                    value={data.productPrice}
+                                    id="productprice"
+                                    name="productprice"
+                                    value={data.productprice}
                                     className="form-control-lg"
-                                    autoComplete="productPrice"
-                                    onChange={(e) => setData("productPrice", e.target.value)}
+                                    autoComplete="productprice"
+                                    onChange={(e) => setData("productprice", e.target.value)}
                                     required
                                     style={{ width: '10rem' }}
                                 />
                                 <InputError
-                                    message={errors.productPrice}
+                                    message={errors.productprice}
                                     className="mt-2"
                                 />
                             </Form.Group>
@@ -180,6 +129,7 @@ const RemoveEditProduct = ({ auth }) => {
                                 type="submit"
                                 className="mt-2 "
                                 disabled={processing}
+                                onClick={(e) => setData("action","update")}
                             >
                                 Update Product
                             </Button>
@@ -190,6 +140,7 @@ const RemoveEditProduct = ({ auth }) => {
                                 type="submit"
                                 className="mt-2"
                                 disabled={processing}
+                                onClick={(e) => setData("action","remove")}
                             >
                                 Remove Product
                             </Button>
@@ -197,6 +148,9 @@ const RemoveEditProduct = ({ auth }) => {
                     </Row>
                 </Form>
             </Container>
+
+            </div>
+        
         </div>
     );
 };

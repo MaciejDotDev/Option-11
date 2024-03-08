@@ -23,25 +23,25 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
 
     const clothesList = clothes.map((clothing) => (
         <div
-            key={clothing.productid}
-            className={`col-md-6 mb-4 ${selectedClothes === clothing.productid ? "selected-clothing" : ""
+            key={clothing.products.productid}
+            className={`col-md-6 mb-4 ${selectedClothes === clothing.products.productid ? "selected-clothing" : ""
                 }`}
             onClick={() => {
-                setSelectedClothes(clothing.productid);
-                setData("clothingid_hidden", clothing.productid);
+                setSelectedClothes(clothing.products.productid);
+                setData("clothingid_hidden", clothing.products.productid);
             }}
         >
             <div className="card">
                 <div className="card-body">
-                    <h5 className="card-title text-center h4">{clothing.productname}</h5>
-                    <p className="card-text">{clothing.description}</p>
+                    <h5 className="card-title text-center h4">{clothing.products.productname}</h5>
+                    <p className="card-text">{clothing.products.description}</p>
                     <p className="card-text">
-                        <strong>Price:</strong> £{clothing.price}
+                        <strong>Price:</strong> £{clothing.products.price}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${clothing.productid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${clothing.products.productid}`}>Quantity</label>
                         <input
-                            id={`quantity_${clothing.productid}`}
+                            id={`quantity_${clothing.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"
@@ -49,7 +49,7 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
                             name="quantity"
                             onChange={(e) => setData("quantity", e.target.value)}
                         />
-                        <p className="text-black">{flash.message}</p>
+                           <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
                         <InputError message={errors.quantity} className="mt-2" />
                     </div>
                 </div>

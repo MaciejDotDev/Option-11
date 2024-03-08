@@ -163,7 +163,7 @@ body {
 
 /* farhan css below */
 .basketContainer {
-    max-width: 800px;
+    width: clamp(200px,70%,1000px);
     margin: 0 auto;
     padding: 2px;
 }
@@ -317,15 +317,9 @@ body {
 
     color: white;
 
-    transition: all 200ms ease-in-out;
+    transition: all 500ms ease-in-out;
 }
 
-.card-title.dashboard:hover {
-    background: #212529;
-
-    cursor: pointer;
-    transform: scale(1.1);
-}
 
 .close {
     color: #aaaaaa;
@@ -337,9 +331,12 @@ body {
 }
 
 .dashboardContainer.closed {
-    height: 7.3rem;
+    height: 5.3rem;
 }
 
+.dashboardContainer.open {
+    height:2.3rem;
+}
 .close:hover,
 .close:focus {
     color: #000;
@@ -349,26 +346,46 @@ body {
 
 .card-title.dashboard {
     transition: all 300ms ease-in-out;
-    height: 50px;
+    height: 20px;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     justify-content: center;
 }
 .arrowContainer {
-    margin-top: 20px;
-    padding: 0px 0px;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+ 
+  
+
+    
     display: flex;
     justify-content: center;
-    background-color: #000;
+    
+}
+
+.arrowContainer.open {
+ 
+    transform: translate(0px, 340px);
+    
+    transition: all 500ms ease-in-out;
+}
+
+.arrowIcon:hover{
+
+    color: #aaaaaa;
+
+
+}
+.arrowContainer.closed {
+ 
+   
+  
+    transition: all 500ms ease-in-out;
 }
 
 .arrowContainer:hover {
-    background-color: #000;
+  
     text-decoration: none;
-    cursor: pointer;
+ 
 }
 
 div.expand {
@@ -412,12 +429,36 @@ div.expand {
 @media (max-width: 700px) {
     .dashboard-groups {
         display: block;
+        max-width: 400px;
     }
     .dashboardContainer {
         margin: 2rem auto;
     }
+
+    .adminDashboard-container{
+        display: block;
+        max-width: 400px;
+
+    }
+    .editProducts {
+   
+        font-size:0.6rem;
+        
+    }
 }
 
+@media (max-width: 1200px) {
+    .editProducts {
+   
+    
+        width: fit-content;
+    }
+    .editDescription {
+
+        text-indent: 0.4em;
+    }
+    
+}
 @media (max-width: 600px) {
     .dashboard-container {
         display: block;
@@ -431,9 +472,21 @@ div.expand {
     .dashboardContainer {
         margin: 2rem auto;
     }
-    .basketContainer {
+    
+    .adminDashboard-container{
+        display: block;
         max-width: 400px;
+
+
     }
+    .editProducts {
+   
+        font-size:0.4rem;
+       
+        
+    }
+  
+  
 }
 
 .dashboard-container > div {
@@ -557,6 +610,3 @@ div.expand {
     display: flex;
 }
 
-.arrowContainer.open {
-    transition: all 300ms ease-in-out;
-}

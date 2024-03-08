@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('baskets', function (Blueprint $table) {
             $table->bigIncrements('basketid')->unsigned();
-
             $table->unsignedBigInteger('productid');
-            $table->foreign('productid')->references('productid')->on('products');
+            $table->foreign('productid')->references('productid')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('userid')->on('users')->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('totalprice');
-            
             $table->enum('status', ['open', 'closed']);
        
            

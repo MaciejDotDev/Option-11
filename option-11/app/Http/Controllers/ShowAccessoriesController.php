@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Products;
 use App\Models\Basket;
-
+use App\Models\Accessory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -29,9 +29,8 @@ class ShowAccessoriesController extends Controller
 
     public function showAll()
     {
-        $categories = Categories::where('name','accessory')->first(); // go optimmise later on to use hasmany or hasone in the model
 
-        $accessories = Products::where('categoryid',$categories->categoryid)->get();
+        $accessories = Accessory::with('products')->get();
         return Inertia::render('AccessoryProducts', ['accessories' => $accessories]);
     }
 

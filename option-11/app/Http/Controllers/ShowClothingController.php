@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Products;
 use App\Models\Categories;
 use App\Models\Basket;
-
+use App\Models\Clothes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -29,9 +29,7 @@ class ShowClothingController extends Controller
 
     public function showAll()
     {
-        $categories = Categories::where('name','clothing')->first();
-
-        $clothes = Products::where('categoryid',$categories->categoryid)->get();
+        $clothes =  Clothes::with('products')->get();
         return Inertia::render('Clothing', ['clothes' => $clothes]);
     }
     public function addBasket(Request $request)
