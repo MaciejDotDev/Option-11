@@ -1,0 +1,19 @@
+# .gitpod.yml
+
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Install Dependencies
+    command: |
+      composer install
+      npm install
+
+  - name: Start Laravel Server
+    command: php artisan serve --host=0.0.0.0 --port=8080
+
+  - name: Start Inertia Development Server
+    command: npm run watch
+
+  - name: Run dev mode
+    command: npm run dev
