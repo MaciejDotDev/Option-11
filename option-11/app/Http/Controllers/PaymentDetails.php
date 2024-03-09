@@ -19,8 +19,8 @@ class PaymentDetails extends Controller
 
     public function payment () {
 
-        $basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->first(); 
-     
+        $basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->first();
+
 
         if(is_null($basket)) {
             return redirect()->back();
@@ -28,22 +28,22 @@ class PaymentDetails extends Controller
         }else {
             return Inertia::render('Checkout');
         }
-                
+
 
 
     }
 
-    
-    
+
+
     public function addPayment (Request $request) {
-        
+
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $basket = Basket::with('products')->where('userid', auth()->user()->userid)->where('status', 'open')->get();
         $lineItems = [];
 
         foreach ($basket as $product) {
-          
+
             $lineItems[] = [
                 'price_data' => [
                     'currency'     => 'gbp',
@@ -57,13 +57,14 @@ class PaymentDetails extends Controller
         }
 
 
-        
-        
+
+
         $session = \Stripe\Checkout\Session::create([
+            'shipping_address_collection' => ['allowed_countries' => ['GB']],
             'line_items' => $lineItems,
             'mode' => 'payment',
             'success_url' => route('success') . "?session_id={CHECKOUT_SESSION_ID}",
-            'cancel_url' => route('basket'),  
+            'cancel_url' => route('basket'),
         ]);
 
         $total = Basket::where('userid', auth()->user()->userid)->where('status', 'open');
@@ -85,10 +86,10 @@ class PaymentDetails extends Controller
 
         }
         return Inertia::location($session->url);
- 
-          
 
-      
+
+
+
 
 
     }
@@ -105,8 +106,8 @@ class PaymentDetails extends Controller
                 throw new NotFoundHttpException;
 
             }
-            
-          
+
+
         $checkOrder = Orders::where('userid', auth()->user()->userid)->first();
 
         if (!$checkOrder) {
