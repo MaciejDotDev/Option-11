@@ -45,9 +45,11 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
         e.preventDefault();
     };
 
-    // State object that will store the quantity the user selects for each clothing.
-    const handleQuantityChange = (clothingId, quantity) => {
-        setClothQuantities({ ...clothQuantities, [clothingId]: quantity });
+    // State object that will store the quantity the user selects for each bike.
+    const handleQuantityChange = (bikeId, quantity) => {
+        // console.log(quantity);
+        // console.log(typeof quantity);
+        setBikeQuantities({ ...bikeQuantities, [bikeId]: quantity });
         setData("quantity", quantity);
     };
 
@@ -96,7 +98,9 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                             message={errors.quantity}
                             className="mt-2"
                         />
-                        <p className="text-black">{flash.message}</p>
+                        {selectedBikeId === bike.bikeid && (
+                            <p className="text-black">{flash.message}</p>
+                        )}
                     </div>
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
