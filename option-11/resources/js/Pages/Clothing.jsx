@@ -41,13 +41,13 @@ const Clothing = ({ auth, clothes }) => {
                                 id="clothing-filters"
                                 value={filter}
                                 onChange={handleFilterChange}
-                                className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             >
                                 <option value="All Clothes">All Clothes</option>
-                                <option value="Shirts">Shirts</option>
-                                <option value="Jeans">Jeans</option>
-                                <option value="Dresses">Dresses</option>
-                                <option value="Accessories">Accessories</option>
+                                <option value="Jersey">Jersey</option>
+                                <option value="Shorts">Shorts</option>
+                                <option value="Jacket">Jacket</option>
+                                <option value="Tights">Tights</option>
                             </select>
                         </form>
 
