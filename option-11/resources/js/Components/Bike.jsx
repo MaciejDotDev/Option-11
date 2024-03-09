@@ -45,11 +45,9 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
         e.preventDefault();
     };
 
-    // State object that will store the quantity the user selects for each bike.
-    const handleQuantityChange = (bikeId, quantity) => {
-        // console.log(quantity);
-        // console.log(typeof quantity);
-        setBikeQuantities({ ...bikeQuantities, [bikeId]: quantity });
+    // State object that will store the quantity the user selects for each clothing.
+    const handleQuantityChange = (clothingId, quantity) => {
+        setClothQuantities({ ...clothQuantities, [clothingId]: quantity });
         setData("quantity", quantity);
     };
 
