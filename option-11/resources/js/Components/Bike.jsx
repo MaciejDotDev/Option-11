@@ -133,7 +133,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
         <div>
             <form onSubmit={submit}>
                 <div className="container">
-                    <div className="row mt-14">{bikeList}</div>
+                    <div className="row mt-8">{bikeList}</div>
                 </div>
             </form>
         </div>

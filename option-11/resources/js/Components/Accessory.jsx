@@ -65,10 +65,11 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
             className="col-lg-4 col-md-6 mb-4"
         >
             <Card
-                className={`text-center ${selectedAccessory === accessory.accessoryid
-                    ? "selected-accessory"
-                    : ""
-                    }`}
+                className={`text-center ${
+                    selectedAccessory === accessory.accessoryid
+                        ? "selected-accessory"
+                        : ""
+                }`}
                 onClick={() => {
                     setSelectedAccessory(accessory.accessoryid);
                     setData("accessoryid_hidden", accessory.accessoryid);
@@ -149,7 +150,7 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
 
     return (
         <form onSubmit={submit}>
-            <Container className=" mt-14">
+            <Container className=" mt-8">
                 <Row>{accessoryList}</Row>
             </Container>
         </form>

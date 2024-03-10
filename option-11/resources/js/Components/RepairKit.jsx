@@ -131,7 +131,7 @@ const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
 
     return (
         <form onSubmit={submit}>
-            <Container className=" mt-14">
+            <Container className=" mt-8">
                 <Row>{repairKitList}</Row>
             </Container>
         </form>

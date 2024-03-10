@@ -124,7 +124,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
         <div>
             <form onSubmit={submit}>
                 <div className="container">
-                    <div className="row mt-14">{clothesList}</div>
+                    <div className="row mt-8">{clothesList}</div>
                 </div>
             </form>
         </div>
