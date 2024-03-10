@@ -1,39 +1,65 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
-const BikePart = ({ bikePart,auth,openModal }) => {
-    const { flash } = usePage().props
+import { usePage } from "@inertiajs/react";
+import { Card, Button, Container, Row } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
+
+const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
+    const { flash } = usePage().props;
+
     const { data, setData, post, processing, errors, reset } = useForm({
         bikepartid_hidden: "",
         quantity: "",
     });
 
     const [selectedBikePartId, setSelectedBikePartId] = useState("");
+    const [bikePartQuantities, setBikePartQuantities] = useState({});
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasketPart", data);
+        post("/addBasketPart", {
+            ...data,
+            quantity: bikePartQuantities[data.bikepartid_hidden],
+        });
     };
 
-    const onClickPreventDefault= (e) => {
+    const onClickPreventDefault = (e) => {
         openModal();
         e.preventDefault();
-        
-      };
+    };
 
-    const bikePartList = bikePart.map((part) => (
+    const handleQuantityChange = (bikePartId, quantity) => {
+        setBikePartQuantities({
+            ...bikePartQuantities,
+            [bikePartId]: quantity,
+        });
+        setData("quantity", quantity);
+    };
+
+    // Apply filter based on the selected option
+    const filteredBikeParts = bikePart.filter((part) => {
+        const categoryFilter =
+            filter === "All Parts" || part.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (part.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                part.price <= parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
+    const bikePartList = filteredBikeParts.map((part) => (
         <div
             key={part.bikepartsid}
-            className={`col-md-6 mb-4 ${selectedBikePartId === part.bikepartsid
-                }`}
+            className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
                 setSelectedBikePartId(part.bikepartsid);
                 setData("bikepartid_hidden", part.bikepartsid);
             }}
         >
-            <div className="card">
-                <div className="card-body">
+            <Card>
+                <Card.Body>
                     <h5 className="text-center card-title h4">{part.productname}</h5>
                     <p className="card-text">{part.description}</p>
                     <p className="card-text">
@@ -58,37 +84,55 @@ const BikePart = ({ bikePart,auth,openModal }) => {
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
-                            onChange={(e) => setData("quantity", e.target.value)}
+                            value={bikePartQuantities[part.bikepartsid]}
+                            name={`quantity_${part.bikepartsid}`}
+                            onChange={(e) =>
+                                handleQuantityChange(
+                                    part.bikepartsid,
+                                    parseInt(e.target.value)
+                                )
+                            }
                         />
-                        <p className="text-black">{flash.message}</p>
-                        <InputError message={errors.quantity} className="mt-2" />
-                    </div>
-                </div>
-                <div className="card-footer">
-                {auth.user ? (
-                     
-                     <button type="submit" className="btn btn-dark text-dark">
-                     Add to basket
-                 </button>
-                          
-                        ) : (
-                          
-                            <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
-                            Add to basket
-                        </button>
+                        <InputError
+                            message={errors.quantity}
+                            className="mt-2"
+                        />
+                        {selectedBikePartId === part.bikepartsid && (
+                            <p className="text-black">{flash.message}</p>
                         )}
-                </div>
-            </div>
+                    </div>
+                </Card.Body>
+                <Card.Footer className=" flex gap-3">
+                    {auth.user ? (
+                        <Button type="submit" className="btn btn-dark text-dark">
+                            Add to basket
+                        </Button>
+                    ) : (
+                        <Button
+                            type="submit"
+                            onClick={onClickPreventDefault}
+                            className="btn btn-dark text-dark"
+                        >
+                            Add to basket
+                        </Button>
+                    )}
+                    <InertiaLink
+                        // href={route("productDetails", { id: part.bikepartid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
+                </Card.Footer>
+            </Card>
         </div>
     ));
 
     return (
         <form onSubmit={submit}>
-            <div className="container">
-                <div className="row">{bikePartList}</div>
-            </div>
+            <Container className=" mt-8">
+                <Row>{bikePartList}</Row>
+            </Container>
         </form>
     );
 };
