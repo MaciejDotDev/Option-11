@@ -94,7 +94,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                         )}
                     </div>
                 </Card.Body>
-                <Card.Footer>
+                <Card.Footer className=" flex gap-3">
                     {auth.user ? (
                         <Button type="submit" variant="outline-dark">
                             Add to basket
@@ -108,6 +108,13 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )}
+                    <InertiaLink
+                        // href={route("productDetails", { id: clothing.clothingid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
                 </Card.Footer>
             </Card>
         </div>

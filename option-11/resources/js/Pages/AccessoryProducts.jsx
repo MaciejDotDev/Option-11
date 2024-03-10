@@ -23,7 +23,7 @@ const AccessoryProducts = ({ auth, accessories }) => {
                         Accessory Section
                     </h1>
                     <p className="lead text-white text-center pb-4">
-                        Explore our stylish collection of accessory items.
+                        Safety Meets Style: Your Accessory Haven
                     </p>
 
                     <section className="filters-section flex justify-center gap-10 pb-3">

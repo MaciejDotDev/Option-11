@@ -65,11 +65,10 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
             className="col-lg-4 col-md-6 mb-4"
         >
             <Card
-                className={`text-center ${
-                    selectedAccessory === accessory.accessoryid
-                        ? "selected-accessory"
-                        : ""
-                }`}
+                className={`text-center ${selectedAccessory === accessory.accessoryid
+                    ? "selected-accessory"
+                    : ""
+                    }`}
                 onClick={() => {
                     setSelectedAccessory(accessory.accessoryid);
                     setData("accessoryid_hidden", accessory.accessoryid);
@@ -115,9 +114,12 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
                             message={errors.quantity}
                             className="mt-2"
                         />
+                        {selectedAccessory === accessory.accessoryid && (
+                            <p className="text-black">{flash.message}</p>
+                        )}
                     </div>
                 </Card.Body>
-                <Card.Footer>
+                <Card.Footer className=" flex gap-3">
                     {auth.user ? (
                         <Button type="submit" variant="outline-dark">
                             Add to basket
@@ -147,7 +149,7 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
 
     return (
         <form onSubmit={submit}>
-            <Container>
+            <Container className=" mt-14">
                 <Row>{accessoryList}</Row>
             </Container>
         </form>
