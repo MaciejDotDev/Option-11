@@ -2,11 +2,11 @@
 // We use react because we are using react components
 import React, { useState } from "react";
 // We use inertia link to link to other pages
-import { InertiaLink } from '@inertiajs/inertia-react';
+import { InertiaLink } from "@inertiajs/inertia-react";
 // We import the bikepart component to use in the page
-import BikePart from "@/Components/BikePart";  // Updated import name
-import { AnimatePresence, motion } from 'framer-motion';
-import AnimateModal from '@/Components/AnimateModal';
+import BikePart from "@/Components/BikePart"; // Updated import name
+import { AnimatePresence, motion } from "framer-motion";
+import AnimateModal from "@/Components/AnimateModal";
 
 // In React, we use a function to create a component, which can be a page or a component
 // In this case, this is a page, so we create a function called BikeParts
@@ -27,9 +27,7 @@ const BikeParts = ({ auth, bikePart }) => {
 
     return (
         <div>
-
             <AnimateModal auth={auth}>
-
                 <div className="heading backdrop-brightness-90 my-2">
                     <h1 className="display-4 text-white text-center py-2">
                         Bike Parts Section
@@ -38,9 +36,7 @@ const BikeParts = ({ auth, bikePart }) => {
                         Find the perfect parts to enhance your ride.
                     </p>
 
-
                     <section className="filters-section flex justify-center gap-10 pb-3">
-
                         <form className="max-w-sm">
                             <label
                                 htmlFor="part-filters"
@@ -53,13 +49,13 @@ const BikeParts = ({ auth, bikePart }) => {
                                 id="part-filters"
                                 value={filter}
                                 onChange={handleFilterChange}
-                                className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-24 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             >
                                 <option value="All Parts">All Parts</option>
-                                <option value="Tires">Tires</option>
-                                <option value="Brakes">Brakes</option>
-                                <option value="Handlebars">Handlebars</option>
-                                <option value="Seats">Seats</option>
+                                <option value="Chain">Chain</option>
+                                <option value="Pedals">Pedals</option>
+                                <option value="Grips">Grips</option>
+                                <option value="Saddle">Seats</option>
                             </select>
                         </form>
 
@@ -78,10 +74,10 @@ const BikeParts = ({ auth, bikePart }) => {
                                 className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             >
                                 <option value="All Prices">All Prices</option>
-                                <option value="0-50">£0 to £50</option>
+                                <option value="0-25">£0 to £25</option>
+                                <option value="25-50">£25 to £50</option>
                                 <option value="50-100">£50 to £100</option>
-                                <option value="100-200">£100 to £200</option>
-                                <option value="200plus">£200 +</option>
+                                <option value="100plus">£100 +</option>
                             </select>
                         </form>
                     </section>
@@ -105,7 +101,7 @@ const BikeParts = ({ auth, bikePart }) => {
             </AnimateModal>
         </div>
     );
-}
+};
 
 // We export the component so we can use it in other pages
 export default BikeParts;

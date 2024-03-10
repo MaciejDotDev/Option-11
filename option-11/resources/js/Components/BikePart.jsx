@@ -59,8 +59,11 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
             }}
         >
             <Card>
+                <Card.Img variant="top" src={part.imageURL} />
                 <Card.Body>
-                    <h5 className="text-center card-title h4">{part.productname}</h5>
+                    <h5 className="text-center card-title h4">
+                        {part.productname}
+                    </h5>
                     <p className="card-text">{part.description}</p>
                     <p className="card-text">
                         <strong>Price:</strong> £{part.price}
@@ -75,10 +78,13 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
                         <strong>Size:</strong> {part.size}
                     </p>
                     <p className="card-text">
-                        <strong>Compatible with:</strong> {part.CompatibleWithType}
+                        <strong>Compatible with:</strong>{" "}
+                        {part.CompatibleWithType}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${part.bikepartsid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${part.bikepartsid}`}>
+                            Quantity
+                        </label>
                         <input
                             id={`quantity_${part.bikepartsid}`}
                             className="form-control"
@@ -104,7 +110,10 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
                     {auth.user ? (
-                        <Button type="submit" className="btn btn-dark text-dark">
+                        <Button
+                            type="submit"
+                            className="btn btn-dark text-dark"
+                        >
                             Add to basket
                         </Button>
                     ) : (
