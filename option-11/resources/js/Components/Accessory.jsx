@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
 
-const Accessory = ({ accessories, auth, openModal }) => {
+const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         accessoryid_hidden: "",
@@ -12,10 +13,14 @@ const Accessory = ({ accessories, auth, openModal }) => {
     });
 
     const [selectedAccessory, setSelectedAccessory] = useState("");
+    const [accessoryQuantities, setAccessoryQuantities] = useState({});
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasketAccessory", data);
+        post("/addBasketAccessory", {
+            ...data,
+            quantity: accessoryQuantities[data.accessoryid_hidden],
+        });
     };
 
     const onClickPreventDefault = (e) => {
@@ -23,8 +28,42 @@ const Accessory = ({ accessories, auth, openModal }) => {
         e.preventDefault();
     };
 
-    const accessoryList = accessories.map((accessory) => (
-        <Col key={accessory.accessoryid} md={6} className="mb-4">
+    const handleQuantityChange = (accessoryId, quantity) => {
+        setAccessoryQuantities({
+            ...accessoryQuantities,
+            [accessoryId]: quantity,
+        });
+        setData("quantity", quantity);
+    };
+
+    const navigateToIndividualProduct = (productname) => {
+        // Add logic to navigate to the "IndividualProduct" page with the selected productname
+    };
+
+    // Filter accessories based on selected options
+    const filteredAccessories = accessories.filter((accessory) => {
+        const categoryFilter =
+            filter === "All Accessories" || accessory.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (accessory.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                accessory.price <= parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
+    // Array that will be used to store only unique accessories based on the product name.
+    const distinctAccessories = [
+        ...new Map(
+            filteredAccessories.map((item) => [item.productname, item])
+        ).values(),
+    ];
+    const accessoryList = distinctAccessories.map((accessory) => (
+        <Col
+            key={accessory.accessoryid}
+            md={6}
+            className="col-lg-4 col-md-6 mb-4"
+        >
             <Card
                 className={`text-center ${
                     selectedAccessory === accessory.accessoryid
@@ -36,6 +75,7 @@ const Accessory = ({ accessories, auth, openModal }) => {
                     setData("accessoryid_hidden", accessory.accessoryid);
                 }}
             >
+                <Card.Img variant="top" src={accessory.imageURL} />
                 <Card.Body>
                     <Card.Title className="h4">
                         {accessory.productname}
@@ -48,7 +88,7 @@ const Accessory = ({ accessories, auth, openModal }) => {
                         <strong>Category:</strong> {accessory.category}
                     </Card.Text>
                     <Card.Text>
-                        <strong>Size:</strong> {accessory.size}
+                        <strong>Size:</strong> View Details for size info
                     </Card.Text>
                     <Card.Text>
                         <strong>Colour:</strong> {accessory.colour}
@@ -62,10 +102,13 @@ const Accessory = ({ accessories, auth, openModal }) => {
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
+                            value={accessoryQuantities[accessory.accessoryid]}
+                            name={`quantity_${accessory.accessoryid}`}
                             onChange={(e) =>
-                                setData("quantity", e.target.value)
+                                handleQuantityChange(
+                                    accessory.accessoryid,
+                                    parseInt(e.target.value)
+                                )
                             }
                         />
                         <InputError
@@ -76,18 +119,27 @@ const Accessory = ({ accessories, auth, openModal }) => {
                 </Card.Body>
                 <Card.Footer>
                     {auth.user ? (
-                        <Button type="submit" variant="dark">
+                        <Button type="submit" variant="outline-dark">
                             Add to basket
                         </Button>
                     ) : (
                         <Button
                             type="submit"
                             onClick={onClickPreventDefault}
-                            variant="dark"
+                            variant="outline-dark"
                         >
                             Add to basket
                         </Button>
                     )}
+                    <InertiaLink
+                        href=""
+                        className="btn btn-outline-primary"
+                        onClick={() =>
+                            navigateToIndividualProduct(accessory.productname)
+                        }
+                    >
+                        View Details
+                    </InertiaLink>
                 </Card.Footer>
             </Card>
         </Col>
