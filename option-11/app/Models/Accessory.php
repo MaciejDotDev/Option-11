@@ -12,18 +12,19 @@ class Accessory extends Model
     use HasFactory;
 
     protected $table = 'accessories';
-    public $timestamps = false;
+
     protected $primaryKey = 'accessoryid';
     protected $connection = 'mysql';
+
+    public function products()
+    {
+        return $this->belongsTo(Products::class, 'productid');
+    }
     protected $fillable = [
-        'productname',
-        'description',
-        'price',
-        'stockquantity',
-        'imageURL',
+        'productid',
         'category',
         'size',
         'colour',
-        'accessoryid',
+        
     ];
 }

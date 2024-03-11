@@ -18,18 +18,6 @@ export default function UpdateAccount({ auth, baskIcon }) {
     //below is a form template, needs to be replaced
   
 
-    const open = () => {
-
-
-        if (state ==  false) {
-
-            setState(true);
-        } else {
-
-            setState(false)
-        }
-    }
-  
   
 
     const { data, setData, post, processing, errors, reset } = useForm({

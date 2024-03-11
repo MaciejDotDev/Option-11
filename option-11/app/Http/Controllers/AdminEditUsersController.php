@@ -33,8 +33,20 @@ class AdminEditUsersController extends Controller
     
         $user->delete();
 
-        return  Redirect::to('/adminEditUsers');
+        return  Redirect::to('/adminUsers');
     }
 
+
+    public function viewUser(Request $request,$userid) {
+
+        
+
+        
+        $user = User::where('userid', $userid)->first();
+    
+     
+
+        return Inertia::render('AdminViewUser', ['users' => $user]);
+    }
     
 }

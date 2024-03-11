@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Bikes;
+use App\Models\Products;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Clothes;
+use App\Models\Bikes;
 use App\Models\Basket;
 use Inertia\Inertia;
 
@@ -38,9 +39,9 @@ public function showAll() {
 
 
    
+ 
 
-
-    $bikes = Bikes::all();
+    $bikes =  Bikes::with('products')->get();
 
 
     return Inertia::render('BikeProducts',['bikes' => $bikes]);
@@ -49,12 +50,13 @@ public function showAll() {
   
 }
 
-public function addBasket(Request $request) {
+public function addBasket(Request $request)
+{
 
-
+    //to validate if item already exists inside the database, as well as a plus or minus button to increase quantity
 
     $validateInput = $request->validate([
-        'quantity' => 'numeric|required|not_in:0|max:10',
+        'quantity' => 'required|not_in:0',
         
         
 
@@ -62,76 +64,69 @@ public function addBasket(Request $request) {
  
     if ($validateInput) {
 
-        $finditem =  Basket::where('userid', auth()->user()->userid)->first();
+
+
+
+
+         
+    $finditem =  Basket::where('userid', auth()->user()->userid)->first();
+    $basket = new Basket();
+
+    $noRecords = false;
+
+    $stopLoop = true;
+
+    while ($stopLoop) {
+        if ($finditem  ==  null || $noRecords) { 
+
+
             $basket = new Basket();
-
-            if ($finditem  ==  null) {
-
-                $basket = new Basket();
-                $basket->userid =  auth()->user()->userid;
-                $basket->bikeid = request('bikeid_hidden');
-                $basket->quantity =request('quantity');
-                $bike = Bikes::where('bikeid',$basket->bikeid)->first();
-        
-                
+            $basket->userid =  auth()->user()->userid;
+            $basket->productid = request('bikeid_hidden');
+            $basket->quantity =request('quantity');
             
-                $basket->totalprice = $basket->quantity * $bike->price;
-                
-                $basket->status = 'open';
+            $bike = Products::where('productid',$basket->productid)->first();
+            $basket->totalprice = $basket->quantity * $bike->price;
+            $bike->stockquantity = $bike->stockquantity -  $basket->quantity;
         
-                //an erorr validation will be needed to add here, to check if thre is enough stock
-                $basket->save();
-         
-               
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-
-
-            }
-
-
-            $record = Basket::where('userid', auth()->user()->userid)->where('bikeid',  request('bikeid_hidden'))->first();
-
-
-            if ($record) {
-
-                $record->quantity = request('quantity') + $record->quantity;
-
-                $record->save();
-
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-
-               
-
-
-
-
-            } else { 
-                $basket = new Basket();
-                $basket->userid =  auth()->user()->userid;
-                $basket->bikeid = request('bikeid_hidden');
-                $basket->quantity =request('quantity');
-                $bike = Bikes::where('bikeid',$basket->bikeid)->first();
-        
-                
-            
-                $basket->totalprice = $basket->quantity * $bike->price;
-                
-                $basket->status = 'open';
-        
-                //an erorr validation will be needed to add here, to check if thre is enough stock
-                $basket->save();
-         
-               
-                return redirect()->back()->with('success', "Item successfully added to basket!");
-
-            }
-
-
-       
-
+            $basket->status = 'open';
+            $basket->save();
+            $stopLoop = false;
+            return redirect()->back()->with('success', "Item successfully added to basket!");
+    
+        }
+    
+        $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('bikeid_hidden'))->first();
+    
+    
+        if ($record) {
+    
+            $record->quantity = request('quantity') + $record->quantity;
+    
+            $record->save();
+            $stopLoop = false;
+            return redirect()->back()->with('success', "Item successfully added to basket!");
+    
+           
+    
+    
+    
+    
+        } else { 
+            $noRecords =  true;
+    
+        }
 
     }
-  
+
+    
+
+
+
+
+
+    
+}
 
    
 

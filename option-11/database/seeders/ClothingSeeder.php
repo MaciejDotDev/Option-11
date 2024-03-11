@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Clothes;
-
+use App\Models\Products;
+use App\Models\Categories;
 class ClothingSeeder extends Seeder
 {
     /**
@@ -14,43 +15,54 @@ class ClothingSeeder extends Seeder
     public function run(): void
     {
 
+        
+
+        $categories = Categories::where('name','clothing')->first(); // go optimmise later on to use hasmany or hasone in the model
+
+        $accessories = Products::where('categoryid', $categories->categoryid)->get();
+
+        $uniqueid = [];
+        foreach ($accessories as $item) {
+
+            $uniqueid[] = $item->productid;
+
+        
+
+
+        }
+
+
+
+        
+        
         Clothes::create([
-            'productname' => 'Cycling Jersey',
-            'description' => 'A comfortable jersey for your cycling adventures.',
-            'price' => rand(50, 150),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'cycling_jersey.jpg',
+            'productid' => $uniqueid[0],
             'category' => 'Jersey',
+            'colour' => 'Blue',
+            'size' => 'Jersey',
+
         ]);
         
         Clothes::create([
-            'productname' => 'Biking Shorts',
-            'description' => 'Durable shorts for a smooth ride.',
-            'price' => rand(30, 80),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'biking_shorts.jpg',
+            'productid' => $uniqueid[1],
             'category' => 'Shorts',
+            'colour' => 'Jersey',
+            'size' => 'Jersey',
         ]);
         
         Clothes::create([
-            'productname' => 'Cycling Jacket',
-            'description' => 'A lightweight jacket for changing weather conditions.',
-            'price' => rand(60, 120),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'cycling_jacket.jpg',
+            'productid' => $uniqueid[2],
             'category' => 'Jacket',
+            'colour' => 'Jersey',
+            'size' => 'Jersey',
         ]);
         
         Clothes::create([
-            'productname' => 'Biking Tights',
-            'description' => 'Tights for aero efficiency during rides.',
-            'price' => rand(40, 100),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'biking_tights.jpg',
+            'productid' => $uniqueid[3],
             'category' => 'Tights',
+            'colour' => 'Jersey',
+            'size' => 'Jersey',
         ]);
-        
-       
         
     }
 }

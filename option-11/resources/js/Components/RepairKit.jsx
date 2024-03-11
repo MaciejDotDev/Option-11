@@ -81,7 +81,7 @@ const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${kit.repairkitsid}`}
+                            id={`quantity_${kit.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

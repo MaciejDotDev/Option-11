@@ -6,6 +6,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { AnimatePresence } from "framer-motion";
 import Login from "@/Pages/Auth/Login";
 import AnimateModal from "@/Components/AnimateModal";
+import AddRemBasket from "@/Components/AddRemBasket";
 export default function Basket({ auth, basket, totalprice, bikes }) {
     const { data, setData, post } = useForm({
         basketid: null,
@@ -15,27 +16,6 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
         e.preventDefault();
         setData("basketid", basketid);
     };
-
-    useEffect(() => {
-        const scrollToTopButton = document.getElementById("scrollToTop");
-
-        const handleScrollToTop = () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        };
-
-        if (scrollToTopButton) {
-            scrollToTopButton.addEventListener("click", handleScrollToTop);
-        }
-
-        return () => {
-            if (scrollToTopButton) {
-                scrollToTopButton.removeEventListener(
-                    "click",
-                    handleScrollToTop
-                );
-            }
-        };
-    }, []);
 
     useEffect(() => {
         const removeItem = async () => {
@@ -78,67 +58,74 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                         Price: £
                                                         {item.totalprice}
                                                     </p>
-                                                    <p>
-                                                        Quantity:{" "}
-                                                       
-                                                    </p>
+                                                    <p>Quantity: </p>
                                                     <div
+                                                        key={item.basketid}
+                                                        style={{
+                                                            width: "1rem",
+                                                            height: "1rem",
+                                                            position:
+                                                                "relative",
+                                                            // Adjust the top value as needed
+                                                            left: "20px", // Adjust the right value as needed
+                                                            bottom: "22px",
+                                                            marginTop: "0.3rem",
+                                                            marginBottom:
+                                                                "0.3rem",
+                                                        }}
+                                                    >
+                                                        <AddRemBasket
+                                                            key={item.basketid}
+                                                            item={item.quantity}
+                                                            itemid={
+                                                                item.basketid
+                                                            }
+                                                            action="remove"
+                                                            type="danger"
+                                                            right="1.4rem"
+                                                            top="22px"
+                                                            symbol="-"
+                                                            totalprice={
+                                                                bikes[index]
+                                                                    .price
+                                                            }
+                                                        ></AddRemBasket>
+
+                                                        <p
                                                             style={{
-                                                                width: "1rem",
-                                                                height: "1rem",
-                                                                position:
-                                                                    "relative",
-                                                                // Adjust the top value as needed
-                                                                left: "20px", // Adjust the right value as needed
-                                                                bottom: "22px",
+                                                                marginRight:
+                                                                    "4.11rem",
                                                             }}
                                                         >
-                                                            <div
-                                                                className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
-                                                                style={{
-                                                                    width: "1rem",
-                                                                    height: "1rem",
-                                                                    position:
-                                                                        "relative",
-                                                                    // Adjust the top value as needed
-                                                                    right: "20px", // Adjust the right value as needed
-                                                                    top: "22px",
-                                                                }}
-                                                            >
-                                                                <span
-                                                                    style={{
-                                                                        color: "#fff",
-                                                                        fontSize:
-                                                                            "1rem",
-                                                                    }}
-                                                                >
-                                                                    -
-                                                                </span>
-                                                            </div>
-                                                            {item.quantity}{" "}
-                                                            <div
-                                                                className="rounded-circle bg-success d-flex justify-content-center align-items-center"
-                                                                style={{
-                                                                    width: "1rem",
-                                                                    height: "1rem",
-                                                                    position:
-                                                                        "relative",
-                                                                    // Adjust the top value as needed
-                                                                    left: "12px", // Adjust the right value as needed
-                                                                    bottom: "24px",
-                                                                }}
-                                                            >
-                                                                <span
-                                                                    style={{
-                                                                        color: "#fff",
-                                                                        fontSize:
-                                                                            "1rem",
-                                                                    }}
-                                                                >
-                                                                    +
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                                                            {" "}
+                                                            {item.quantity}
+                                                        </p>
+
+                                                        <AddRemBasket
+                                                            item={item.quantity}
+                                                            itemid={
+                                                                item.basketid
+                                                            }
+                                                            action="add"
+                                                            type="success"
+                                                            left={
+                                                                item.quantity >=
+                                                                10
+                                                                    ? item.quantity >=
+                                                                      20
+                                                                        ? "1.5rem"
+                                                                        : "1.5rem"
+                                                                    : "1rem"
+                                                            }
+                                                            bottom="23px"
+                                                            symbol="+"
+                                                            paddingTop="0.1rem"
+                                                            totalprice={
+                                                                bikes[index]
+                                                                    .price
+                                                            }
+                                                        ></AddRemBasket>
+                                                    </div>
 
                                                     <form
                                                         onSubmit={(e) =>
@@ -160,22 +147,24 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                         </div>
                                     ))}
 
-                                    <div className="total">
-                                        <h2 className="h2basket">
-                                            Total Amount:
-                                        </h2>
-                                        <p>£{totalprice}</p>
+                                    <div style={{width: "100%"}}>
+                                        <div className="total">
+                                            <h2 className="h2basket">
+                                                Total Amount:
+                                            </h2>
+                                            <p>£{totalprice}</p>
+                                        </div>
+                                        
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                Inertia.visit(route("addPayment"))
+                                            }
+                                            className="checkout-btn"
+                                        >
+                                            Go to Checkout
+                                        </button>
                                     </div>
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            Inertia.visit(route("checkout"))
-                                        }
-                                        className="checkout-btn"
-                                    >
-                                        Go to Checkout
-                                    </button>
                                 </div>
                             ) : (
                                 <p style={{ fontSize: "25px" }}>
@@ -186,14 +175,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                     </div>
                 </body>
 
-                <button
-                    className="mt-3 btn btn-outline-light"
-                    id="scrollToTop"
-                    title="Scroll to Top"
-                    style={{ display: "block", margin: "0 auto" }}
-                >
-                    ^ Back to Top
-                </button>
+             
             </AnimateModal>
         </>
     );

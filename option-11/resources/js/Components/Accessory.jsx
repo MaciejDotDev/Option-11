@@ -65,11 +65,10 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
             className="col-lg-4 col-md-6 mb-4"
         >
             <Card
-                className={`text-center ${
-                    selectedAccessory === accessory.accessoryid
+                className={`text-center ${selectedAccessory === accessory.accessoryid
                         ? "selected-accessory"
                         : ""
-                }`}
+                    }`}
                 onClick={() => {
                     setSelectedAccessory(accessory.accessoryid);
                     setData("accessoryid_hidden", accessory.accessoryid);
@@ -98,7 +97,7 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${accessory.accessoryid}`}
+                            id={`quantity_${accessory.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

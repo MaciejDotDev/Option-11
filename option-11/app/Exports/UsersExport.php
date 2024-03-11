@@ -21,7 +21,7 @@ class UsersExport implements FromCollection, Responsable
     * It's required to define the fileName within
     * the export class when making use of Responsable.
     */
-    private $fileName = 'invoices.xlsx';
+    private $fileName = 'users.xlsx';
     
     /**
     * Optional Writer Type
@@ -37,13 +37,17 @@ class UsersExport implements FromCollection, Responsable
     public function collection()
     {
         $data = collect();
-        $amountUsers2022 = [];
+
+      
+        $amountUsers2024 = [];
         $amountUsers2023 = [];
 
         $months = [];
 
         $currentYear = Carbon::now()->year;
         $lastYear = Carbon::now()->year - 1;
+
+
 
         for ($m=1; $m<=12; $m++) {
             $months[] = date('F', mktime(0,0,0,$m, 1, date('Y')));
@@ -53,7 +57,7 @@ class UsersExport implements FromCollection, Responsable
             $jan =User::whereYear('created_at',$currentYear)
             ->whereMonth('created_at', $i)
             ->get()->count();
-            $amountUsers2022[$i] =$jan;
+            $amountUsers2024[$i] =$jan;
 
 
              // Add your custom values to the collection
@@ -68,13 +72,24 @@ class UsersExport implements FromCollection, Responsable
              // Add your custom values to the collection
         }
 
+
         
-        $avarage2022 = array_sum($amountUsers2022)/12;
+
+        
+        $avarage2024 = array_sum($amountUsers2024)/12;
 
         $avarage2023 = array_sum($amountUsers2023)/12;
 
+        if ($avarage2024 == 0 || $avarage2023  == 0) {
+
+            $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2024],["Amount of created accounts in $lastYear"], [$months],[$amountUsers2023]);
+            return $data;
+        }
+
       
-        $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2022],["Avarage user account creation"],[$avarage2022],["Amount of created accounts in $lastYear"], [$currentYear],[$months],[$amountUsers2023], ["Avarage user account creation"],[$avarage2023], ["Ammount of accounts increase"], [(($avarage2023 - $avarage2022) / $avarage2022) * 100]);
+        $stringNumber = strval((($avarage2024 - $avarage2023) / $avarage2023) * 100);
+      
+        $data->push(["Amount of created accounts in $currentYear"],[$months],[$amountUsers2024],["Avarage user account creation"],[$avarage2024],["Amount of created accounts in $lastYear"], [$months],[$amountUsers2023], ["Avarage user account creation"],[$avarage2023], ["Ammount of accounts increase betweeen  $currentYear and  $lastYear"], ["$stringNumber%"]);
 
        
 

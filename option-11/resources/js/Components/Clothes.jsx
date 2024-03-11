@@ -53,8 +53,8 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
             key={clothing.clothingid}
             className={`col-lg-4 col-md-6 mb-4`}
             onClick={() => {
-                setSelectedClothes(clothing.clothingid);
-                setData("clothingid_hidden", clothing.clothingid);
+                setSelectedClothes(clothing.products.productid);
+                setData("clothingid_hidden", clothing.products.productid);
             }}
         >
             <Card>
@@ -72,7 +72,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${clothing.clothingid}`}
+                            id={`quantity_${clothing.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"

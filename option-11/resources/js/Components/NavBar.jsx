@@ -68,10 +68,10 @@ const NavBar = ({ auth, openModal }) => {
                                 Bike Parts
                             </NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link className="text-grey  " href="/contactUs">
+                        <Nav.Link className="text-grey " href="/contactUs">
                             Contact us
                         </Nav.Link>
-                        <Nav.Link className="text-grey  " href="/aboutus">
+                        <Nav.Link className="text-grey " href="/aboutus">
                             About us
                         </Nav.Link>
                         {auth.user ? (
@@ -88,7 +88,7 @@ const NavBar = ({ auth, openModal }) => {
                                 </Nav.Link>
 
                                 <Nav.Link
-                                    className="text-black bg-info rounded-2 px-4 "
+                                    className="px-4 text-black bg-info rounded-2 "
                                     href="/dashboard"
                                 >
                                     My Account
@@ -96,7 +96,7 @@ const NavBar = ({ auth, openModal }) => {
                             </>
                         ) : (
                             <Nav.Link
-                                className="text-black bg-info rounded-2 px-4 "
+                                className="px-4 text-black bg-info rounded-2 "
                                 onClick={openModal}
                             >
                                 Login

@@ -58,8 +58,8 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
             key={bike.bikeid}
             className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
-                setSelectedBikeId(bike.bikeid);
-                setData("bikeid_hidden", bike.bikeid);
+                setSelectedBikeId(bike.products.productid);
+                setData("bikeid_hidden", bike.products.productid);
             }}
         >
             {/* <Card style={{ width: "28rem" }}> */}
@@ -77,11 +77,11 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                         <strong>Category:</strong> {bike.category}
                     </Card.Text>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${bike.bikeid}`}>
+                        <label htmlFor={`quantity_${bike.productid}`}>
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${bike.bikeid}`}
+                            id={`quantity_${bike.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"
@@ -131,6 +131,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
 
     return (
         <div>
+
             <form onSubmit={submit}>
                 <div className="container">
                     <div className="row mt-8">{bikeList}</div>

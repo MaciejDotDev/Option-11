@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('repairkits', function (Blueprint $table) {
             $table->bigIncrements('repairkitsid')->unsigned();
-            $table->string('productname');
-            $table->string('description');
-            $table->decimal('price', 8, 2);
-            $table->integer('stockquantity');
-            $table->string('imageURL');
+            $table->unsignedBigInteger('productid');
+            $table->foreign('productid')->references('productid')->on('products')->onDelete('cascade');
             $table->string('category');
             $table->string('CompatibleWithType');
             $table->timestamps();

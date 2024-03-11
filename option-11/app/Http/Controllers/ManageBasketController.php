@@ -9,11 +9,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Basket;
-use App\Models\Bikes;
-use App\Models\BikePart;
-use App\Models\Clothes;
-use App\Models\RepairKit;
-use App\Models\Accessory;
+use App\Models\Products;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -27,41 +24,21 @@ class ManageBasketController extends Controller
 {
     protected $bikes;
     protected  $basket;
-
+ 
 
     public function search()
     {
+
+
+
         $this->basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
 
 
         $this->bikes = [];
         foreach ($this->basket as $item) {
 
-            $bike = Bikes::where('bikeid', $item->bikeid)->first();
-            $bikePart = BikePart::where('bikepartsid', $item->bikepartsid)->first();
-            $clothes = Clothes::where('clothingid', $item->clothingid)->first();
-            $repairkits = RepairKit::where('repairkitsid', $item->repairkitsid)->first();
-            $accessory = Accessory::where('accessoryid', $item->accessoryid)->first();
-            if ($bike) {
-
-
-                $this->bikes[] = $bike;
-            } else if ($bikePart) {
-
-                $this->bikes[] = $bikePart;
-            } else if ($clothes) {
-
-
-                $this->bikes[] = $clothes;
-            } else if ($repairkits) {
-
-
-                $this->bikes[] = $repairkits;
-            } else if ($accessory) {
-
-
-                $this->bikes[] = $accessory;
-            }
+            
+            $this->bikes[] = Products::where('productid', $item->productid)->first();
         }
 
         $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
@@ -82,31 +59,13 @@ class ManageBasketController extends Controller
 
         foreach ($basket1 as $item) {
 
-            $bikes = Bikes::where('bikeid', $item->bikeid)->first();
-            $bikePart = BikePart::where('bikepartsid', $item->bikepartsid)->first();
-            $clothes = Clothes::where('clothingid', $item->clothingid)->first();
-            $repairkits = RepairKit::where('repairkitsid', $item->repairkitsid)->first();
-            $accessory = Accessory::where('accessoryid', $item->accessoryid)->first();
+         $bikes = Products::where('productid', $item->productid)->first();
 
-            if ($bikes) {
-
+       
 
                 $basket->totalprice = $basket->quantity * $bikes->price;
-            } else if ($bikePart) {
+       
 
-                $basket->totalprice = $basket->quantity * $bikePart->price;
-            } else if ($clothes) {
-
-                $basket->totalprice = $basket->quantity * $clothes->price;
-            } else if ($repairkits) {
-
-
-                $basket->totalprice = $basket->quantity * $repairkits->price;
-            } else if ($accessory) {
-
-
-                $basket->totalprice = $basket->quantity * $repairkits->accessory;
-            }
         }
     }
 
@@ -152,7 +111,7 @@ class ManageBasketController extends Controller
 
 
 
-                return    $this->deleteProduct($request);
+                return $this->deleteProduct($request);
             } else {
 
 
@@ -177,6 +136,6 @@ class ManageBasketController extends Controller
         $basketFind = Basket::where('basketid', $basketid);
 
         $basketFind->delete();
-        return $this->search();
+        return Redirect::route('basket');
     }
 }

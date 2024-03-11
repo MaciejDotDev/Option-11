@@ -21,9 +21,11 @@ use App\Http\Controllers\AdminAddProductsController;
 use App\Http\Controllers\AdminRemoveEditProductsController;
 use App\Http\Controllers\AdminReportsController;
 use App\Http\Controllers\AdminEditOrderController;
+use App\Http\Controllers\AdminEditProductsController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +42,9 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
+        'canResetPassword' => Route::has('password.request'),
         'phpVersion' => PHP_VERSION,
+        'status' => session('status')
     ]);
 });
 
@@ -49,10 +53,11 @@ Route::get('/contactUs', function () {
 });
 Route::get('/updateAccount', function () {
 
-   
-    
+
+
     return Inertia::render('UpdateAccount');
 })->middleware(['auth', 'verified'])->name('updateAccount');
+
 
 
 
@@ -61,15 +66,10 @@ Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('prod
 
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
 
-Route::match(['get', 'post'],'/filter/{type}','App\Http\Controllers\ShowBikesController@filter')->name('filter');
+Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');
 Route::post('update', [ManageAccount::class, 'update'])->name('update');
 
 
-
-
-
-    Route::match(['get', 'post'],'/checkout','App\Http\Controllers\PaymentDetails@payment')->name('checkout');
-  
 
 
 
@@ -96,7 +96,12 @@ Route::get('/Orders', [ShowOrdersController::class, 'showAll'])->name('orders');
 
 Route::group(['middleware' => ['admin']], function () {
 
-    
+
+    Route::get('/addProduct', function () {
+        return Inertia::render('AdminAddProduct');
+    })->name('addProduct');
+
+    Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
     
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
     Route::get('/addProducts', [AdminAddProductsController::class, 'showAddProductsPage']);
@@ -107,19 +112,36 @@ Route::group(['middleware' => ['admin']], function () {
 
     
 
-    Route::get('/adminEditUsers', [AdminEditUsersController::class, 'show'])->name('adminEditUsers');
+    Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
+    Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');
+   
+    Route::match(['get', 'post'],'/remEditProduct', [AdminEditProductsController::class, 'userManageAction'])->name('remEditProduct');
+    
     Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
 
-    Route::get('/adminUpdateShow{userid}', [AdminEditUsersController::class, 'updateShow'])->name('adminUpdateShow');
+    Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
+
+  
+
+    Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
 
     Route::get('/adminExport{dbName}', [CsvExporter::class, 'export'])->name('adminExport');
 
-    Route::get('users/export/', [UserController::class, 'export']);
+    Route::get('users/export/', [AdminReportsController::class, 'exportUsers']);
+    Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
+    Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
+    Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
+    
+
+    Route::match(['get', 'post'],'/adminLogout', [AdminLoginController::class, 'destroy'])
+    ->name('adminLogout');
 
 
 
 
-        
+
+
+
 
 });
 Route::group(['middleware' => ['admin.guest']], function () {
@@ -132,35 +154,43 @@ Route::group(['middleware' => ['admin.guest']], function () {
 
 
 
-        
-
-}); 
 
 
-Route::middleware('auth')->group(function () {
-  
-    Route::get('deleteAccount', [ManageAccount::class, 'destroy'])
-    ->name('deleteAccount');
-    Route::get('/basket', [ManageBasketController::class, 'search'])->name('basket');
-    Route::match(['get', 'post'],'/addBasket','App\Http\Controllers\ShowBikesController@addBasket')->name('addBasket');
-    Route::match(['get', 'post'],'/addBasketPart','App\Http\Controllers\ShowBikePartsController@addBasket')->name('addBasketPart');
-    Route::match(['get', 'post'],'/addBasketRepairkit','App\Http\Controllers\ShowRepairKitsController@addBasket')->name('addBasketRepairkit');
-    Route::match(['get', 'post'],'/addBasketAccessory','App\Http\Controllers\ShowAccessoriesController@addBasket')->name('addBasketAccessory');
-    Route::post('/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
-    Route::match(['get', 'post'],'/addBasketClothing','App\Http\Controllers\ShowClothingController@addBasket')->name('addBasketClothing');
-
-    Route::match(['get', 'post'],'/makeOrder','App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');
- 
- 
-    Route::match(['get', 'post'],'/deleteProduct','App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
-
-    Route::match(['get', 'post'],'/orderHistory','App\Http\Controllers\OrdersController@showAll')->name('orderHistory');
-
-   
-
-
-  
-    
 });
 
-require __DIR__.'/auth.php';
+Route::stripeWebhooks('/webhook');
+Route::get('/reviews', [ReviewsController::class,'showAll'])->name('reviews'); // to add to teh middleware later
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('deleteAccount', [ManageAccount::class, 'destroy'])
+        ->name('deleteAccount');
+    Route::get('/basket', [ManageBasketController::class, 'search'])->name('basket');
+    Route::match(['get', 'post'], '/addBasket', 'App\Http\Controllers\ShowBikesController@addBasket')->name('addBasket');
+    Route::match(['get', 'post'], '/addBasketPart', 'App\Http\Controllers\ShowBikePartsController@addBasket')->name('addBasketPart');
+    Route::match(['get', 'post'], '/addBasketRepairkit', 'App\Http\Controllers\ShowRepairKitsController@addBasket')->name('addBasketRepairkit');
+    Route::match(['get', 'post'], '/addBasketAccessory', 'App\Http\Controllers\ShowAccessoriesController@addBasket')->name('addBasketAccessory');
+    Route::match(['get', 'post'],'/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
+    Route::match(['get', 'post'], '/addBasketClothing', 'App\Http\Controllers\ShowClothingController@addBasket')->name('addBasketClothing');
+
+    Route::match(['get', 'post'], '/makeOrder', 'App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');
+
+ 
+
+    Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview'); 
+    Route::match(['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
+
+    Route::match(['get', 'post'], '/orderHistory', 'App\Http\Controllers\OrdersController@showAll')->name('orderHistory');
+    Route::post('/basket/action', [ManageBasketController::class, 'addRemItem'])->name('basketAction');
+
+ 
+
+    Route::match(['get', 'post'], '/checkout', 'App\Http\Controllers\PaymentDetails@payment')->name('checkout');
+    
+    Route::match(['get', 'post'], '/success', 'App\Http\Controllers\PaymentDetails@finalizeOrder')->name('success');
+
+
+
+});
+
+require __DIR__ . '/auth.php';

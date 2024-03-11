@@ -22,6 +22,8 @@ createInertiaApp({
         root.render(
             <>
             <App {...props} />
+
+            <Footer {...props} />
                 
             </>
         );

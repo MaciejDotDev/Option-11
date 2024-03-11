@@ -13,12 +13,9 @@ return new class extends Migration
 {
     Schema::create('accessories', function (Blueprint $table) {
         $table->bigIncrements('accessoryid')->unsigned();
-        $table->string('productname');
-        $table->decimal('price', 8, 2);
-        $table->string('description');
-        $table->string('imageURL');
+        $table->unsignedBigInteger('productid');
+        $table->foreign('productid')->references('productid')->on('products')->onDelete('cascade');
         $table->string('category');
-        $table->integer('stockquantity');
         $table->char('size');
         $table->char('colour');
         $table->timestamps();

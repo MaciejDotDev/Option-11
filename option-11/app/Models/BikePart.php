@@ -16,12 +16,13 @@ class BikePart extends Model
     //This is the connection name
     protected $connection = 'mysql';
     //These are the fillable fields , they represent the columns in the table
+
+    public function products()
+    {
+        return $this->belongsTo(Products::class, 'productid');
+    }
     protected $fillable = [
-        'productname',
-        'description',
-        'price',
-        'stockquantity',
-        'imageURL',
+        'productid',
         'category',
         'color',
         'size',

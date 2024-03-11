@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Bikes;
+use App\Models\Products;
+use App\Models\Categories;
 
 class BikesTableSeeder extends Seeder
 {
@@ -14,49 +16,58 @@ class BikesTableSeeder extends Seeder
      */
     public function run()
     {
+      
+
+        $categories = Categories::where('name','bike')->first(); // go optimmise later on to use hasmany or hasone in the model
+
+        $accessories = Products::where('categoryid', $categories->categoryid)->get();
+
+        $uniqueid = [];
+        foreach ($accessories as $item) {
+
+            $uniqueid[] = $item->productid;
+
+        
+
+
+        }
+       
+      
+     
         Bikes::create([
-            'productname' => 'Mountain Bike',
-            'description' => 'A sturdy mountain bike for off-road adventures.',
-            'price' => 499.99,
-            'stockquantity' => 10,
-            'imageURL' => 'mountain_bike.jpg',
+            'productid' => $uniqueid[0],
             'category' => 'Mountain',
+            'colour' => 'red',
+            'size' => 'red',
         ]);
 
         Bikes::create([
-            'productname' => 'Road Bike',
-            'description' => 'A lightweight road bike for speed.',
-            'price' => 599.99,
-            'stockquantity' => 10,
-            'imageURL' => 'road_bike.jpg',
+            'productid' => $uniqueid[1],
             'category' => 'Road',
+            'colour' => 'red',
+            'size' => 'red',
         ]);
 
         Bikes::create([
-            'productname' => 'Hybrid Bike',
-            'description' => 'A hybrid bike for both on and off-road.',
-            'price' => 399.99,
-            'stockquantity' => 10,
-            'imageURL' => 'hybrid_bike.jpg',
+            'productid' => $uniqueid[2],
             'category' => 'Hybrid',
+            'colour' => 'red',
+            'size' => 'red',
         ]);
 
         Bikes::create([
-            'productname' => 'Electric Bike',
-            'description' => 'An electric bike for those who want to go further.',
-            'price' => 799.99,
-            'stockquantity' => 10,
-            'imageURL' => 'electric_bike.jpg',
+            'productid' => $uniqueid[3],
             'category' => 'Electric',
+            'colour' => 'red',
+            'size' => 'red',
         ]);
 
         Bikes::create([
-            'productname' => 'Kids Bike',
-            'description' => 'A kids bike for those who want to start young.',
-            'price' => 199.99,
-            'stockquantity' => 10,
-            'imageURL' => 'kids_bike.jpg',
+            'productid' => $uniqueid[4],
             'category' => 'Kids',
+            'colour' => 'red',
+            'size' => 'red',
         ]);
+        
     }
 }

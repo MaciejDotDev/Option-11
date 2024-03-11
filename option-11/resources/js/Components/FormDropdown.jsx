@@ -4,6 +4,8 @@ const FormDropdown = ({ cardName, children, state, setState, processing,cardId }
     const [dropdownstate, setDropdownopen] = useState(false);
 
     const setOpen = () => {
+
+        //put  atry block to test vairable
         if (dropdownstate == false) {
             setState(true);
             setDropdownopen(true);

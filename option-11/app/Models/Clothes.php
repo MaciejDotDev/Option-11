@@ -9,16 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 
 
 class Clothes extends Model
-{   public $timestamps = false;
-    protected $primaryKey = 'clothesid';
+{   
+    protected $primaryKey = 'clothingid';
     protected $connection = 'mysql';
+    public function products()
+    {
+        return $this->belongsTo(Products::class, 'productid');
+    }
     protected $fillable = [
-        'productname',
-        'description',
-        'price',
-        'stockquantity',
-        'imageURL',
+        'productid',
         'category',
+        'colour',
     ];
 
   

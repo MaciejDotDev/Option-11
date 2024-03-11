@@ -11,16 +11,25 @@ class Address extends Model
 {
     use HasFactory;
 
+
+
     protected $table = 'address';
-    public $timestamps = false;
+
     protected $primaryKey = 'addressid';
     protected $connection = 'mysql';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userid');
+    }
+
     protected $fillable = [
+        'userid',
         'postcode',
         'country',
         'city',
         'street',
-        'house_no',
-        
+
+
     ];
 }

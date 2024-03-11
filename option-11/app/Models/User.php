@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Basket;
+use App\Models\Reviews;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -31,6 +32,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Address::class, 'addressid');
     }
+
+    public function reviews() {
+        return $this->hasMany(Reviews::class,'userid')->latest();
+   }
 
     protected $fillable = [
         'firstname',

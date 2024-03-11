@@ -15,28 +15,19 @@ class Orders extends Model
         return $this->belongsTo(User::class, 'userid');
     }
 
-    public function basket()
-    {
-        return $this->belongsTo(Basket::class, 'basketid');
-    }
 
-    public function payment()
-    {
-        return $this->belongsTo(Payment::class, 'paymentid');
-    }
     public function address()
     {
         return $this->belongsTo(Address::class, 'addressid');
     }
     protected $table = 'orders';
-    public $timestamps = false;
-    protected $primaryKey = 'ordersid';
+  
+    protected $primaryKey = 'orderid';
     protected $connection = 'mysql';
     protected $fillable = [
-        'ordersid',
+        'orderid',
         'userid',
-        'basketid',
-        'paymentid',
+        'trackingcode',
         'addressid',
         'totalprice',
         'status',

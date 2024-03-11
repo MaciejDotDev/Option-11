@@ -54,8 +54,8 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
             key={part.bikepartsid}
             className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
-                setSelectedBikePartId(part.bikepartsid);
-                setData("bikepartid_hidden", part.bikepartsid);
+                setSelectedBikePartId(part.products.productid);
+                setData("bikepartid_hidden", part.products.productid);
             }}
         >
             <Card>
@@ -66,7 +66,7 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
                     </h5>
                     <p className="card-text">{part.description}</p>
                     <p className="card-text">
-                        <strong>Price:</strong> £{part.price}
+                        <strong>Price:</strong> £{part.products.price}
                     </p>
                     <p className="card-text">
                         <strong>Category:</strong> {part.category}
@@ -86,7 +86,7 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
                             Quantity
                         </label>
                         <input
-                            id={`quantity_${part.bikepartsid}`}
+                            id={`quantity_${part.products.bikepartsid}`}
                             className="form-control"
                             min="0"
                             type="number"

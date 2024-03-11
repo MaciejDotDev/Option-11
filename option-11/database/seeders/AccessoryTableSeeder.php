@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Accessory;
-
+use App\Models\Products;
+use App\Models\Categories;
+use Illuminate\Support\Facades\Log;
 class AccessoryTableSeeder extends Seeder
 {
     /**
@@ -13,105 +15,83 @@ class AccessoryTableSeeder extends Seeder
      */
     public function run(): void
     {
+
+       $categories = Categories::where('name','accessory')->first(); // go optimmise later on to use hasmany or hasone in the model
+
+        $accessories = Products::where('categoryid', $categories->categoryid)->get();
+
+        $uniqueid = [];
+        foreach ($accessories as $item) {
+
+            $uniqueid[] = $item->productid;
+
+        
+
+
+        }
+      
+      
         Accessory::create([
-            'productname' => 'Helmet',
-            'description' => 'A helmet to protect your head.',
-            'price' => 49.99,
-            'stockquantity' => 10,
-            'imageURL' => 'helmet.jpg',
+            'productid' => $uniqueid[0],
             'category' => 'Helmet',
             'size' => 'Medium',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Helmet',
-            'description' => 'A helmet to protect your head.',
-            'price' => 49.99,
-            'stockquantity' => 10,
-            'imageURL' => 'helmet.jpg',
+            'productid' => $uniqueid[1],
             'category' => 'Helmet',
             'size' => 'Large',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Helmet',
-            'description' => 'A helmet to protect your head.',
-            'price' => 49.99,
-            'stockquantity' => 10,
-            'imageURL' => 'helmet.jpg',
+            'productid' => $uniqueid[2],
             'category' => 'Helmet',
             'size' => 'Small',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Knee Pads',
-            'description' => 'Knee pads to protect your knees.',
-            'price' => 29.99,
-            'stockquantity' => 10,
-            'imageURL' => 'knee_pads.jpg',
+            'productid' => $uniqueid[3],
             'category' => 'Knee Pads',
             'size' => 'Medium',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Knee Pads',
-            'description' => 'Knee pads to protect your knees.',
-            'price' => 29.99,
-            'stockquantity' => 10,
-            'imageURL' => 'knee_pads.jpg',
+            'productid' => $uniqueid[4],
             'category' => 'Knee Pads',
             'size' => 'Large',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Knee Pads',
-            'description' => 'Knee pads to protect your knees.',
-            'price' => 29.99,
-            'stockquantity' => 10,
-            'imageURL' => 'knee_pads.jpg',
+            'productid' => $uniqueid[5],
             'category' => 'Knee Pads',
             'size' => 'Small',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Gloves',
-            'description' => 'Gloves to protect your hands.',
-            'price' => 19.99,
-            'stockquantity' => 10,
-            'imageURL' => 'gloves.jpg',
+            'productid' => $uniqueid[6],
             'category' => 'Gloves',
             'size' => 'Medium',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Gloves',
-            'description' => 'Gloves to protect your hands.',
-            'price' => 19.99,
-            'stockquantity' => 10,
-            'imageURL' => 'gloves.jpg',
+            'productid' => $uniqueid[7],
             'category' => 'Gloves',
             'size' => 'Large',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Gloves',
-            'description' => 'Gloves to protect your hands.',
-            'price' => 19.99,
-            'stockquantity' => 10,
-            'imageURL' => 'gloves.jpg',
+            'productid' => $uniqueid[8],
             'category' => 'Gloves',
             'size' => 'Small',
             'colour' => 'Black',
         ]);
         Accessory::create([
-            'productname' => 'Water Bottle',
-            'description' => 'A water bottle to keep you hydrated.',
-            'price' => 9.99,
-            'stockquantity' => 10,
-            'imageURL' => 'water_bottle.jpg',
+            'productid' => $uniqueid[9],
             'category' => 'Water Bottle',
             'size' => 'Medium',
             'colour' => 'Black',
         ]);
+
+
     }
 }
