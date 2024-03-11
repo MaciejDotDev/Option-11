@@ -23,6 +23,7 @@ use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\AdminReportsController;
 use App\Http\Controllers\AdminEditOrderController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\AdminEditOrders;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/addresses', function () {
+    return Inertia::render('ViewAddress');
+})->middleware(['auth', 'verified'])->name('addresses');
+
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 //squob work below
@@ -90,7 +95,7 @@ Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('cloth
 
 Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
 
-Route::get('/Orders', [ShowOrdersController::class, 'showAll'])->name('orders');
+
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -99,31 +104,38 @@ Route::group(['middleware' => ['admin']], function () {
         return Inertia::render('AdminAddProduct');
     })->name('addProduct');
 
+
+
+Route::get('/editOrder{orderid}', [AdminEditOrders::class, 'editOrder'])->name('editOrder');
+
+Route::get('/orders', [AdminEditOrders::class, 'show'])->name('orders');
+
+
     Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
-    
+
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
 
     Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
     Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');
-   
+
     Route::match(['get', 'post'],'/remEditProduct', [AdminEditProductsController::class, 'userManageAction'])->name('remEditProduct');
-    
+
     Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
 
     Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
 
-  
+
 
     Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
 
-    Route::get('/adminExport{dbName}', [CsvExporter::class, 'export'])->name('adminExport');
+
+
+
 
     Route::get('users/export/', [AdminReportsController::class, 'exportUsers']);
     Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
-    Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
-    Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
-    
 
+    Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
     Route::match(['get', 'post'],'/adminLogout', [AdminLoginController::class, 'destroy'])
     ->name('adminLogout');
 
@@ -166,19 +178,20 @@ Route::middleware('auth')->group(function () {
 
     Route::match(['get', 'post'], '/makeOrder', 'App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');
 
- 
 
-    Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview'); 
+
+    Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview');
     Route::match(['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
 
     Route::match(['get', 'post'], '/orderHistory', 'App\Http\Controllers\OrdersController@showAll')->name('orderHistory');
     Route::post('/basket/action', [ManageBasketController::class, 'addRemItem'])->name('basketAction');
 
- 
+
 
     Route::match(['get', 'post'], '/checkout', 'App\Http\Controllers\PaymentDetails@payment')->name('checkout');
-    
+
     Route::match(['get', 'post'], '/success', 'App\Http\Controllers\PaymentDetails@finalizeOrder')->name('success');
+    Route::match(['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
 
 
 

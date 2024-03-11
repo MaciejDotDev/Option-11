@@ -9,11 +9,11 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
 
     const [starNum, setStarNum] = useState(0);
 
-   
+
     const onClickPreventDefault= (e) => {
         openModal();
         e.preventDefault();
-        
+
       };
     const rate = () => {
         const numbers = [1, 2, 3, 4, 5]; // Assuming you have an array of numbers
@@ -46,7 +46,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                         margin: "20px 1px",
                         marginTop: "1px",
                         marginBottom: "1px",
-                       
+
                     }}
                 />
             </div>
@@ -100,7 +100,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                         <h5 class="card-title">{review.title}</h5>
 
                         <h6 class="card-subtitle mb-2 text-secondary">
-                            username
+                            {review.user.firstname}
                         </h6>
                         <div className="stars-container">
                             {" "}
@@ -135,7 +135,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
 
     return (
 
-       
+
         <div className="review-container">
             {commentsCount >= 1 ? (
                           <div>
@@ -239,7 +239,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                                         }
                                         type="text"
                                     ></input>
-                                    <InputError 
+                                    <InputError
                                         message={errors.title}
                                         className="mt-2"
                                     />
@@ -275,7 +275,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                             </form>
                         </div>
                     </div>
-                </div>  
+                </div>
                             </>
                         ) : (
                             <button
@@ -302,8 +302,8 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                                 Write a review
                             </div>
                         </button>
-                        )}  
-              
+                        )}
+
 
                 {listItems}
             </div>
@@ -313,9 +313,9 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
 
                             <h5 class="card-title reviewTitle" style={{textAlign:"center"}}>No reviews yet</h5>
                             </div>
-                            
-                          )}  
-            
+
+                          )}
+
         </div>
     );
 }

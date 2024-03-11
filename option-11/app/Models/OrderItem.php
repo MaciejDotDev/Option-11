@@ -13,6 +13,11 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Products::class, 'productid');
     }
+
+    public function orders()
+    {
+        return $this->belongsTo(Orders::class, 'orderid');
+    }
     protected $table = 'orderitem';
 
     protected $primaryKey = 'orderitemid';
@@ -20,10 +25,11 @@ class OrderItem extends Model
     protected $fillable = [
         'orderitemid',
         'productid',
+        'quantity',
         'orderid',
-        'sessionid',
-     
-        
+
+
+
     ];
 
 

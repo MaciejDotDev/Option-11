@@ -20,17 +20,25 @@ class Orders extends Model
     {
         return $this->belongsTo(Address::class, 'addressid');
     }
+
+
+    public function transaction()
+    {
+        return $this->hasOne(Transactions::class, 'orderid');
+    }
+
+
+
     protected $table = 'orders';
-  
+
     protected $primaryKey = 'orderid';
     protected $connection = 'mysql';
     protected $fillable = [
-        'orderid',
         'userid',
         'trackingcode',
         'addressid',
         'totalprice',
         'status',
-        
+
     ];
 }

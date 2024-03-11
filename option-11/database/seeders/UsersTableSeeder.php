@@ -20,11 +20,11 @@ class UsersTableSeeder extends Seeder
         // Dummy data for users
         $users = [];
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
             $users[] = [
                 'firstname' => $faker->firstName,
                 'lastname' => $faker->lastName,
-             
+
                 'email' => $faker->unique()->safeEmail,
                 'phonenumber' => $faker->phoneNumber,
                 'password' => Hash::make('password123'),
@@ -35,6 +35,6 @@ class UsersTableSeeder extends Seeder
 
         // Insert dummy data into the 'users' table
         DB::table('users')->insert($users);
-    
+
     }
 }

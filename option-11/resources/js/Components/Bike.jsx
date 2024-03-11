@@ -6,7 +6,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
 
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
-        bikeid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -30,7 +30,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
             }`}
             onClick={() => {
                 setSelectedBikeId(bike.products.productid);
-                setData("bikeid_hidden", bike.products.productid);
+                setData("product_hidden", bike.products.productid);
             }}
         >
             <div className="card">
@@ -44,6 +44,9 @@ const Bike = ({ bikes,  auth, openModal }) => {
                     </p>
                     <p className="card-text">
                         <strong>Category:</strong> {bike.category}
+                    </p>
+                    <p className="card-text">
+                        <strong>Stock quantity:</strong> {bike.products.stockquantity}
                     </p>
                     <div className="form-group">
                         <label htmlFor={`quantity_${bike.productid}`}>
@@ -91,11 +94,11 @@ const Bike = ({ bikes,  auth, openModal }) => {
 
     return (
         <div>
-            
+
             <form onSubmit={submit}>
                 <div className="container">
                     <div className="row">{bikeList}</div>
-                    
+
                 </div>
             </form>
         </div>

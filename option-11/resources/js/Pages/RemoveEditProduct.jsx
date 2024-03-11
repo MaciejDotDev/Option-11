@@ -14,7 +14,7 @@ const RemoveEditProduct = ({ auth,products }) => {
         action: "",
         productprice: products.price,
         category: products.products.name,
-        
+
     });
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const RemoveEditProduct = ({ auth,products }) => {
         <div>
             <AdminNavbar auth={auth} />
             <h2 className="pt-3 text-center text-light h2">Remove/Edit Product</h2>
-          
+
             <div key={products.productid}>
             <Container className="mt-4 d-flex justify-content-center">
                 <Form className="rounded" onSubmit={submit}>
@@ -100,7 +100,7 @@ const RemoveEditProduct = ({ auth,products }) => {
                             </Col>
                         </Row>
                     <Row>
-                       
+
                         <Col md={6}>
                             <Form.Group controlId="formBasicProductPrice" className="mb-3">
                                 <Form.Label className="text-white">Product Price</Form.Label>
@@ -150,7 +150,7 @@ const RemoveEditProduct = ({ auth,products }) => {
             </Container>
 
             </div>
-        
+
         </div>
     );
 };

@@ -17,6 +17,7 @@ body {
     border-radius: 5px;
 }
 
+
 .backdrop {
     position: fixed;
     top: 0;
@@ -354,20 +355,20 @@ body {
     justify-content: center;
 }
 .arrowContainer {
- 
-  
 
-    
+
+
+
     display: flex;
     justify-content: center;
-  
-    
+
+
 }
 
 .arrowContainer.open {
- 
+
     transform: translate(0px, 340px);
-    
+
     transition: all 500ms ease-in-out;
 }
 
@@ -378,16 +379,16 @@ body {
 
 }
 .arrowContainer.closed {
- 
-   
+
+
 
     transition: all 500ms ease-in-out;
 }
 
 .arrowContainer:hover {
-  
+
     text-decoration: none;
- 
+
 }
 
 div.expand {
@@ -444,23 +445,26 @@ div.expand {
 
     }
     .editProducts {
-   
+
         font-size:0.6rem;
-        
+
+    }
+    .ordersTable{
+        font-size:0.6rem;
     }
 }
 
 @media (max-width: 1200px) {
     .editProducts {
-   
-    
+
+
         width: fit-content;
     }
     .editDescription {
 
         text-indent: 0.4em;
     }
-    
+
 }
 @media (max-width: 600px) {
     .dashboard-container {
@@ -475,7 +479,7 @@ div.expand {
     .dashboardContainer {
         margin: 2rem auto;
     }
-    
+
     .adminDashboard-container{
         display: block;
         max-width: 400px;
@@ -483,13 +487,20 @@ div.expand {
 
     }
     .editProducts {
-   
+
         font-size:0.4rem;
-       
-        
+
+
     }
-  
-  
+
+    .ordersTable {
+
+        font-size:0.3rem;
+
+
+    }
+
+
 }
 
 .dashboard-container > div {
@@ -613,3 +624,9 @@ div.expand {
     display: flex;
 }
 
+.ordersTable {
+
+    padding-top: 1rem;
+
+
+}

@@ -5,7 +5,7 @@ import { usePage } from '@inertiajs/react'
 const RepairKit = ({ repairKit, success,auth,openModal }) => {
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
-        repairkitsid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -13,13 +13,13 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasketRepairkit", data);
+        post("/addBasket", data);
     };
 
     const onClickPreventDefault= (e) => {
         openModal();
         e.preventDefault();
-        
+
       };
 
     const repairKitList = repairKit.map((kit) => (
@@ -29,7 +29,7 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
                 }`}
             onClick={() => {
                 setSelectedRepairKit(kit.products.productid);
-                setData("repairkitsid_hidden", kit.products.productid);
+                setData("product_hidden", kit.products.productid);
             }}
         >
             <div className="card">
@@ -62,13 +62,13 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
                 </div>
                 <div className="card-footer">
                 {auth.user ? (
-                     
+
                      <button type="submit" className="btn btn-dark text-dark">
                      Add to basket
                  </button>
-                          
+
                         ) : (
-                          
+
                             <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
                             Add to basket
                         </button>

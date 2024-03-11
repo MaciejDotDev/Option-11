@@ -5,7 +5,7 @@ import { usePage } from '@inertiajs/react'
 const BikePart = ({ bikePart,auth,openModal }) => {
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
-        bikepartid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -13,13 +13,13 @@ const BikePart = ({ bikePart,auth,openModal }) => {
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasketPart", data);
+        post("/addBasket", data);
     };
 
     const onClickPreventDefault= (e) => {
         openModal();
         e.preventDefault();
-        
+
       };
 
     const bikePartList = bikePart.map((part) => (
@@ -29,7 +29,7 @@ const BikePart = ({ bikePart,auth,openModal }) => {
                 }`}
             onClick={() => {
                 setSelectedBikePartId(part.products.productid);
-                setData("bikepartid_hidden", part.products.productid);
+                setData("product_hidden", part.products.productid);
             }}
         >
             <div className="card">
@@ -51,6 +51,10 @@ const BikePart = ({ bikePart,auth,openModal }) => {
                     <p className="card-text">
                         <strong>Compatible with:</strong> {part.CompatibleWithType}
                     </p>
+
+                    <p className="card-text">
+                        <strong>Stock quantity:</strong> {part.products.stockquantity}
+                    </p>
                     <div className="form-group">
                         <label htmlFor={`quantity_${part.products.bikepartsid}`}>Quantity</label>
                         <input
@@ -68,13 +72,13 @@ const BikePart = ({ bikePart,auth,openModal }) => {
                 </div>
                 <div className="card-footer">
                 {auth.user ? (
-                     
+
                      <button type="submit" className="btn btn-dark text-dark">
                      Add to basket
                  </button>
-                          
+
                         ) : (
-                          
+
                             <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
                             Add to basket
                         </button>

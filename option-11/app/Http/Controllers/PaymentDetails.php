@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\Orders;
 use App\Models\Basket;
 use App\Models\Products;
+use Stripe\Customer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\OrderItem;
@@ -39,9 +40,17 @@ class PaymentDetails extends Controller
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
+
         $basket = Basket::with('products')->where('userid', auth()->user()->userid)->where('status', 'open')->get();
         $lineItems = [];
+        $customer = Customer::create([
 
+            'email' => auth()->user()->email,
+
+
+
+
+        ]);
         foreach ($basket as $product) {
 
             $lineItems[] = [
@@ -62,35 +71,39 @@ class PaymentDetails extends Controller
         $session = \Stripe\Checkout\Session::create([
             'shipping_address_collection' => ['allowed_countries' => ['GB']],
             'line_items' => $lineItems,
+            'customer' => $customer->id,
+            "metadata" => array("cus_id" => $customer->id,"userid" =>auth()->user()->userid ),
             'mode' => 'payment',
             'success_url' => route('success') . "?session_id={CHECKOUT_SESSION_ID}",
-            'cancel_url' => route('basket'),
+            'cancel_url' => route('cancel') . "?session_id={CHECKOUT_SESSION_ID}",
         ]);
 
-        $total = Basket::where('userid', auth()->user()->userid)->where('status', 'open');
-        $order = new Orders();
-        $order->userid = auth()->user()->userid;
-        $order->trackingcode = "not provided yet";
-        $order->addressid =  null;
-        $order->sessionid = $session->id;
-        $order->totalprice = $total->sum('totalprice');
-        $order->status = "unpaid";
-        $order->save();
-        $basket = Basket::with('products')->where('userid', auth()->user()->userid)->where('status', 'open')->get();
-        foreach ($basket as $product) {
-            $orderItem = new OrderItem();
-            $orderItem->productid = $product->productid;
-            $orderItem->orderid = $order->orderid;
 
-            $orderItem->save();
 
-        }
+
+
+
+
         return Inertia::location($session->url);
 
 
 
 
 
+
+    }
+
+    public function cancel(Request $request) {
+
+
+        $sessionId = $request->get('session_id');
+
+
+
+       Orders::where('sessionid',  $sessionId)->delete();
+
+        Orders::where('addressid',   null  )->delete();
+        return Redirect::route('basket');
 
     }
 

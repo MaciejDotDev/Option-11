@@ -29,6 +29,7 @@ const DashboardCard = ({ cardName, children }) => {
                         "arrowContainer " + (dropdownstate ? "open" : "closed")
                     }
                 >
+
                     <FaCaretDown
                     className="arrowIcon"
                         fontSize="40px"

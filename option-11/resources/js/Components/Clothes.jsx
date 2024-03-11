@@ -5,7 +5,7 @@ import { usePage } from '@inertiajs/react'
 const Clothes = ({ clothes, success,auth,openModal }) => {
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
-        clothingid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -13,12 +13,12 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasketClothing", data);
+        post("/addBasket", data);
     };
     const onClickPreventDefault= (e) => {
         openModal();
         e.preventDefault();
-        
+
       };
 
     const clothesList = clothes.map((clothing) => (
@@ -28,15 +28,21 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
                 }`}
             onClick={() => {
                 setSelectedClothes(clothing.products.productid);
-                setData("clothingid_hidden", clothing.products.productid);
+                setData("product_hidden", clothing.products.productid);
             }}
         >
             <div className="card">
                 <div className="card-body">
                     <h5 className="card-title text-center h4">{clothing.products.productname}</h5>
-                    <p className="card-text">{clothing.products.description}</p>
+                    <p className="card-text">  <strong>Category:</strong>{clothing.category}</p>
+                    <p className="card-text">  <strong>Colour:</strong>{clothing.colour}</p>
+                    <p className="card-text">  <strong>Size:</strong>{clothing.size}</p>
+                    <p className="card-text">  <strong>Description:</strong>{clothing.products.description}</p>
                     <p className="card-text">
                         <strong>Price:</strong> £{clothing.products.price}
+                    </p>
+                    <p className="card-text">
+                        <strong>Stock quantity:</strong> {clothing.products.stockquantity}
                     </p>
                     <div className="form-group">
                         <label htmlFor={`quantity_${clothing.products.productid}`}>Quantity</label>
@@ -55,13 +61,13 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
                 </div>
                 <div className="card-footer">
                 {auth.user ? (
-                     
+
                      <button type="submit" className="btn btn-dark text-dark">
                      Add to basket
                  </button>
-                          
+
                         ) : (
-                          
+
                             <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
                             Add to basket
                         </button>

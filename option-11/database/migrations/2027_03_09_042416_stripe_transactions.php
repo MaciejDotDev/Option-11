@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-       
 
-        Schema::create('stripeTransactions', function (Blueprint $table) {
+
+        Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('stripeid')->unsigned();
             $table->unsignedBigInteger('orderid');
-            $table->foreign('orderid')->references('orderid')->on('orders');
+            $table->foreign('orderid')->references('orderid')->on('orders')->onDelete('cascade');
             $table->text('customerid');
-            $table->text('paymentMethod');
+            $table->text('paymentIntent');
+
             $table->text('status');
             $table->text('currency');
             $table->text('creation');
-          
+
         });
     }
 

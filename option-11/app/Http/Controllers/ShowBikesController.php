@@ -19,7 +19,7 @@ class ShowBikesController extends Controller
      *
      * @return void
      */
-    
+
 
     /**
      * Show the application dashboard.
@@ -38,8 +38,8 @@ public function showAll() {
 
 
 
-   
- 
+
+
 
     $bikes =  Bikes::with('products')->get();
 
@@ -47,7 +47,7 @@ public function showAll() {
     return Inertia::render('BikeProducts',['bikes' => $bikes]);
 
 
-  
+
 }
 
 public function addBasket(Request $request)
@@ -57,81 +57,94 @@ public function addBasket(Request $request)
 
     $validateInput = $request->validate([
         'quantity' => 'required|not_in:0',
-        
-        
+
+
 
     ]);
- 
+
     if ($validateInput) {
 
 
 
 
 
-         
-    $finditem =  Basket::where('userid', auth()->user()->userid)->first();
-    $basket = new Basket();
+        $stockCheck =  Products::find(request('product_hidden'));
 
-    $noRecords = false;
+        if ($stockCheck->stockquantity -request('quantity') >= 0  ) {
 
-    $stopLoop = true;
-
-    while ($stopLoop) {
-        if ($finditem  ==  null || $noRecords) { 
-
-
+            $finditem =  Basket::where('userid', auth()->user()->userid)->first();
             $basket = new Basket();
-            $basket->userid =  auth()->user()->userid;
-            $basket->productid = request('bikeid_hidden');
-            $basket->quantity =request('quantity');
-            
-            $bike = Products::where('productid',$basket->productid)->first();
-            $basket->totalprice = $basket->quantity * $bike->price;
-            $bike->stockquantity = $bike->stockquantity -  $basket->quantity;
-        
-            $basket->status = 'open';
-            $basket->save();
-            $stopLoop = false;
-            return redirect()->back()->with('success', "Item successfully added to basket!");
-    
+
+            $noRecords = false;
+
+            $stopLoop = true;
+
+            while ($stopLoop) {
+                if ($finditem  ==  null || $noRecords) {
+
+
+                    $basket = new Basket();
+                    $basket->userid =  auth()->user()->userid;
+                    $basket->productid = request('product_hidden');
+                    $basket->quantity =request('quantity');
+
+                    $bike = Products::where('productid',$basket->productid)->first();
+                    $basket->totalprice = $basket->quantity * $bike->price;
+
+
+                    $basket->status = 'open';
+                    $basket->save();
+
+                    $stopLoop = false;
+                    return redirect()->back()->with('success', "Item successfully added to basket!");
+
+                }
+
+                $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('product_hidden'))->first();
+
+
+                if ($record) {
+
+                    $record->quantity = request('quantity') + $record->quantity;
+                    $bike = Products::where('productid',request('product_hidden'))->first();
+                    $bike->stockquantity = $bike->stockquantity - request('quantity');
+                    $bike->save();
+                    $record->save();
+                    $stopLoop = false;
+                    return redirect()->back()->with('success', "Item successfully added to basket!");
+
+
+
+
+
+
+                } else {
+                    $noRecords =  true;
+
+                }
+
+            }
+        } else {
+
+            return redirect()->back()->with('success', "Not enough in stock!");
+
         }
-    
-        $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('bikeid_hidden'))->first();
-    
-    
-        if ($record) {
-    
-            $record->quantity = request('quantity') + $record->quantity;
-    
-            $record->save();
-            $stopLoop = false;
-            return redirect()->back()->with('success', "Item successfully added to basket!");
-    
-           
-    
-    
-    
-    
-        } else { 
-            $noRecords =  true;
-    
-        }
-
-    }
-
-    
 
 
 
 
 
-    
+
+
+
+
+
 }
 
-   
 
 
-  
+
+
 }
 
 

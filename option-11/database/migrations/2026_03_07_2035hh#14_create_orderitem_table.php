@@ -15,9 +15,10 @@ return new class extends Migration
             $table->bigIncrements('orderitemid')->unsigned();
             $table->unsignedBigInteger('productid');
             $table->foreign('productid')->references('productid')->on('products')->onDelete('cascade');
+            $table->integer('quantity');
             $table->unsignedBigInteger('orderid');
-            $table->foreign('orderid')->references('orderid')->on('orders');
-          
+            $table->foreign('orderid')->references('orderid')->on('orders')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

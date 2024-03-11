@@ -8,7 +8,7 @@ import Login from "@/Pages/Auth/Login";
 import AnimateModal from "@/Components/AnimateModal";
 import AddRemBasket from "@/Components/AddRemBasket";
 export default function Basket({ auth, basket, totalprice, bikes }) {
-    const { data, setData, post } = useForm({
+    const { data, setData, post,processing } = useForm({
         basketid: null,
     });
 
@@ -38,23 +38,24 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
 
                         <div className="basketClass">
                             {basket.length > 0 ? (
-                                <div>
+                                <div >
                                     {basket.map((item, index) => (
                                         <div className="basketitem" key={index}>
                                             <div
                                                 className={
                                                     index % 2 === 0 ? "" : ""
                                                 }
+                                                key={item.basketid}
                                             >
                                                 <div className="item-details">
-                                                    <h2 className="h2basket">
+                                                    <h2   className="h2basket">
                                                         {
                                                             bikes[index]
                                                                 .productname
                                                         }
                                                     </h2>
 
-                                                    <p>
+                                                    <p >
                                                         Price: £
                                                         {item.totalprice}
                                                     </p>
@@ -135,35 +136,40 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             )
                                                         }
                                                     >
+                                                        <div  >
+
                                                         <button
                                                             type="submit"
                                                             className="text-red-500 hover:underline"
                                                         >
                                                             Remove
                                                         </button>
+                                                        </div>
+
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
 
-                                    <div style={{width: "100%"}}>
-                                        <div className="total">
+
+
+                                    <div>
+                                        <div className="total" >
                                             <h2 className="h2basket">
                                                 Total Amount:
                                             </h2>
                                             <p>£{totalprice}</p>
                                         </div>
-                                        
-                                        <button
+
+                                        <a
+                                          disabled={processing}
                                             type="button"
-                                            onClick={() =>
-                                                Inertia.visit(route("addPayment"))
-                                            }
+                                            href={route("addPayment")}
                                             className="checkout-btn"
                                         >
                                             Go to Checkout
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             ) : (
@@ -175,7 +181,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                     </div>
                 </body>
 
-             
+
             </AnimateModal>
         </>
     );

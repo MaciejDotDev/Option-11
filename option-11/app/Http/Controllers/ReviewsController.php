@@ -20,7 +20,7 @@ class ReviewsController extends Controller
      *
      * @return void
      */
-    
+
 
     /**
      * Show the application dashboard.
@@ -36,7 +36,7 @@ class ReviewsController extends Controller
 
 
 public function showAll() {
-    $reviews = Reviews::orderBy('created_at', 'DESC')
+    $reviews = Reviews::with('user')->orderBy('created_at', 'DESC')
     ->get();
 
     $stars = Reviews::where('productid',13)->get();
@@ -49,7 +49,7 @@ public function showAll() {
         $starTotal[] =  $item->stars;
 
     }
-   if ($starTotal == null) 
+   if ($starTotal == null)
    {
 
     return Inertia::render('Test',['reviews' => $reviews]);
@@ -60,23 +60,23 @@ public function showAll() {
 
     return Inertia::render('Test',['reviews' => $reviews,'starsAvg' => $starsAvg,'commentsCount' => $commentsCount]);
 
- 
 
 
-  
+
+
 }
 
 
 
 
 public function createReview(Request $request) {
-    
- 
+
+
 
     $validateInput = $request->validate([
         'stars'=>'required|integer|between:1,5',
         'title'=>'required',
-   
+
         'description'=>'required'
 
 
@@ -92,10 +92,10 @@ public function createReview(Request $request) {
 
 if ($validateInput){
 
-  
+
 
         $review = new Reviews();
-        $review->userid =  auth()->user()->userid; 
+        $review->userid =  auth()->user()->userid;
         $review->title = $request->title;
         $review->description =$request->description;
         $review->stars =$request->stars;
@@ -105,7 +105,7 @@ if ($validateInput){
 
 
 
-  
+
 
 
 
@@ -118,14 +118,14 @@ if ($validateInput){
 
 
 
-  
+
 }
-  
-
-   
 
 
-  
+
+
+
+
 
 
 
