@@ -5,43 +5,49 @@ import { Head, Link, useForm } from '@inertiajs/react';
 
 
 
-const AdminLogin = ({ handleClose,auth }) => {
+const AdminLogin = ({ handleClose, auth }) => {
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        username: '',
-        password: '',
-      
-      });
-     
-    
-      useEffect(() => {
-        return () => {
-          reset('password');
-        };
-      }, []);
-    
-      const submit = (e) => {
-        e.preventDefault();
-    
-        post(route('adminLogin'));
-      };
-    
+  const { data, setData, post, processing, errors, reset } = useForm({
+    username: '',
+    password: '',
 
-    return (
-    
-     
-            <Container
-      className="d-flex align-items-center justify-content-center "
+  });
+
+
+  useEffect(() => {
+    return () => {
+      reset('password');
+    };
+  }, []);
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    post(route('adminLogin'));
+  };
+
+
+  return (
+
+
+    <Container
+      className="d-flex align-items-center justify-content-center flex-col"
       style={{ minHeight: '75vh' }}
     >
-     
+
+      <div className=" mb-10 text-center">
+        <h1 className=" text-white display-3">Admin Area</h1>
+        <p className=" mt-2 text-red-600">If you are not authorised to view this page, please leave now.</p>
+      </div>
+
+
       <Form
         className="p-5 rounded shadow-sm bg-dark text-light"
         onSubmit={submit}
       >
         <Head title="Log in" />
 
-      
+
 
         <div>
           <Form.Label>Username</Form.Label>
@@ -68,10 +74,10 @@ const AdminLogin = ({ handleClose,auth }) => {
           <Form.Text className="text-danger">{errors.password}</Form.Text>
         </div>
 
-        
+
 
         <div className="flex items-center justify-end mt-4">
-         
+
 
           <Button
             variant="primary"
@@ -84,9 +90,9 @@ const AdminLogin = ({ handleClose,auth }) => {
         </div>
       </Form>
     </Container>
-         
-    );
-  };
 
-  
-  export default AdminLogin;
+  );
+};
+
+
+export default AdminLogin;

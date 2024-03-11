@@ -14,7 +14,7 @@ const Login = ({ handleClose, auth }) => {
     //manipulate this to get different animations of pop in
     const dropIn = {
         hidden: {
-          y: "-100vh",
+            y: "-100vh",
             opacity: 0,
         },
         visible: {
@@ -41,7 +41,7 @@ const Login = ({ handleClose, auth }) => {
 
     const submit = (e) => {
         e.preventDefault();
-      
+
         post(route("login"));
     };
 
@@ -62,88 +62,96 @@ const Login = ({ handleClose, auth }) => {
                 exit="exit"
                 margin="auto"
             >
-             <Container>
-             <span class="close"  onClick={handleClose}>&times;</span>
-             <Form
-                    className="p-5 rounded shadow-sm bg-dark text-light"
-                    onSubmit={submit}
-                >
-                      
-                    <Head title="Log in" />
+                <Container>
+                    <span class="close" onClick={handleClose}>&times;</span>
+                    <Form
+                        className="p-5 rounded shadow-sm bg-dark text-light"
+                        onSubmit={submit}
+                    >
 
-                    <h2 className="pt-4 mb-4 text-center h2">Log in</h2>
+                        <Head title="Log in" />
 
-                    {status && (
-                        <div className="mb-4 text-sm font-medium text-green-600">
-                            {status}
+                        <h2 className="pt-4 mb-4 text-center h2">Log in</h2>
+
+                        {status && (
+                            <div className="mb-4 text-sm font-medium text-green-600">
+                                {status}
+                            </div>
+                        )}
+
+                        <div>
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={data.email}
+                                placeholder="hell"
+                                className="block w-full mt-1"
+                                autoComplete="username"
+                                onChange={(e) => setData("email", e.target.value)}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.email}
+                            </Form.Text>
                         </div>
-                    )}
 
-                    <div>
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            placeholder="hell"
-                            className="block w-full mt-1"
-                            autoComplete="username"
-                            onChange={(e) => setData("email", e.target.value)}
-                        />
-                        <Form.Text className="text-danger">
-                            {errors.email}
-                        </Form.Text>
-                    </div>
+                        <div className="mt-4">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={data.password}
+                                autoComplete="current-password"
+                                onChange={(e) =>
+                                    setData("password", e.target.value)
+                                }
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.password}
+                            </Form.Text>
+                        </div>
 
-                    <div className="mt-4">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            value={data.password}
-                            autoComplete="current-password"
-                            onChange={(e) =>
-                                setData("password", e.target.value)
-                            }
-                        />
-                        <Form.Text className="text-danger">
-                            {errors.password}
-                        </Form.Text>
-                    </div>
+                        <div className="block mt-4">
+                            <Form.Check
+                                type="checkbox"
+                                label="Remember me"
+                                name="remember"
+                                checked={data.remember}
+                                onChange={(e) =>
+                                    setData("remember", e.target.checked)
+                                }
+                            />
+                        </div>
 
-                    <div className="block mt-4">
-                        <Form.Check
-                            type="checkbox"
-                            label="Remember me"
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData("remember", e.target.checked)
-                            }
-                        />
-                    </div>
+                        <div className="flex items-center justify-end mt-4 gap-10">
+                            <div className=" flex flex-col">
+                                <Link
+                                    href="/register"
+                                    className="text-center link-info"
+                                >
+                                    Not Registered? Click here to sign-up!
+                                </Link>
+                                <Link
+                                    href="/adminLogin"
+                                    className=" text-center link-info mt-2"
+                                >
+                                    Staff? Click here to sign-in.
+                                </Link>
+                            </div>
 
-                    <div className="flex items-center justify-end mt-4">
-                        <Link
-                            href="/register"
-                            className="text-center link-info"
-                        >
-                            Not Registered? Click here to sign-up!
-                        </Link>
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                className="ms-4"
+                                disabled={processing}
+                            >
+                                Log in
+                            </Button>
+                        </div>
+                    </Form>
 
-                        <Button
-                            variant="primary"
-                            type="submit"
-                            className="ms-4"
-                            disabled={processing}
-                        >
-                            Log in
-                        </Button>
-                    </div>
-                </Form>
-                
-             </Container>
-               
+                </Container>
+
             </motion.div>
         </Backdrop>
     );
