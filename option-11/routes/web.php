@@ -17,16 +17,14 @@ use App\Http\Controllers\ShowRepairBookingController;
 use App\Http\Controllers\ShowOrdersController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminEditUsersController;
-use App\Http\Controllers\AdminAddProductsController;
-use App\Http\Controllers\AdminRemoveEditProductsController;
-use App\Http\Controllers\AdminReportsController;
-use App\Http\Controllers\AdminEditOrderController;
 use App\Http\Controllers\AdminEditProductsController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
+use App\Http\Controllers\AdminReportsController;
+use App\Http\Controllers\AdminEditOrderController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\AdminEditOrders;
-
+use App\Http\Controllers\AdminEditAddress;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,19 +108,14 @@ Route::group(['middleware' => ['admin']], function () {
 
 Route::get('/editOrder{orderid}', [AdminEditOrders::class, 'editOrder'])->name('editOrder');
 
+Route::post('/updateOrder', [AdminEditOrders::class, 'updateOrder'])->name('updateOrder');
+
 Route::get('/orders', [AdminEditOrders::class, 'show'])->name('orders');
 
-
+Route::get('/addressView{addressid}', [AdminEditAddress::class, 'show'])->name('addressView');
     Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
 
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
-    Route::get('/addProducts', [AdminAddProductsController::class, 'showAddProductsPage']);
-    Route::get('/removeEditProducts', [AdminRemoveEditProductsController::class, 'showRemoveEditProductsPage']);
-    Route::get('/reports', [AdminReportsController::class, 'showAdminReportsPage']);
-
-    Route::get('/editOrders', [AdminEditOrderController::class, 'showAdminEditOrderPage']);
-
-    
 
     Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
     Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');

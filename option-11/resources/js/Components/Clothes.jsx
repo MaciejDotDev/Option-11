@@ -23,8 +23,8 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
             filter === "All Clothes" || clothing.category === filter;
         const priceFilterCondition =
             priceFilter === "All Prices" ||
-            (clothing.price >= parseInt(priceFilter.split("-")[0], 10) &&
-                clothing.price <= parseInt(priceFilter.split("-")[1], 10));
+            (clothing.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                clothing.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
         return categoryFilter && priceFilterCondition;
     });
@@ -58,14 +58,23 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
             }}
         >
             <Card>
-                <Card.Img variant="top" src={clothing.imageURL} />
+                <Card.Img variant="top" src={clothing.products.imageURL} />
                 <Card.Body>
                     <Card.Title className="text-center h4">
-                        {clothing.productname}
+                        {clothing.products.productname}
                     </Card.Title>
-                    <Card.Text>{clothing.description}</Card.Text>
+                    <Card.Text>{clothing.products.description}</Card.Text>
                     <Card.Text>
-                        <strong>Price:</strong> £{clothing.price}
+                        <strong>Price:</strong> £{clothing.products.price}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Category:</strong> {clothing.category}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Colour:</strong> {clothing.colour}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Stock Quantity:</strong> {clothing.products.stockquantity}
                     </Card.Text>
                     <div className="form-group">
                         <label htmlFor={`quantity_${clothing.clothingid}`}>

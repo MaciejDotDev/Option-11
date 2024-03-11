@@ -22,8 +22,8 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
             filter === "All Bikes" || bike.category === filter;
         const priceFilterCondition =
             priceFilter === "All Prices" ||
-            (bike.price >= parseInt(priceFilter.split("-")[0], 10) &&
-                bike.price <= parseInt(priceFilter.split("-")[1], 10));
+            (bike.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                bike.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
         return categoryFilter && priceFilterCondition;
     });
@@ -64,14 +64,20 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
         >
             {/* <Card style={{ width: "28rem" }}> */}
             <Card>
-                <Card.Img variant="top" src={bike.imageURL} />
+                <Card.Img variant="top" src={bike.products.imageURL} />
                 <Card.Body>
                     <Card.Title className="text-center h4">
-                        {bike.productname}
+                        {bike.products.productname}
                     </Card.Title>
-                    <Card.Text>{bike.description}</Card.Text>
+                    <Card.Text>{bike.products.description}</Card.Text>
                     <Card.Text>
-                        <strong>Price:</strong> £{bike.price}
+                        <strong>Price:</strong> £{bike.products.price}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Category:</strong> {bike.category}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Stock Quantity:</strong> {bike.products.stockquantity}
                     </Card.Text>
                     <Card.Text>
                         <strong>Category:</strong> {bike.category}

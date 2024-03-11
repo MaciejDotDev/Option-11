@@ -47,6 +47,24 @@ class RepairKitsTableSeeder extends Seeder
             'CompatibleWithType' => 'All',
         ]);
 
+        RepairKit::create([
+            'productid' => $uniqueid[3],
+            'category' => 'Repair Kit',
+            'CompatibleWithType' => 'All',
+        ]);
+
+        RepairKit::create([
+            'productid' => $uniqueid[4],
+            'category' => 'Repair Kit',
+            'CompatibleWithType' => 'All',
+        ]);
+
+        RepairKit::create([
+            'productid' => $uniqueid[5],
+            'category' => 'Repair Kit',
+            'CompatibleWithType' => 'All',
+        ]);
+
    
 
       

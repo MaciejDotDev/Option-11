@@ -43,8 +43,8 @@ const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
             filter === "All Repair Kits" || kit.category === filter;
         const priceFilterCondition =
             priceFilter === "All Prices" ||
-            (kit.price >= parseInt(priceFilter.split("-")[0], 10) &&
-                kit.price <= parseInt(priceFilter.split("-")[1], 10));
+            (kit.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                kit.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
         return categoryFilter && priceFilterCondition;
     });
@@ -60,14 +60,14 @@ const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
             }}
         >
             <Card>
-                <Card.Img variant="top" src={kit.imageURL} />
+                <Card.Img variant="top" src={kit.products.imageURL} />
                 <Card.Body>
                     <Card.Title className="h4 text-center">
-                        {kit.productname}
+                        {kit.products.productname}
                     </Card.Title>
-                    <Card.Text>{kit.description}</Card.Text>
+                    <Card.Text>{kit.products.description}</Card.Text>
                     <Card.Text>
-                        <strong>Price:</strong> £{kit.price}
+                        <strong>Price:</strong> £{kit.products.price}
                     </Card.Text>
                     <Card.Text>
                         <strong>Category:</strong> {kit.category}

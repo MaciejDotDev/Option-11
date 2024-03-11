@@ -1,5 +1,5 @@
 import { InertiaLink } from "@inertiajs/inertia-react";
-import Clothes from "../components/Clothes"; // Import the Clothes component
+import Clothes from "@/Components/Clothes"; // Import the Clothes component
 
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";

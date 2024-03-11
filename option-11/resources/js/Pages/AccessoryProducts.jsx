@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
-import Accessory from "../components/Accessory";
+import Accessory from "@/Components/Accessory";
 import AnimateModal from "@/Components/AnimateModal";
 
 const AccessoryProducts = ({ auth, accessories }) => {

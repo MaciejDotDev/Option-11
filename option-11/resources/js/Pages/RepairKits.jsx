@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
-import RepairKit from "../components/RepairKit";
+import RepairKit from "@/Components/RepairKit";
 import AnimateModal from "@/Components/AnimateModal";
 
 const RepairKits = ({ auth, repairKit }) => {

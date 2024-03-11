@@ -2,7 +2,7 @@
 
 import { InertiaLink } from "@inertiajs/inertia-react";
 
-import Bike from "../components/Bike";
+import Bike from "@/Components/Bike";
 import Bik from "@/Components/Bik";
 
 import Form from "react-bootstrap/Form";

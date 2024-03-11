@@ -46,8 +46,8 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
             filter === "All Accessories" || accessory.category === filter;
         const priceFilterCondition =
             priceFilter === "All Prices" ||
-            (accessory.price >= parseInt(priceFilter.split("-")[0], 10) &&
-                accessory.price <= parseInt(priceFilter.split("-")[1], 10));
+            (accessory.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                accessory.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
         return categoryFilter && priceFilterCondition;
     });
@@ -55,7 +55,7 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
     // Array that will be used to store only unique accessories based on the product name.
     const distinctAccessories = [
         ...new Map(
-            filteredAccessories.map((item) => [item.productname, item])
+            filteredAccessories.map((item) => [item.products.productname, item])
         ).values(),
     ];
     const accessoryList = distinctAccessories.map((accessory) => (
@@ -74,14 +74,14 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
                     setData("accessoryid_hidden", accessory.accessoryid);
                 }}
             >
-                <Card.Img variant="top" src={accessory.imageURL} />
+                <Card.Img variant="top" src={accessory.products.imageURL} />
                 <Card.Body>
                     <Card.Title className="h4">
-                        {accessory.productname}
+                        {accessory.products.productname}
                     </Card.Title>
-                    <Card.Text>{accessory.description}</Card.Text>
+                    <Card.Text>{accessory.products.description}</Card.Text>
                     <Card.Text>
-                        <strong>Price:</strong> £{accessory.price}
+                        <strong>Price:</strong> £{accessory.products.price}
                     </Card.Text>
                     <Card.Text>
                         <strong>Category:</strong> {accessory.category}
@@ -91,6 +91,9 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
                     </Card.Text>
                     <Card.Text>
                         <strong>Colour:</strong> {accessory.colour}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Quantity:</strong> {accessory.products.stockquantity}
                     </Card.Text>
                     <div className="form-group">
                         <label htmlFor={`quantity_${accessory.accessoryid}`}>

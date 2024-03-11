@@ -43,8 +43,8 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
             filter === "All Parts" || part.category === filter;
         const priceFilterCondition =
             priceFilter === "All Prices" ||
-            (part.price >= parseInt(priceFilter.split("-")[0], 10) &&
-                part.price <= parseInt(priceFilter.split("-")[1], 10));
+            (part.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                part.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
         return categoryFilter && priceFilterCondition;
     });
@@ -59,12 +59,12 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
             }}
         >
             <Card>
-                <Card.Img variant="top" src={part.imageURL} />
+                <Card.Img variant="top" src={part.products.imageURL} />
                 <Card.Body>
                     <h5 className="text-center card-title h4">
-                        {part.productname}
+                        {part.products.productname}
                     </h5>
-                    <p className="card-text">{part.description}</p>
+                    <p className="card-text">{part.products.description}</p>
                     <p className="card-text">
                         <strong>Price:</strong> £{part.products.price}
                     </p>

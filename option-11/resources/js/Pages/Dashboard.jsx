@@ -4,7 +4,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
-import Button from "@mui/material/Button";
+import Button from "react-bootstrap/Button";
 
 export default function Dashboard({ auth, baskIcon }) {
     const handleDeleteConfirmation = (e) => {
