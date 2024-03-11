@@ -9,7 +9,7 @@ const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        repairkitsid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 

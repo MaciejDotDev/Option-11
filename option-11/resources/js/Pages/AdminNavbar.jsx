@@ -22,55 +22,37 @@ const AdminNavbar = ({ auth, openModal }) => {
                             <NavDropdown.Item href={route('adminReports')}>Reports</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Users" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href={route('adminUsers')}>View users</NavDropdown.Item>
                             <NavDropdown.Item href={route('addProduct')}>Add user</NavDropdown.Item>
-                            
+                            <NavDropdown.Item href={route('adminUsers')}>View users</NavDropdown.Item>
+
+                            <NavDropdown.Item href={route('adminUsers')}>Manage addresses</NavDropdown.Item>
+
+
                         </NavDropdown>
                         <NavDropdown title="Products" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href={route('addProduct')}>   Add Products</NavDropdown.Item>
+                            <NavDropdown.Item href={route('addProduct')}> Add Products</NavDropdown.Item>
+                            <NavDropdown.Item href={route('addProduct')}>View Stock</NavDropdown.Item>
                             <NavDropdown.Item href={route('adminProducts')}>View products</NavDropdown.Item>
-                            <NavDropdown.Item href={route('products')}> Remove/Edit Product</NavDropdown.Item>
-                            <NavDropdown.Item href={route('products')}> Add category</NavDropdown.Item>
-                            
+
+
+
                         </NavDropdown>
 
                         <NavDropdown title="Orders" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href={route('adminUsers')}> View orders</NavDropdown.Item>
+                            <NavDropdown.Item href={route('orders')}> View orders</NavDropdown.Item>
                             <NavDropdown.Item href={route('products')}>Manage products</NavDropdown.Item>
                             <NavDropdown.Item href={route('products')}> Remove/Edit Product</NavDropdown.Item>
-                            
+
                         </NavDropdown>
-                        
+
                         <Nav.Link
-<<<<<<< HEAD
-                            className="text-grey  "
-                            href={route("adminEditUsers")}
+                            className="px-4 text-black bg-info rounded-2 "
+                            href="/adminLogout"
                         >
-                            Manage users
-                        </Nav.Link>
-                        <Nav.Link
-                            className="text-grey  "
-                            href="/addproduct"
-                        >
-                            Add Product
-                        </Nav.Link>
-                        <Nav.Link
-                            className="text-grey  "
-                            href="/aboutus"
-                        >
-                            Remove/Edit Product
+                            Logout
                         </Nav.Link>
 
 
-=======
-                                    className="px-4 text-black bg-info rounded-2 "
-                                    href="/adminLogout"
-                                >
-                                    Logout
-                                </Nav.Link>
-                   
-                        
->>>>>>> dff58cfa8409bec97d6cb4bdbc29964178bb75db
                     </Nav>
                 </Navbar.Collapse>
             </Container>

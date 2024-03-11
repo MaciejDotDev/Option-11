@@ -12,7 +12,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
     const [bikeQuantities, setBikeQuantities] = useState({});
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        bikeid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -59,7 +59,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
             className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
                 setSelectedBikeId(bike.products.productid);
-                setData("bikeid_hidden", bike.products.productid);
+                setData("product_hidden", bike.products.productid);
             }}
         >
             {/* <Card style={{ width: "28rem" }}> */}

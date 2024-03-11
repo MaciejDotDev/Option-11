@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Bikes;
 class Basket extends Model
 {
- 
+
     protected $primaryKey = 'basketid';
     protected $connection = 'mysql';
 
@@ -33,7 +33,7 @@ class Basket extends Model
         'totalprice',
         'status',
 
-        
+
     ];
-    
+
 }

@@ -1,210 +1,78 @@
-import { useState, useEffect } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import AdminNavbar from "@/Pages/AdminNavbar";
+import { Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+
 import InputError from "@/Components/InputError";
 
-const EditOrderDetails = ({ auth }) => {
-    const [searchOrderId, setSearchOrderId] = useState("");
-    const [searchedOrder, setSearchedOrder] = useState(null);
-    const [data, setData] = useState({
-        orderId: "",
-        customerName: "",
-        productQuantity: "",
-        deliveryStatus: "",
+import AdminNavbar from "@/Pages/AdminNavbar";
+
+const AdminEditOrder = ({ auth, orders }) => {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        orderid: orders.productid,
+        trackingcode: orders.trackingcode,
+        addressid: orders.addressid,
+        totalPrice: orders.totalprice,
+        status: orders.status,
+        category: orders.products,
+        transactionid: orders.transaction.paymentIntent,
+        customerId: orders.transaction.customerid,
     });
 
-    // Sample data for testing
-    const sampleOrdersData = [
-        {
-            orderId: "123456",
-            customerName: "John Doe",
-            productQuantity: 3,
-            deliveryStatus: "notDelivered",
-            trackingCode: "No tracking code",
-        },
-        {
-            orderId: "789012",
-            customerName: "Jane Smith",
-            productQuantity: 2,
-            deliveryStatus: "delivered",
-            trackingCode: "PG-GTRG6EDS",
-        },
-        {
-            orderId: "345678",
-            customerName: "Bob Johnson",
-            productQuantity: 5,
-            trackingCode: "No tracking code",
-        },
-    ];
-
-    // I did this just to implement the appearning functionality one the user searches.
-    // If you're doing backend feel free to delete the sample data and fetch from backend.
-    const handleOrderSearch = async (e) => {
-        e.preventDefault();
-        try {
-            // Checking if the searched order ID matches one that exists.
-            const searchedOrder = sampleOrdersData.find(
-                (order) => order.orderId === searchOrderId
+    useEffect(() => {
+        return () => {
+            reset(
+                "productId",
+                "productSearchName",
+                "productName",
+                "productDescription",
+                "productQuantity",
+                "productPrice"
             );
+        };
+    }, []);
 
-            if (searchedOrder) {
-                // Setting the fetched order details to the state.
-                setSearchedOrder(searchedOrder);
-                setData(searchedOrder); // Setting the form data to the searched order.
-            } else {
-                setSearchedOrder(null);
-                setData({
-                    orderId: "",
-                    customerName: "",
-                    productQuantity: "",
-                    deliveryStatus: "",
-                    trackingCode: searchedOrder.trackingCode || "",
-                });
-            }
-        } catch (error) {
-            console.error("Error fetching order details:", error);
-        }
-    };
+    // I made these so that if the admin types in one, the other cannot be active.
 
     const submit = (e) => {
         e.preventDefault();
-        // Implement the logic to update order details
-        console.log("Updated Order Details:", data);
-    };
-
-    // Clears the form
-    const handleClear = () => {
-        setSearchedOrder(null);
-        setSearchOrderId("");
-        setData({
-            orderId: "",
-            customerName: "",
-            productQuantity: "",
-            deliveryStatus: "",
-        });
+        post(route("remEditProduct"));
     };
 
     return (
         <div>
             <AdminNavbar auth={auth} />
-            <h2 className="text-light h2 text-center pt-3">
-                Edit Order Details
-            </h2>
+            <h2 className="pt-3 text-center text-light h2">View/Edit Order</h2>
 
-            <Container className="d-flex justify-content-center mt-4">
-                <Form className="rounded" onSubmit={handleOrderSearch}>
-                    <Row>
-                        <Col md={6}>
-                            <Form.Group
-                                controlId="formBasicSearchOrderId"
-                                className="mb-3"
-                            >
-                                <Form.Label className="text-white">
-                                    Search Order ID
-                                </Form.Label>
-                                <Form.Control
-                                    id="searchOrderId"
-                                    name="searchOrderId"
-                                    value={searchOrderId}
-                                    className="mt-1 form-control-lg"
-                                    autoComplete="searchOrderId"
-                                    onChange={(e) =>
-                                        setSearchOrderId(e.target.value)
-                                    }
-                                    required
-                                    style={{ width: "20rem" }}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Col md={6} className="align-self-end">
-                        <Button
-                            className="text-white"
-                            variant="info"
-                            type="submit"
-                        >
-                            Search Order
-                        </Button>
-                    </Col>
-                </Form>
-            </Container>
-
-            <Container className="d-flex justify-content-center mt-4">
-                {/* Displays the order details in their corresponding fields once searched. */}
-                {searchedOrder && (
+            <div key={orders.productid}>
+                <Container className="mt-4 d-flex justify-content-center">
                     <Form className="rounded" onSubmit={submit}>
                         <Row>
                             <Col md={6}>
                                 <Form.Group
-                                    controlId="formBasicOrderId"
+                                    controlId="formBasicProductName"
                                     className="mb-3"
                                 >
                                     <Form.Label className="text-white">
-                                        Order ID
+                                        Tracking code
                                     </Form.Label>
                                     <Form.Control
-                                        id="orderId"
-                                        name="orderId"
-                                        value={data.orderId}
+                                        id="productname"
+                                        name="productname"
+                                        value={data.trackingcode}
                                         className="mt-1 form-control-lg"
-                                        autoComplete="orderId"
-                                        disabled
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col md={6}>
-                                <Form.Group
-                                    controlId="formBasicCustomerName"
-                                    className="mb-3"
-                                >
-                                    <Form.Label className="text-white">
-                                        Customer Name
-                                    </Form.Label>
-                                    <Form.Control
-                                        id="customerName"
-                                        name="customerName"
-                                        value={data.customerName}
-                                        className="mt-1 form-control-lg"
-                                        autoComplete="customerName"
+                                        autoComplete="productName"
                                         onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                customerName: e.target.value,
-                                            })
+                                            setData(
+                                                "productname",
+                                                e.target.value
+                                            )
                                         }
                                         required
                                         style={{ width: "20rem" }}
                                     />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col md={6}>
-                                <Form.Group
-                                    controlId="formBasicProductQuantity"
-                                    className="mb-3"
-                                >
-                                    <Form.Label className="text-white">
-                                        Product Quantity
-                                    </Form.Label>
-                                    <Form.Control
-                                        id="productQuantity"
-                                        name="productQuantity"
-                                        value={data.productQuantity}
-                                        className="form-control-lg"
-                                        autoComplete="productQuantity"
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                productQuantity: e.target.value,
-                                            })
-                                        }
-                                        required
-                                        style={{ width: "10rem" }}
+                                    <InputError
+                                        message={errors.productname}
+                                        className="mt-2"
                                     />
                                 </Form.Group>
                             </Col>
@@ -213,103 +81,145 @@ const EditOrderDetails = ({ auth }) => {
                         <Row>
                             <Col md={6}>
                                 <Form.Group
-                                    controlId="formBasicTrackingCode"
+                                    controlId="formBasicProductDescription"
                                     className="mb-3"
                                 >
                                     <Form.Label className="text-white">
-                                        Tracking Code
+                                        Total Price
                                     </Form.Label>
                                     <Form.Control
-                                        id="trackingCode"
-                                        name="trackingCode"
-                                        value={data.trackingCode}
+                                        id="productdescription"
+                                        name="productdescription"
+                                        value={data.totalPrice}
                                         className="form-control-lg"
-                                        autoComplete="trackingCode"
+                                        autoComplete="productdescription"
                                         onChange={(e) =>
                                             setData(
-                                                "trackingCode",
+                                                "productdescription",
                                                 e.target.value
                                             )
                                         }
-                                        style={{ width: "15rem" }}
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.productdescription}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6}>
+                                <Form.Label className="text-white">
+                                    Status
+                                </Form.Label>
+                                <Form.Select
+                                    className="form-control-lg"
+                                    onChange={(e) =>
+                                        setData("status", e.target.value)
+                                    }
+                                    value={data.status}
+                                >
+                                    <option value="unpaid">Unpaid</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="dispatched">
+                                        Dispatched
+                                    </option>
+                                    <option value="delivered">Delivered</option>
+                                </Form.Select>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group
+                                    controlId="formBasicProductPrice"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Customer ID
+                                    </Form.Label>
+                                    <Form.Control
+                                        id="productprice"
+                                        name="productprice"
+                                        value={data.customerId}
+                                        className="form-control-lg"
+                                        autoComplete="productprice"
+                                        onChange={(e) =>
+                                            setData(
+                                                "productprice",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+
+                                    />
+                                    <InputError
+                                        message={errors.productprice}
+                                        className="mt-2"
                                     />
                                 </Form.Group>
                             </Col>
                         </Row>
 
                         <Row>
-                            <Col md={6}>
+                            <Col>
                                 <Form.Group
-                                    controlId="formBasicDeliveryStatus"
+                                    controlId="formBasicProductPrice"
                                     className="mb-3"
                                 >
                                     <Form.Label className="text-white">
-                                        Delivery Status
+                                        Transaction id
                                     </Form.Label>
                                     <Form.Control
-                                        as="select"
-                                        id="deliveryStatus"
-                                        name="deliveryStatus"
-                                        value={data.deliveryStatus}
+                                        id="productprice"
+                                        name="productprice"
+                                        value={data.transactionid}
                                         className="form-control-lg"
-                                        autoComplete="deliveryStatus"
+                                        autoComplete="productprice"
                                         onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                deliveryStatus: e.target.value,
-                                            })
+                                            setData(
+                                                "productprice",
+                                                e.target.value
+                                            )
                                         }
                                         required
-                                        style={{ width: "15rem" }}
-                                    >
-                                        <option value="delivered">
-                                            Delivered
-                                        </option>
-                                        <option value="notDelivered">
-                                            Not Delivered
-                                        </option>
-                                        <option value="dispatched">
-                                            Dispatched
-                                        </option>
-                                    </Form.Control>
+                                    />
+                                    <InputError
+                                        message={errors.productprice}
+                                        className="mt-2"
+                                    />
                                 </Form.Group>
                             </Col>
                         </Row>
 
-                        {/* Clear Button to clear all data */}
-                        <Row className="mb-4 d-flex justify-content-center">
-                            <Col md={6}>
-                                <Form.Group
-                                    controlId="formBasicClear"
-                                    className="mb-3"
+                        <Row className="mb-4">
+                            <Col className="mt-2" md={6}>
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    className="mt-2 "
+                                    disabled={processing}
+                                    onClick={(e) => setData("action", "update")}
                                 >
-                                    <Button
-                                        variant="secondary"
-                                        onClick={handleClear}
-                                        disabled={!searchedOrder}
-                                    >
-                                        Clear
-                                    </Button>
-                                </Form.Group>
+                                    Update Order
+                                </Button>
                             </Col>
-                        </Row>
-
-                        {/* Submit Button (Updates Order Details) */}
-                        <Row className="mb-4 d-flex justify-content-center">
-                            <Col md={6}>
-                                <Form.Group
-                                    controlId="formBasicSubmit"
-                                    className="mb-3"
+                            <Col className="mt-2" md={6}>
+                                <Button
+                                    variant="danger"
+                                    type="submit"
+                                    className="mt-2"
+                                    disabled={processing}
+                                    onClick={(e) => setData("action", "remove")}
                                 >
-                                    <Button variant="primary" type="submit">
-                                        Update Order
-                                    </Button>
-                                </Form.Group>
+                                    Remove Order
+                                </Button>
                             </Col>
                         </Row>
                     </Form>
-                )}
-            </Container>
+                </Container>
+            </div>
         </div>
     );
 };

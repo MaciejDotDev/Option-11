@@ -19,7 +19,7 @@ class AdminEditProductsController extends Controller
 
         if (request('action') == "update") {
             logger($request->all());
-            $this->update($request->productid,$request->productname,$request->productdescription,$request->productprice,$request->category);
+            $this->update($request);
             return Redirect::route('adminProducts');
 
         } else if (request('action') == "remove") {
@@ -32,7 +32,7 @@ class AdminEditProductsController extends Controller
            return Redirect::route('adminProducts');
         }
 
-     
+
 
 
 
@@ -41,27 +41,39 @@ class AdminEditProductsController extends Controller
 
     public function delete($productid) {
 
-        
+
 
         $product = Products::where('productid', $productid);
-    
+
         $product->delete();
 
-       
+
 
     }
 
 
-public function update($productid,$productname,$description,$price,$category) {
+public function update(Request $request) {
 
-    $cat =  $category =  Categories::where('name',$category)->first();
-    Products::where('productid',$productid)->update([
-        'productname' => $productname,
-        'description' => $description,
-        'price' => $price,
+    $validateInput = $request->validate([ //need to improve the validation amongst all controllers forms
+        'productname' => 'required',
+        'productdescription' => 'required',
+        'category' => 'required',
+        'productprice' => 'required|numeric|not_in:0',
+
+
+
+
+    ]);
+
+
+    $cat =  Categories::where('name',$request->category)->first();
+    Products::where('productid',$request->productid)->update([
+        'productname' => $request->productname,
+        'description' => $request->productdescription,
+        'price' => $request->productprice,
         'categoryid' => $cat->categoryid,
-    
-       
+
+
 
 
 
@@ -70,7 +82,7 @@ public function update($productid,$productname,$description,$price,$category) {
 
 }
     public function updateShow (Request $request,$productid) {
-    
+
 
  $products = Products::with('products')->where('productid',$productid)->first();
         return Inertia::render('RemoveEditProduct', ['products' => $products]);
@@ -78,8 +90,8 @@ public function update($productid,$productname,$description,$price,$category) {
 
 
     public function create (Request $request) {
-   
-      
+
+
         $validateInput = $request->validate([ //need to improve the validation amongst all controllers forms
             'productname' => 'required',
             'productdescription' => 'required',
@@ -88,17 +100,17 @@ public function update($productid,$productname,$description,$price,$category) {
             'imageURL' => 'required|not_in:0',
             'stockquantity' => 'required|numeric|not_in:0',
 
-            
-            
-    
+
+
+
         ]);
-     
+
         if ($validateInput) {
 
             $product = new Products();
            $category =  Categories::where('name', request('category'))->first();
-      
-            
+
+
                 $product->productname =request('productname');
                 $product->categoryid =  $category->categoryid;
                 $product->description =request('productdescription');
@@ -108,8 +120,8 @@ public function update($productid,$productname,$description,$price,$category) {
                 $product->save();
 
                 return Redirect::route('adminProducts');
-    
+
     }
     }
-    
+
 }

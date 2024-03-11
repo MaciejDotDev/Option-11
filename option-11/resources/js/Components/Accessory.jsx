@@ -8,7 +8,7 @@ import { InertiaLink } from "@inertiajs/inertia-react";
 const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
-        accessoryid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -66,8 +66,8 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
         >
             <Card
                 className={`text-center ${selectedAccessory === accessory.accessoryid
-                        ? "selected-accessory"
-                        : ""
+                    ? "selected-accessory"
+                    : ""
                     }`}
                 onClick={() => {
                     setSelectedAccessory(accessory.accessoryid);

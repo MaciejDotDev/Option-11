@@ -10,8 +10,4 @@ class AdminEditOrderController extends Controller
     {
         return Inertia::render('AdminEditOrder');
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> dff58cfa8409bec97d6cb4bdbc29964178bb75db

@@ -11,7 +11,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
 
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
-        clothingid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -54,7 +54,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
             className={`col-lg-4 col-md-6 mb-4`}
             onClick={() => {
                 setSelectedClothes(clothing.products.productid);
-                setData("clothingid_hidden", clothing.products.productid);
+                setData("product_hidden", clothing.products.productid);
             }}
         >
             <Card>

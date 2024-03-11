@@ -24,7 +24,7 @@ class ManageBasketController extends Controller
 {
     protected $bikes;
     protected  $basket;
- 
+
 
     public function search()
     {
@@ -37,7 +37,7 @@ class ManageBasketController extends Controller
         $this->bikes = [];
         foreach ($this->basket as $item) {
 
-            
+
             $this->bikes[] = Products::where('productid', $item->productid)->first();
         }
 
@@ -61,10 +61,10 @@ class ManageBasketController extends Controller
 
          $bikes = Products::where('productid', $item->productid)->first();
 
-       
+
 
                 $basket->totalprice = $basket->quantity * $bikes->price;
-       
+
 
         }
     }
@@ -81,20 +81,26 @@ class ManageBasketController extends Controller
 
             $basket->delete();
 
-            
+
 
             return Redirect::route('basket');
 
         } else if ($request->action == "add") {
 
 
+
             $basket = Basket::where('basketid', $request->input('basketid'))->first();
+            $bikes = Products::where('productid', $basket->productid)->first();
+            if ($bikes->stockquantity - $basket->quantity <= 0 ) {
+                return Redirect::route('basket');
 
 
+            }
 
             $basket->quantity =  $basket->quantity + 1;
 
-            $this->update($basket);
+
+  $basket->totalprice  = $basket->totalprice + $bikes->price;
             $basket->save();
 
             return Redirect::route('basket');
@@ -117,7 +123,9 @@ class ManageBasketController extends Controller
 
                 $basket->quantity =  $basket->quantity - 1;
 
-                $this->update($basket);
+                $bikes = Products::where('productid', $basket->productid)->first();
+
+                $basket->totalprice  = $basket->totalprice - $bikes->price;
 
 
                 $basket->save();

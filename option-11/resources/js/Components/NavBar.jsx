@@ -78,7 +78,7 @@ const NavBar = ({ auth, openModal }) => {
                             <>
                                 <Nav.Link className="px-4 position-relative" href="/basket">
                                     <div>{itemBasket()}</div>
-                                    
+
                                     <Image
                                         src={basketIcon}
                                         rounded

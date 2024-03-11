@@ -9,7 +9,7 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        bikepartid_hidden: "",
+        product_hidden: "",
         quantity: "",
     });
 
@@ -55,7 +55,7 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
             className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
                 setSelectedBikePartId(part.products.productid);
-                setData("bikepartid_hidden", part.products.productid);
+                setData("product_hidden", part.products.productid);
             }}
         >
             <Card>
@@ -80,6 +80,10 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
                     <p className="card-text">
                         <strong>Compatible with:</strong>{" "}
                         {part.CompatibleWithType}
+                    </p>
+
+                    <p className="card-text">
+                        <strong>Stock quantity:</strong> {part.products.stockquantity}
                     </p>
                     <div className="form-group">
                         <label htmlFor={`quantity_${part.bikepartsid}`}>
