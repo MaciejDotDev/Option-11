@@ -7,6 +7,7 @@ import { HSquareFill } from "react-bootstrap-icons";
 import { Link } from "@inertiajs/react";
 import AdminNavbar from "@/Pages/AdminNavbar";
 import { useState } from "react";
+import Pagination from "react-bootstrap/Pagination";
 
 const AdminEditUsers = ({ users }) => {
     // The search criteria that can be used to search a user.
@@ -66,8 +67,8 @@ const AdminEditUsers = ({ users }) => {
     return (
         <div>
             <AdminNavbar />
-            <div className="container">
-                <div className="flex justify-center items-center my-6">
+            <div className="container flex flex-col items-center">
+                <div className="my-6">
                     <input
                         type="text"
                         placeholder="Search by name"
@@ -88,12 +89,14 @@ const AdminEditUsers = ({ users }) => {
                     </thead>
                     <tbody>{bikePartList}</tbody>
                 </table>
-                <a
-                    className="text-center bg-blue-500 text-white px-4 py-2 rounded-md"
-                    href="users/export/"
-                >
-                    Export
-                </a>
+                <div className="my-6">
+                    <a
+                        className="text-center bg-blue-500 text-white px-4 py-2 rounded-md"
+                        href="users/export/"
+                    >
+                        Export
+                    </a>
+                </div>
             </div>
         </div>
     );
