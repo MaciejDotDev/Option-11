@@ -73,9 +73,6 @@ Route::post('update', [ManageAccount::class, 'update'])->name('update');
 
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::get('/addresses', function () {
@@ -186,6 +183,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('deleteAccount', [ManageAccount::class, 'destroy'])
         ->name('deleteAccount');
+
+        Route::get('/dashboard', [ManageAccount::class, 'create'])
+        ->name('dashboard');
     Route::get('/basket', [ManageBasketController::class, 'search'])->name('basket');
     Route::match(['get', 'post'], '/addBasket', 'App\Http\Controllers\ShowBikesController@addBasket')->name('addBasket');
     Route::match(['get', 'post'], '/addBasketPart', 'App\Http\Controllers\ShowBikePartsController@addBasket')->name('addBasketPart');

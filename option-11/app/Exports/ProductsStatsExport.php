@@ -95,6 +95,22 @@ class ProductsStatsExport implements FromCollection
         ->limit(1)
         ->get("productname");
 
+
+        $mostsoldCategory = ProductHistory::select('category')
+        ->groupBy('category')
+        ->orderByRaw('COUNT(*) DESC')
+        ->limit(1)
+        ->get("productname");
+        $leastsoldCategory = ProductHistory::select('category')
+        ->groupBy('category')
+        ->orderByRaw('COUNT(*) ASC')
+        ->limit(1)
+        ->get("productname");
+
+
+        $soldCategory = json_decode($mostsoldCategory, true);
+        $leastcategory = json_decode($leastsoldCategory, true);
+
         $soldproduct = json_decode($mostsoldProduct, true);
         $leastproduct = json_decode($leastsoldProduct, true);
         $avarage2024 = $totalsold2024 / 12;
@@ -109,7 +125,7 @@ class ProductsStatsExport implements FromCollection
             $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of created accounts in $lastYear"], [$months], [$amountproductsold2023]);
             return $data;
         }
-        $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of created accounts in $lastYear"], [$months], [$amountproductsold2023], ["most sold product:"], [ $soldproduct[0]['productname']], ["least sold product:"],[$leastproduct[0]['productname']], ["total products sold in $lastYear:"], [ $totalsold2023],["total sold in $currentYear"],[$totalsold2024],["increase of products sold from $lastYear and $currentYear"],[ "$avarageToString%"] );
+        $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of created accounts in $lastYear"], [$months], [$amountproductsold2023], ["most sold product:"], [ $soldproduct[0]['productname']], ["least sold product:"],[$leastproduct[0]['productname']], ["total products sold in $lastYear:"], [ $totalsold2023],["total sold in $currentYear"],[$totalsold2024],["increase of products sold from $lastYear and $currentYear"],[ "$avarageToString%"], ["most sold category of product:"], [$soldCategory[0]['category']], ["least sold category:"],[ $leastcategory[0]['category'] ] );
         return $data;
 
     }
