@@ -5,7 +5,10 @@ import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
 import Button from "@mui/material/Button";
-
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
 export default function Dashboard({ auth, baskIcon }) {
     const handleDeleteConfirmation = (e) => {
         if (window.confirm("Are you sure you wish to delete your account?")) {
@@ -20,28 +23,117 @@ export default function Dashboard({ auth, baskIcon }) {
             <AnimateModal auth={auth} baskIcon={baskIcon}>
                 <div className="dashboard-groups">
                     <div className="dashboard-container">
-                        <DashboardCard cardName="My orders">
-                            <Link
-                                href={route("updateAccount")}
-                                className="text-white btn btn-dark"
-                                style={{
+                        <DashboardCard cardName="My orders" style={{}}>
+                            <List
+                                sx={{
                                     width: "100%",
-                                    textAlign: "left",
-                                }}
-                            >
-                                Track my order
-                            </Link>
+                                    maxWidth: 560,
+                                    bgcolor: "#212529",
 
-                            <Button
-                                href={route("updateAccount")}
-                                className="text-white btn btn-dark"
-                                style={{
-                                    width: "100%",
-                                    textAlign: "left",
+                                    overflow: "auto",
+                                    maxHeight: 200,
                                 }}
+                                subheader={<li />}
                             >
-                                View my orders
-                            </Button>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                                <div style={{   backgroundColor: "#212529", }}>
+                                <h5 className="h2basket">
+                                   Product
+                                </h5>
+                                <p>Tracking Code: </p>
+                                <p>Total Price: </p>
+
+                                <p style={{
+                                    fontSize:"10px",
+
+                                    color: "grey"
+                                 }}>Total Price: </p>
+
+                                </div>
+                            </List>
                         </DashboardCard>
                         <DashboardCard cardName="My account">
                             <div style={{}}>
@@ -49,8 +141,10 @@ export default function Dashboard({ auth, baskIcon }) {
                                     href={route("updateAccount")}
                                     className="text-white btn btn-dark"
                                     style={{
+                                        justifyContent: "flex-start",
                                         width: "100%",
                                         textAlign: "left",
+                                        marginBottom: "1rem",
                                     }}
                                 >
                                     Personal information
@@ -60,9 +154,10 @@ export default function Dashboard({ auth, baskIcon }) {
                                     href={route("addresses")}
                                     className="text-white btn btn-dark"
                                     style={{
-                                        margin: "0.5rem auto",
+                                        justifyContent: "flex-start",
                                         width: "100%",
                                         textAlign: "left",
+                                        marginBottom: "1rem",
                                     }}
                                 >
                                     Manage my addresses
@@ -71,9 +166,10 @@ export default function Dashboard({ auth, baskIcon }) {
                                     href={route("logout")}
                                     className="text-warning btn btn-dark"
                                     style={{
-                                        margin: "0.5rem auto",
+                                        justifyContent: "flex-start",
                                         width: "100%",
                                         textAlign: "left",
+                                        marginBottom: "1rem",
                                     }}
                                 >
                                     Logout
@@ -82,9 +178,10 @@ export default function Dashboard({ auth, baskIcon }) {
                                     href={route("logout")}
                                     className="text-danger btn btn-dark"
                                     style={{
-                                        margin: "0.5rem auto",
+                                        justifyContent: "flex-start",
                                         width: "100%",
                                         textAlign: "left",
+                                        marginBottom: "1rem",
                                     }}
                                 >
                                     Delete account
@@ -93,7 +190,118 @@ export default function Dashboard({ auth, baskIcon }) {
                         </DashboardCard>
                     </div>
                     <div className="dashboard-container">
-                        <DashboardCard cardName="Wishlist"></DashboardCard>
+                        <DashboardCard cardName="Wishlist"> <List style={{
+
+                         }}
+                                sx={{
+                                    width: "100%",
+                                    maxWidth: 560,
+                                    bgcolor: "#212529",
+
+                                    overflow: "auto",
+                                    maxHeight: 200,
+
+                                }}
+                                subheader={<li />}
+                            >   <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>
+                            <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>
+                            <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>
+                            <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>
+                            <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>
+                            <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>
+                            <div style={{   backgroundColor: "#212529", }}>
+                            <h5 className="h2basket">
+                               Product
+                            </h5>
+                            <p>Tracking Code: </p>
+                            <p>Total Price: </p>
+
+                            <p style={{
+                                fontSize:"10px",
+
+                                color: "grey"
+                             }}>Total Price: </p>
+
+                            </div>   </List>
+                            </DashboardCard>
 
                         <DashboardCard cardName="Additional services">
                             {/* add tracking tracking seervice for bikes, repair service,  */}
@@ -102,8 +310,10 @@ export default function Dashboard({ auth, baskIcon }) {
                                 href={route("updateAccount")}
                                 className="text-white btn btn-dark"
                                 style={{
+                                    justifyContent: "flex-start",
                                     width: "100%",
                                     textAlign: "left",
+                                    marginBottom: "1rem",
                                 }}
                             >
                                 Repair service
@@ -112,11 +322,25 @@ export default function Dashboard({ auth, baskIcon }) {
                                 href={route("updateAccount")}
                                 className="text-white btn btn-dark"
                                 style={{
+                                    justifyContent: "flex-start",
                                     width: "100%",
                                     textAlign: "left",
+                                    marginBottom: "1rem",
                                 }}
                             >
-                                Report problem
+                                Report a problem
+                            </Link>
+                            <Link
+                                href={route("updateAccount")}
+                                className="text-white btn btn-dark"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    width: "100%",
+                                    textAlign: "left",
+                                    marginBottom: "1rem",
+                                }}
+                            >
+                                Check part compatability
                             </Link>
                         </DashboardCard>
                     </div>

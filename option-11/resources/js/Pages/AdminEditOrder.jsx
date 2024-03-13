@@ -8,34 +8,19 @@ import AdminNavbar from "@/Pages/AdminNavbar";
 
 const AdminEditOrder = ({ auth, orders }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        orderid: orders.productid,
+        orderid: orders.orderid,
         trackingcode: orders.trackingcode,
-        addressid: orders.addressid,
         totalPrice: orders.totalprice,
         status: orders.status,
-        category: orders.products,
         transactionid: orders.transaction.paymentIntent,
         customerId: orders.transaction.customerid,
     });
-
-    useEffect(() => {
-        return () => {
-            reset(
-                "productId",
-                "productSearchName",
-                "productName",
-                "productDescription",
-                "productQuantity",
-                "productPrice"
-            );
-        };
-    }, []);
 
     // I made these so that if the admin types in one, the other cannot be active.
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("remEditProduct"));
+        post(route("updateOrder"));
     };
 
     return (
@@ -56,14 +41,14 @@ const AdminEditOrder = ({ auth, orders }) => {
                                         Tracking code
                                     </Form.Label>
                                     <Form.Control
-                                        id="productname"
-                                        name="productname"
+                                        id="trackingcode"
+                                        name="trackingcode"
                                         value={data.trackingcode}
                                         className="mt-1 form-control-lg"
-                                        autoComplete="productName"
+                                        autoComplete="trackingcode"
                                         onChange={(e) =>
                                             setData(
-                                                "productname",
+                                                "trackingcode",
                                                 e.target.value
                                             )
                                         }
@@ -88,14 +73,14 @@ const AdminEditOrder = ({ auth, orders }) => {
                                         Total Price
                                     </Form.Label>
                                     <Form.Control
-                                        id="productdescription"
-                                        name="productdescription"
+                                        id="totalPrice"
+                                        name="totalPrice"
                                         value={data.totalPrice}
                                         className="form-control-lg"
-                                        autoComplete="productdescription"
+                                        autoComplete="totalPrice"
                                         onChange={(e) =>
                                             setData(
-                                                "productdescription",
+                                                "totalPrice",
                                                 e.target.value
                                             )
                                         }
@@ -140,19 +125,18 @@ const AdminEditOrder = ({ auth, orders }) => {
                                         Customer ID
                                     </Form.Label>
                                     <Form.Control
-                                        id="productprice"
-                                        name="productprice"
+                                        id="customerId"
+                                        name="customerId"
                                         value={data.customerId}
                                         className="form-control-lg"
-                                        autoComplete="productprice"
+                                        autoComplete="customerId"
                                         onChange={(e) =>
                                             setData(
-                                                "productprice",
+                                                "customerId",
                                                 e.target.value
                                             )
                                         }
                                         required
-
                                     />
                                     <InputError
                                         message={errors.productprice}
@@ -172,14 +156,14 @@ const AdminEditOrder = ({ auth, orders }) => {
                                         Transaction id
                                     </Form.Label>
                                     <Form.Control
-                                        id="productprice"
-                                        name="productprice"
+                                        id="transactionid"
+                                        name="transactionid"
                                         value={data.transactionid}
                                         className="form-control-lg"
-                                        autoComplete="productprice"
+                                        autoComplete="transactionid"
                                         onChange={(e) =>
                                             setData(
-                                                "productprice",
+                                                "transactionid",
                                                 e.target.value
                                             )
                                         }
@@ -200,7 +184,7 @@ const AdminEditOrder = ({ auth, orders }) => {
                                     type="submit"
                                     className="mt-2 "
                                     disabled={processing}
-                                    onClick={(e) => setData("action", "update")}
+
                                 >
                                     Update Order
                                 </Button>
@@ -211,9 +195,24 @@ const AdminEditOrder = ({ auth, orders }) => {
                                     type="submit"
                                     className="mt-2"
                                     disabled={processing}
-                                    onClick={(e) => setData("action", "remove")}
+
+                                    href={route("deleteOrder", { orderid: data.orderid })}
+
                                 >
+
                                     Remove Order
+                                </Button>
+                                <Button
+                                    variant="danger"
+                                    type="submit"
+                                    className="mt-2"
+                                    disabled={processing}
+
+                                    href={route("viewOrderItems", { orderid: data.orderid })}
+
+                                >
+
+                                    View order items
                                 </Button>
                             </Col>
                         </Row>

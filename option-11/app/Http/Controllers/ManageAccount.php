@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Redirect;
 class ManageAccount extends Controller
 {
 
-    
-  
+
+
 
     public function create () {
 
-        
+
 
         return Inertia::render('Dashboard');
 
@@ -39,55 +39,55 @@ class ManageAccount extends Controller
     {
         $user = $request->user();
         $userID = $user->userid;
-        $firstname = $request->firstname ?? auth()->user()->firstname; // this means if  $request->firstname is null then use whatver is after ?? if not use it directly 
+        $firstname = $request->firstname ?? auth()->user()->firstname; // this means if  $request->firstname is null then use whatver is after ?? if not use it directly
         $lastname = $request->lastname ?? auth()->user()->lastname;
         $phonenumber = $request->phonenumber ?? auth()->user()->phonenumber;
         $email = $request->email ?? auth()->user()->email;
-       
-        
 
-       
-        
+
+
+
+
 
             $validateInput = $request->validate([
-                'firstname' => 'string|max:255',
-                'lastname' => 'string|max:255',
-                'phonenumber' => 'string|max:12',
-                'email' => 'string|lowercase|email|max:255',
-               
-        
+                'firstname' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'phonenumber' => 'required|string|min:10|max:12|regex:/[0-9]{9}/',
+                'email' => 'required|string|lowercase|email|max:255',
+
+
             ]);
-        
-        
-        
-           
-        
-           
-        
+
+
+
+
+
+
+
                 User::where('userid',$userID)->update([
                     'firstname' => $firstname,
                     'lastname' => $lastname,
                     'phonenumber' => $phonenumber,
                     'email' => $email,
-                   
-        
-        
-        
+
+
+
+
                 ]);
                 // ManageAccount.php
                 return redirect()->back();
 
-        
-        
-        
-    
-        
-        
+
+
+
+
+
+
     }
 
     public function destroy(Request $request): RedirectResponse
     {
-        
+
         $user = $request->user();
 
         Auth::logout();

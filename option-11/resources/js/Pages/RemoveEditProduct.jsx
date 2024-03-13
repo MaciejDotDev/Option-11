@@ -17,11 +17,6 @@ const RemoveEditProduct = ({ auth,products }) => {
 
     });
 
-    useEffect(() => {
-        return () => {
-            reset("productId", "productSearchName", "productName", "productDescription", "productQuantity", "productPrice");
-        };
-    }, []);
 
     // I made these so that if the admin types in one, the other cannot be active.
 

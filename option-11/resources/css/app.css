@@ -167,12 +167,13 @@ body {
     width: clamp(200px,70%,1000px);
     margin: 0 auto;
     padding: 2px;
-    padding-bottom: 7rem;
+    padding-bottom: 10.5rem;
 }
 
 .basketContainer {
     max-width: 1200px;
     margin: 0 auto;
+
 }
 
 .basketClass {
@@ -180,7 +181,9 @@ body {
     border: 1px solid #212529;
     padding: 15px;
     background-color: #212529;
-    margin-bottom: 20px;
+    padding-bottom: 2rem;
+
+
 }
 
 .basketitem {
@@ -220,6 +223,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 17px;
+
 }
 
 .total {
@@ -338,6 +342,7 @@ body {
 
 .dashboardContainer.open {
     height:2.3rem;
+
 }
 .close:hover,
 .close:focus {
@@ -351,6 +356,7 @@ body {
     height: 20px;
     width: 100%;
     padding: 10px;
+
     text-align: center;
     justify-content: center;
 }
@@ -363,12 +369,14 @@ body {
     justify-content: center;
 
 
+
 }
 
 .arrowContainer.open {
 
-    transform: translate(0px, 340px);
-
+    transform: translate(0px, 290px);
+    z-index: 100;
+    position: relative;
     transition: all 500ms ease-in-out;
 }
 
@@ -380,6 +388,7 @@ body {
 }
 .arrowContainer.closed {
 
+    transform: translateY(30%);
 
 
     transition: all 500ms ease-in-out;
@@ -392,11 +401,12 @@ body {
 }
 
 div.expand {
-    height: 397px;
+    height: 360px;
 }
 
 .card-open {
     padding: 40px;
+    padding-top: 1rem;
 }
 
 .card-title.dashboard p {
@@ -410,12 +420,14 @@ div.expand {
     margin: 0 auto;
     width: 100%;
     text-align: left;
-    padding-bottom: 15rem;
+
 }
 .dashboard-groups {
     display: flex;
     margin: 0 auto;
     max-width: 1000px;
+    padding-bottom: 15rem;
+
 }
 
 .has {

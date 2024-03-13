@@ -5,10 +5,13 @@ import NavBar from "@/Components/NavBar";
 import { Inertia } from "@inertiajs/inertia";
 import { AnimatePresence } from "framer-motion";
 import Login from "@/Pages/Auth/Login";
+import InputError from "@/Components/InputError";
+import { usePage } from "@inertiajs/react";
 import AnimateModal from "@/Components/AnimateModal";
 import AddRemBasket from "@/Components/AddRemBasket";
-export default function Basket({ auth, basket, totalprice, bikes }) {
-    const { data, setData, post,processing } = useForm({
+export default function Basket({ auth, basket, totalprice }) {
+    const { errors } = usePage().props;
+    const { data, setData, post, processing } = useForm({
         basketid: null,
     });
 
@@ -38,7 +41,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
 
                         <div className="basketClass">
                             {basket.length > 0 ? (
-                                <div >
+                                <div>
                                     {basket.map((item, index) => (
                                         <div className="basketitem" key={index}>
                                             <div
@@ -48,14 +51,14 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                 key={item.basketid}
                                             >
                                                 <div className="item-details">
-                                                    <h2   className="h2basket">
+                                                    <h2 className="h2basket">
                                                         {
-                                                            bikes[index]
+                                                            item.products
                                                                 .productname
                                                         }
                                                     </h2>
 
-                                                    <p >
+                                                    <p>
                                                         Price: £
                                                         {item.totalprice}
                                                     </p>
@@ -87,7 +90,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             top="22px"
                                                             symbol="-"
                                                             totalprice={
-                                                                bikes[index]
+                                                                item.products
                                                                     .price
                                                             }
                                                         ></AddRemBasket>
@@ -122,7 +125,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             symbol="+"
                                                             paddingTop="0.1rem"
                                                             totalprice={
-                                                                bikes[index]
+                                                                item.products
                                                                     .price
                                                             }
                                                         ></AddRemBasket>
@@ -136,26 +139,23 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                                             )
                                                         }
                                                     >
-                                                        <div  >
-
-                                                        <button
-                                                            type="submit"
-                                                            className="text-red-500 hover:underline"
-                                                        >
-                                                            Remove
-                                                        </button>
+                                                        <div>
+                                                            <button
+                                                                type="submit"
+                                                                className="text-red-500 hover:underline"
+                                                            >
+                                                                Remove
+                                                            </button>
                                                         </div>
-
                                                     </form>
+{/* add error here for stock */}
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
 
-
-
                                     <div>
-                                        <div className="total" >
+                                        <div className="total">
                                             <h2 className="h2basket">
                                                 Total Amount:
                                             </h2>
@@ -163,7 +163,7 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                                         </div>
 
                                         <a
-                                          disabled={processing}
+                                            disabled={processing}
                                             type="button"
                                             href={route("addPayment")}
                                             className="checkout-btn"
@@ -180,8 +180,6 @@ export default function Basket({ auth, basket, totalprice, bikes }) {
                         </div>
                     </div>
                 </body>
-
-
             </AnimateModal>
         </>
     );

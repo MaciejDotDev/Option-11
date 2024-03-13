@@ -1,20 +1,43 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
-const Bike = ({ bikes,  auth, openModal }) => {
+import { usePage } from "@inertiajs/react";
+import { Card, Button } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
 
-    const { flash } = usePage().props
+const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
+    const { flash } = usePage().props;
+
+    // Create a state object to store quantities for each bike
+    const [bikeQuantities, setBikeQuantities] = useState({});
+
     const { data, setData, post, processing, errors, reset } = useForm({
         product_hidden: "",
         quantity: "",
     });
 
+    // Apply filter based on the selected option
+    const filteredBikes = bikes.filter((bike) => {
+        const categoryFilter =
+            filter === "All Bikes" || bike.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (bike.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                bike.products.price <= parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
+    // Will modify the quantity selected for each bike based on ID.
     const [selectedBikeId, setSelectedBikeId] = useState("");
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasket", data);
+        post("/addBasket", {
+            ...data,
+            quantity: bikeQuantities[data.bikeid_hidden],
+        });
+        // console.log(data.quantity);
     };
 
     const onClickPreventDefault = (e) => {
@@ -22,32 +45,43 @@ const Bike = ({ bikes,  auth, openModal }) => {
         e.preventDefault();
     };
 
-    const bikeList = bikes.map((bike) => (
+    // State object that will store the quantity the user selects for each bike.
+    const handleQuantityChange = (bikeId, quantity) => {
+        // console.log(quantity);
+        // console.log(typeof quantity);
+        setBikeQuantities({ ...bikeQuantities, [bikeId]: quantity });
+        setData("quantity", quantity);
+    };
+
+    const bikeList = filteredBikes.map((bike) => (
         <div
-            key={bike.products.productid}
-            className={`col-md-6 mb-4 ${
-                selectedBikeId === bike.products.productid ? "selected-bike" : ""
-            }`}
+            key={bike.bikeid}
+            className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
                 setSelectedBikeId(bike.products.productid);
                 setData("product_hidden", bike.products.productid);
             }}
         >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title text-center h4">
+            {/* <Card style={{ width: "28rem" }}> */}
+            <Card>
+                <Card.Img variant="top" src={bike.products.imageURL} />
+                <Card.Body>
+                    <Card.Title className="text-center h4">
                         {bike.products.productname}
-                    </h5>
-                    <p className="card-text">{bike.products.description}</p>
-                    <p className="card-text">
+                    </Card.Title>
+                    <Card.Text>{bike.products.description}</Card.Text>
+                    <Card.Text>
                         <strong>Price:</strong> £{bike.products.price}
-                    </p>
-                    <p className="card-text">
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Category:</strong> {bike.category}
-                    </p>
-                    <p className="card-text">
-                        <strong>Stock quantity:</strong> {bike.products.stockquantity}
-                    </p>
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Stock Quantity:</strong> {bike.products.stockquantity}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Category:</strong> {bike.category}
+                    </Card.Text>
                     <div className="form-group">
                         <label htmlFor={`quantity_${bike.productid}`}>
                             Quantity
@@ -57,38 +91,52 @@ const Bike = ({ bikes,  auth, openModal }) => {
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
+                            value={bikeQuantities[bike.bikeid]}
+                            name={`quantity_${bike.bikeid}`}
                             onChange={(e) =>
-                                setData("quantity", e.target.value)
+                                handleQuantityChange(
+                                    bike.bikeid,
+                                    parseInt(e.target.value)
+                                )
                             }
                         />
                         <InputError
-                            message={errors.quantity}
+                            message={errors.stock}
                             className="mt-2"
                         />
-                        <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
+                        {selectedBikeId === bike.bikeid && (
+                         <p
+                         style={{ color: "green" }}
+                         className="block font-medium text-sm text-gray-700"
+                     >
+                         {flash.message}
+                     </p>
+                        )}
                     </div>
-                </div>
-                <div className="card-footer">
+                </Card.Body>
+                <Card.Footer className=" flex gap-3">
                     {auth.user ? (
-                        <button
-                            type="submit"
-                            className="btn btn-dark text-dark"
-                        >
+                        <Button type="submit" variant="outline-dark">
                             Add to basket
-                        </button>
+                        </Button>
                     ) : (
-                        <button
+                        <Button
                             type="submit"
                             onClick={onClickPreventDefault}
-                            className="btn btn-dark text-dark"
+                            variant="outline-dark"
                         >
                             Add to basket
-                        </button>
+                        </Button>
                     )}
-                </div>
-            </div>
+                    <InertiaLink
+                        // href={route("productDetails", { id: bike.bikeid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
+                </Card.Footer>
+            </Card>
         </div>
     ));
 
@@ -97,8 +145,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
 
             <form onSubmit={submit}>
                 <div className="container">
-                    <div className="row">{bikeList}</div>
-
+                    <div className="row mt-8">{bikeList}</div>
                 </div>
             </form>
         </div>

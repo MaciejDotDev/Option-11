@@ -28,10 +28,7 @@ class User extends Authenticatable
         return $this->hasMany(Basket::class, 'userid');
     }
 
-    public function address()
-    {
-        return $this->belongsTo(Address::class, 'addressid');
-    }
+
 
     public function reviews() {
         return $this->hasMany(Reviews::class,'userid')->latest();
@@ -43,8 +40,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phonenumber',
-        'addressid',
-        
+
+
     ];
 
     /**

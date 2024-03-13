@@ -31,82 +31,57 @@ class ManageBasketController extends Controller
 
 
 
-        $this->basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
+        $this->basket = Basket::with('products')->where('userid', auth()->user()->userid)->where('status', 'open')->get();
 
 
-        $this->bikes = [];
-        foreach ($this->basket as $item) {
 
-
-            $this->bikes[] = Products::where('productid', $item->productid)->first();
-        }
 
         $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
 
 
-        return Inertia::render('Basket', ['basket' => $this->basket, 'totalprice' => $totalPrice, 'bikes' => $this->bikes]);
+        return Inertia::render('Basket', ['basket' => $this->basket, 'totalprice' => $totalPrice]);
     }
 
 
-    public function update($basket)
-    {
 
-        $basket1 = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
-
-
-
-
-
-        foreach ($basket1 as $item) {
-
-         $bikes = Products::where('productid', $item->productid)->first();
-
-
-
-                $basket->totalprice = $basket->quantity * $bikes->price;
-
-
-        }
-    }
 
     public function addRemItem(Request $request)
     {
 
         //When adding or removing items need to change ht price
 
-        if ($request->action == "delete") {
 
-            $basket = Basket::where('basketid', $request->basketid)->first();
+        switch ($request->action) {
 
-
-            $basket->delete();
-
+            case "delete":
+                $basket = Basket::where('basketid', $request->basketid)->first();
 
 
-            return Redirect::route('basket');
-
-        } else if ($request->action == "add") {
+                $basket->delete();
 
 
 
-            $basket = Basket::where('basketid', $request->input('basketid'))->first();
-            $bikes = Products::where('productid', $basket->productid)->first();
-            if ($bikes->stockquantity - $basket->quantity <= 0 ) {
                 return Redirect::route('basket');
+            case "add":
+
+                $basket = Basket::where('basketid', $request->input('basketid'))->first();
+                $bikes = Products::where('productid', $basket->productid)->first();
+                if ($bikes->stockquantity - $basket->quantity <= 0 ) {
+                    return redirect()->back()->withErrors(['stock' => 'Not enough stock!']);
 
 
-            }
+                }
 
-            $basket->quantity =  $basket->quantity + 1;
+                $basket->quantity =  $basket->quantity + 1;
 
 
-  $basket->totalprice  = $basket->totalprice + $bikes->price;
-            $basket->save();
 
-            return Redirect::route('basket');
-        } else if ($request->action == "remove") {
+                $basket->totalprice = $basket->quantity * $bikes->price;
+                $basket->save();
 
-            $basket = Basket::find($request->basketid);
+                return Redirect::route('basket');
+            case "remove":
+                $basket = Basket::find($request->basketid);
 
             if ($basket->quantity <= 1) {
 
@@ -123,15 +98,22 @@ class ManageBasketController extends Controller
 
                 $basket->quantity =  $basket->quantity - 1;
 
-                $bikes = Products::where('productid', $basket->productid)->first();
 
-                $basket->totalprice  = $basket->totalprice - $bikes->price;
+
+                $bike = Products::where('productid',$basket->productid)->first();
+                $basket->totalprice = $basket->quantity * $bike->price;
 
 
                 $basket->save();
                 return Redirect::route('basket');
             }
+
+
+
+
+
         }
+
     }
 
     public function deleteProduct(Request $request)
@@ -145,5 +127,98 @@ class ManageBasketController extends Controller
 
         $basketFind->delete();
         return Redirect::route('basket');
+    }
+
+    public function addBasket(Request $request)
+    {
+
+        //to validate if item already exists inside the database, as well as a plus or minus button to increase quantity
+
+        $validateInput = $request->validate([
+            'quantity' => 'required|numeric|not_in:0',
+
+
+
+        ]);
+
+        if ($validateInput) {
+
+
+
+
+
+            $stockCheck =  Products::find(request('product_hidden'));
+
+            if ($stockCheck->stockquantity -request('quantity') >= 0  ) {
+
+                $finditem =  Basket::where('userid', auth()->user()->userid)->first();
+                $basket = new Basket();
+
+                $noRecords = false;
+
+                $stopLoop = true;
+
+                while ($stopLoop) {
+                    if ($finditem  ==  null || $noRecords) {
+
+
+                        $basket = new Basket();
+                        $basket->userid =  auth()->user()->userid;
+                        $basket->productid = request('product_hidden');
+                        $basket->quantity =request('quantity');
+
+                        $bike = Products::where('productid',$basket->productid)->first();
+                        $basket->totalprice = $basket->quantity * $bike->price;
+
+
+                        $basket->status = 'open';
+                        $basket->save();
+
+                        $stopLoop = false;
+                        return redirect()->back()->with('success', "Item successfully added to basket!");
+
+                    }
+
+                    $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('product_hidden'))->first();
+
+
+                    if ($record) {
+
+                        $record->quantity = request('quantity') + $record->quantity;
+                        $bike = Products::where('productid',request('product_hidden'))->first();
+
+
+                        $record->save();
+                        $stopLoop = false;
+                        return redirect()->back()->with('success', "Item successfully added to basket!");
+
+
+
+
+
+
+                    } else {
+                        $noRecords =  true;
+
+                    }
+
+                }
+            } else {
+
+                return redirect()->back()->withErrors(['stock' => 'Not enough stock!']);
+
+            }
+
+
+
+
+
+
+
+
+
+
+    }
+
     }
 }

@@ -24,7 +24,9 @@ const AdminViewOrder = ({ orders }) => {
                 </a></td>
             <td scope="row">{order.trackingcode}</td>
             <td scope="row">{order.transaction.customerid}</td>
-            <td scope="row">{order.addressid}</td>
+            <td scope="row"> <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href={route("addressView", { addressid: order.addressid })}>
+            {order.addressid}
+                </a></td>
             <td scope="row">{order.totalprice}</td>
             <td scope="row">{order.status}</td>
             <td scope="row">{formattedDate} {formattedTime}</td>
@@ -47,7 +49,7 @@ const AdminViewOrder = ({ orders }) => {
     return (
 
       <div>  <AdminNavbar/>
-<a   className="px-4 py-2 text-center text-white bg-blue-500 rounded-md" href="editorder" >Search order</a>
+
         <div className="ordersTable" >
 
 

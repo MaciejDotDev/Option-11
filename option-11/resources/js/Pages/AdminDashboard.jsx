@@ -13,7 +13,7 @@ const RepairBooking = ({ auth }) => {
             <AdminNavbar/>
 
             <div class="adminDashboard-container">
-       
+
             <DashboardCard cardName="Notifications">
                     <div className="mt-1 d-flex justify-content-evenly">
                             <div className="flex-col space-y-3 d-flex">
@@ -31,7 +31,7 @@ const RepairBooking = ({ auth }) => {
                                 </Link>
 
                                 <Link
-                                    href={route("updateAccount")}
+                                    href={route("profile.update")}
                                     className="px-4 py-2 text-center text-white bg-blue-500 rounded-md "
                                 >
                                     Update address
@@ -53,15 +53,15 @@ const RepairBooking = ({ auth }) => {
                         >
                             Update Account
                         </Link>
-                        
+
                     </DashboardCard>
 
-              
+
 
                     </div>
-          
 
-        
+
+
         </div>
     );
 };

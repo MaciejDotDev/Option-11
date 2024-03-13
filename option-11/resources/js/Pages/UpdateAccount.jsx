@@ -10,15 +10,15 @@ import InputError from "@/Components/InputError";
 
 import FormDropdown from "@/Components/FormDropdown";
 export default function UpdateAccount({ auth, baskIcon }) {
-   
+
     const [state, setState] = useState(false);
 
 
-  
-    //below is a form template, needs to be replaced
-  
 
-  
+    //below is a form template, needs to be replaced
+
+
+
 
     const { data, setData, post, processing, errors, reset } = useForm({
         firstname: auth.user.firstname,
@@ -26,7 +26,17 @@ export default function UpdateAccount({ auth, baskIcon }) {
         email: auth.user.email,
         phonenumber: auth.user.phonenumber,
     });
-    
+
+    const resetField = (fieldName) => {
+        reset({
+            ...data,
+            [fieldName]: '', // Reset the specific field to an empty string
+        });
+    };
+
+    // Example usage: reset the 'email' field
+
+
 
     const submit = (e) => {
         e.preventDefault();
@@ -60,11 +70,11 @@ export default function UpdateAccount({ auth, baskIcon }) {
                             }
                             state={state}
                             setState={setState}
-                 
-                            processing={processing}
-                            
 
-                           
+                            processing={processing}
+
+
+
                         >
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Control
@@ -77,15 +87,15 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                     onChange={(e) =>
                                         setData("email", e.target.value)
                                     }
-                                   
+
                                 />
                                 <InputError
                                     message={errors.email}
                                     className="mt-2"
                                 />
                                 <div className="flex items-center justify-end mt-4">
-                                    
-                                
+
+
                                 </div>
                             </Form.Group>
                         </FormDropdown>
@@ -102,11 +112,11 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                 }
                                 state={state}
                                 setState={setState}
-                               
-                                processing={processing}
-                         
 
-                             
+                                processing={processing}
+
+
+
                             >
                                 <Form.Control
                                     id="phonenumber"
@@ -151,14 +161,14 @@ export default function UpdateAccount({ auth, baskIcon }) {
                             cardName={
                                 "First Name"
                             }
-                        
+
                             state={state}
                             setState={setState}
-                 
-                            processing={processing}
-                            
 
-                           
+                            processing={processing}
+
+
+
                         >
                             <Form.Group controlId="formFirstName">
                                 <Form.Control
@@ -171,15 +181,15 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                     onChange={(e) =>
                                         setData("firstname", e.target.value)
                                     }
-                                   
+
                                 />
                                 <InputError
                                     message={errors.email}
                                     className="mt-2"
                                 />
                                 <div className="flex items-center justify-end mt-4">
-                                    
-                                
+
+
                                 </div>
                             </Form.Group>
                         </FormDropdown>
@@ -194,14 +204,14 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                 cardName={
                                     "Last Name"
                                 }
-                            
+
                                 state={state}
                                 setState={setState}
-                               
-                                processing={processing}
-                         
 
-                             
+                                processing={processing}
+
+
+
                             >
                                 <Form.Control
                                     id="lastname"

@@ -14,17 +14,17 @@ class ProductsSeeder extends Seeder
      */
     public function run(): void
     {
-        $bike = Categories::where('name','bike')->first(); 
-        $accessory = Categories::where('name','accessory')->first(); 
-        $repairkit = Categories::where('name','repairkit')->first(); 
-        $bikepart = Categories::where('name','bikepart')->first(); 
-        $clothing = Categories::where('name','clothing')->first(); 
+        $bike = Categories::where('name','bike')->first();
+        $accessory = Categories::where('name','accessory')->first();
+        $repairkit = Categories::where('name','repairkit')->first();
+        $bikepart = Categories::where('name','bikepart')->first();
+        $clothing = Categories::where('name','clothing')->first();
         Products::create([
             'productname' => 'Mountain Bike',
             'description' => 'A sturdy mountain bike for off-road adventures.',
             'price' => 499.99,
             'stockquantity' => 10,
-            'imageURL' => 'mountain_bike.jpg',
+            'imageURL' => 'product-images/bike-products/mountain-bike-1.jpg',
             'categoryid'=> $bike->categoryid,
         ]);
 
@@ -33,7 +33,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A lightweight road bike for speed.',
             'price' => 599.99,
             'stockquantity' => 10,
-            'imageURL' => 'road_bike.jpg',
+            'imageURL' => 'product-images/bike-products/road-bike-1.jpg',
             'categoryid'=> $bike->categoryid,
         ]);
 
@@ -42,7 +42,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A hybrid bike for both on and off-road.',
             'price' => 399.99,
             'stockquantity' => 10,
-            'imageURL' => 'hybrid_bike.jpg',
+            'imageURL' => 'product-images/bike-products/hybrid-bike.jpg',
             'categoryid'=> $bike->categoryid,
         ]);
 
@@ -51,7 +51,7 @@ class ProductsSeeder extends Seeder
             'description' => 'An electric bike for those who want to go further.',
             'price' => 799.99,
             'stockquantity' => 10,
-            'imageURL' => 'electric_bike.jpg',
+            'imageURL' => 'product-images/bike-products/electric-bike-1.jpg',
             'categoryid'=> $bike->categoryid,
         ]);
 
@@ -60,7 +60,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A kids bike for those who want to start young.',
             'price' => 199.99,
             'stockquantity' => 10,
-            'imageURL' => 'kids_bike.jpg',
+            'imageURL' => 'product-images/bike-products/kids-bike-1.jpg',
             'categoryid'=> $bike->categoryid,
         ]);
 
@@ -69,7 +69,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A helmet to protect your head.',
             'price' => 49.99,
             'stockquantity' => 10,
-            'imageURL' => 'helmet.jpg',
+            'imageURL' => 'product-images/accessory-products/helmet-1.jpg',
             'categoryid'=> $accessory->categoryid,
         ]);
         Products::create([
@@ -77,7 +77,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A helmet to protect your head.',
             'price' => 49.99,
             'stockquantity' => 10,
-            'imageURL' => 'helmet.jpg',
+            'imageURL' => 'product-images/accessory-products/helmet-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -85,7 +85,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A helmet to protect your head.',
             'price' => 49.99,
             'stockquantity' => 10,
-            'imageURL' => 'helmet.jpg',
+            'imageURL' => 'product-images/accessory-products/helmet-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -93,7 +93,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Knee pads to protect your knees.',
             'price' => 29.99,
             'stockquantity' => 10,
-            'imageURL' => 'knee_pads.jpg',
+            'imageURL' => 'product-images/accessory-products/knee-pads-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -101,7 +101,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Knee pads to protect your knees.',
             'price' => 29.99,
             'stockquantity' => 10,
-            'imageURL' => 'knee_pads.jpg',
+            'imageURL' => 'product-images/accessory-products/knee-pads-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -109,7 +109,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Knee pads to protect your knees.',
             'price' => 29.99,
             'stockquantity' => 10,
-            'imageURL' => 'knee_pads.jpg',
+            'imageURL' => 'product-images/accessory-products/knee-pads-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -117,7 +117,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Gloves to protect your hands.',
             'price' => 19.99,
             'stockquantity' => 10,
-            'imageURL' => 'gloves.jpg',
+            'imageURL' => 'product-images/accessory-products/gloves-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -125,7 +125,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Gloves to protect your hands.',
             'price' => 19.99,
             'stockquantity' => 10,
-            'imageURL' => 'gloves.jpg',
+            'imageURL' => 'product-images/accessory-products/gloves-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -133,7 +133,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Gloves to protect your hands.',
             'price' => 19.99,
             'stockquantity' => 10,
-            'imageURL' => 'gloves.jpg',
+            'imageURL' => 'product-images/accessory-products/gloves-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
         Products::create([
@@ -141,7 +141,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A water bottle to keep you hydrated.',
             'price' => 9.99,
             'stockquantity' => 10,
-            'imageURL' => 'water_bottle.jpg',
+            'imageURL' => 'product-images/accessory-products/water-bottle-1.jpg',
             'categoryid'=>  $accessory->categoryid,
         ]);
 
@@ -151,10 +151,10 @@ class ProductsSeeder extends Seeder
             'description' => 'A puncture repair kit for fixing punctures.',
             'price' => 4.99,
             'stockquantity' => 10,
-            'imageURL' => 'puncture_repair_kit.jpg',
+            'imageURL' => 'product-images/repair-products/puncture-repair-kit.jpg',
             'categoryid'=>  $repairkit->categoryid,
-         
-          
+
+
         ]);
 
         Products::create([
@@ -162,10 +162,10 @@ class ProductsSeeder extends Seeder
             'description' => 'A bike pump for pumping up tyres.',
             'price' => 9.99,
             'stockquantity' => 10,
-            'imageURL' => 'bike_pump.jpg',
+            'imageURL' => 'product-images/repair-products/bike-pump.jpg',
             'categoryid'=> $repairkit->categoryid,
-          
-         
+
+
         ]);
 
         Products::create([
@@ -173,10 +173,10 @@ class ProductsSeeder extends Seeder
             'description' => 'A bike multi-tool for fixing your bike.',
             'price' => 14.99,
             'stockquantity' => 10,
-            'imageURL' => 'bike_multi_tool.jpg',
+            'imageURL' => 'product-images/repair-products/multi-tool.jpg',
             'categoryid'=> $repairkit->categoryid,
-           
-        
+
+
         ]);
 
         Products::create([
@@ -184,34 +184,34 @@ class ProductsSeeder extends Seeder
             'description' => 'A comfortable jersey for your cycling adventures.',
             'price' => rand(50, 150),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'cycling_jersey.jpg',
+            'imageURL' => 'product-images/clothing-products/Jersey-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
-        
+
         Products::create([
             'productname' => 'Biking Shorts',
             'description' => 'Durable shorts for a smooth ride.',
             'price' => rand(30, 80),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'biking_shorts.jpg',
+            'imageURL' => 'product-images/clothing-products/shorts-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
-        
+
         Products::create([
             'productname' => 'Cycling Jacket',
             'description' => 'A lightweight jacket for changing weather conditions.',
             'price' => rand(60, 120),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'cycling_jacket.jpg',
+            'imageURL' => 'product-images/clothing-products/jacket-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
-        
+
         Products::create([
             'productname' => 'Biking Tights',
             'description' => 'Tights for aero efficiency during rides.',
             'price' => rand(40, 100),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'biking_tights.jpg',
+            'imageURL' => 'product-images/clothing-products/tights-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
 
@@ -220,10 +220,10 @@ class ProductsSeeder extends Seeder
             'description' => 'A bike chain for replacing your chain.',
             'price' => 19.99,
             'stockquantity' => 10,
-            'imageURL' => 'bike_chain.jpg',
+            'imageURL' => 'product-images/parts-products/bike-chain.jpg',
             'categoryid'=> $bikepart->categoryid,
-            
- 
+
+
         ]);
 
         Products::create([
@@ -231,10 +231,10 @@ class ProductsSeeder extends Seeder
             'description' => 'A bike Repair Kit for all of your puncture repair needs.',
             'price' => 44.99,
             'stockquantity' => 10,
-            'imageURL' => 'bikerepairkitB.jpg',
-            'categoryid'=> $bikepart->categoryid,
-       
-           
+            'imageURL' => 'product-images/repair-products/repair-kit-m.jpg',
+            'categoryid'=> $repairkit->categoryid,
+
+
         ]);
 
         Products::create([
@@ -242,11 +242,11 @@ class ProductsSeeder extends Seeder
             'description' => 'A bike Repair Kit for all of your puncture repair needs.',
             'price' => 59.99,
             'stockquantity' => 10,
-            'imageURL' => 'bikerepairkitC.jpg',
-            'categoryid'=> $bikepart->categoryid,
-      
-          
-           
+            'imageURL' => 'product-images/repair-products/repair-kit-l.jpg',
+            'categoryid'=> $repairkit->categoryid,
+
+
+
         ]);
 
         Products::create([
@@ -254,28 +254,20 @@ class ProductsSeeder extends Seeder
             'description' => 'A bike Repair Kit for all of your puncture repair needs.',
             'price' => 29.99,
             'stockquantity' => 10,
-            'imageURL' => 'bikerepairkitA.jpg',
-            'categoryid'=> $bikepart->categoryid,
-        
-           
-          
+            'imageURL' => 'product-images/repair-products/repair-kit-s.jpg',
+            'categoryid'=> $repairkit->categoryid,
+
+
+
         ]);
 
-        Products::create([
-            'productname' => 'Bike Chain',
-            'description' => 'A durable chain for smooth cycling.',
-            'price' => rand(15, 40),
-            'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_chain.jpg',
-            'categoryid'=> $bikepart->categoryid,
-        ]);
 
         Products::create([
             'productname' => 'Bike Pedals',
             'description' => 'Quality pedals for a comfortable ride.',
             'price' => rand(20, 50),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_pedals.jpg',
+            'imageURL' => 'product-images/parts-products/bike-pedals.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
 
@@ -284,7 +276,7 @@ class ProductsSeeder extends Seeder
             'description' => 'Comfortable grips for better control.',
             'price' => rand(10, 30),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'handlebar_grips.jpg',
+            'imageURL' => 'product-images/parts-products/red-grips.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
 
@@ -293,7 +285,7 @@ class ProductsSeeder extends Seeder
             'description' => 'An ergonomic saddle for a smooth ride.',
             'price' => rand(30, 70),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_saddle.jpg',
+            'imageURL' => 'product-images/parts-products/bike-seat.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
 
@@ -302,7 +294,7 @@ class ProductsSeeder extends Seeder
             'description' => 'A set of lights for safety during night rides.',
             'price' => rand(15, 40),
             'stockquantity' => rand(5, 20),
-            'imageURL' => 'bike_lights.jpg',
+            'imageURL' => 'product-images/parts-products/lights-set.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
 

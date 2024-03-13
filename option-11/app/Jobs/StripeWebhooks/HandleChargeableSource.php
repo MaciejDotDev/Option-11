@@ -55,7 +55,7 @@ class HandleChargeableSource implements ShouldQueue
 
 
        // Assuming $sessionId is correctly defined elsewhere in your code
-$session = Orders::where('sessionid', $sessionId)->first();
+
 
 // Assuming $total is a collection of Basket items
 $total = Basket::where('userid', $userid)->where('status', 'open')->get();

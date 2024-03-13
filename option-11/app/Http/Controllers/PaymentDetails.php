@@ -59,9 +59,9 @@ class PaymentDetails extends Controller
                     'product_data' => [
                         'name' => $product->products->productname,
                     ],
-                    'unit_amount'  => round( $product->totalprice *100,1),
+                    'unit_amount'  => round(  $product->products->price *100,1),
                 ],
-                'quantity'   => 1,
+                'quantity'   => $product->quantity,
             ];
         }
 

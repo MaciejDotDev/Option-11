@@ -7,14 +7,15 @@ import { useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
 import InputError from "@/Components/InputError";
-
+import AdminNavbar from '@/Pages/AdminNavbar';
 import FormDropdown from "@/Components/FormDropdown";
-export default function AdminViewUser({ users }) {
+export default function AdminViewUser({ users,auth }) {
     const [state, setState] = useState(false);
 
     //below is a form template, needs to be replaced
 
     const { data, setData, post, processing, errors, reset } = useForm({
+        userid: users.userid,
         firstname: users.firstname,
         lastname: users.lastname,
         email: users.email,
@@ -23,147 +24,135 @@ export default function AdminViewUser({ users }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("adminViewUser"));
+        post(route("adminUpdateUser"));
     };
 
-    const formEmail = () => {
-        const { data, setData, post, processing, errors, reset } = useForm({
-            email: users.email,
-            phonenumber: users.phonenumber,
-        });
 
-        const submit2 = (e) => {
-            e.preventDefault();
-            post(route("adminViewUser"));
-        };
-
-        return (
-            <Form
-                className="p-5 rounded shadow-sm bg-dark text-light"
-                onSubmit={submit2}
-            >
-                <Row className="mb-3">
-                    <Col md={6} className="pr-md-2">
-                        <FormDropdown
-                            cardId={users.email}
-                            cardName={"Email"}
-                            state={state}
-                            setState={setState}
-                            processing={processing}
-                        >
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Control
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value={data.email}
-                                    className="block w-full mt-1"
-                                    autoComplete="email"
-                                    onChange={(e) =>
-                                        setData("email", e.target.value)
-                                    }
-                                />
-                                <InputError
-                                    message={errors.email}
-                                    className="mt-2"
-                                />
-                                <div className="flex items-center justify-end mt-4"></div>
-                            </Form.Group>
-                        </FormDropdown>
-                    </Col>
-
-                    <Col md={6} className="pl-md-2">
-                        <Form.Group controlId="formBasicPhoneNumber">
-                            <FormDropdown
-                                cardId={users.phonenumber}
-                                cardName={"Phone number"}
-                                state={state}
-                                setState={setState}
-                                processing={processing}
-                            >
-                                <Form.Control
-                                    id="phonenumber"
-                                    type="number"
-                                    name="phonenumber"
-                                    value={data.phonenumber}
-                                    className="block w-full mt-1"
-                                    autoComplete="phonenumber"
-                                    onChange={(e) =>
-                                        setData("phonenumber", e.target.value)
-                                    }
-                                    required
-                                />
-                                <InputError
-                                    message={errors.phonenumber}
-                                    className="mt-2"
-                                />
-
-                                <div className="flex items-center justify-end mt-4"></div>
-                            </FormDropdown>
-                        </Form.Group>
-                    </Col>
-                </Row>
-            </Form>
-        );
-    };
 
     return (
-        <div className="viewuser">
-            <Form
-                className="p-5 rounded shadow-sm bg-dark text-light"
-                onSubmit={submit}
-            >
-                <h2 className="pt-4 mb-4 text-center h2">
-                    Personal Information
-                </h2>
-                <Row className="mb-3">
-                    <Col md={6} className="pr-md-2">
-                        <FormDropdown
-                            cardId={users.firstname}
-                            cardName={"First Name"}
-                            state={state}
-                            setState={setState}
-                            processing={processing}
-                        >
-                            <Form.Group controlId="formFirstName">
+
+        <div>
+        <AdminNavbar auth={auth} />
+        <h2 className="pt-3 text-center text-light h2">View/Edit Address</h2>
+
+        <div key={users.userid}>
+            <Container className="mt-4 d-flex justify-content-center">
+                <Form className="rounded" onSubmit={submit}>
+                    <Row>
+                        <Col md={6}>
+                            <Form.Group
+                                controlId="formBasicProductName"
+                                className="mb-3"
+                            >
+                                <Form.Label className="text-white">
+                                    First Name
+                                </Form.Label>
                                 <Form.Control
                                     id="firstname"
-                                    type="firstname"
                                     name="firstname"
                                     value={data.firstname}
-                                    className="block w-full mt-1"
+                                    className="mt-1 form-control-lg"
+                                    autoComplete="firstname"
+                                    onChange={(e) =>
+                                        setData(
+                                            "firstname",
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                    style={{ width: "20rem" }}
+                                />
+                                <InputError
+                                    message={errors.firstname}
+                                    className="mt-2"
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md={6}>
+                            <Form.Group
+                                controlId="formBasicProductDescription"
+                                className="mb-3"
+                            >
+                                <Form.Label className="text-white">
+                                    Last Name
+                                </Form.Label>
+                                <Form.Control
+                                    id="lastname"
+                                    name="lastname"
+                                    value={data.lastname}
+                                    className="form-control-lg"
+                                    autoComplete="lastname"
+                                    onChange={(e) =>
+                                        setData(
+                                            "lastname",
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                    style={{ width: "20rem" }}
+                                />
+                                <InputError
+                                    message={errors.lastname}
+                                    className="mt-2"
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            <Form.Group
+                                controlId="formBasicProductPrice"
+                                className="mb-3"
+                            >
+                                <Form.Label className="text-white">
+                                    Email
+                                </Form.Label>
+                                <Form.Control
+                                    id="email"
+                                    name="email"
+                                    value={data.email}
+                                    className="form-control-lg"
                                     autoComplete="email"
                                     onChange={(e) =>
-                                        setData("firstname", e.target.value)
+                                        setData(
+                                            "email",
+                                            e.target.value
+                                        )
                                     }
+                                    required
                                 />
                                 <InputError
                                     message={errors.email}
                                     className="mt-2"
                                 />
-                                <div className="flex items-center justify-end mt-4"></div>
                             </Form.Group>
-                        </FormDropdown>
-                    </Col>
+                        </Col>
+                    </Row>
 
-                    <Col md={6} className="pl-md-2">
-                        <Form.Group controlId="formBasicLastName">
-                            <FormDropdown
-                                cardId={users.lastname}
-                                cardName={"Last Name"}
-                                state={state}
-                                setState={setState}
-                                processing={processing}
+                    <Row>
+                        <Col>
+                            <Form.Group
+                                controlId="formBasicProductPrice"
+                                className="mb-3"
                             >
+                                <Form.Label className="text-white">
+                                   Phone Number
+                                </Form.Label>
                                 <Form.Control
-                                    id="lastname"
-                                    type="lastname"
-                                    name="lastname"
-                                    value={data.lastname}
-                                    className="block w-full mt-1"
-                                    autoComplete="lastname"
+                                    id="phonenumber"
+                                    name="phonenumber"
+                                    value={data.phonenumber}
+                                    className="form-control-lg"
+                                    autoComplete="street"
                                     onChange={(e) =>
-                                        setData("lastname", e.target.value)
+                                        setData(
+                                            "phonenumber",
+                                            e.target.value
+                                        )
                                     }
                                     required
                                 />
@@ -171,40 +160,27 @@ export default function AdminViewUser({ users }) {
                                     message={errors.phonenumber}
                                     className="mt-2"
                                 />
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
-                                <div className="flex items-center justify-end mt-4"></div>
-                            </FormDropdown>
-                        </Form.Group>
-                    </Col>
-                </Row>
-            </Form>
-            {formEmail()}
+                    <Row className="mb-4">
+                        <Col className="mt-2" md={6}>
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                className="mt-2 "
+                                disabled={processing}
 
-            <div style={{display: "flex"}}>
+                            >
+                                Update
+                            </Button>
+                        </Col>
 
-            <Link
-                href={route("logout")}
-                className="px-4 py-2 text-center text-white bg-yellow-500 rounded-md "
-            >
-                View address
-            </Link>
-            <Link
-                href={route("logout")}
-                className="px-4 py-2 text-center text-white bg-yellow-500 rounded-md "
-            >
-               View payment information
-            </Link>
-
-            <Link
-                href={route("adminDeleteUsers", { userid: users.userid })}
-                className="px-4 py-2 text-center text-white bg-yellow-500 rounded-md "
-            >
-               delete
-               
-            </Link>
-            </div>
-
-           
+                    </Row>
+                </Form>
+            </Container>
         </div>
+    </div>
     );
 }

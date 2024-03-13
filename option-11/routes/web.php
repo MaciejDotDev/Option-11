@@ -12,7 +12,7 @@ use App\Http\Controllers\ShowBikePartsController;
 use App\Http\Controllers\ShowRepairKitsController;
 use App\Http\Controllers\ShowAccessoriesController;
 use App\Http\Controllers\ShowClothingController;
-use App\Http\Controllers\OrdersController;
+
 use App\Http\Controllers\ShowRepairBookingController;
 use App\Http\Controllers\ShowOrdersController;
 use App\Http\Controllers\AdminDashboardController;
@@ -24,7 +24,8 @@ use App\Http\Controllers\AdminReportsController;
 use App\Http\Controllers\AdminEditOrderController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\AdminEditOrders;
-
+use App\Http\Controllers\AdminEditAddress;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -108,9 +109,21 @@ Route::group(['middleware' => ['admin']], function () {
 
 Route::get('/editOrder{orderid}', [AdminEditOrders::class, 'editOrder'])->name('editOrder');
 
-Route::get('/orders', [AdminEditOrders::class, 'show'])->name('orders');
+Route::post('/updateOrder', [AdminEditOrders::class, 'updateOrder'])->name('updateOrder');
 
 
+
+Route::match(['get', 'post'],'/deleteOrder{orderid}', [AdminEditOrders::class, 'deleteOrder'])->name('deleteOrder');
+
+Route::get('/admin/orders', [AdminEditOrders::class, 'show'])->name('orders');
+
+Route::get('/orders{orderid}', [AdminEditOrders::class, 'getOrderItems'])->name('viewOrderItems');
+
+Route::get('/addressView{addressid}', [AdminEditAddress::class, 'show'])->name('addressView');
+
+Route::get('/address', [AdminEditAddress::class, 'view'])->name('address');
+
+Route::post('/updateAddress', [AdminEditAddress::class, 'update'])->name('updateAddress');
     Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
 
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
@@ -124,7 +137,7 @@ Route::get('/orders', [AdminEditOrders::class, 'show'])->name('orders');
 
     Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
 
-
+    Route::post('/updateUser', [AdminEditUsersController::class, 'update'])->name('adminUpdateUser');
 
     Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
 
@@ -132,8 +145,9 @@ Route::get('/orders', [AdminEditOrders::class, 'show'])->name('orders');
 
 
 
-    Route::get('users/export/', [AdminReportsController::class, 'exportUsers']);
+    Route::get('users/all/export/', [AdminReportsController::class, 'exportStatsUsers']);
     Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
+    Route::get('users/stats/export/', [AdminReportsController::class, 'exportStatsUsers']);
 
     Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
     Route::match(['get', 'post'],'/adminLogout', [AdminLoginController::class, 'destroy'])
@@ -162,6 +176,9 @@ Route::group(['middleware' => ['admin.guest']], function () {
 });
 
 Route::stripeWebhooks('/webhook');
+
+
+
 Route::get('/reviews', [ReviewsController::class,'showAll'])->name('reviews'); // to add to teh middleware later
 
 Route::middleware('auth')->group(function () {
@@ -176,7 +193,7 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'],'/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
     Route::match(['get', 'post'], '/addBasketClothing', 'App\Http\Controllers\ShowClothingController@addBasket')->name('addBasketClothing');
 
-    Route::match(['get', 'post'], '/makeOrder', 'App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');
+
 
 
 
@@ -194,7 +211,9 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
 
 
-
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

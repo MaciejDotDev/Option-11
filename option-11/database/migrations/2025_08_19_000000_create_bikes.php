@@ -18,10 +18,11 @@ return new class extends Migration
         $table->string('category');
         $table->string('colour');
         $table->string('size');
+        $table->integer('quantity');
 
         $table->timestamps();
-  
-        
+
+
     });
 }
 
