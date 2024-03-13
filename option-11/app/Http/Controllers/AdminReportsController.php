@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\UsersExport;
+use App\Exports\UsersStatsExport;
 use App\Exports\ProductsExporter;
+use App\Exports\ProductsStatsExport;
 use App\Exports\UsersAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
@@ -33,4 +34,13 @@ class AdminReportsController extends Controller
     {
         return Excel::download(new ProductsExporter, 'users.xlsx');
     }
+
+    public function exportStatsProducts()
+    {
+        $export = new ProductsStatsExport();
+
+        // Use the Excel facade to download the export
+        return Excel::download($export, 'productsStats.xlsx');
+    }
+    
 }

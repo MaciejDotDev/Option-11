@@ -11,7 +11,7 @@ class ProductHistory extends Model
 
     protected $primaryKey = 'productsHistoryid';
     protected $connection = 'mysql';
-
+    protected $table = 'products_history';
     public function products()
     {
         return $this->belongsTo(Categories::class, 'categoryid');
@@ -19,10 +19,10 @@ class ProductHistory extends Model
 
 
     protected $fillable = [
-        'userid',
+      
         'productid',
-        'price',
-        'addressid',
+        'productname',
+        'category',
 
     ];
 

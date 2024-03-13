@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
     BikesTableSeeder::class,
     ClothingSeeder::class,
     UsersTableSeeder::class,
+    ProductsHistorySeeder::class,
 
     // make sure the order on top remains
     ReviewsTableSeeder::class,

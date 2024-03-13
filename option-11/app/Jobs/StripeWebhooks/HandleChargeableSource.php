@@ -54,56 +54,53 @@ class HandleChargeableSource implements ShouldQueue
 
 
 
-       // Assuming $sessionId is correctly defined elsewhere in your code
+    
+        $total = Basket::where('userid', $userid)->where('status', 'open')->get();
 
+        $order = new Orders();
+        $order->userid = $userid;
+        $order->trackingcode = "not provided yet";
+        $order->sessionid = $sessionId;
+        $order->totalprice = $total->sum('totalprice');
+        $order->status = "paid";
 
-// Assuming $total is a collection of Basket items
-$total = Basket::where('userid', $userid)->where('status', 'open')->get();
+        $address = new Address();
+        $address->userid = $order->userid;
+        $address->postcode = $postcode;
+        $address->country = $country;
+        $address->city = $city;
+        $address->street = $line1;
+        $address->save(); 
 
-$order = new Orders();
-$order->userid = $userid;
-$order->trackingcode = "not provided yet";
-$order->sessionid = $sessionId;
-$order->totalprice = $total->sum('totalprice');
-$order->status = "paid";
+        $order->addressid = $address->addressid; 
+        $order->save();
 
-$address = new Address();
-$address->userid = $order->userid;
-$address->postcode = $postcode;
-$address->country = $country;
-$address->city = $city;
-$address->street = $line1;
-$address->save(); // Save address first to get its ID
+    
+        $basket = Basket::with('products')->where('userid', $userid)->where('status', 'open')->get();
+        foreach ($basket as $product) {
+            $orderItem = new OrderItem();
+            $orderItem->productid = $product->productid;
+            $orderItem->orderid = $order->orderid;
+            $orderItem->quantity = $product->quantity;
+            $orderItem->save();
+        }
 
-$order->addressid = $address->addressid; // Use the correct property to get the ID
-$order->save();
+        $transaction = new Transactions();
+        $transaction->orderid = $order->orderid;
+        $transaction->paymentIntent = $paymentIntent;
+        $transaction->customerid = $customerid;
+        $transaction->status = $status;
+        $transaction->currency = $currency;
+        $transaction->creation = date('D-m-y H:i:s', $created);
+        $transaction->save();
 
-// Assuming Basket and OrderItem models are correctly defined
-$basket = Basket::with('products')->where('userid', $userid)->where('status', 'open')->get();
-foreach ($basket as $product) {
-    $orderItem = new OrderItem();
-    $orderItem->productid = $product->productid;
-    $orderItem->orderid = $order->orderid;
-    $orderItem->quantity = $product->quantity;
-    $orderItem->save();
-}
-
-$transaction = new Transactions();
-$transaction->orderid = $order->orderid;
-$transaction->paymentIntent = $paymentIntent;
-$transaction->customerid = $customerid;
-$transaction->status = $status;
-$transaction->currency = $currency;
-$transaction->creation = date('D-m-y H:i:s', $created);
-$transaction->save();
-
-// Update product stock quantities
-$orderItems = OrderItem::where('orderid', $order->orderid)->get();
-foreach ($orderItems as $item) {
-    $product = Products::where('productid', $item->productid)->first();
-    $product->stockquantity -= $item->quantity;
-    $product->save();
-}
+    
+        $orderItems = OrderItem::where('orderid', $order->orderid)->get();
+        foreach ($orderItems as $item) {
+            $product = Products::where('productid', $item->productid)->first();
+            $product->stockquantity -= $item->quantity;
+            $product->save();
+        }
 
 
 

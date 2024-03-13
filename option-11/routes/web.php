@@ -21,7 +21,7 @@ use App\Http\Controllers\AdminEditProductsController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\AdminReportsController;
-use App\Http\Controllers\AdminEditOrderController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\AdminEditOrders;
 use App\Http\Controllers\AdminEditAddress;
@@ -147,7 +147,8 @@ Route::post('/updateAddress', [AdminEditAddress::class, 'update'])->name('update
 
     Route::get('users/all/export/', [AdminReportsController::class, 'exportStatsUsers']);
     Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
-    Route::get('users/stats/export/', [AdminReportsController::class, 'exportStatsUsers']);
+    Route::get('users/stats/export/', [AdminReportsController::class, 'exportUsersStats']);
+    Route::get('products/stats/export/', [AdminReportsController::class, 'exportStatsProducts']);
 
     Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
     Route::match(['get', 'post'],'/adminLogout', [AdminLoginController::class, 'destroy'])
@@ -214,6 +215,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
+    Route::post('/wishlist/remove', 'WishlistController@remove');
 });
 
 require __DIR__ . '/auth.php';

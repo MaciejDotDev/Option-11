@@ -13,13 +13,9 @@ return new class extends Migration
     {
         Schema::create('products_history', function (Blueprint $table) {
             $table->bigIncrements('productsHistoryid')->unsigned();
-
-
-
-            $table->unsignedBigInteger('productid')->nullable();
-            $table->foreign('productid')->references('productid')->on('products');
             $table->string('productname');
             $table->string('category');
+            $table->enum('status', ['deleted','avalible']);
             $table->timestamps();
         });
     }

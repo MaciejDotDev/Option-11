@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\OrderItem;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -31,7 +32,8 @@ class ManageAccount extends Controller
 
 
 
-        return Inertia::render('Dashboard');
+        $orderItems = OrderItem::with('orders')->where('userid', auth()->user()->userid)->get();
+        return Inertia::render('Dashboard', ['orderItems' => $orderItems]);
 
 
     }
