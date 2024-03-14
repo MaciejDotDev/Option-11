@@ -33,19 +33,20 @@ class ManageAccount extends Controller
 
 
         $order = Orders::where('userid',auth()->user()->userid)->first();
+        $ordersItems =  [];
 
         if ($order == null) {
 
-            return Inertia::render('Dashboard');
+            return Inertia::render('Dashboard',['orderItems' => $ordersItems]);
         }
 
-        $ordersItems = OrderItem::where('orderid', $order->orderid)->get();
 
 
-        
+        $ordersItems = OrderItem::with('products','orders')->where('orderid', $order->orderid)->get();
+
         return Inertia::render('Dashboard',['orderItems' => $ordersItems]);
 
-        
+
 
 
     }
@@ -63,7 +64,7 @@ class ManageAccount extends Controller
 
 
 
-            $validateInput = $request->validate([
+       /*     $validateInput = $request->validate([
                 'firstname' => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
                 'phonenumber' => 'required|string|min:10|max:12|regex:/[0-9]{9}/',
@@ -71,7 +72,7 @@ class ManageAccount extends Controller
 
 
             ]);
-
+*/
 
 
 

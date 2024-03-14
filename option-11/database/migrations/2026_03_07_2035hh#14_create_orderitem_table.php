@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('productid');
             $table->foreign('productid')->references('productid')->on('products')->onDelete('cascade');
             $table->integer('quantity');
+            $table->decimal('totalprice',8, 2);
             $table->unsignedBigInteger('orderid');
             $table->foreign('orderid')->references('orderid')->on('orders')->onDelete('cascade');
 

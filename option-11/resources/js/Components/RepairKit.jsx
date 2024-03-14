@@ -58,8 +58,6 @@ const RepairKit = ({ repairKit, success,auth,openModal }) => {
                         />
                            <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
                         <InputError message={errors.quantity} className="mt-2" />
-                        <Link to={route('sendRepairKitDetails', { kitid: kit.products.productid})}>View Product</Link>
-
                     </div>
                 </div>
                 <div className="card-footer">

@@ -25,6 +25,7 @@ export default function UpdateAccount({ auth, baskIcon }) {
         lastname: auth.user.lastname,
         email: auth.user.email,
         phonenumber: auth.user.phonenumber,
+        action: "",
     });
 
     const resetField = (fieldName) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-const FormDropdown = ({ cardName, children, state, setState, processing,cardId,setData }) => {
+const FormDropdown = ({ cardName, children, state, setState, processing,cardId }) => {
     const [dropdownstate, setDropdownopen] = useState(false);
 
     const setOpen = () => {
@@ -34,7 +34,6 @@ const FormDropdown = ({ cardName, children, state, setState, processing,cardId,s
                     type="button"
                     onClick={() => {
                         setOpen();
-
                     }}
                 >
                     Edit
@@ -58,7 +57,6 @@ const FormDropdown = ({ cardName, children, state, setState, processing,cardId,s
                         type="button"
                         onClick={() => {
                             setOpen();
-
                         }}
                     >
                         Cancel

@@ -23,42 +23,65 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
         borderColor: "divider",
         backgroundColor: "background.paper",
     };
+    const bikePartList = ordersItems.map((orderItem) => {
+        const date = new Date(orderItem.created_at);
 
-
-
-    const orderItemsList = ordersItems.map((item) => {
+        // Format date using toLocaleDateString and toLocaleTimeString
+        const formattedDate = date.toLocaleDateString();
+        const formattedTime = date.toLocaleTimeString();
         return (
-            <div>
-                <ListItem>
-                    <ListItemText
-                        primary={item.products.productname}
-                        secondary={item.products.description +"   ds"}
-                        third="ds"
-                    />
-                    <Link to={`/product/${item.products.id}`}>View Product</Link>
 
-                </ListItem>
-                <Divider component="li" />
-            </div>
+            <tr>
+                        <td scope="row" width="5%"><input type="checkbox" className="form-check-input" /></td>
+            <td scope="row">{orderItem.orderitemid}</td>
+            <td scope="row">{orderItem.products.productname}</td>
+            <td scope="row">{orderItem.quantity}</td>
+            <td scope="row">{orderItem.totalprice}</td>
+
+            <td scope="row">{formattedDate} {formattedTime}</td>
+
+            <td scope="row">
+                <a href={route("editProducts", { productid: orderItem.products.productid })}>
+                    View User
+                </a>{" "}
+
+
+            </td>
+        </tr>
         );
+
+
+
+
     });
+
+
+
 
     return (
         <div>
             <AdminNavbar auth={auth} />
 
-            <div
-                style={{
-                    width: "50%",
-                    margin: "0 auto",
-                    marginBottom: "1rem",
-                    marginTop: "5rem",
-                }}
-            >
-                <List sx={style} aria-label="mailbox folders">
-                    {orderItemsList}
-                </List>
-            </div>
+            <table class="table table-bordered editProducts" >
+                <thead>
+                    <tr>
+
+                        <th scope="col">ID</th>
+                        <th scope="col">Product name</th>
+                        <th scope="col">Total price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Action</th>
+
+
+
+
+                    </tr>
+                </thead>
+                <tbody>{bikePartList}</tbody>
+
+            </table>
         </div>
     );
 }

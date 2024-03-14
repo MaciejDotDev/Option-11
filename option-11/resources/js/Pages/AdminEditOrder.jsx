@@ -202,6 +202,11 @@ const AdminEditOrder = ({ auth, orders }) => {
 
                                     Remove Order
                                 </Button>
+
+                            </Col>
+
+                            <Col className="mt-2" md={6}>
+
                                 <Button
                                     variant="danger"
                                     type="submit"

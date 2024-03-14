@@ -15,10 +15,10 @@ return new class extends Migration
             $table->bigIncrements('addressid')->unsigned();
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('userid')->on('users')->onDelete('cascade');
-            $table->string('postcode', 9);
-            $table->string('country', 15);
-            $table->string('city', 15);
-            $table->string('street', 15);
+            $table->text('postcode', 9);
+            $table->text('country', 15);
+            $table->text('city', 15);
+            $table->text('street', 15);
             $table->timestamps();
         });
     }

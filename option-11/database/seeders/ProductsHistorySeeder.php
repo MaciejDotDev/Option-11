@@ -41,7 +41,7 @@ class ProductsHistorySeeder extends Seeder
             'Bike Multi-Tool'
         ];
 
-     
+
         $faker = Faker::create();
         $startDate = Carbon::now();
         $endDate = Carbon::now()->addDays(10);
@@ -50,17 +50,17 @@ class ProductsHistorySeeder extends Seeder
         $productsHistory = [];
 
         foreach ($dates as $date) {
-         
+
             $productName = $productNames[array_rand($productNames)];
 
             if (in_array($productName, $recurringProductNames)) {
                 $productName = $recurringProductNames[array_rand($recurringProductNames)];
             }
 
-        
+
             $category = $categories[array_rand($categories)];
 
-           
+
             $productsHistory[] = [
                 'productname' => $productName,
                 'category' => $category,
@@ -69,7 +69,7 @@ class ProductsHistorySeeder extends Seeder
             ];
         }
 
-        // Insert data into the products_history table
+
         DB::table('products_history')->insert($productsHistory);
     }
 }

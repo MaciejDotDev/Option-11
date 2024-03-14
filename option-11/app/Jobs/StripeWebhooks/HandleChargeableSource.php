@@ -54,7 +54,7 @@ class HandleChargeableSource implements ShouldQueue
 
 
 
-    
+
         $total = Basket::where('userid', $userid)->where('status', 'open')->get();
 
         $order = new Orders();
@@ -70,18 +70,19 @@ class HandleChargeableSource implements ShouldQueue
         $address->country = $country;
         $address->city = $city;
         $address->street = $line1;
-        $address->save(); 
+        $address->save();
 
-        $order->addressid = $address->addressid; 
+        $order->addressid = $address->addressid;
         $order->save();
 
-    
+
         $basket = Basket::with('products')->where('userid', $userid)->where('status', 'open')->get();
         foreach ($basket as $product) {
             $orderItem = new OrderItem();
             $orderItem->productid = $product->productid;
             $orderItem->orderid = $order->orderid;
             $orderItem->quantity = $product->quantity;
+            $orderItem->totalprice = $product->totalprice;
             $orderItem->save();
         }
 
@@ -94,7 +95,7 @@ class HandleChargeableSource implements ShouldQueue
         $transaction->creation = date('D-m-y H:i:s', $created);
         $transaction->save();
 
-    
+
         $orderItems = OrderItem::where('orderid', $order->orderid)->get();
         foreach ($orderItems as $item) {
             $product = Products::where('productid', $item->productid)->first();

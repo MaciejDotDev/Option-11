@@ -9,7 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-export default function Dashboard({ auth, baskIcon }) {
+export default function Dashboard({ auth, baskIcon, orderItems }) {
     const handleDeleteConfirmation = (e) => {
         if (window.confirm("Are you sure you wish to delete your account?")) {
             this.onCancel(item);
@@ -17,6 +17,37 @@ export default function Dashboard({ auth, baskIcon }) {
             e.preventDefault();
         }
     };
+
+
+    const orderItemsList =
+
+
+    orderItems.length > 0 ? (
+
+            orderItems.map((orderItem) =>
+
+
+            <div style={{ backgroundColor: "#212529" }}>
+                <h4  style={{
+
+                    fontSize: "1.5rem"
+                }}className="h2basket">{orderItem.products.productname}</h4>
+                <p>Tracking Code: {orderItem.orders.trackingcode} </p>
+                <p>Total Price: {orderItem.totalprice} </p>
+
+                <p
+                    style={{
+                        fontSize: "10px",
+
+                        color: "grey",
+                    }}
+                >
+                   {new Date(orderItem.created_at).toLocaleDateString()}
+                </p>
+            </div>
+                )
+        ) : <p style={{  textAlign: "center" }}>No orders yet</p>
+
 
     return (
         <>
@@ -35,104 +66,7 @@ export default function Dashboard({ auth, baskIcon }) {
                                 }}
                                 subheader={<li />}
                             >
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
-                                <div style={{   backgroundColor: "#212529", }}>
-                                <h5 className="h2basket">
-                                   Product
-                                </h5>
-                                <p>Tracking Code: </p>
-                                <p>Total Price: </p>
-
-                                <p style={{
-                                    fontSize:"10px",
-
-                                    color: "grey"
-                                 }}>Total Price: </p>
-
-                                </div>
+                                {orderItemsList}
                             </List>
                         </DashboardCard>
                         <DashboardCard cardName="My account">
@@ -190,9 +124,10 @@ export default function Dashboard({ auth, baskIcon }) {
                         </DashboardCard>
                     </div>
                     <div className="dashboard-container">
-                        <DashboardCard cardName="Wishlist"> <List style={{
-
-                         }}
+                        <DashboardCard cardName="Wishlist">
+                            {" "}
+                            <List
+                                style={{}}
                                 sx={{
                                     width: "100%",
                                     maxWidth: 560,
@@ -200,108 +135,117 @@ export default function Dashboard({ auth, baskIcon }) {
 
                                     overflow: "auto",
                                     maxHeight: 200,
-
                                 }}
                                 subheader={<li />}
-                            >   <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
+                            >
+                                {" "}
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                            <p style={{
-                                fontSize:"10px",
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                                color: "grey"
-                             }}>Total Price: </p>
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                            </div>
-                            <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                            <p style={{
-                                fontSize:"10px",
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                                color: "grey"
-                             }}>Total Price: </p>
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                            </div>
-                            <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                            <p style={{
-                                fontSize:"10px",
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                                color: "grey"
-                             }}>Total Price: </p>
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                            </div>
-                            <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                            <p style={{
-                                fontSize:"10px",
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                                color: "grey"
-                             }}>Total Price: </p>
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                            </div>
-                            <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>
+                                <div style={{ backgroundColor: "#212529" }}>
+                                    <h5 className="h2basket">Product</h5>
+                                    <p>Tracking Code: </p>
+                                    <p>Total Price: </p>
 
-                            <p style={{
-                                fontSize:"10px",
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
 
-                                color: "grey"
-                             }}>Total Price: </p>
-
-                            </div>
-                            <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
-
-                            <p style={{
-                                fontSize:"10px",
-
-                                color: "grey"
-                             }}>Total Price: </p>
-
-                            </div>
-                            <div style={{   backgroundColor: "#212529", }}>
-                            <h5 className="h2basket">
-                               Product
-                            </h5>
-                            <p>Tracking Code: </p>
-                            <p>Total Price: </p>
-
-                            <p style={{
-                                fontSize:"10px",
-
-                                color: "grey"
-                             }}>Total Price: </p>
-
-                            </div>   </List>
-                            </DashboardCard>
+                                            color: "grey",
+                                        }}
+                                    >
+                                        Total Price:{" "}
+                                    </p>
+                                </div>{" "}
+                            </List>
+                        </DashboardCard>
 
                         <DashboardCard cardName="Additional services">
                             {/* add tracking tracking seervice for bikes, repair service,  */}

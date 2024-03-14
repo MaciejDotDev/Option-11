@@ -26,6 +26,7 @@ class OrderItem extends Model
         'orderitemid',
         'productid',
         'quantity',
+        'totalprice',
         'orderid',
 
 

@@ -19,8 +19,7 @@ const AdminReports = ({ auth }) => {
     }, []);
 
     // I made these so that if the admin types in one, the other cannot be active.
-    const isProductIdNotEmpty = !!data.productId.trim();
-    const isProductSearchNameNotEmpty = !!data.productSearchName.trim();
+
 
     const submit = (e) => {
         e.preventDefault();

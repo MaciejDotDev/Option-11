@@ -139,7 +139,6 @@ Route::post('/updateAddress', [AdminEditAddress::class, 'update'])->name('update
     Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
 
 
-    Route::match(['get','post'],'sendRepairKitDetails{kitid}', [ShowRepairKitsController::class, 'sendRepairKitDetails'])->name('sendRepairKitDetails');
 
 
     Route::get('users/all/export/', [AdminReportsController::class, 'exportStatsUsers']);
