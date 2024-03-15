@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('productsHistoryid')->unsigned();
             $table->string('productname');
             $table->string('category');
+            $table->integer('quantity');
             $table->enum('status', ['deleted','avalible']);
             $table->timestamps();
         });

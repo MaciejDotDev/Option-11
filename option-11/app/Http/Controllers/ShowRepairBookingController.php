@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Repair;
+use App\Models\Bikes;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -14,8 +14,8 @@ class ShowRepairBookingController extends Controller{
 
     public function showAll()
     {
-        $repairs = Repair::all();
-        return Inertia::render('RepairBooking', ['repairs' => $repairs]);
+        $bikes = Bikes::with('products')->get();
+        return Inertia::render('RepairBooking', ['bikes' => $bikes]);
     }
 }
 

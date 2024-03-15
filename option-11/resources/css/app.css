@@ -642,3 +642,68 @@ div.expand {
 
 
 }
+
+
+/* progress bar css */
+
+
+.RSPBprogressBar {
+    height: 10px;
+    width: 50%;
+    line-height: 1;
+    border-radius: 10px;
+    position: relative;
+    background-color: rgb(207, 207, 207);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 0;
+    margin: 20px auto;
+  }
+
+  .RSPBprogressBar .RSPBstep {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    transition-property: all;
+    transition-timing-function: ease;
+  }
+
+  .RSPBprogressBar .RSPBprogressBarText {
+    color: white;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .RSPBprogressBar .RSPBprogression {
+    position: absolute;
+    transition: width 0.3s ease;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 10px;
+    background: #FE002C;
+    z-index: -1;
+  }
+
+  .indexedStep {
+
+    width: 30px;
+    height: 30px;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+
+    border-width: 1px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }

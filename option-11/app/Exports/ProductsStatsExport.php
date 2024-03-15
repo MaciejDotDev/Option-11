@@ -65,7 +65,17 @@ class ProductsStatsExport implements FromCollection
             $jan = ProductHistory::whereYear('created_at', $currentYear)
                 ->whereMonth('created_at', $i)
                 ->get()->count();
-            $amountproductsold2024[$i] = $jan;
+
+                $feb = ProductHistory::whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $i)
+                ->get();
+
+                $num = 0;
+
+                foreach ($feb as $item) $num   =  $num + $item->quantity;
+
+                $amountproductsold2024[$i] = $num ;
+
 
 
             // Add your custom values to the collection
@@ -74,15 +84,26 @@ class ProductsStatsExport implements FromCollection
             $jan = ProductHistory::whereYear('created_at', $lastYear)
                 ->whereMonth('created_at', $i)
                 ->get()->count();
-            $amountproductsold2023[$i] = $jan;
+
+                $feb = ProductHistory::whereYear('created_at', $lastYear)
+                ->whereMonth('created_at', $i)
+                ->get();
+
+                $num = 0;
+
+                foreach ($feb as $item) $num   =  $num + $item->quantity;
 
 
-          
+
+                $amountproductsold2023[$i] = $num ;
+
+
+
 
         }
 
-        $totalsold2023= ProductHistory::whereYear('created_at', $lastYear)->get()->count();
-        $totalsold2024= ProductHistory::whereYear('created_at', $currentYear)->get()->count();
+        $totalsold2023= array_sum($amountproductsold2023);
+        $totalsold2024= array_sum($amountproductsold2024);;
 
         $mostsoldProduct = ProductHistory::select('productname')
         ->groupBy('productname')
@@ -118,14 +139,15 @@ class ProductsStatsExport implements FromCollection
         $avarage2023 = $totalsold2023 / 12;
 
 
-        $avarageToString = ($avarage2024 - $avarage2023) / $avarage2023 *100;
+        $avarageToString = ($totalsold2024 - $totalsold2023) / $totalsold2023 *100;
 
         if ($avarage2024 <= 0 || $avarage2023 <= 0) {
 
-            $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of created accounts in $lastYear"], [$months], [$amountproductsold2023]);
+            $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of products sold in $lastYear"], [$months], [$amountproductsold2023]);
             return $data;
         }
-        $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of created accounts in $lastYear"], [$months], [$amountproductsold2023], ["most sold product:"], [ $soldproduct[0]['productname']], ["least sold product:"],[$leastproduct[0]['productname']], ["total products sold in $lastYear:"], [ $totalsold2023],["total sold in $currentYear"],[$totalsold2024],["increase of products sold from $lastYear and $currentYear"],[ "$avarageToString%"], ["most sold category of product:"], [$soldCategory[0]['category']], ["least sold category:"],[ $leastcategory[0]['category'] ] );
+        $data->push(["Amount of products sold in $currentYear"], [$months], [$amountproductsold2024], ["Amount of products sold in $lastYear"], [$months], [$amountproductsold2023], ["Most sold product:"], [ $soldproduct[0]['productname']], ["Least sold product:"],[$leastproduct[0]['productname']] , ["Most sold category of product:"], [$soldCategory[0]['category']], ["Least sold category:"],[ $leastcategory[0]['category'] ], ["Total products sold in $currentYear:"], [ $totalsold2024],["Total sold in $lastYear"],[$totalsold2023],["Increase of products sold from $lastYear and $currentYear"],[ "$avarageToString%"]);
+
         return $data;
 
     }

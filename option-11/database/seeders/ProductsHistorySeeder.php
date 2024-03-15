@@ -64,6 +64,7 @@ class ProductsHistorySeeder extends Seeder
             $productsHistory[] = [
                 'productname' => $productName,
                 'category' => $category,
+                'quantity' => 2,
                 'created_at' => $faker->dateTimeBetween('2023-01-01', '2024-12-31'),
                 'updated_at' => $faker->dateTimeBetween('2023-01-01', '2024-12-31'),
             ];

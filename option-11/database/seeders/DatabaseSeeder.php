@@ -16,16 +16,18 @@ class DatabaseSeeder extends Seeder
     CategorySeeder::class,
     ProductsSeeder::class,
     AdminsTableSeeder::class,
-    ProductPartsSeeder::class,
+
     RepairKitsTableSeeder::class,
     AccessoryTableSeeder::class,
     BikesTableSeeder::class,
     ClothingSeeder::class,
     UsersTableSeeder::class,
     ProductsHistorySeeder::class,
+    ProductPartsSeeder::class,
 
     // make sure the order on top remains
     ReviewsTableSeeder::class,
+    ProductsPartsCheck::class,
     ]);
     }
 }

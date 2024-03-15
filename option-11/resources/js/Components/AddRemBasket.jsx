@@ -15,7 +15,7 @@ const AddRemBasket = ({
     paddingTop,
     totalprice
 }) => {
-  
+
     const { data, setData, post, processing, errors, reset } = useForm({
         quantity: item,
         basketid: itemid,
@@ -25,17 +25,17 @@ const AddRemBasket = ({
 
     const handleSubmit  = (e) => {
         e.preventDefault();
-    
+
         post(route("basketAction"));
          //might want to change this so it requires not  a reload
-       
+
 
     };
 
     return (
         <form onSubmit={handleSubmit}>
 
-   
+
             <div
                 className={
                     "rounded-circle bg-" +
@@ -52,10 +52,11 @@ const AddRemBasket = ({
                     bottom: bottom,
                     left: left,
                     cursor: "pointer",
-                   
+                    alignItems: "center"
+
                 }}
                 onClick={handleSubmit}
-                
+
             >
                 <span
                     style={{

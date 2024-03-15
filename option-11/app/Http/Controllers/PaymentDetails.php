@@ -11,7 +11,12 @@ use App\Models\Products;
 use Stripe\Customer;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ProductHistory;
 use App\Models\OrderItem;
+use App\Models\Categories;
+use App\Models\Address;
+
+use App\Models\Transactions;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -121,13 +126,8 @@ class PaymentDetails extends Controller
             }
 
 
-        $checkOrder = Orders::where('userid', auth()->user()->userid)->first();
 
-        if (!$checkOrder) {
-            throw new NotFoundHttpException;
 
-        }
-        $total = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->delete();
 
         } catch (Exception $e) {
 
@@ -135,5 +135,127 @@ class PaymentDetails extends Controller
         }
 
         return Redirect::route('basket');
+    }
+
+
+    public function webhook()
+    {
+
+        $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
+
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload, $sig_header, $endpoint_secret
+            );
+        } catch (\UnexpectedValueException $e) {
+
+            return response('', 400);
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+
+            return response('', 400);
+        }
+
+
+        switch ($event->type) {
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+
+
+
+
+                $sessionId =  $session->id;
+                $paymentIntent =  $session->payment_intent;
+                $customerid = $session->metadata->cus_id;
+                $userid =  $session->metadata->userid;
+
+
+                $status = $session->status;
+                $currency =  $session->currency;
+                $created =  $session->created;
+
+
+                $customerDetails = $session->customer_details;
+
+
+                $city = $customerDetails->address->city;
+                $postcode = $customerDetails->address->postal_code;
+                $line1 = $customerDetails->address->line1;
+                $country = $customerDetails->address->country;
+
+
+
+
+
+                $total = Basket::where('userid', $userid)->where('status', 'open')->get();
+
+                $order = new Orders();
+                $order->userid = $userid;
+                $order->trackingcode = \Str::random(10);
+                $order->sessionid = $sessionId;
+                $order->totalprice = $total->sum('totalprice');
+                $order->status = "paid";
+
+                $address = new Address();
+                $address->userid = $order->userid;
+                $address->postcode = $postcode;
+                $address->country = $country;
+                $address->city = $city;
+                $address->street = $line1;
+                $address->save();
+
+                $order->addressid = $address->addressid;
+                $order->save();
+
+
+                $basket = Basket::with('products')->where('userid', $userid)->where('status', 'open')->get();
+                foreach ($basket as $product) {
+                    $orderItem = new OrderItem();
+                    $orderItem->productid = $product->productid;
+                    $orderItem->orderid = $order->orderid;
+                    $orderItem->quantity = $product->quantity;
+                    $orderItem->totalprice = $product->totalprice;
+                    $orderItem->save();
+                    $productHistory = new ProductHistory();
+                    $product1 = Categories::where('categoryid', $product->products->categoryid)->first();
+                    $productHistory->productname = $product->products->productname;
+
+                    $productHistory->category = $product1->name;
+
+                    $productHistory->quantity = $product->quantity;
+                    $productHistory->save();
+
+
+                }
+
+                $transaction = new Transactions();
+                $transaction->orderid = $order->orderid;
+                $transaction->paymentIntent = $paymentIntent;
+                $transaction->customerid = $customerid;
+                $transaction->status = $status;
+                $transaction->currency = $currency;
+                $transaction->creation = date('D-m-y H:i:s', $created);
+                $transaction->save();
+
+
+                $orderItems = OrderItem::where('orderid', $order->orderid)->get();
+                foreach ($orderItems as $item) {
+                    $product = Products::where('productid', $item->productid)->first();
+                    $product->stockquantity -= $item->quantity;
+                    $product->save();
+
+                }
+
+
+                $total = Basket::where('userid', $userid)->where('status', 'open')->delete();
+
+            default:
+                echo 'Received unknown event type ' . $event->type;
+        }
+
+        return response('');
     }
 }

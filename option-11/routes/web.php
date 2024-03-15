@@ -80,6 +80,7 @@ Route::get('/addresses', function () {
 })->middleware(['auth', 'verified'])->name('addresses');
 
 
+
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 //squob work below
 Route::get('/BikeParts', [ShowBikePartsController::class, 'showAll'])->name('BikeParts');
@@ -172,8 +173,8 @@ Route::group(['middleware' => ['admin.guest']], function () {
 
 });
 
-Route::stripeWebhooks('/webhook');
 
+Route::match(['get', 'post'],'/webhook', [PaymentDetails::class, 'webhook'])->name('webhook');
 
 
 Route::get('/reviews', [ReviewsController::class,'showAll'])->name('reviews'); // to add to teh middleware later
@@ -195,13 +196,14 @@ Route::middleware('auth')->group(function () {
 
 
 
-
+    Route::match(['get', 'post'], '/trackorder', 'App\Http\Controllers\OrdersController@showAll')->name('trackorder');
 
     Route::post('/createReview', [ReviewsController::class,'createReview'])->name('createReview');
     Route::match(['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
 
     Route::match(['get', 'post'], '/orderHistory', 'App\Http\Controllers\OrdersController@showAll')->name('orderHistory');
     Route::post('/basket/action', [ManageBasketController::class, 'addRemItem'])->name('basketAction');
+
 
 
 

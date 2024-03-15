@@ -42,5 +42,5 @@ class AdminReportsController extends Controller
         // Use the Excel facade to download the export
         return Excel::download($export, 'productsStats.xlsx');
     }
-    
+
 }

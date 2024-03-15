@@ -33,6 +33,7 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                     fontSize: "1.5rem"
                 }}className="h2basket">{orderItem.products.productname}</h4>
                 <p>Tracking Code: {orderItem.orders.trackingcode} </p>
+                <p>Quantity: {orderItem.quantity} </p>
                 <p>Total Price: {orderItem.totalprice} </p>
 
                 <p
@@ -251,7 +252,7 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                             {/* add tracking tracking seervice for bikes, repair service,  */}
 
                             <Link
-                                href={route("updateAccount")}
+                                href={route("repairBooking")}
                                 className="text-white btn btn-dark"
                                 style={{
                                     justifyContent: "flex-start",

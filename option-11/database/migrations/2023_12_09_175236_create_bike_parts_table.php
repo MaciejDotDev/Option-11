@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('color');
             $table->string('size');
-            $table->string('CompatibleWithType');
+
 
             $table->timestamps();
         });
