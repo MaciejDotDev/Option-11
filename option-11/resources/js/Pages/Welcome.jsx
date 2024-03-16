@@ -6,7 +6,7 @@ import Categories from '@/Components/Categories';
 import MainPgProducts from '@/Components/MainPgProducts';
 import AnimateModal from '@/Components/AnimateModal';
 import Footer from '@/Components/Footer';
-import Login from '@/Pages/Auth/Login'; // Import your Modal component
+import Login from '@/Pages/Auth/Login';
 
 import mainBike from '../../assets/main-img.png';
 
@@ -17,7 +17,7 @@ const Home = ({ auth,baskIcon }) => {
     <>
       <main>
       <AnimateModal auth={auth} baskIcon={baskIcon}>
-       
+
         <MainImage
           imageSrc={mainBike}
           altText="bike sign"
@@ -27,17 +27,17 @@ const Home = ({ auth,baskIcon }) => {
         <Categories />
         <MainPgProducts />
 
-        
-       
-      
-       
-     
-      
+
+
+
+
+
+
         </AnimateModal>
       </main>
 
-   
-  
+
+
     </>
   );
 };

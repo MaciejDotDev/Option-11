@@ -86,13 +86,14 @@ Route::get('/RepairKits', [ShowRepairKitsController::class, 'showAll'])->name('r
 
 Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('clothing');
 
-
 Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
 
 Route::get('/Orders', [ShowOrdersController::class, 'showAll'])->name('orders');
 
-//Route for individual Product Page functionality ( Bikes )
+//Route for individual Product Page functionality
 Route::get('/product/{category}/{id}', [IndividualProductController::class, 'product'])->name('product');
+
+
 
 
 Route::group(['middleware' => ['admin']], function () {

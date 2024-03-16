@@ -27,12 +27,12 @@ class ManageBasketController extends Controller
 {
     //
 
-    public function search() 
+    public function search()
 {
     $basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->get();
 
     $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
-    
+
     $bikes = [];
     foreach ($basket as $item) {
 
@@ -45,7 +45,7 @@ class ManageBasketController extends Controller
 
 
             $bikes[] = $bike;
-            
+
         } else if ($bikePart) {
 
             $bikes[] = $bikePart;
@@ -57,38 +57,38 @@ class ManageBasketController extends Controller
             $bikes[] = $clothes;
 
 
-            
+
         }  else if ($repairkits) {
 
 
             $bikes[] = $repairkits;
 
 
-            
+
         }  else if ($accessory) {
 
 
             $bikes[] = $accessory;
 
 
-            
+
         }
 
 
 
     }
-    
-    
+
+
     return Inertia::render('Basket',['basket' => $basket, 'totalprice' => $totalPrice, 'bikes' => $bikes ]);
 
-    
+
 }
 
 
 public function deleteProduct(Request $request)
 {
- 
-    
+
+
     $basket = Basket::where('userid', auth()->user()->userid)->get();
     $basketid =$request->input('basketid');
 
@@ -96,13 +96,7 @@ public function deleteProduct(Request $request)
 
     $basketFind->delete();
 
- 
-
-  
 }
-
-
-
 
 }
 

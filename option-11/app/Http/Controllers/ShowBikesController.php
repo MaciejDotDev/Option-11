@@ -122,6 +122,8 @@ public function addBasket(Request $request) {
                 $bike = Bikes::where('bikeid',$basket->bikeid)->first();
 
 
+                //set default value of basket total price to 0 and then calculate the total price
+                $basket->totalprice = 0;
 
                 $basket->totalprice = $basket->quantity * $bike->price;
 
