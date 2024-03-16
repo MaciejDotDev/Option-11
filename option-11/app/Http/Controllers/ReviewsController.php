@@ -32,7 +32,11 @@ class ReviewsController extends Controller
 
 
 
+     public function show() {
 
+
+        return Inertia::render('OrderTrack');
+    }
 
 
 public function showAll() {
@@ -74,7 +78,7 @@ public function createReview(Request $request) {
 
 
     $validateInput = $request->validate([
-        'stars'=>'required|integer|between:1,5',
+        'stars'=>'required|integer|between:1,5|gt:0',
         'title'=>'required',
 
         'description'=>'required'

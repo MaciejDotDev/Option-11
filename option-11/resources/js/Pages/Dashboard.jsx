@@ -1,15 +1,21 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-import Dropdown from "@/Components/Dropdown";
-import NavBar from "@/Components/NavBar";
+
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
-import Button from "@mui/material/Button";
+
+import { Inertia } from "@inertiajs/inertia";
+import { InertiaLink } from "@inertiajs/inertia-react";
+import Footer from "@/Components/Footer";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
-export default function Dashboard({ auth, baskIcon, orderItems }) {
+
+export default function Dashboard({
+    auth,
+    baskIcon,
+    orderItems,
+    wishlistItems,
+    wishlistAmount
+}) {
     const handleDeleteConfirmation = (e) => {
         if (window.confirm("Are you sure you wish to delete your account?")) {
             this.onCancel(item);
@@ -20,42 +26,76 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
 
 
     const orderItemsList =
+        orderItems.length > 0 ? (
+            orderItems.map((orderItem) => (
+                <div style={{ backgroundColor: "#212529" }}>
+                    <h4
+                        style={{
+                            fontSize: "1.5rem",
+                        }}
+                        className="h2basket"
+                    >
+                        {orderItem.products.productname}
+                    </h4>
 
 
-    orderItems.length > 0 ? (
+                    <p>Tracking Code:   <a href={route("orderTrack", { trackingid: orderItem.orders.trackingcode  })} class="text-blue-500 hover:text-blue-700" >{orderItem.orders.trackingcode}</a></p>
+                    <p>Quantity: {orderItem.quantity} </p>
+                    <p>Total Price: {orderItem.totalprice} </p>
 
-            orderItems.map((orderItem) =>
+                    <p
+                        style={{
+                            fontSize: "10px",
 
+                            color: "grey",
+                        }}
+                    >
+                        {new Date(orderItem.created_at).toLocaleDateString()}
+                    </p>
+                </div>
+            ))
+        ) : (
+            <p style={{ textAlign: "center" }}>No orders yet</p>
+        );
 
-            <div style={{ backgroundColor: "#212529" }}>
-                <h4  style={{
+    const wishlistItemsList =
+        wishlistItems.length > 0 ? (
+            wishlistItems.map((wishlistItem) => (
+                <div style={{ backgroundColor: "#212529" }}>
+                    <h4
+                        style={{
+                            fontSize: "1.5rem",
+                        }}
+                        className="h2basket"
+                    >
+                        {wishlistItem.products.productname}
+                    </h4>
+                    <p>Price: {wishlistItem.products.price} </p>
+                    <p>Stock left: {wishlistItem.products.stockquantity} </p>
+                    <p><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="#">Remove</a></p>
 
-                    fontSize: "1.5rem"
-                }}className="h2basket">{orderItem.products.productname}</h4>
-                <p>Tracking Code: {orderItem.orders.trackingcode} </p>
-                <p>Quantity: {orderItem.quantity} </p>
-                <p>Total Price: {orderItem.totalprice} </p>
+                    <p
+                        style={{
+                            fontSize: "10px",
 
-                <p
-                    style={{
-                        fontSize: "10px",
-
-                        color: "grey",
-                    }}
-                >
-                   {new Date(orderItem.created_at).toLocaleDateString()}
-                </p>
-            </div>
-                )
-        ) : <p style={{  textAlign: "center" }}>No orders yet</p>
-
+                            color: "grey",
+                        }}
+                    >
+                        {new Date(wishlistItem.created_at).toLocaleDateString()}
+                    </p>
+                </div>
+            ))
+        ) : (
+            <p style={{ textAlign: "center" }}>Nothing in your wishlist</p>
+        );
 
     return (
         <>
             <AnimateModal auth={auth} baskIcon={baskIcon}>
                 <div className="dashboard-groups">
                     <div className="dashboard-container">
-                        <DashboardCard cardName="My orders" style={{}}>
+                        <DashboardCard cardName="My orders" >
+
                             <List
                                 sx={{
                                     width: "100%",
@@ -71,7 +111,8 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                             </List>
                         </DashboardCard>
                         <DashboardCard cardName="My account">
-                            <div style={{}}>
+
+                            <div style={{   }}>
                                 <Link
                                     href={route("updateAccount")}
                                     className="text-white btn btn-dark"
@@ -125,7 +166,8 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                         </DashboardCard>
                     </div>
                     <div className="dashboard-container">
-                        <DashboardCard cardName="Wishlist">
+                        <DashboardCard cardName="Wishlist" wish={wishlistAmount} wishlistAmount={wishlistAmount}>
+
                             {" "}
                             <List
                                 style={{}}
@@ -140,111 +182,7 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                                 subheader={<li />}
                             >
                                 {" "}
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>
-                                <div style={{ backgroundColor: "#212529" }}>
-                                    <h5 className="h2basket">Product</h5>
-                                    <p>Tracking Code: </p>
-                                    <p>Total Price: </p>
-
-                                    <p
-                                        style={{
-                                            fontSize: "10px",
-
-                                            color: "grey",
-                                        }}
-                                    >
-                                        Total Price:{" "}
-                                    </p>
-                                </div>{" "}
+                                {wishlistItemsList}
                             </List>
                         </DashboardCard>
 
@@ -264,7 +202,7 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                                 Repair service
                             </Link>
                             <Link
-                                href={route("updateAccount")}
+
                                 className="text-white btn btn-dark"
                                 style={{
                                     justifyContent: "flex-start",
@@ -290,6 +228,7 @@ export default function Dashboard({ auth, baskIcon, orderItems }) {
                         </DashboardCard>
                     </div>
                 </div>
+                <Footer  />
             </AnimateModal>
         </>
     );

@@ -10,20 +10,22 @@ import AnimateModal from '@/Components/AnimateModal';
 // We import the navbar component to use the navbar
 import NavBar from "@/Components/NavBar";
 import Login from '@/Pages/Auth/Login';
+import Footer from "@/Components/Footer";
 // In React, we use a function to create a component, which can be a page or a component
 // In this case, this is a page, so we create a function called BikeParts
 // In the page bikeparts, we pass in the props auth and bikeparts, which we get from the controller, to use in the page
 
 const BikeParts = ({ auth, bikePart }) => {
-    
+
     return (
         <div>
            <AnimateModal auth={auth}>
-           
+
 
             <BikePart bikePart={bikePart} auth={auth} />
 
             <InertiaLink className="text-white" href={route('basket')}>Go to Basket</InertiaLink>
+            <Footer  />
             </AnimateModal>
         </div>
     );

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\OrderItem;
 use App\Models\Orders;
+use App\Models\Wishlist;
+use App\Models\Products;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -32,19 +34,41 @@ class ManageAccount extends Controller
     public function create () {
 
 
-        $order = Orders::where('userid',auth()->user()->userid)->first();
+        $order = Orders::where('userid',auth()->user()->userid)->get();
         $ordersItems =  [];
+
+
+        $wishlist = Wishlist::with('products')->where('userid',  auth()->user()->userid)->get();
+
+
+
+        $wishlistAmount = $wishlist->count();
+
+
+
+
+
 
         if ($order == null) {
 
-            return Inertia::render('Dashboard',['orderItems' => $ordersItems]);
+            return Inertia::render('Dashboard',['orderItems' => $ordersItems,'wishlistItems' => $wishlist,'wishlistAmount'=>$wishlistAmount]);
+        }
+
+        foreach($order as $item) {
+
+            $ordersItems[] = OrderItem::with('products','orders')->where('orderid', $item->orderid)->first();
         }
 
 
 
-        $ordersItems = OrderItem::with('products','orders')->where('orderid', $order->orderid)->get();
 
-        return Inertia::render('Dashboard',['orderItems' => $ordersItems]);
+
+
+
+
+
+
+        return Inertia::render('Dashboard',['orderItems' => $ordersItems, 'wishlistItems' => $wishlist]);
 
 
 

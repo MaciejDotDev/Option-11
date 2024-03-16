@@ -5,7 +5,7 @@ import NavBar from "@/Components/NavBar";
 import { Inertia } from "@inertiajs/inertia";
 import { AnimatePresence } from "framer-motion";
 import Login from "@/Pages/Auth/Login";
-import InputError from "@/Components/InputError";
+import Footer from "@/Components/Footer";
 import { usePage } from "@inertiajs/react";
 import AnimateModal from "@/Components/AnimateModal";
 import AddRemBasket from "@/Components/AddRemBasket";
@@ -36,7 +36,7 @@ export default function Basket({ auth, basket, totalprice }) {
                 <Head title="Basket" />
 
                 <body className="basketbody">
-                    <div className="basketContainer">
+                    <div className="basketContainer" style={{ fontFamily: "Koulen, sans-serif"  }}>
                         <h1 className="h1basket">Shopping Basket</h1>
 
                         <div className="basketClass">
@@ -179,7 +179,9 @@ export default function Basket({ auth, basket, totalprice }) {
                             )}
                         </div>
                     </div>
+                    <Footer  position="absolute"  />
                 </body>
+
             </AnimateModal>
         </>
     );

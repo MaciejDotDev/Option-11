@@ -41,7 +41,7 @@ body {
 }
 
 .footer {
-    background-color: #1f2124;
+
 }
 
 /* Navbar Styling */
@@ -181,7 +181,7 @@ body {
     border: 1px solid #212529;
     padding: 15px;
     background-color: #212529;
-    padding-bottom: 2rem;
+
 
 
 }
@@ -212,17 +212,21 @@ body {
     box-sizing: border-box;
     background-color: #17191b;
     color: white;
-    font-family: "Koulen", sans-serif;
+    position: relative;
+    padding-bottom: 17.5rem;
+min-height: 100%;
+
 }
 
 .checkout-btn {
-    padding: 10px 20px;
+    padding: 4px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 17px;
+
 
 }
 
@@ -662,9 +666,8 @@ div.expand {
   }
 
   .RSPBprogressBar .RSPBstep {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+
+
     z-index: 0;
     position: absolute;
     transform: translateX(-50%);
@@ -688,11 +691,11 @@ div.expand {
     top: 0;
     bottom: 0;
     border-radius: 10px;
-    background: #FE002C;
-    z-index: -1;
+    background: #b8011b;
+
   }
 
-  .indexedStep {
+  .step {
 
     width: 30px;
     height: 30px;

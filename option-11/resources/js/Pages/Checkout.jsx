@@ -5,6 +5,7 @@ import NavBar from "@/Components/NavBar";
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import AnimateModal from "@/Components/AnimateModal";
+import Footer from "@/Components/Footer";
 export default function Checkout({ auth, baskIcon }) {
 
     const { csrf_token } = usePage().props
@@ -12,13 +13,13 @@ export default function Checkout({ auth, baskIcon }) {
         email: "",
         amount: "",
         _token: csrf_token,
-       
+
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-      
+
 
         // If all validations pass, proceed to submit the form
         post("/addPayment", data, {
@@ -26,7 +27,7 @@ export default function Checkout({ auth, baskIcon }) {
                 'X-CSRF-Token': csrf_token,
             }
         });
-        
+
     };
 
     return (
@@ -37,9 +38,9 @@ export default function Checkout({ auth, baskIcon }) {
                     <button type="submit" id="checkout-live-button">Checkout</button>
                     </form>
 
-             
+
                 </div>
-                
+                <Footer  />
             </AnimateModal>
         </body>
     );

@@ -14,6 +14,9 @@ use App\Models\Basket;
 use App\Models\Address;
 use App\Models\Products;
 use App\Models\Transactions;
+use Illuminate\Support\Str;
+
+
 
 class HandleChargeableSource implements ShouldQueue
 {
@@ -56,10 +59,10 @@ class HandleChargeableSource implements ShouldQueue
 
 
         $total = Basket::where('userid', $userid)->where('status', 'open')->get();
-
+        $randomString = Str::random(10);
         $order = new Orders();
         $order->userid = $userid;
-        $order->trackingcode = "not provided yet";
+        $order->trackingcode = strtoupper($randomString);;
         $order->sessionid = $sessionId;
         $order->totalprice = $total->sum('totalprice');
         $order->status = "paid";

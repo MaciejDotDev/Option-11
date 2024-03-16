@@ -3,7 +3,9 @@ import { SlArrowDown } from "react-icons/sl";
 import { FaCaretDown } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-const DashboardCard = ({ cardName, children }) => {
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+const DashboardCard = ({ cardName, children, wish, wishlistAmount }) => {
     const [dropdownstate, setDropdownopen] = useState(false);
 
     const setOpen = () => {
@@ -14,6 +16,43 @@ const DashboardCard = ({ cardName, children }) => {
         }
     };
 
+    const wishlistCount = (wish) => {
+
+
+if (!wishlistAmount == 0) {
+
+    return (
+        <div
+        className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
+        style={{
+            width: "2rem",
+            height: "2rem",
+            position: "absolute",
+            marginLeft: "18rem",
+            marginBottom: "20rem",
+            transform: "translateY(-100%)",
+        }}
+    >
+        <span style={{ color: "#fff", fontSize: "1rem" }}>
+{wishlistAmount}
+        </span>
+    </div>
+
+    );
+
+}
+
+
+
+
+
+
+
+
+
+
+    }
+
     return (
         <div className="dashboardcard">
             <div
@@ -23,7 +62,9 @@ const DashboardCard = ({ cardName, children }) => {
                 }
             >
                 <div className="card-title dashboard">
-                    <p> {cardName} </p>
+
+                    <p> {cardName}  {wishlistCount()} </p>
+
                 </div>
 
                 <div
@@ -39,6 +80,7 @@ const DashboardCard = ({ cardName, children }) => {
                             color: "grey",
                             marginTop: " 0.1rem",
                         }}
+                        sx={{color: 'white'}}
                         onClick={() => {
                             setOpen();
                         }}

@@ -4,6 +4,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Inertia } from "@inertiajs/inertia";
 import NavBar from "@/Components/NavBar";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import Footer from "@/Components/Footer";
 import AnimateModal from "@/Components/AnimateModal";
 import {
     Select,
@@ -141,6 +142,7 @@ const RepairBooking = ({ auth, baskIcon, bikes }) => {
                 Submit
             </Button>
                 </div>
+                <Footer  />
             </AnimateModal>
         </div>
     );

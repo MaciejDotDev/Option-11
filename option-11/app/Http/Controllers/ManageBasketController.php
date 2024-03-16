@@ -135,7 +135,7 @@ class ManageBasketController extends Controller
         //to validate if item already exists inside the database, as well as a plus or minus button to increase quantity
 
         $validateInput = $request->validate([
-            'quantity' => 'required|numeric|not_in:0',
+            'quantity' => 'required|numeric|not_in:0|gt:0',
 
 
 

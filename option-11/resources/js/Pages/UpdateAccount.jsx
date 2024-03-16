@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
 import InputError from "@/Components/InputError";
-
+import Footer from "@/Components/Footer";
 import FormDropdown from "@/Components/FormDropdown";
 export default function UpdateAccount({ auth, baskIcon }) {
 
@@ -239,6 +239,7 @@ export default function UpdateAccount({ auth, baskIcon }) {
             </Form>
                 {formEmail()}
             </div>
+            <Footer  />
         </AnimateModal>
     );
 }

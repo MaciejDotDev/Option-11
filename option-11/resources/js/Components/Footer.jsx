@@ -1,9 +1,15 @@
 import { Container, Row, Col } from 'react-bootstrap';
 
-const CustomFooter = () => {
+const CustomFooter = ({position}) => {
 
   return (
-    <footer className='bg-dark text-white text-center p-4'>
+        <footer className='bg-dark text-white text-center p-4'  style={{ position:position,
+        left: 0,
+        bottom: 0,
+        width: "100%",
+        backgroundColor: "red",
+        color: "white",
+        textAlign: "center" }}>
       <Container>
         <Row>
           <Col className='flex justify-center'>

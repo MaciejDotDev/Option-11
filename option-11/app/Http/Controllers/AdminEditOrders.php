@@ -21,7 +21,8 @@ class AdminEditOrders extends Controller
 
 
 
-    public function show() {
+    public function show()
+    {
 
         $orders = Orders::with('transaction')->get();
 
@@ -32,18 +33,20 @@ class AdminEditOrders extends Controller
 
 
 
-    public function editOrder(Request $request, $orderid) {
+    public function editOrder(Request $request, $orderid)
+    {
 
-        $orders = Orders::with('transaction')->where('orderid',$orderid)->first();
+        $orders = Orders::with('transaction')->where('orderid', $orderid)->first();
 
         return Inertia::render('AdminEditOrder', ['orders' => $orders]);
     }
 
-    public function updateOrder(Request $request) {
+    public function updateOrder(Request $request)
+    {
 
         $validateInput = $request->validate([ //need to improve the validation amongst all controllers forms
             'trackingcode' => 'required',
-            'totalPrice' => 'required|numeric|not_in:0',
+            'totalPrice' => 'required|numeric|not_in:0|gt:0',
             'status' => 'required',
             'transactionid' => 'required',
             'customerId' => 'required',
@@ -55,22 +58,25 @@ class AdminEditOrders extends Controller
         ]);
 
 
+        if ($validateInput) {
 
 
-        Orders::where('orderid',$request->orderid)->update([
-            'trackingcode' => $request->trackingcode,
-            'totalprice' => $request->totalPrice,
-            'status' => $request->status,
+            Orders::where('orderid', $request->orderid)->update([
+                'trackingcode' => $request->trackingcode,
+                'totalprice' => $request->totalPrice,
+                'status' => $request->status,
 
 
 
 
 
 
-        ]);
+            ]);
+        }
+
 
         $transaction = Transactions::where('orderid', $request->orderid)->first();
-        if($transaction) {
+        if ($transaction) {
             $transaction->update([
                 'paymentIntent' => $request->transactionid,
                 'customerid' => $request->customerId,
@@ -78,37 +84,39 @@ class AdminEditOrders extends Controller
         }
 
 
-      return $this->show();
+        return $this->show();
     }
 
 
 
 
-    public function updateAddress (Request $request) {
+    public function updateAddress(Request $request)
+    {
 
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-       $transaction  =  Transactions::where('orderid', $request->orderid)->first();
+        $transaction = Transactions::where('orderid', $request->orderid)->first();
 
 
         $paymentMethod = \Stripe\PaymentMethod::update(
-        $transaction->paymentIntent , // Replace with the actual payment method ID
-         [
-            'billing_details' => [
-                'address' => [
-                    'line1' => $request->street + $request->housenum,
+            $transaction->paymentIntent, // Replace with the actual payment method ID
+            [
+                'billing_details' => [
+                    'address' => [
+                        'line1' => $request->street + $request->housenum,
 
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'postal_code' => $request->postalcode,
-                    'country' => $request->country,
+                        'city' => $request->city,
+                        'state' => $request->state,
+                        'postal_code' => $request->postalcode,
+                        'country' => $request->country,
+                    ],
                 ],
-            ],
-         ]
+            ]
         );
-            }
+    }
 
-    public function deleteOrder ($orderid) {
+    public function deleteOrder($orderid)
+    {
 
 
         Orders::where('orderid', $orderid)->delete();
@@ -122,12 +130,70 @@ class AdminEditOrders extends Controller
     }
 
 
-    public function getOrderItems($orderid) {
+    public function getOrderItems($orderid)
+    {
 
-        $ordersItems = OrderItem::with('products')->where('orderid',$orderid )->get();
+        $ordersItems = OrderItem::with('products')->where('orderid', $orderid)->get();
 
 
         return Inertia::render('AdminViewOrderItems', ['ordersItems' => $ordersItems]);
+
+    }
+
+    public function editItemOrderPage($itemOrderid)
+    {
+
+        $ordersItem = OrderItem::with('products')->where('orderitemid', $itemOrderid)->first();
+
+        $products = Products::all();
+        return Inertia::render('AdminEditOrderItem', ['product' => $ordersItem, 'products' => $products]);
+
+    }
+
+    public function editOrderItem(Request $request)
+    {
+
+
+        $validateInput = $request->validate([ //need to improve the validation amongst all controllers forms
+            'itemid' => 'required',
+            'productid' => 'required',
+            'quantity' => 'required|numeric|not_in:0|gt:0',
+
+
+
+
+
+        ]);
+
+        if ($validateInput) {
+            $product = Products::where('productid', $request->productid)->first();
+            if ($product->stockquantity -request('quantity') >= 0 ) {
+
+                $ordersItem = OrderItem::with('products')->where('orderitemid', $request->itemid)->first();
+
+                $ordersItem->quantity = $request->quantity;
+
+                $ordersItem->productid = $request->productid;
+
+                $bike = Products::where('productid',$request->productid)->first();
+                $ordersItem->totalprice = $request->quantity * $bike->price;
+
+                $product->stockquantity -= $ordersItem->quantity;
+                $product->save();
+                $ordersItem->save();
+                return $this->getOrderItems($ordersItem->orderid);
+
+            } else {
+                return redirect()->back()->withErrors(['stock' => 'Not enough stock!']);
+
+            }
+
+
+
+        }
+
+
+
 
     }
 }

@@ -11,7 +11,7 @@ import { AnimatePresence } from "framer-motion";
 import NavBar from "@/Components/NavBar";
 import Login from "@/Pages/Auth/Login";
 import AnimateModal from "@/Components/AnimateModal";
-
+import Footer from "@/Components/Footer";
 const BikeProducts = ({ auth, bikes }) => {
     // State for bikes filtering process, with default value set to all bikes.
     const [filter, setFilter] = useState("All Bikes");
@@ -97,7 +97,7 @@ const BikeProducts = ({ auth, bikes }) => {
                     priceFilter={priceFilter}
                 />
 
-
+<Footer  />
             </AnimateModal>
         </div>
     );

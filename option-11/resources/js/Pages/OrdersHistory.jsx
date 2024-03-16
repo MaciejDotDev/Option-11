@@ -9,7 +9,7 @@ import NavBar from "@/Components/NavBar";
 
 const OrdersHistory = ({ auth, orders, bikes, basketitems }) => {
 
-        
+
 
     useEffect(() => {
         const scrollToTopButton = document.getElementById("scrollToTop");
@@ -31,11 +31,11 @@ const OrdersHistory = ({ auth, orders, bikes, basketitems }) => {
             }
         };
     }, []);
-  
+
 
     return (
         <>
-        <AnimateModal auth={auth} >  
+        <AnimateModal auth={auth} >
 
         <Head title="Basket" />
 
@@ -55,7 +55,7 @@ const OrdersHistory = ({ auth, orders, bikes, basketitems }) => {
                                     >
                                         <div className="item-details">
                                             <h2 className="h2basket">
-                                              
+
                                                 {bikes[index].productname}
                                             </h2>
 
@@ -65,13 +65,13 @@ const OrdersHistory = ({ auth, orders, bikes, basketitems }) => {
                                             <p>Tracking code: {item.trackingcode}</p>
 
 
-                                           
+
                                         </div>
                                     </div>
                                 </div>
                             ))}
 
-                      
+
                         </div>
                     ) : (
                         <p>Order history is empty.</p>
@@ -88,6 +88,7 @@ const OrdersHistory = ({ auth, orders, bikes, basketitems }) => {
         >
             ^ Back to Top
         </button>
+
         </AnimateModal>
     </>
     );

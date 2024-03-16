@@ -53,7 +53,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'flash' => [
 
-                'message' => fn () => $request->session()->get('success')
+                'message' => fn () => $request->session()->get('success'),
+                'wishlist' => fn () => $request->session()->get('wishlist')
             ],
 
             'baskIcon' => [

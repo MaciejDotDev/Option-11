@@ -20,7 +20,7 @@ const AdminNavbar = ({ auth, openModal }) => {
                     <Nav className="gap-5 nav-links fs-4">
 
 
-                    <Nav.Link className="text-grey "  href={route('orders')}>
+                    <Nav.Link className="text-grey "  href={route('adminReports')}>
                         Reports
                         </Nav.Link>
                         <Nav.Link className="text-grey "  href={route('adminUsers')}>
@@ -28,7 +28,7 @@ const AdminNavbar = ({ auth, openModal }) => {
                         </Nav.Link>
                         <NavDropdown title="Products" id="collasible-nav-dropdown">
                             <NavDropdown.Item href={route('addProduct')}> Add Product</NavDropdown.Item>
-                            <NavDropdown.Item href={route('addProduct')}>View Stock</NavDropdown.Item>
+                            <NavDropdown.Item href={route('adminStockUpdateshow')}>Add Stock</NavDropdown.Item>
                             <NavDropdown.Item href={route('adminProducts')}>View all products</NavDropdown.Item>
 
 

@@ -5,7 +5,7 @@ import RepairKit from "../components/RepairKit";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from '@/Components/AnimateModal';
-import { Link } from 'react-router-dom';
+import Footer from "@/Components/Footer";
 const RepairKits = ({ auth, repairKit }) => {
     return (
         <div>
@@ -14,7 +14,7 @@ const RepairKits = ({ auth, repairKit }) => {
 
             <InertiaLink className="text-white" href={route("basket")}>Go to Basket</InertiaLink>
 
-
+            <Footer  />
             </AnimateModal>
         </div>
     );

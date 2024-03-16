@@ -7,7 +7,7 @@ import { HSquareFill } from "react-bootstrap-icons";
 import { Link } from "@inertiajs/react";
 import AdminNavbar from '@/Pages/AdminNavbar';
 import DashboardCard from "@/Components/DashboardCard";
-const RepairBooking = ({ auth }) => {
+const AdminDashboard = ({ auth }) => {
     return (
         <div>
             <AdminNavbar/>
@@ -66,4 +66,4 @@ const RepairBooking = ({ auth }) => {
     );
 };
 
-export default RepairBooking;
+export default AdminDashboard;

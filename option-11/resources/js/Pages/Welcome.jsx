@@ -17,7 +17,7 @@ const Home = ({ auth,baskIcon,canResetPassword }) => {
     <>
       <main>
       <AnimateModal auth={auth} baskIcon={baskIcon} canResetPassword={canResetPassword}>
-       
+
         <MainImage
           imageSrc={mainBike}
           altText="bike sign"
@@ -27,17 +27,17 @@ const Home = ({ auth,baskIcon,canResetPassword }) => {
         <Categories />
         <MainPgProducts />
 
-        
-       
-      
-       
-     
-      
+
+
+
+        <Footer  />
+
+
         </AnimateModal>
       </main>
 
-   
-  
+
+
     </>
   );
 };

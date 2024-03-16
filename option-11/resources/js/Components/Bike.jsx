@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card, Button } from "react-bootstrap";
+import { Inertia } from "@inertiajs/inertia";
 import { InertiaLink } from "@inertiajs/inertia-react";
-
 const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
 
@@ -53,6 +53,14 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
         setData("quantity", quantity);
     };
 
+    const [successMessage, setSuccessMessage] = useState("");
+
+    const addToWishlist = (bikeId) => {
+        Inertia.post(
+            "/wishlist/add",
+            { itemId: bikeId }
+        ).then(() => setSuccessMessage("Item successfully added to wishlist."));
+    };
     const bikeList = filteredBikes.map((bike) => (
         <div
             key={bike.bikeid}
@@ -77,7 +85,8 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                         <strong>Category:</strong> {bike.category}
                     </Card.Text>
                     <Card.Text>
-                        <strong>Stock Quantity:</strong> {bike.products.stockquantity}
+                        <strong>Stock Quantity:</strong>{" "}
+                        {bike.products.stockquantity}
                     </Card.Text>
                     <Card.Text>
                         <strong>Category:</strong> {bike.category}
@@ -100,17 +109,31 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                                 )
                             }
                         />
-                        <InputError
-                            message={errors.stock}
-                            className="mt-2"
-                        />
+  <p
+                                    style={{ color: "green" }}
+                                    className="block font-medium text-sm text-gray-700"
+                                >
+                                    {successMessage}
+                                </p>
                         {selectedBikeId === bike.bikeid && (
-                         <p
-                         style={{ color: "green" }}
-                         className="block font-medium text-sm text-gray-700"
-                     >
-                         {flash.message}
-                     </p>
+                            <div>
+                                {" "}
+                                <p
+                                    style={{ color: "green" }}
+                                    className="block font-medium text-sm text-gray-700"
+                                >
+                                    {flash.message}
+                                </p>
+
+                                <InputError
+                                    message={errors.stock}
+                                    className="mt-2"
+                                />
+                                <InputError
+                                    message={errors.quantity}
+                                    className="mt-2"
+                                />
+                            </div>
                         )}
                     </div>
                 </Card.Body>
@@ -128,6 +151,24 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )}
+                    {auth.user ? (
+                        <button
+                            type="button"
+                            onClick={() => addToWishlist(bike.productid)}
+                            className="btn btn-dark text-dark"
+                        >
+                            Add to Wishlist
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={onClickPreventDefault}
+                            className="btn btn-dark text-dark"
+                        >
+                            Add to Wishlist
+                        </button>
+                    )}
+
                     <InertiaLink
                         // href={route("productDetails", { id: bike.bikeid })}
                         href=""
@@ -142,7 +183,6 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
 
     return (
         <div>
-
             <form onSubmit={submit}>
                 <div className="container">
                     <div className="row mt-8">{bikeList}</div>

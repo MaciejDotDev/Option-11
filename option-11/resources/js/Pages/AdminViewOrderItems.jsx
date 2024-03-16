@@ -41,8 +41,8 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
             <td scope="row">{formattedDate} {formattedTime}</td>
 
             <td scope="row">
-                <a href={route("editProducts", { productid: orderItem.products.productid })}>
-                    View User
+                <a href={route("editItemOrderPage", { itemOrderid: orderItem.orderitemid })}>
+                    View Item
                 </a>{" "}
 
 

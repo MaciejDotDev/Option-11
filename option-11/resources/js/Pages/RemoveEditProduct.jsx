@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import InputError from "@/Components/InputError";
 
 import AdminNavbar from "@/Pages/AdminNavbar";
-
+import Footer from "@/Components/Footer";
 const RemoveEditProduct = ({ auth,products }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         productid: products.productid,
@@ -78,6 +78,7 @@ const RemoveEditProduct = ({ auth,products }) => {
                     </Row>
                     <Row>
                             <Col md={6}>
+                            <Form.Label className="text-white">Category</Form.Label>
                                 <Form.Select className="form-control-lg"   onChange={(e) =>
                                             setData(
                                                 "category",
@@ -85,7 +86,7 @@ const RemoveEditProduct = ({ auth,products }) => {
                                             )
                                         }
                                         value={data.category}>
-                                    <option>Category</option>
+                                    <option>Choose a category</option>
                                     <option value="bike">Bike</option>
                                     <option value="accessory">Accessory</option>
                                     <option value="bikepart">Bike Part</option>

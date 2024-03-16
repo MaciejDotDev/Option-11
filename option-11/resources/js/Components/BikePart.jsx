@@ -1,7 +1,9 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
+import { usePage } from '@inertiajs/react';
+import { Inertia } from "@inertiajs/inertia";
+import { InertiaLink } from "@inertiajs/inertia-react";
 const BikePart = ({ bikePart,auth,openModal }) => {
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -21,7 +23,9 @@ const BikePart = ({ bikePart,auth,openModal }) => {
         e.preventDefault();
 
       };
-
+      const addToWishlist = (bikeId) => {
+        Inertia.post("/wishlist/add", { itemId: bikeId });
+    };
     const bikePartList = bikePart.map((part) => (
         <div
             key={part.products.bikepartsid}
@@ -83,6 +87,24 @@ const BikePart = ({ bikePart,auth,openModal }) => {
                             Add to basket
                         </button>
                         )}
+                         {auth.user ? (
+                        <button
+                            type="button"
+                            onClick={() => addToWishlist(part.productid)}
+                            className="btn btn-dark text-dark"
+                        >
+                            Add to Wishlist
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={onClickPreventDefault}
+                            className="btn btn-dark text-dark"
+                        >
+                            Add to Wishlist
+                        </button>
+                    )}
+
                 </div>
             </div>
         </div>
