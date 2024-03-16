@@ -1,11 +1,12 @@
-import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
-const Bike = ({ bikes,  auth, openModal }) => {
+import { usePage } from '@inertiajs/react';
+import RedirectButton from "@/Components/RedirectButton";
 
-    const { flash } = usePage().props
-    const { data, setData, post, processing, errors, reset } = useForm({
+const Bike = ({ bikes, auth, openModal }) => {
+    const { flash } = usePage().props;
+    const { data, setData, post, errors } = useForm({
         bikeid_hidden: "",
         quantity: "",
     });
@@ -68,6 +69,7 @@ const Bike = ({ bikes,  auth, openModal }) => {
                     </div>
                 </div>
                 <div className="card-footer">
+                    <RedirectButton category="bike" productId={bike.bikeid} />
                     {auth.user ? (
                         <button
                             type="submit"
@@ -94,7 +96,6 @@ const Bike = ({ bikes,  auth, openModal }) => {
             <form onSubmit={submit}>
                 <div className="container">
                     <div className="row">{bikeList}</div>
-                    
                 </div>
             </form>
         </div>

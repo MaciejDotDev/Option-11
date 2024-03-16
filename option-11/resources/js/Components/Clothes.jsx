@@ -2,6 +2,9 @@ import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from '@inertiajs/react'
+import RedirectButton from "@/Components/RedirectButton";
+
+
 const Clothes = ({ clothes, success,auth,openModal }) => {
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -18,7 +21,7 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
     const onClickPreventDefault= (e) => {
         openModal();
         e.preventDefault();
-        
+
       };
 
     const clothesList = clothes.map((clothing) => (
@@ -54,14 +57,15 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
                     </div>
                 </div>
                 <div className="card-footer">
+                    <RedirectButton category='clothing' productId={clothing.clothingid} />
                 {auth.user ? (
-                     
+
                      <button type="submit" className="btn btn-dark text-dark">
                      Add to basket
                  </button>
-                          
+
                         ) : (
-                          
+
                             <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
                             Add to basket
                         </button>

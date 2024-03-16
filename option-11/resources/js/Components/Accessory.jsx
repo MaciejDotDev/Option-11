@@ -2,6 +2,9 @@ import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from '@inertiajs/react'
+import RedirectButton from "@/Components/RedirectButton";
+
+
 const Accessory = ({ accessories,auth, openModal }) => {
     const { flash } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -19,9 +22,9 @@ const Accessory = ({ accessories,auth, openModal }) => {
     const onClickPreventDefault= (e) => {
         openModal();
         e.preventDefault();
-        
+
       };
-     
+
 
     const accessoryList = accessories.map((accessory) => (
         <div
@@ -37,7 +40,7 @@ const Accessory = ({ accessories,auth, openModal }) => {
                 <div className="card-body">
                     <h5 className="card-title text-center h4">{accessory.productname}</h5>
                     <p className="card-text">{accessory.description}</p>
-                    
+
                     <p className="card-text">
                         <strong>Price:</strong> £{accessory.price}
                     </p>
@@ -66,15 +69,15 @@ const Accessory = ({ accessories,auth, openModal }) => {
                     </div>
                 </div>
                 <div className="card-footer">
-                   
+                    <RedirectButton category='accessory' productId={accessory.accessoryid} />
                     {auth.user ? (
-                     
+
                      <button type="submit" className="btn btn-dark text-dark">
                      Add to basket
                  </button>
-                          
+
                         ) : (
-                          
+
                             <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
                             Add to basket
                         </button>
@@ -88,7 +91,7 @@ const Accessory = ({ accessories,auth, openModal }) => {
         <form onSubmit={submit}>
             <div className="container">
                 <div className="row">{accessoryList} </div>
-                
+
             </div>
         </form>
     );

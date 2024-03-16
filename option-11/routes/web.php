@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminEditUsersController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\CsvExporter;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IndividualProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,8 +46,8 @@ Route::get('/contactUs', function () {
 });
 Route::get('/updateAccount', function () {
 
-   
-    
+
+
     return Inertia::render('UpdateAccount');
 })->middleware(['auth', 'verified'])->name('updateAccount');
 
@@ -65,7 +66,7 @@ Route::post('update', [ManageAccount::class, 'update'])->name('update');
 
 
     Route::match(['get', 'post'],'/checkout','App\Http\Controllers\PaymentDetails@payment')->name('checkout');
-  
+
 
 
 
@@ -74,9 +75,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-
+//Squob Work
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
-//squob work below
+
 Route::get('/BikeParts', [ShowBikePartsController::class, 'showAll'])->name('BikeParts');
 
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
@@ -90,10 +91,14 @@ Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->n
 
 Route::get('/Orders', [ShowOrdersController::class, 'showAll'])->name('orders');
 
+//Route for individual Product Page functionality ( Bikes )
+Route::get('/product/{category}/{id}', [IndividualProductController::class, 'product'])->name('product');
+
+
 Route::group(['middleware' => ['admin']], function () {
 
-    
-    
+
+
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
 
     Route::get('/adminEditUsers', [AdminEditUsersController::class, 'show'])->name('adminEditUsers');
@@ -108,7 +113,7 @@ Route::group(['middleware' => ['admin']], function () {
 
 
 
-        
+
 
 });
 Route::group(['middleware' => ['admin.guest']], function () {
@@ -121,13 +126,13 @@ Route::group(['middleware' => ['admin.guest']], function () {
 
 
 
-        
 
-}); 
+
+});
 
 
 Route::middleware('auth')->group(function () {
-  
+
     Route::get('deleteAccount', [ManageAccount::class, 'destroy'])
     ->name('deleteAccount');
     Route::get('/basket', [ManageBasketController::class, 'search'])->name('basket');
@@ -139,17 +144,17 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'],'/addBasketClothing','App\Http\Controllers\ShowClothingController@addBasket')->name('addBasketClothing');
 
     Route::match(['get', 'post'],'/makeOrder','App\Http\Controllers\OrdersController@makeOrder')->name('makeOrder');
- 
- 
+
+
     Route::match(['get', 'post'],'/deleteProduct','App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
 
     Route::match(['get', 'post'],'/orderHistory','App\Http\Controllers\OrdersController@showAll')->name('orderHistory');
 
-   
 
 
-  
-    
+
+
+
 });
 
 require __DIR__.'/auth.php';
