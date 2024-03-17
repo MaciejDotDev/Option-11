@@ -35,10 +35,10 @@ const OrderTrack = ({ auth,orderItem, status }) => {
                 </Typography>
 
                 <Typography sx={{ mb: 1.5, fontSize: 15, color: "white"  }} color="text.secondary">
-                Total price: {orderItem.quantity}
+                Total price: {orderItem.totalprice}
                 </Typography>
                 <Typography sx={{ mb: 1.5, fontSize: 15 , color: "white" }} color="text.secondary">
-                Quantity: {orderItem.totalprice}
+                Quantity: {orderItem.quantity}
                 </Typography>
 
             </CardContent>
@@ -145,36 +145,7 @@ const OrderTrack = ({ auth,orderItem, status }) => {
                         Your order has been paid now waiting for shipping.....
                     </p>
 
-                    <div
-                        style={{
-                            width: "70%",
 
-                            borderLeft: "1px solid white",
-                            margin: "0 auto",
-                            borderRight: "1px solid white",
-                        }}
-                    >
-                        <p
-                            style={{
-                                marginLeft: "1rem",
-                                color: "white",
-                                marginBottom: "10px",
-                            }}
-                        >
-                            ds
-                        </p>
-                        <div
-                            className="ds"
-                            style={{
-                                borderBottom: "1px solid black",
-                                width: "80%",
-                                margin: "0 auto",
-                                marginBottom: "1rem",
-                                backgroundColor: "white",
-                                borderBottomColor: "white",
-                            }}
-                        ></div>
-                    </div>
                 </div>
                 <Footer  />
             </AnimateModal>

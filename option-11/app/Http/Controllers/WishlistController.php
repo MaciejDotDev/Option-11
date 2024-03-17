@@ -53,14 +53,23 @@ class WishlistController extends Controller
     public function remove(Request $request)
     {
         $validated = $request->validate([
-            'itemId' => 'required|integer|exists:wishlist,id',
+            'itemId' => 'required',
         ]);
 
+        if ($validated) {
+            $item = Wishlist::find($request->itemId);
 
-        $item = Wishlist::find($validated['itemId']);
-        if ($item) {
             $item->delete();
-            return redirect()->back();
+
+
+            return redirect()->route('dashboard');
+
+        } else {
+
+
+        return redirect()->back()->withErrors('erros', "Something went wrong!");
         }
+
+
     }
 }

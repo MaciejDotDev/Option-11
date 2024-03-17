@@ -1,14 +1,16 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-
+import axios from "axios";
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
+import { router } from '@inertiajs/react'
+
 
 import { Inertia } from "@inertiajs/inertia";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import Footer from "@/Components/Footer";
 import List from "@mui/material/List";
-
+import { useForm } from "@inertiajs/react";
 export default function Dashboard({
     auth,
     baskIcon,
@@ -24,7 +26,15 @@ export default function Dashboard({
         }
     };
 
+    const { data, setData, post, processing, errors, reset } = useForm({
+        itemId: null
 
+    });
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('wishlist.remove'));
+
+    };
     const orderItemsList =
         orderItems.length > 0 ? (
             orderItems.map((orderItem) => (
@@ -61,7 +71,9 @@ export default function Dashboard({
     const wishlistItemsList =
         wishlistItems.length > 0 ? (
             wishlistItems.map((wishlistItem) => (
-                <div style={{ backgroundColor: "#212529" }}>
+
+                <form onSubmit={submit}>
+ <div style={{ backgroundColor: "#212529" }}>
                     <h4
                         style={{
                             fontSize: "1.5rem",
@@ -72,8 +84,7 @@ export default function Dashboard({
                     </h4>
                     <p>Price: {wishlistItem.products.price} </p>
                     <p>Stock left: {wishlistItem.products.stockquantity} </p>
-                    <p><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="#">Remove</a></p>
-
+                                        <p><button class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-value="someValue" onClick={(e) => { setData({itemId: wishlistItem.wishlistid}); submit(); }}>Remove</button></p>
                     <p
                         style={{
                             fontSize: "10px",
@@ -84,6 +95,9 @@ export default function Dashboard({
                         {new Date(wishlistItem.created_at).toLocaleDateString()}
                     </p>
                 </div>
+
+                </form>
+
             ))
         ) : (
             <p style={{ textAlign: "center" }}>Nothing in your wishlist</p>

@@ -17,7 +17,7 @@ const AdminEditUsers = ({ users }) => {
         return (
 
             <tr>
-                        <td scope="row" width="5%"><input type="checkbox" className="form-check-input" /></td>
+
             <td scope="row">{user.userid}</td>
             <td scope="row">{user.firstname}</td>
             <td scope="row">{user.lastname}</td>
@@ -50,7 +50,7 @@ const AdminEditUsers = ({ users }) => {
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                    <th scope="col">All <input type="checkbox" className="form-check-input" /></th>
+
                         <th scope="col">ID</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
