@@ -52,6 +52,12 @@ public function showAll() {
 
 }
 
+public function showIndividual(Request $request) {
+
+
+
+}
+
 
 
 

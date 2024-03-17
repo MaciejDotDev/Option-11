@@ -15,7 +15,7 @@ use App\Models\ProductHistory;
 use App\Models\OrderItem;
 use App\Models\Categories;
 use App\Models\Address;
-
+use App\Events\OrderPlacedEvent;
 use App\Models\Transactions;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
@@ -81,11 +81,8 @@ class PaymentDetails extends Controller
             'mode' => 'payment',
             'success_url' => route('success') . "?session_id={CHECKOUT_SESSION_ID}",
             'cancel_url' => route('cancel') . "?session_id={CHECKOUT_SESSION_ID}",
+
         ]);
-
-
-
-
 
 
 
@@ -251,6 +248,9 @@ class PaymentDetails extends Controller
 
 
                 $total = Basket::where('userid', $userid)->where('status', 'open')->delete();
+
+
+
 
             default:
                 echo 'Received unknown event type ' . $event->type;

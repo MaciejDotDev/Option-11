@@ -16,7 +16,7 @@ use App\Models\Products;
 use App\Models\Transactions;
 use Illuminate\Support\Str;
 
-
+use App\Events\OrderPlacedEvent;
 
 class HandleChargeableSource implements ShouldQueue
 {

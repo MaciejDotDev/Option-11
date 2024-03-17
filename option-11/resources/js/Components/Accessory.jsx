@@ -39,6 +39,7 @@ const Accessory = ({ accessories, auth, openModal }) => {
                     <h5 className="card-title text-center h4">
                         {accessory.products.productname}
                     </h5>
+
                     <p className="card-text">{accessory.description}</p>
 
                     <p className="card-text">

@@ -35,6 +35,11 @@ class ShowRepairKitsController extends ManageBasketController
         return Inertia::render('RepairKits', ['repairKit' => $repairkits]); // Corrected the key to 'repairKits'
     }
 
+    public function showIndividual($productid) {
+
+        $repairkits =  RepairKit::with('products')->get();
+
+    }
 
 
 }

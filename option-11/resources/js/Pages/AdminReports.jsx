@@ -2,19 +2,36 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-import InputError from "@/Components/InputError";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Pusher from 'pusher-js';
+
+
+import toastr from 'toastr';
 import AdminNavbar from "@/Pages/AdminNavbar";
 
 const AdminReports = ({ auth }) => {
     // I made these so that if the admin types in one, the other cannot be active.
+    useEffect(() => {
+        // Initialize Pusher
+        const pusher = new Pusher('b11836fcfa155e7399cb', {
+          cluster: 'eu',
+        });
 
+        // Subscribe to a channel
+        const channel = pusher.subscribe('notification-channel');
+
+        // Bind to an event
+        channel.bind('order-placed', (data) => {
+
+
+            toastr.success('Order placed successfully!' + data);
+        });
+
+        // Clean up the subscription when the component unmounts
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        };
+     }, []);
     const [state, setState] = useState("");
     const submit = (e) => {
         e.preventDefault();

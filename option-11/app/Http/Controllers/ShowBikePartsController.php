@@ -32,14 +32,12 @@ class ShowBikePartsController extends ManageBasketController
         return Inertia::render('BikeParts', ['bikePart' => $bikeparts]); // Corrected the key to 'bikeParts'
     }
 
-    public function showProduct($productid) {
+    public function showIndividual(Request $request) {
 
 
-        $bikeparts =  BikePart::with('products')->find($productid);
 
-
-        return Inertia::render('IndividualProductPage', ['product' => $bikeparts]);
     }
+
 
 
 

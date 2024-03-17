@@ -25,6 +25,6 @@ class Accessory extends Model
         'category',
         'size',
         'colour',
-        
+
     ];
 }

@@ -69,6 +69,10 @@ Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('prod
 
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
 
+Route::get('/accessory/{productid}', [ShowAccessoriesController::class, 'showIndividual'])->name('individualAccessory');
+
+
+
 Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');
 Route::match(['get', 'post'],'update', [ManageAccount::class, 'update'])->name('update');
 
