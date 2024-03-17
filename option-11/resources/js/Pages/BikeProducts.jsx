@@ -14,8 +14,6 @@ const BikeProducts = ({ auth, bikes }) => {
     <div>
       <AnimateModal auth={auth} >
 
-
-
       <Bike bikes={bikes} auth={auth} />
 
 

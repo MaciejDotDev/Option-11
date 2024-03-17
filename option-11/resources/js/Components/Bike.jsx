@@ -69,7 +69,7 @@ const Bike = ({ bikes, auth, openModal }) => {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <RedirectButton category="bike" productId={bike.bikeid} />
+                    <RedirectButton auth={auth} category="bike" productId={bike.bikeid} />
                     {auth.user ? (
                         <button
                             type="submit"

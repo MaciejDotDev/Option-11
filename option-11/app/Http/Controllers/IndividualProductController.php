@@ -10,70 +10,34 @@ use App\Models\Accessory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-
 class IndividualProductController extends Controller
 {
     public function product($category, $id)
     {
-        if ($category == 'bike') {
-            $bike = Bikes::findOrFail($id);
-            return Inertia::render('IndividualProductPage', ['product' => $bike]);
-        } else if ($category == 'repairkit') {
-            $repairKit = RepairKit::findOrFail($id);
-            return Inertia::render('IndividualProductPage', ['product' => $repairKit]);
-        } else if ($category == 'bikepart') {
-            $bikePart = BikePart::findOrFail($id);
-            return Inertia::render('IndividualProductPage', ['product' => $bikePart]);
+        $product = null;
+
+        switch ($category) {
+            case 'bike':
+                $product = Bikes::findOrFail($id);
+                break;
+            case 'repairkit':
+                $product = RepairKit::findOrFail($id);
+                break;
+            case 'bikepart':
+                $product = BikePart::findOrFail($id);
+                break;
+            case 'clothing':
+                $product = Clothes::findOrFail($id);
+                break;
+            case 'accessory':
+                $product = Accessory::findOrFail($id);
+                break;
+            default:
+                abort(404);
         }
-        else if ($category == 'clothing') {
-            $clothing = Clothes::findOrFail($id);
-            return Inertia::render('IndividualProductPage', ['product' => $clothing]);
-        }
-        else if ($category == 'accessory') {
-            $accessory = Accessory::findOrFail($id);
-            return Inertia::render('IndividualProductPage', ['product' => $accessory]);
-        }
-        else {
-            return Inertia::render('404');
-        }
+
+        return Inertia::render('IndividualProductPage', ['product' => $product]);
     }
-
-
-    public function showBike($id)
-    {
-        $bike = Bikes::findOrFail($id);
-
-        return Inertia::render('IndividualProductPage', ['product' => $bike]);
-    }
-
-    public function showRepairKit($id)
-    {
-        $repairKit = RepairKit::findOrFail($id);
-
-        return Inertia::render('IndividualProductPage', ['product' => $repairKit]);
-    }
-
-    public function showBikePart($id)
-    {
-        $bikePart = BikePart::findOrFail($id);
-
-        return Inertia::render('IndividualProductPage', ['product' => $bikePart]);
-    }
-
-    public function showClothing($id)
-    {
-        $clothing = Clothes::findOrFail($id);
-
-        return Inertia::render('IndividualProductPage', ['product' => $clothing]);
-    }
-
-    public function showAccessory($id)
-    {
-        $accessory = Accessory::findOrFail($id);
-
-        return Inertia::render('IndividualProductPage', ['product' => $accessory]);
-    }
-
 }
 
 

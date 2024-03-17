@@ -4,6 +4,8 @@ import Dropdown from "@/Components/Dropdown";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
+
+
 export default function Dashboard({ auth, baskIcon }) {
     const handleDeleteConfirmation = (e) => {
         if (window.confirm("Are you sure you wish to delete your account?")) {
@@ -58,24 +60,24 @@ export default function Dashboard({ auth, baskIcon }) {
                                 >
                                     Delete account
                                 </Link>
-                          
+
                         </div>
-                             
+
                     </DashboardCard>
-                   
+
                 </div>
                 <div className="dashboard-container">
                 <DashboardCard cardName="Wishlist"></DashboardCard>
-                   
+
                     <DashboardCard cardName="Additional services">
                         {/* add tracking tracking seervice for bikes, repair service,  */}
                     </DashboardCard>
-                  
+
                 </div>
-              
+
 
             </div>
-                
+
             </AnimateModal>
         </>
     );
