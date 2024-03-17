@@ -31,14 +31,15 @@ class ManageAccount extends Controller
 
 
 
-    public function create () {
+    public function create()
+    {
 
 
-        $order = Orders::where('userid',auth()->user()->userid)->get();
-        $ordersItems =  [];
+        $order = Orders::where('userid', auth()->user()->userid)->get();
+        $ordersItems = [];
 
 
-        $wishlist = Wishlist::with('products')->where('userid',  auth()->user()->userid)->get();
+        $wishlist = Wishlist::with('products')->where('userid', auth()->user()->userid)->get();
 
 
 
@@ -51,12 +52,12 @@ class ManageAccount extends Controller
 
         if ($order == null) {
 
-            return Inertia::render('Dashboard',['orderItems' => $ordersItems,'wishlistItems' => $wishlist,'wishlistAmount'=>$wishlistAmount]);
+            return Inertia::render('Dashboard', ['orderItems' => $ordersItems, 'wishlistItems' => $wishlist, 'wishlistAmount' => $wishlistAmount]);
         }
 
-        foreach($order as $item) {
+        foreach ($order as $item) {
 
-            $ordersItems[] = OrderItem::with('products','orders')->where('orderid', $item->orderid)->first();
+            $ordersItems[] = OrderItem::with('products', 'orders')->where('orderid', $item->orderid)->first();
         }
 
 
@@ -68,7 +69,7 @@ class ManageAccount extends Controller
 
 
 
-        return Inertia::render('Dashboard',['orderItems' => $ordersItems, 'wishlistItems' => $wishlist]);
+        return Inertia::render('Dashboard', ['orderItems' => $ordersItems, 'wishlistItems' => $wishlist]);
 
 
 
@@ -88,39 +89,44 @@ class ManageAccount extends Controller
 
 
 
-       /*     $validateInput = $request->validate([
-                'firstname' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
-                'phonenumber' => 'required|string|min:10|max:12|regex:/[0-9]{9}/',
-                'email' => 'required|string|lowercase|email|max:255',
+        $validateInput = $request->validate([
+            'firstname' => 'required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'lastname' => 'required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'phonenumber' => 'required|string|min:10|max:12|regex:/[0-9]{9}/',
+            'email' => 'required|string|lowercase|email|max:255',
+
+
+        ]);
+
+
+
+
+
+
+        if ($validateInput) {
+
+            User::where('userid', $userID)->update([
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'phonenumber' => $phonenumber,
+                'email' => $email,
+
+
 
 
             ]);
-*/
+            // ManageAccount.php
+            return redirect('updateAccount');
 
 
 
 
 
+        } else {
 
-                User::where('userid',$userID)->update([
-                    'firstname' => $firstname,
-                    'lastname' => $lastname,
-                    'phonenumber' => $phonenumber,
-                    'email' => $email,
+            return redirect()->back()->withErrors(['errors' => 'something has gone wrong']);
 
-
-
-
-                ]);
-                // ManageAccount.php
-                return redirect()->back();
-
-
-
-
-
-
+        }
 
     }
 

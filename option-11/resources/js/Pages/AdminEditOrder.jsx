@@ -208,9 +208,9 @@ const AdminEditOrder = ({ auth, orders }) => {
                             <Col className="mt-2" md={6}>
 
                                 <Button
-                                    variant="danger"
+                                    variant="info"
                                     type="submit"
-                                    className="mt-2"
+                                    className="mt-2 text-white"
                                     disabled={processing}
 
                                     href={route("viewOrderItems", { orderid: data.orderid })}

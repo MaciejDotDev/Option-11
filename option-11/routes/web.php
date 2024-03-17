@@ -70,7 +70,7 @@ Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('prod
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
 
 Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');
-Route::post('update', [ManageAccount::class, 'update'])->name('update');
+Route::match(['get', 'post'],'update', [ManageAccount::class, 'update'])->name('update');
 
 
 
@@ -202,11 +202,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ManageAccount::class, 'create'])
         ->name('dashboard');
     Route::get('/basket', [ManageBasketController::class, 'search'])->name('basket');
-    Route::match (['get', 'post'], '/addBasket', 'App\Http\Controllers\ManageBasket@addBasket')->name('addBasket');
+    Route::match (['get', 'post'], '/addBasket', 'App\Http\Controllers\ManageBasketController@addBasket')->name('addBasket');
 
 
 
-
+    Route::match (['get', 'post'], '/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
 
 
 

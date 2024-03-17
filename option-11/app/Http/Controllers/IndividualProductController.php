@@ -16,7 +16,7 @@ class IndividualProductController extends Controller
     public function product($id)
     {
 
-        $product = Products::find($id);
+        $product = Accessories::find($id);
 
 
 

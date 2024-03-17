@@ -33,7 +33,7 @@ export default function AdminViewUser({ users,auth }) {
 
         <div>
         <AdminNavbar auth={auth} />
-        <h2 className="pt-3 text-center text-light h2">View/Edit Address</h2>
+        <h2 className="pt-3 text-center text-light h2">View/Edit User</h2>
 
         <div key={users.userid}>
             <Container className="mt-4 d-flex justify-content-center">

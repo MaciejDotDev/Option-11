@@ -17,7 +17,7 @@ const AdminViewOrder = ({ orders }) => {
         return (
 
             <tr>
-                        <td scope="row" width="5%"><input type="checkbox" className="form-check-input" /></td>
+
             <td scope="row">{order.orderid}</td>
             <td scope="row"> <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href={route("adminViewUser", { userid: order.userid })}>
             {order.userid}
@@ -52,11 +52,11 @@ const AdminViewOrder = ({ orders }) => {
 
         <div className="ordersTable" >
 
-
+        <h2 className="text-light h2 text-center pt-3">All orders</h2>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                    <th scope="col">All <input type="checkbox" className="form-check-input" /></th>
+
                         <th scope="col"> Order ID</th>
                         {/* add a link that deirects to the user page */}
                         <th scope="col">User ID</th>

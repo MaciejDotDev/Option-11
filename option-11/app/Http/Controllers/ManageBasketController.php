@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Redirect;
 class ManageBasketController extends Controller
 {
     protected $bikes;
-    protected  $basket;
+    protected $basket;
 
 
     public function search()
@@ -33,13 +33,28 @@ class ManageBasketController extends Controller
 
         $this->basket = Basket::with('products')->where('userid', auth()->user()->userid)->where('status', 'open')->get();
 
+        $bikes = [];
+
+        foreach ($this->basket as $item) {
 
 
+                $bikes[] = $item;
+
+
+
+
+
+
+
+
+
+
+        }
 
         $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
 
 
-        return Inertia::render('Basket', ['basket' => $this->basket, 'totalprice' => $totalPrice]);
+        return Inertia::render('Basket', ['basket' => $bikes, 'totalprice' => $totalPrice]);
     }
 
 
@@ -66,13 +81,13 @@ class ManageBasketController extends Controller
 
                 $basket = Basket::where('basketid', $request->input('basketid'))->first();
                 $bikes = Products::where('productid', $basket->productid)->first();
-                if ($bikes->stockquantity - $basket->quantity <= 0 ) {
+                if ($bikes->stockquantity - $basket->quantity <= 0) {
                     return redirect()->back()->withErrors(['stock' => 'Not enough stock!']);
 
 
                 }
 
-                $basket->quantity =  $basket->quantity + 1;
+                $basket->quantity = $basket->quantity + 1;
 
 
 
@@ -83,7 +98,7 @@ class ManageBasketController extends Controller
             case "remove":
                 $basket = Basket::find($request->basketid);
 
-            if ($basket->quantity <= 1) {
+                if ($basket->quantity <= 1) {
 
 
 
@@ -92,21 +107,21 @@ class ManageBasketController extends Controller
 
 
 
-                return $this->deleteProduct($request);
-            } else {
+                    return $this->deleteProduct($request);
+                } else {
 
 
-                $basket->quantity =  $basket->quantity - 1;
+                    $basket->quantity = $basket->quantity - 1;
 
 
 
-                $bike = Products::where('productid',$basket->productid)->first();
-                $basket->totalprice = $basket->quantity * $bike->price;
+                    $bike = Products::where('productid', $basket->productid)->first();
+                    $basket->totalprice = $basket->quantity * $bike->price;
 
 
-                $basket->save();
-                return Redirect::route('basket');
-            }
+                    $basket->save();
+                    return Redirect::route('basket');
+                }
 
 
 
@@ -147,11 +162,11 @@ class ManageBasketController extends Controller
 
 
 
-            $stockCheck =  Products::find(request('product_hidden'));
+            $stockCheck = Products::find(request('product_hidden'));
 
-            if ($stockCheck->stockquantity -request('quantity') >= 0  ) {
+            if ($stockCheck->stockquantity - request('quantity') >= 0) {
 
-                $finditem =  Basket::where('userid', auth()->user()->userid)->first();
+                $finditem = Basket::where('userid', auth()->user()->userid)->first();
                 $basket = new Basket();
 
                 $noRecords = false;
@@ -159,15 +174,15 @@ class ManageBasketController extends Controller
                 $stopLoop = true;
 
                 while ($stopLoop) {
-                    if ($finditem  ==  null || $noRecords) {
+                    if ($finditem == null || $noRecords) {
 
 
                         $basket = new Basket();
-                        $basket->userid =  auth()->user()->userid;
+                        $basket->userid = auth()->user()->userid;
                         $basket->productid = request('product_hidden');
-                        $basket->quantity =request('quantity');
+                        $basket->quantity = request('quantity');
 
-                        $bike = Products::where('productid',$basket->productid)->first();
+                        $bike = Products::where('productid', $basket->productid)->first();
                         $basket->totalprice = $basket->quantity * $bike->price;
 
 
@@ -179,18 +194,27 @@ class ManageBasketController extends Controller
 
                     }
 
-                    $record = Basket::where('userid', auth()->user()->userid)->where('productid',  request('product_hidden'))->first();
+                    $record = Basket::where('userid', auth()->user()->userid)->where('productid', request('product_hidden'))->first();
 
 
-                    if ($record) {
+                    if ($record ) {
+                        if ($stockCheck->stockquantity- $record->quantity - request('quantity') <= 0) {
 
-                        $record->quantity = request('quantity') + $record->quantity;
-                        $bike = Products::where('productid',request('product_hidden'))->first();
+                            return redirect()->back()->withErrors(['stock' => 'Not enough stock!']);
+                        } else {
+
+                            $record->quantity = request('quantity') + $record->quantity;
+                            $bike = Products::where('productid', request('product_hidden'))->first();
 
 
-                        $record->save();
-                        $stopLoop = false;
-                        return redirect()->back()->with('success', "Item successfully added to basket!");
+                            $record->save();
+                            $stopLoop = false;
+                            return redirect()->back()->with('success', "Item successfully added to basket!");
+
+
+                        }
+
+
 
 
 
@@ -198,7 +222,7 @@ class ManageBasketController extends Controller
 
 
                     } else {
-                        $noRecords =  true;
+                        $noRecords = true;
 
                     }
 
@@ -218,7 +242,7 @@ class ManageBasketController extends Controller
 
 
 
-    }
+        }
 
     }
 }

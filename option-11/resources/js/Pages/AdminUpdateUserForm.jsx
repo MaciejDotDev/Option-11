@@ -8,7 +8,7 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import InputError from "@/Components/InputError";
 import AdminNavbar from '@/Pages/AdminNavbar';
 const AdminUpdateUserForm = ({ auth, user }) => {
-  
+
     const { data, setData, post, processing, errors, reset } = useForm({
         firstname: "",
         lastname: "",
@@ -35,7 +35,7 @@ const AdminUpdateUserForm = ({ auth, user }) => {
         className="p-5 rounded shadow-sm bg-dark text-light"
         onSubmit={submit}
     >
-        <h2 className="text-center mb-4 pt-4 h2">Update Account</h2>
+        <h2 className="text-center mb-4 pt-4 h2">Update user details</h2>
 
         <Row className="mb-3">
             <Col md={6} className="pr-md-2">

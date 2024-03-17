@@ -45,6 +45,7 @@ class WishlistController extends Controller
         ]);
 
 
+
         return redirect()->back()->with('wishlist', "Item successfully added to wishlist!");
     }
 

@@ -44,7 +44,7 @@ const AdminEditProducts = ({ products }) => {
 
 
 
-
+<h2 className="text-light h2 text-center pt-3">Products</h2>
             <table class="table table-bordered editProducts" >
                 <thead>
                     <tr>
@@ -66,7 +66,7 @@ const AdminEditProducts = ({ products }) => {
                 <tbody>{bikePartList}</tbody>
 
             </table>
-            <a   className="px-4 py-2 text-center text-white bg-blue-500 rounded-md" href="users/export/" >Export</a>
+
         </div>
 
 

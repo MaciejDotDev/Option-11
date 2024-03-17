@@ -30,7 +30,7 @@ const Home = ({ auth,baskIcon,canResetPassword }) => {
 
 
 
-        <Footer  />
+
 
 
         </AnimateModal>

@@ -1,5 +1,10 @@
 import React from "react";
-
+import { InertiaLink } from "@inertiajs/inertia-react";
+import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Inertia } from "@inertiajs/inertia";
+import NavBar from "@/Components/NavBar";
+import { HSquareFill } from "react-bootstrap-icons";
+import { Link } from "@inertiajs/react";
 import AdminNavbar from '@/Pages/AdminNavbar';
 const AdminEditUsers = ({ users }) => {
 
@@ -40,7 +45,7 @@ const AdminEditUsers = ({ users }) => {
 
         <div className="container">
 
-
+        <h2 className="text-light h2 text-center pt-3">All users</h2>
 
             <table class="table table-bordered">
                 <thead>

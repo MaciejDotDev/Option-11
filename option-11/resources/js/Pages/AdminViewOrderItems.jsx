@@ -32,9 +32,10 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
         return (
 
             <tr>
-                        <td scope="row" width="5%"><input type="checkbox" className="form-check-input" /></td>
+
             <td scope="row">{orderItem.orderitemid}</td>
             <td scope="row">{orderItem.products.productname}</td>
+            <td scope="row"><a  class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href={route("editProducts", { productid: orderItem.productid  })}>{orderItem.productid} </a></td>
             <td scope="row">{orderItem.quantity}</td>
             <td scope="row">{orderItem.totalprice}</td>
 
@@ -61,17 +62,18 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
     return (
         <div>
             <AdminNavbar auth={auth} />
-
-            <table class="table table-bordered editProducts" >
+            <h2 className="text-light h2 text-center pt-3">All order items</h2>
+            <table class="table table-bordered" >
                 <thead>
                     <tr>
 
+
                         <th scope="col">ID</th>
                         <th scope="col">Product name</th>
+                        <th scope="col">Product ID</th>
                         <th scope="col">Total price</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Created</th>
+                        <th scope="col">Date created</th>
                         <th scope="col">Action</th>
 
 
