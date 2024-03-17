@@ -141,6 +141,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
 
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
+    Route::get('/api/adminNotifications', [AdminDashboardController::class, 'notifications'])->name('adminNotifications');
 
     Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
     Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');

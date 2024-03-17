@@ -3,8 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import axios from "axios";
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
-import { router } from '@inertiajs/react'
-
+import { router } from "@inertiajs/react";
 
 import { Inertia } from "@inertiajs/inertia";
 import { InertiaLink } from "@inertiajs/inertia-react";
@@ -16,7 +15,7 @@ export default function Dashboard({
     baskIcon,
     orderItems,
     wishlistItems,
-    wishlistAmount
+    wishlistAmount,
 }) {
     const handleDeleteConfirmation = (e) => {
         if (window.confirm("Are you sure you wish to delete your account?")) {
@@ -27,13 +26,11 @@ export default function Dashboard({
     };
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        itemId: null
-
+        itemId: null,
     });
     const submit = (e) => {
         e.preventDefault();
-        post(route('wishlist.remove'));
-
+        post(route("wishlist.remove"));
     };
     const orderItemsList =
         orderItems.length > 0 ? (
@@ -48,8 +45,18 @@ export default function Dashboard({
                         {orderItem.products.productname}
                     </h4>
 
-
-                    <p>Tracking Code:   <a href={route("orderTrack", { trackingid: orderItem.orders.trackingcode  })} class="text-blue-500 hover:text-blue-700" >{orderItem.orders.trackingcode}</a></p>
+                    <p>
+                        Tracking Code:{" "}
+                        <a
+                            href={route("orderTrack", {
+                                trackingid: orderItem.orders.trackingcode,
+                            })}
+                            class="text-blue-500 hover:text-blue-700"
+                            style={{}}
+                        >
+                            {orderItem.orders.trackingcode}
+                        </a>
+                    </p>
                     <p>Quantity: {orderItem.quantity} </p>
                     <p>Total Price: {orderItem.totalprice} </p>
 
@@ -58,10 +65,12 @@ export default function Dashboard({
                             fontSize: "10px",
 
                             color: "grey",
+                            paddingBottom: "1rem",
                         }}
                     >
                         {new Date(orderItem.created_at).toLocaleDateString()}
                     </p>
+                    <div className="line"></div>
                 </div>
             ))
         ) : (
@@ -71,33 +80,49 @@ export default function Dashboard({
     const wishlistItemsList =
         wishlistItems.length > 0 ? (
             wishlistItems.map((wishlistItem) => (
-
                 <form onSubmit={submit}>
- <div style={{ backgroundColor: "#212529" }}>
-                    <h4
-                        style={{
-                            fontSize: "1.5rem",
-                        }}
-                        className="h2basket"
-                    >
-                        {wishlistItem.products.productname}
-                    </h4>
-                    <p>Price: {wishlistItem.products.price} </p>
-                    <p>Stock left: {wishlistItem.products.stockquantity} </p>
-                                        <p><button class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-value="someValue" onClick={(e) => { setData({itemId: wishlistItem.wishlistid}); submit(); }}>Remove</button></p>
-                    <p
-                        style={{
-                            fontSize: "10px",
+                    <div style={{ backgroundColor: "#212529" }}>
+                        <h4
+                            style={{
+                                fontSize: "1.5rem",
+                            }}
+                            className="h2basket"
+                        >
+                            {wishlistItem.products.productname}
+                        </h4>
+                        <p>Price: {wishlistItem.products.price} </p>
+                        <p>
+                            Stock left: {wishlistItem.products.stockquantity}{" "}
+                        </p>
+                        <p>
+                            <button
+                                class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                data-value="someValue"
+                                onClick={(e) => {
+                                    setData({
+                                        itemId: wishlistItem.wishlistid,
+                                    });
+                                    submit();
+                                }}
+                            >
+                                Remove
+                            </button>
+                        </p>
+                        <p
+                            style={{
+                                fontSize: "10px",
 
-                            color: "grey",
-                        }}
-                    >
-                        {new Date(wishlistItem.created_at).toLocaleDateString()}
-                    </p>
-                </div>
-
+                                color: "grey",
+                                paddingBottom: "1rem",
+                            }}
+                        >
+                            {new Date(
+                                wishlistItem.created_at
+                            ).toLocaleDateString()}
+                        </p>
+                        <div className="line"></div>
+                    </div>
                 </form>
-
             ))
         ) : (
             <p style={{ textAlign: "center" }}>Nothing in your wishlist</p>
@@ -108,8 +133,7 @@ export default function Dashboard({
             <AnimateModal auth={auth} baskIcon={baskIcon}>
                 <div className="dashboard-groups">
                     <div className="dashboard-container">
-                        <DashboardCard cardName="My orders" >
-
+                        <DashboardCard cardName="My orders">
                             <List
                                 sx={{
                                     width: "100%",
@@ -125,8 +149,7 @@ export default function Dashboard({
                             </List>
                         </DashboardCard>
                         <DashboardCard cardName="My account">
-
-                            <div style={{   }}>
+                            <div style={{}}>
                                 <Link
                                     href={route("updateAccount")}
                                     className="text-white btn btn-dark"
@@ -180,8 +203,11 @@ export default function Dashboard({
                         </DashboardCard>
                     </div>
                     <div className="dashboard-container">
-                        <DashboardCard cardName="Wishlist" wish={wishlistAmount} wishlistAmount={wishlistAmount}>
-
+                        <DashboardCard
+                            cardName="Wishlist"
+                            wish={wishlistAmount}
+                            wishlistAmount={wishlistAmount}
+                        >
                             {" "}
                             <List
                                 style={{}}
@@ -216,7 +242,6 @@ export default function Dashboard({
                                 Repair service
                             </Link>
                             <Link
-
                                 className="text-white btn btn-dark"
                                 style={{
                                     justifyContent: "flex-start",
@@ -242,7 +267,7 @@ export default function Dashboard({
                         </DashboardCard>
                     </div>
                 </div>
-                <Footer  />
+                <Footer />
             </AnimateModal>
         </>
     );

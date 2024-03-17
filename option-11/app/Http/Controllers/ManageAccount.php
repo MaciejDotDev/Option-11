@@ -35,41 +35,57 @@ class ManageAccount extends Controller
     {
 
 
-        $order = Orders::where('userid', auth()->user()->userid)->get();
-        $ordersItems = [];
+
 
 
         $wishlist = Wishlist::with('products')->where('userid', auth()->user()->userid)->get();
 
 
+        $ordersItems = OrderItem::whereHas('orders', function ($query) {
+            $query->where('userid', auth()->user()->userid);
+        })->with('products', 'orders')->get();
 
-        $wishlistAmount = $wishlist->count();
+        if ($wishlist == null && $ordersItems != null) {
 
-
-
-
-
-
-        if ($order == null) {
-
-            return Inertia::render('Dashboard', ['orderItems' => $ordersItems, 'wishlistItems' => $wishlist, 'wishlistAmount' => $wishlistAmount]);
+            return Inertia::render('Dashboard', ['orderItems' => $ordersItems]);
         }
+        if ($ordersItems == null && $wishlist) {
 
-        foreach ($order as $item) {
+            return Inertia::render('Dashboard', ['wishlistItems' => $wishlist,]);
+        } elseif ($ordersItems == null && $wishlist == null) {
 
-            $ordersItems[] = OrderItem::with('products', 'orders')->where('orderid', $item->orderid)->first();
+            return Inertia::render('Dashboard');
+
         }
-
-
-
-
-
-
-
 
 
 
         return Inertia::render('Dashboard', ['orderItems' => $ordersItems, 'wishlistItems' => $wishlist]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

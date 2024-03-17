@@ -40,9 +40,11 @@ class ShowAccessoriesController extends ManageBasketController
 
     public function showIndividual($productid) {
 
-                $bikeparts =  Accessory::where('productid', $productid)->with('products')->first();
+                $accessory =  Accessory::where('productid', $productid)->first();
 
-        return Inertia::render('IndividualProductPage', ['product' => $bikeparts]);
+                $product =  Products::where('productid', $$accessory->productid)->first();
+
+        return Inertia::render('IndividualProductPage', ['accessory' => $accessory, 'product'  =>$product  ]);
 
     }
 

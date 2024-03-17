@@ -18,10 +18,12 @@ class OrderPlacedEvent implements ShouldBroadcast
      * Create a new event instance.
      */
 
-     public $order;
-    public function __construct($order)
+     public $orderid;
+
+    public function __construct($orderid)
     {
-        $this->order = $order;
+        $this->orderid = $orderid;
+
     }
 
     /**

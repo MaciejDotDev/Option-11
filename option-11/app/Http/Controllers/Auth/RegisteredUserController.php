@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
-
+use App\Models\Notification;
 class RegisteredUserController extends Controller
 {
     /**
@@ -47,7 +47,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        event(new Registered($user));#
+
+        $notification = new Notification();
+        $notification->notification_type = "user";
+        $notification->notification_title = "New user registered";
+        $orderTime = \Carbon\Carbon::parse( $user->created_at)->format('d/m/Y H:i:s');
+
+        $notification->notification_description = "user of id $user->userid has joined at $orderTime";
+        $notification->save();
 
         Auth::login($user);
 

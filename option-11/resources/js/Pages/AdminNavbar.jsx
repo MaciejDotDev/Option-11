@@ -9,7 +9,29 @@ import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
 const AdminNavbar = ({ auth, openModal }) => {
 
+    useEffect(() => {
 
+        const pusher = new Pusher('e090badc6993a1fe1e83', {
+          cluster: 'eu', //because we're in the europe we define cluser as eu
+        });
+
+
+        const channel = pusher.subscribe('notification-channel');
+
+  // create channel name that pusher dashboard uses, if two applications with the same pusher key will result into double notifcation
+        channel.bind('order-placed', (data) => {
+
+
+            toastr.success(data.orderid); //  send notifcation to admin
+        });
+
+
+
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        };
+     }, []);
     return (
         <Navbar className="navbar" collapseOnSelect expand="lg" data-bs-theme="dark">
             <Container>
