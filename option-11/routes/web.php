@@ -50,6 +50,12 @@ Route::get('/', function () {
 Route::get('/contactUs', function () {
     return Inertia::render('Contactus');
 });
+
+Route::get('/aboutus', function () {
+    return Inertia::render('AboutUs');
+});
+
+
 Route::get('/updateAccount', function () {
 
 

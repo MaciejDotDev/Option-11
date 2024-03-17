@@ -1,12 +1,14 @@
-import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import { Form, Button, FormControl } from "react-bootstrap";
+import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
 
 const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
+    const [searchQuery, setSearchQuery] = useState("");
 
     // Create a state object to store quantities for each bike
     const [bikeQuantities, setBikeQuantities] = useState({});
@@ -25,7 +27,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
             (bike.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
                 bike.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
-        return categoryFilter && priceFilterCondition;
+        return categoryFilter && priceFilterCondition && (bike.products.productname.toLowerCase().includes(searchQuery.toLowerCase()) || bike.products.description.toLowerCase().includes(searchQuery.toLowerCase()));
     });
 
     // Will modify the quantity selected for each bike based on ID.
@@ -62,7 +64,6 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                 setData("product_hidden", bike.products.productid);
             }}
         >
-            {/* <Card style={{ width: "28rem" }}> */}
             <Card>
                 <Card.Img variant="top" src={bike.products.imageURL} />
                 <Card.Body>
@@ -78,9 +79,6 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                     </Card.Text>
                     <Card.Text>
                         <strong>Stock Quantity:</strong> {bike.products.stockquantity}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Category:</strong> {bike.category}
                     </Card.Text>
                     <div className="form-group">
                         <label htmlFor={`quantity_${bike.productid}`}>
@@ -124,7 +122,6 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
                         </Button>
                     )}
                     <InertiaLink
-                        // href={route("productDetails", { id: bike.bikeid })}
                         href=""
                         className="btn btn-outline-primary"
                     >
@@ -137,12 +134,19 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
 
     return (
         <div>
-
-            <form onSubmit={submit}>
-                <div className="container">
-                    <div className="row mt-8">{bikeList}</div>
-                </div>
-            </form>
+            <Form onSubmit={submit} className="flex justify-center">
+                <FormControl
+                    type="search"
+                    placeholder="Search"
+                    className="mr-2 mb-2 w-25"
+                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </Form>
+            <div className="container">
+                <div className="row mt-8">{bikeList}</div>
+            </div>
         </div>
     );
 };

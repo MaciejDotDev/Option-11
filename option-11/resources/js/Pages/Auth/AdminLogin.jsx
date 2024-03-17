@@ -31,18 +31,18 @@ const AdminLogin = ({ handleClose, auth }) => {
 
 
     <Container
-      className="d-flex align-items-center justify-content-center flex-col"
+      className="d-flex align-items-center justify-content-center flex-col mt-6"
       style={{ minHeight: '75vh' }}
     >
 
       <div className=" mb-10 text-center">
         <h1 className=" text-white display-3">Admin Area</h1>
-        <p className=" mt-2 text-red-600">If you are not authorised to view this page, please leave now.</p>
+        <p className=" mt-2 text-red-600">If you are not authorised to view this page, <a className="link-info underline" href="/">please leave now.</a></p>
       </div>
 
 
       <Form
-        className="p-5 rounded shadow-sm bg-dark text-light"
+        className="p-5 rounded shadow-sm bg-dark text-light mb-20"
         onSubmit={submit}
       >
         <Head title="Log in" />

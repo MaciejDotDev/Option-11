@@ -2,6 +2,8 @@ import bikeProductImage from "../../assets/featuredBike1.png";
 import vintageBikeImage from "../../assets/vintageBike.png";
 import bikeHelmet from "../../assets/bikeHelmet.png";
 
+import Button from "react-bootstrap/Button";
+
 const FeaturedProductCard = ({
     image,
     title,
@@ -14,7 +16,7 @@ const FeaturedProductCard = ({
             <div className="card">
                 <img src={image} className="card-img-top" alt="Product" />
                 <div className="card-body text-center">
-                    <h4 className="card-title fw">{title}</h4>
+                    <h4 className="card-title fw-bold fs-5">{title}</h4>
                     <p className="card-title">{description}</p>
                     {salePrice ? (
                         <>
@@ -27,6 +29,9 @@ const FeaturedProductCard = ({
                     ) : (
                         <p className="card-text fw-bold">Price: {price}</p>
                     )}
+                    <Button className=" mt-2" type="submit" variant="outline-dark">
+                        Add to basket
+                    </Button>
                 </div>
             </div>
         </div>

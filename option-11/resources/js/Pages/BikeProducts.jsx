@@ -44,10 +44,10 @@ const BikeProducts = ({ auth, bikes }) => {
                     </p>
 
                     <section className="filters-section flex justify-center gap-10 pb-3">
-                        <form class="max-w-sm">
+                        <form className="max-w-sm">
                             <label
-                                for="bike-filters"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                htmlFor="bike-filters"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >
                                 Filter Bikes
                             </label>
@@ -55,9 +55,9 @@ const BikeProducts = ({ auth, bikes }) => {
                                 id="bike-filters"
                                 value={filter}
                                 onChange={handleFilterChange}
-                                class=" cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className=" cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             >
-                                <option selected>All Bikes</option>
+                                <option defaultValue='All Bikes'>All Bikes</option>
                                 <option value="Mountain">Mountain Bikes</option>
                                 <option value="Electric">Electric Bikes</option>
                                 <option value="Hybrid">Hybrid Bikes</option>
