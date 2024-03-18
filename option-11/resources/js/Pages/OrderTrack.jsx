@@ -40,10 +40,13 @@ const OrderTrack = ({ auth,orderItem, status }) => {
                 <Typography sx={{ mb: 1.5, fontSize: 15 , color: "white" }} color="text.secondary">
                 Quantity: {orderItem.quantity}
                 </Typography>
+                <Typography sx={{ mb: 1.5, fontSize: 15 , color: "white" }} color="text.secondary">
+                Status: {status}
+                </Typography>
 
             </CardContent>
             <CardActions>
-                                <Button size="small" sx={{color: 'white'}}>View Product</Button>
+                                <Button size="small"   href={`bike/${orderItem.productid}`} sx={{color: 'white'}}>View Product</Button>
             </CardActions>
         </React.Fragment>
     );

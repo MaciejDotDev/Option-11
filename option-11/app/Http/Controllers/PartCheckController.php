@@ -18,7 +18,9 @@ public function show() {
 }
     public function check() {
 
+        $comp = $product->compatibility()->get()
 
+         ///  add here the code to return to a specifics page  return Inertia::render('', ['comp' => $comp]);
 
     }
 }

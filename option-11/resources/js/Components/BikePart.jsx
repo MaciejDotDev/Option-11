@@ -1,47 +1,72 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react';
-import { Inertia } from "@inertiajs/inertia";
+import { usePage } from "@inertiajs/react";
+import { Card, Button, Container, Row } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
-const BikePart = ({ bikePart,auth,openModal }) => {
-    const { flash } = usePage().props
+
+const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
+    const { flash } = usePage().props;
+
     const { data, setData, post, processing, errors, reset } = useForm({
         product_hidden: "",
         quantity: "",
     });
 
     const [selectedBikePartId, setSelectedBikePartId] = useState("");
+    const [bikePartQuantities, setBikePartQuantities] = useState({});
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasket", data);
+        post("/addBasketPart", {
+            ...data,
+            quantity: bikePartQuantities[data.bikepartid_hidden],
+        });
     };
 
-    const onClickPreventDefault= (e) => {
+    const onClickPreventDefault = (e) => {
         openModal();
         e.preventDefault();
-
-      };
-      const addToWishlist = (bikeId) => {
-        Inertia.post("/wishlist/add", { itemId: bikeId });
     };
-    const bikePartList = bikePart.map((part) => (
+
+    const handleQuantityChange = (bikePartId, quantity) => {
+        setBikePartQuantities({
+            ...bikePartQuantities,
+            [bikePartId]: quantity,
+        });
+        setData("quantity", quantity);
+    };
+
+    // Apply filter based on the selected option
+    const filteredBikeParts = bikePart.filter((part) => {
+        const categoryFilter =
+            filter === "All Parts" || part.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (part.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                part.products.price <= parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
+    const bikePartList = filteredBikeParts.map((part) => (
         <div
-            key={part.products.bikepartsid}
-            className={`col-md-6 mb-4 ${selectedBikePartId === part.products.bikepartsid
-                }`}
+            key={part.bikepartsid}
+            className="col-lg-4 col-md-6 mb-4"
             onClick={() => {
                 setSelectedBikePartId(part.products.productid);
                 setData("product_hidden", part.products.productid);
             }}
         >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="text-center card-title h4">{part.products.productname}</h5>
+            <Card>
+                <Card.Img variant="top" src={part.products.imageURL} />
+                <Card.Body>
+                    <h5 className="text-center card-title h4">
+                        {part.products.productname}
+                    </h5>
                     <p className="card-text">{part.products.description}</p>
                     <p className="card-text">
-                        <strong>Price:</strong> £{part.products.price}
+                        <strong>Price:</strong> Â£{part.products.price}
                     </p>
                     <p className="card-text">
                         <strong>Category:</strong> {part.category}
@@ -53,68 +78,75 @@ const BikePart = ({ bikePart,auth,openModal }) => {
                         <strong>Size:</strong> {part.size}
                     </p>
                     <p className="card-text">
-                        <strong>Compatible with:</strong> {part.CompatibleWithType}
+                        <strong>Compatible with:</strong>{" "}
+                        {part.CompatibleWithType}
                     </p>
 
                     <p className="card-text">
-                        <strong>Stock quantity:</strong> {part.products.stockquantity}
+                        <strong>Stock quantity:</strong>{" "}
+                        {part.products.stockquantity}
                     </p>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${part.products.bikepartsid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${part.bikepartsid}`}>
+                            Quantity
+                        </label>
                         <input
                             id={`quantity_${part.products.bikepartsid}`}
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
-                            onChange={(e) => setData("quantity", e.target.value)}
+                            value={bikePartQuantities[part.bikepartsid]}
+                            name={`quantity_${part.bikepartsid}`}
+                            onChange={(e) =>
+                                handleQuantityChange(
+                                    part.bikepartsid,
+                                    parseInt(e.target.value)
+                                )
+                            }
                         />
-                        <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
-                        <InputError message={errors.quantity} className="mt-2" />
-                    </div>
-                </div>
-                <div className="card-footer">
-                {auth.user ? (
-
-                     <button type="submit" className="btn btn-dark text-dark">
-                     Add to basket
-                 </button>
-
-                        ) : (
-
-                            <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
-                            Add to basket
-                        </button>
+                        <InputError
+                            message={errors.quantity}
+                            className="mt-2"
+                        />
+                        {selectedBikePartId === part.bikepartsid && (
+                            <p className="text-black">{flash.message}</p>
                         )}
-                         {auth.user ? (
-                        <button
-                            type="button"
-                            onClick={() => addToWishlist(part.productid)}
+                    </div>
+                </Card.Body>
+                <Card.Footer className=" flex gap-3">
+                    {/* {auth.user ? (
+                        <Button
+                            type="submit"
                             className="btn btn-dark text-dark"
                         >
-                            Add to Wishlist
-                        </button>
+                            Add to basket
+                        </Button>
                     ) : (
-                        <button
-                            type="button"
+                        <Button
+                            type="submit"
                             onClick={onClickPreventDefault}
                             className="btn btn-dark text-dark"
                         >
-                            Add to Wishlist
-                        </button>
-                    )}
-
-                </div>
-            </div>
+                            Add to basket
+                        </Button>
+                    )} */}
+                    <InertiaLink
+                        // href={route("productDetails", { id: part.bikepartid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
+                </Card.Footer>
+            </Card>
         </div>
     ));
 
     return (
         <form onSubmit={submit}>
-            <div className="container">
-                <div className="row">{bikePartList}</div>
-            </div>
+            <Container className=" mt-8">
+                <Row>{bikePartList}</Row>
+            </Container>
         </form>
     );
 };

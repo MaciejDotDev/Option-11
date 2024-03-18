@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Categories;
 
 class Products extends Model
-{   
+{
     protected $primaryKey = 'productid';
     protected $connection = 'mysql';
     public function products()
@@ -17,7 +17,6 @@ class Products extends Model
         return $this->belongsTo(Categories::class, 'categoryid');
     }
 
- 
     protected $fillable = [
         'productname',
         'description',
@@ -28,6 +27,6 @@ class Products extends Model
         'category',
     ];
 
-  
-    
+
+
 }

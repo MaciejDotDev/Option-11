@@ -1,9 +1,15 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
-const Clothes = ({ clothes, success,auth,openModal }) => {
-    const { flash } = usePage().props
+import { usePage } from "@inertiajs/react";
+import { Card, Button } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
+
+const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
+    // Create a state object to store quantities for each bike
+    const [clothQuantities, setClothQuantities] = useState({});
+
+    const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         product_hidden: "",
         quantity: "",
@@ -11,69 +17,118 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
 
     const [selectedClothes, setSelectedClothes] = useState("");
 
+    // Apply filter based on the selected option
+    const filteredClothes = clothes.filter((clothing) => {
+        const categoryFilter =
+            filter === "All Clothes" || clothing.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (clothing.products.price >=
+                parseInt(priceFilter.split("-")[0], 10) &&
+                clothing.products.price <=
+                    parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasket", data);
+        post("/addBasketClothing", {
+            ...data,
+            quantity: clothQuantities[data.clothingid_hidden],
+        });
     };
-    const onClickPreventDefault= (e) => {
+
+    // State object that will store the quantity the user selects for each clothing.
+    const handleQuantityChange = (clothingid, quantity) => {
+        setClothQuantities({ ...clothQuantities, [clothingid]: quantity });
+        setData("quantity", quantity);
+    };
+
+    const onClickPreventDefault = (e) => {
         openModal();
         e.preventDefault();
+    };
 
-      };
-
-    const clothesList = clothes.map((clothing) => (
+    const clothesList = filteredClothes.map((clothing) => (
         <div
-            key={clothing.products.productid}
-            className={`col-md-6 mb-4 ${selectedClothes === clothing.products.productid ? "selected-clothing" : ""
-                }`}
+            key={clothing.clothingid}
+            className={`col-lg-4 col-md-6 mb-4`}
             onClick={() => {
                 setSelectedClothes(clothing.products.productid);
                 setData("product_hidden", clothing.products.productid);
             }}
         >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title text-center h4">{clothing.products.productname}</h5>
-                    <p className="card-text">  <strong>Category:</strong>{clothing.category}</p>
-                    <p className="card-text">  <strong>Colour:</strong>{clothing.colour}</p>
-                    <p className="card-text">  <strong>Size:</strong>{clothing.size}</p>
-                    <p className="card-text">  <strong>Description:</strong>{clothing.products.description}</p>
-                    <p className="card-text">
-                        <strong>Price:</strong> £{clothing.products.price}
-                    </p>
-                    <p className="card-text">
-                        <strong>Stock quantity:</strong> {clothing.products.stockquantity}
-                    </p>
+            <Card>
+                <Card.Img variant="top" src={clothing.products.imageURL} />
+                <Card.Body>
+                    <Card.Title className="text-center h4">
+                        {clothing.products.productname}
+                    </Card.Title>
+                    <Card.Text>{clothing.products.description}</Card.Text>
+                    <Card.Text>
+                        <strong>Price:</strong> Â£{clothing.products.price}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Category:</strong> {clothing.category}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Colour:</strong> {clothing.colour}
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Stock Quantity:</strong>{" "}
+                        {clothing.products.stockquantity}
+                    </Card.Text>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${clothing.products.productid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${clothing.clothingid}`}>
+                            Quantity
+                        </label>
                         <input
                             id={`quantity_${clothing.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
-                            onChange={(e) => setData("quantity", e.target.value)}
+                            value={clothQuantities[clothing.clothingid]}
+                            name={`quantity_${clothing.clothingid}`}
+                            onChange={(e) =>
+                                handleQuantityChange(
+                                    clothing.clothingid,
+                                    parseInt(e.target.value)
+                                )
+                            }
                         />
-                           <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
-                        <InputError message={errors.quantity} className="mt-2" />
-                    </div>
-                </div>
-                <div className="card-footer">
-                {auth.user ? (
-
-                     <button type="submit" className="btn btn-dark text-dark">
-                     Add to basket
-                 </button>
-
-                        ) : (
-
-                            <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
-                            Add to basket
-                        </button>
+                        <InputError
+                            message={errors.quantity}
+                            className="mt-2"
+                        />
+                        {selectedClothes === clothing.clothingid && (
+                            <p className="text-black">{flash.message}</p>
                         )}
-                </div>
-            </div>
+                    </div>
+                </Card.Body>
+                <Card.Footer className=" flex gap-3">
+                    {/* {auth.user ? (
+                        <Button type="submit" variant="outline-dark">
+                            Add to basket
+                        </Button>
+                    ) : (
+                        <Button
+                            type="submit"
+                            onClick={onClickPreventDefault}
+                            variant="outline-dark"
+                        >
+                            Add to basket
+                        </Button>
+                    )} */}
+                    <InertiaLink
+                        // href={route("productDetails", { id: clothing.clothingid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
+                </Card.Footer>
+            </Card>
         </div>
     ));
 
@@ -81,8 +136,7 @@ const Clothes = ({ clothes, success,auth,openModal }) => {
         <div>
             <form onSubmit={submit}>
                 <div className="container">
-                    <div className="row">{clothesList}</div>
-                    <p className="text-white">{success}</p>
+                    <div className="row mt-8">{clothesList}</div>
                 </div>
             </form>
         </div>

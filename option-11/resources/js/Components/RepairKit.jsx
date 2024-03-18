@@ -1,88 +1,139 @@
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
-import { usePage } from '@inertiajs/react'
-const RepairKit = ({ repairKit, success,auth,openModal }) => {
-    const { flash } = usePage().props
+import { usePage } from "@inertiajs/react";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
+
+const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
+    const { flash } = usePage().props;
+
     const { data, setData, post, processing, errors, reset } = useForm({
         product_hidden: "",
         quantity: "",
     });
 
-    const [selectedRepairKit, setSelectedRepairKit] = useState("");
+    const [selectedRepairKitId, setSelectedRepairKitId] = useState("");
+    const [repairKitQuantities, setRepairKitQuantities] = useState({});
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasket", data);
+        post("/addBasketRepairkit", {
+            ...data,
+            quantity: repairKitQuantities[data.repairkitsid_hidden],
+        });
     };
 
-    const onClickPreventDefault= (e) => {
+    const onClickPreventDefault = (e) => {
         openModal();
         e.preventDefault();
+    };
 
-      };
+    const handleQuantityChange = (repairKitId, quantity) => {
+        setRepairKitQuantities({
+            ...repairKitQuantities,
+            [repairKitId]: quantity,
+        });
+        setData("quantity", quantity);
+    };
 
-    const repairKitList = repairKit.map((kit) => (
-        <div
-            key={kit.products.productid}
-            className={`col-md-6 mb-4 ${selectedRepairKit === kit.products.productid ? "selected-repair-kit" : ""
-                }`}
+    // Apply filter based on the selected option
+    const filteredRepairKits = repairKit.filter((kit) => {
+        const categoryFilter =
+            filter === "All Repair Kits" || kit.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (kit.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
+                kit.products.price <= parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
+    const repairKitList = filteredRepairKits.map((kit) => (
+        <Col
+            key={kit.repairkitsid}
+            md={6}
+            className={`col-lg-4 col-md-6 mb-4`}
             onClick={() => {
-                setSelectedRepairKit(kit.products.productid);
-                setData("product_hidden", kit.products.productid);
+                setSelectedRepairKitId(kit.repairkitsid);
+                setData("repairkitsid_hidden", kit.repairkitsid);
             }}
         >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="text-center card-title h4">{kit.products.productname}</h5>
-                    <p className="card-text">{kit.products.description}</p>
-                    <p className="card-text">
-                        <strong>Price:</strong> £{kit.products.price}
-                    </p>
-                    <p className="card-text">
+            <Card>
+                <Card.Img variant="top" src={kit.products.imageURL} />
+                <Card.Body>
+                    <Card.Title className="h4 text-center">
+                        {kit.products.productname}
+                    </Card.Title>
+                    <Card.Text>{kit.products.description}</Card.Text>
+                    <Card.Text>
+                        <strong>Price:</strong> Â£{kit.products.price}
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Category:</strong> {kit.category}
-                    </p>
-                    <p className="card-text">
-                        <strong>Compatible with:</strong> {kit.CompatibleWithType}
-                    </p>
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Compatible with:</strong>{" "}
+                        {kit.CompatibleWithType}
+                    </Card.Text>
                     <div className="form-group">
-                        <label htmlFor={`quantity_${kit.products.productid}`}>Quantity</label>
+                        <label htmlFor={`quantity_${kit.repairkitsid}`}>
+                            Quantity
+                        </label>
                         <input
                             id={`quantity_${kit.products.productid}`}
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
-                            onChange={(e) => setData("quantity", e.target.value)}
+                            value={repairKitQuantities[kit.repairkitsid]}
+                            name={`quantity_${kit.repairkitsid}`}
+                            onChange={(e) =>
+                                handleQuantityChange(
+                                    kit.repairkitsid,
+                                    parseInt(e.target.value)
+                                )
+                            }
                         />
-                           <p style={{color:"green"}} className="block font-medium text-sm text-gray-700">{flash.message}</p>
-                        <InputError message={errors.quantity} className="mt-2" />
-                    </div>
-                </div>
-                <div className="card-footer">
-                {auth.user ? (
-
-                     <button type="submit" className="btn btn-dark text-dark">
-                     Add to basket
-                 </button>
-
-                        ) : (
-
-                            <button type="submit" onClick={onClickPreventDefault} className="btn btn-dark text-dark">
-                            Add to basket
-                        </button>
+                        <InputError
+                            message={errors.quantity}
+                            className="mt-2"
+                        />
+                        {selectedRepairKitId === kit.repairkitsid && (
+                            <p className="text-black">{flash.message}</p>
                         )}
-                </div>
-            </div>
-        </div>
+                    </div>
+                </Card.Body>
+                <Card.Footer className=" flex gap-3">
+                    {/* {auth.user ? (
+                        <Button type="submit" variant="outline-dark">
+                            Add to basket
+                        </Button>
+                    ) : (
+                        <Button
+                            type="submit"
+                            onClick={onClickPreventDefault}
+                            variant="outline-dark"
+                        >
+                            Add to basket
+                        </Button>
+                    )} */}
+                    <InertiaLink
+                        // href={route("productDetails", { id: kit.kitid })}
+                        href=""
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </InertiaLink>
+                </Card.Footer>
+            </Card>
+        </Col>
     ));
 
     return (
         <form onSubmit={submit}>
-            <div className="container">
-                <div className="row">{repairKitList}</div>
-            </div>
+            <Container className=" mt-8">
+                <Row>{repairKitList}</Row>
+            </Container>
         </form>
     );
 };

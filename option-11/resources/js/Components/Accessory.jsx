@@ -2,7 +2,10 @@ import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
-const Accessory = ({ accessories, auth, openModal }) => {
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { InertiaLink } from "@inertiajs/inertia-react";
+
+const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
     const { flash } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         product_hidden: "",
@@ -10,10 +13,14 @@ const Accessory = ({ accessories, auth, openModal }) => {
     });
 
     const [selectedAccessory, setSelectedAccessory] = useState("");
+    const [accessoryQuantities, setAccessoryQuantities] = useState({});
 
     const submit = (e) => {
         e.preventDefault();
-        post("/addBasket", data);
+        post("/addBasketAccessory", {
+            ...data,
+            quantity: accessoryQuantities[data.accessoryid_hidden],
+        });
     };
 
     const onClickPreventDefault = (e) => {
@@ -21,46 +28,79 @@ const Accessory = ({ accessories, auth, openModal }) => {
         e.preventDefault();
     };
 
-    const accessoryList = accessories.map((accessory) => (
-        <div
-            key={accessory.products.productid}
-            className={`col-md-6 mb-4 ${
-                selectedAccessory === accessory.products.productid
-                    ? "selected-accessory"
-                    : ""
-            }`}
-            onClick={() => {
-                setSelectedAccessory(accessory.products.productid);
-                setData("product_hidden", accessory.products.productid);
-            }}
+    const handleQuantityChange = (accessoryId, quantity) => {
+        setAccessoryQuantities({
+            ...accessoryQuantities,
+            [accessoryId]: quantity,
+        });
+        setData("quantity", quantity);
+    };
+
+    const navigateToIndividualProduct = (productname) => {
+        // Add logic to navigate to the "IndividualProduct" page with the selected productname
+    };
+
+    // Filter accessories based on selected options
+    const filteredAccessories = accessories.filter((accessory) => {
+        const categoryFilter =
+            filter === "All Accessories" || accessory.category === filter;
+        const priceFilterCondition =
+            priceFilter === "All Prices" ||
+            (accessory.products.price >=
+                parseInt(priceFilter.split("-")[0], 10) &&
+                accessory.products.price <=
+                    parseInt(priceFilter.split("-")[1], 10));
+
+        return categoryFilter && priceFilterCondition;
+    });
+
+    // Array that will be used to store only unique accessories based on the product name.
+    const distinctAccessories = [
+        ...new Map(
+            filteredAccessories.map((item) => [item.products.productname, item])
+        ).values(),
+    ];
+    const accessoryList = distinctAccessories.map((accessory) => (
+        <Col
+            key={accessory.accessoryid}
+            md={6}
+            className="col-lg-4 col-md-6 mb-4"
         >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title text-center h4">
+            <Card
+                className={`text-center ${
+                    selectedAccessory === accessory.accessoryid
+                        ? "selected-accessory"
+                        : ""
+                }`}
+                onClick={() => {
+                    setSelectedAccessory(accessory.accessoryid);
+                    setData("accessoryid_hidden", accessory.accessoryid);
+                }}
+            >
+                <Card.Img variant="top" src={accessory.products.imageURL} />
+                <Card.Body>
+                    <Card.Title className="h4">
                         {accessory.products.productname}
-                    </h5>
-
-                    <p className="card-text">{accessory.description}</p>
-
-                    <p className="card-text">
-                        <strong>Price:</strong> £{accessory.products.price}
-                    </p>
-                    <p className="card-text">
+                    </Card.Title>
+                    <Card.Text>{accessory.products.description}</Card.Text>
+                    <Card.Text>
+                        <strong>Price:</strong> Â£{accessory.products.price}
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Category:</strong> {accessory.category}
-                    </p>
-                    <p className="card-text">
-                        <strong>Size:</strong> {accessory.size}
-                    </p>
-                    <p className="card-text">
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Size:</strong> View Details for size info
+                    </Card.Text>
+                    <Card.Text>
                         <strong>Colour:</strong> {accessory.colour}
-                    </p>
-                    <p className="card-text">
-                        <strong>Stock quantity:</strong> {accessory.products.stockquantity}
-                    </p>
+                    </Card.Text>
+                    <Card.Text>
+                        <strong>Quantity:</strong>{" "}
+                        {accessory.products.stockquantity}
+                    </Card.Text>
                     <div className="form-group">
-                        <label
-                            htmlFor={`quantity_${accessory.products.productid}`}
-                        >
+                        <label htmlFor={`quantity_${accessory.accessoryid}`}>
                             Quantity
                         </label>
                         <input
@@ -68,51 +108,54 @@ const Accessory = ({ accessories, auth, openModal }) => {
                             className="form-control"
                             min="0"
                             type="number"
-                            value={data.quantity}
-                            name="quantity"
+                            value={accessoryQuantities[accessory.accessoryid]}
+                            name={`quantity_${accessory.accessoryid}`}
                             onChange={(e) =>
-                                setData("quantity", e.target.value)
+                                handleQuantityChange(
+                                    accessory.accessoryid,
+                                    parseInt(e.target.value)
+                                )
                             }
                         />
-                        <p
-                            style={{ color: "green" }}
-                            className="block font-medium text-sm text-gray-700"
-                        >
-                            {flash.message}
-                        </p>
                         <InputError
                             message={errors.quantity}
                             className="mt-2"
                         />
+                        {selectedAccessory === accessory.accessoryid && (
+                            <p className="text-black">{flash.message}</p>
+                        )}
                     </div>
-                </div>
-                <div className="card-footer">
-                    {auth.user ? (
-                        <button
-                            type="submit"
-                            className="btn btn-dark text-dark"
-                        >
+                </Card.Body>
+                <Card.Footer className=" flex gap-3">
+                    {/* {auth.user ? (
+                        <Button type="submit" variant="outline-dark">
                             Add to basket
-                        </button>
+                        </Button>
                     ) : (
-                        <button
+                        <Button
                             type="submit"
                             onClick={onClickPreventDefault}
-                            className="btn btn-dark text-dark"
+                            variant="outline-dark"
                         >
                             Add to basket
-                        </button>
-                    )}
-                </div>
-            </div>
-        </div>
+                        </Button>
+                    )} */}
+                    <a
+                        href={`/product/accessory/${accessory.accessoryid}`} // Update the URL with the correct accessory ID
+                        className="btn btn-outline-primary"
+                    >
+                        View Details
+                    </a>
+                </Card.Footer>
+            </Card>
+        </Col>
     ));
 
     return (
         <form onSubmit={submit}>
-            <div className="container">
-                <div className="row">{accessoryList} </div>
-            </div>
+            <Container className=" mt-8">
+                <Row>{accessoryList}</Row>
+            </Container>
         </form>
     );
 };

@@ -298,5 +298,54 @@ class ProductsSeeder extends Seeder
             'categoryid'=> $bikepart->categoryid,
         ]);
 
+
+        Products::create([
+            'productname' => 'Electric Frame',
+            'description' => 'A frame for building your own electric bike.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/electric-frame.png',
+            'categoryid'=> $bikepart->categoryid,
+        ]);
+
+        Products::create([
+            'productname' => 'Road Frame',
+            'description' => 'A frame for building your own road bike.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/road-frame.png',
+            'categoryid'=> $bikepart->categoryid,
+
+        ]);
+
+        Products::create([
+            'productname' => 'Mountain Frame',
+            'description' => 'A frame for building your own mountain bike.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/mountain-frame.png',
+            'categoryid'=> $bikepart->categoryid,
+        ]);
+
+        Products::create([
+            'productname' => 'Hybrid Frame',
+            'description' => 'A frame for building your own hybrid bike.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/hybrid-frame.png',
+            'categoryid'=> $bikepart->categoryid,
+        ]);
+
+        Products::create([
+            'productname' => 'Kids Frame',
+            'description' => 'A frame for building your own kids bike.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/kids-frame.png',
+            'categoryid'=> $bikepart->categoryid,
+        ]);
+
     }
 }
+
+

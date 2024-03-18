@@ -18,10 +18,11 @@ class ProductPartsCheck extends Model
         return $this->belongsTo(Bikes::class, 'bikeid');
     }
 
-    public function bikeparts()
+    public function compatability()
     {
-        return $this->belongsTo(BikesPart::class, 'bikepartsid');
+        return $this->belongsTo(Products::class, 'bikepartsid');
     }
+
     protected $fillable = [
 
         'bikeid',

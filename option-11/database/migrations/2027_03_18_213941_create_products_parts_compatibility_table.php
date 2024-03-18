@@ -6,19 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('products_parts_compatibility', function (Blueprint $table) {
             $table->bigIncrements('partscompatibilityid');
-
             $table->unsignedBigInteger('bikepartsid');
             $table->foreign('bikepartsid')->references('bikepartsid')->on('bikeparts')->onDelete('cascade');
             $table->unsignedBigInteger('bikeid');
             $table->foreign('bikeid')->references('bikeid')->on('bikes')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
