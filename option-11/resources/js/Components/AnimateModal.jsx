@@ -13,7 +13,7 @@ const AnimateModal = ({ auth, children,baskIcon,canResetPassword }) => {
       setModalOpen(true);
       document.body.style.overflow = 'hidden'
     };
-  
+
     const closeModal = () => {
       document.body.style.overflow = 'visible';
       setModalOpen(false);
@@ -35,12 +35,12 @@ const AnimateModal = ({ auth, children,baskIcon,canResetPassword }) => {
         )}
       </AnimatePresence>
 
-       
-        </div>
-      
 
-      
-      
+        </div>
+
+
+
+
     );
 }
 

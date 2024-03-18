@@ -4,17 +4,13 @@ import InputError from "@/Components/InputError";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { AiFillStar, AiOutlineForm } from "react-icons/ai";
 
-export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,openModal,productid }) {
+export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,openModal,productid,click }) {
     const [reviewform, setReviewForm] = useState(false);
 
     const [starNum, setStarNum] = useState(0);
 
 
-    const onClickPreventDefault= (e) => {
-        openModal();
-        e.preventDefault();
 
-      };
     const rate = () => {
         const numbers = [1, 2, 3, 4, 5]; // Assuming you have an array of numbers
         return numbers.map((number) => (
@@ -287,7 +283,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                                 borderRadius: "0.3rem",
                                 color: "white",
                             }}
-                            onClick={onClickPreventDefault}
+                            onClick={click}
                         >
                             <div
                                 style={{
@@ -426,7 +422,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                                 borderRadius: "0.3rem",
                                 color: "white",
                             }}
-                            onClick={onClickPreventDefault}
+                            onClick={click}
                         >
                             <div
                                 style={{
