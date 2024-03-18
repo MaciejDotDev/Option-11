@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Bike;
+use App\Models\Bikes;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class BikeAllExport implements FromCollection
@@ -12,6 +12,6 @@ class BikeAllExport implements FromCollection
     */
     public function collection()
     {
-        return Bike::all();
+        return Bikes::all();
     }
 }

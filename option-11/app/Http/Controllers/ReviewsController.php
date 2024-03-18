@@ -56,13 +56,16 @@ public function showAll() {
    if ($starTotal == null)
    {
 
-    return Inertia::render('Test',['reviews' => $reviews]);
+    return Inertia::render('ReviewProducts',['reviews' => $reviews]);
    }
     $starsAvg  = round(array_sum($starTotal)/ $stars->count(),1);
 
     $commentsCount = $stars->count();
 
-    return Inertia::render('Test',['reviews' => $reviews,'starsAvg' => $starsAvg,'commentsCount' => $commentsCount]);
+
+
+
+    return Inertia::render('ReviewProducts',['reviews' => $reviews,'starsAvg' => $starsAvg,'commentsCount' => $commentsCount]);
 
 
 
@@ -80,7 +83,7 @@ public function createReview(Request $request) {
     $validateInput = $request->validate([
         'stars'=>'required|integer|between:1,5|gt:0',
         'title'=>'required',
-
+        'productid' => 'required',
         'description'=>'required'
 
 
@@ -103,9 +106,9 @@ if ($validateInput){
         $review->title = $request->title;
         $review->description =$request->description;
         $review->stars =$request->stars;
-        $review->productid = 5;
+        $review->productid = $request->productid;
         $review->save();
-        return redirect()->route('reviews');
+        return redirect()->back();
 
 
 

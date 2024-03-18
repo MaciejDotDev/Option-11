@@ -38,7 +38,7 @@ class ManageBasketController extends Controller
         foreach ($this->basket as $item) {
 
 
-                $bikes[] = $item;
+            $bikes[] = $item;
 
 
 
@@ -197,8 +197,8 @@ class ManageBasketController extends Controller
                     $record = Basket::where('userid', auth()->user()->userid)->where('productid', request('product_hidden'))->first();
 
 
-                    if ($record ) {
-                        if ($stockCheck->stockquantity- $record->quantity - request('quantity') <= 0) {
+                    if ($record) {
+                        if ($stockCheck->stockquantity - $record->quantity - request('quantity') <= 0) {
 
                             return redirect()->back()->withErrors(['stock' => 'Not enough stock!']);
                         } else {

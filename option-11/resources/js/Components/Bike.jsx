@@ -72,7 +72,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
         >
             {/* <Card style={{ width: "28rem" }}> */}
             <Card>
-                <Card.Img variant="top" src={bike.products.imageURL} />
+                <Card.Img variant="top" src="product-images/bike-products/mountain-bike-1.jpg" />
                 <Card.Body>
                     <Card.Title className="text-center h4">
                         {bike.products.productname}
@@ -171,7 +171,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
 
                     <InertiaLink
                         // href={route("productDetails", { id: bike.bikeid })}
-                        href=""
+
                         className="btn btn-outline-primary"
                     >
                         View Details

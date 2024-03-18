@@ -17,7 +17,7 @@ export default function Dashboard({
     wishlistItems,
     wishlistAmount,
 }) {
-    const handleDeleteConfirmation = (e) => {
+    const handleDeleteConfirmation = (e) => { // not needed yer
         if (window.confirm("Are you sure you wish to delete your account?")) {
             this.onCancel(item);
         } else {
@@ -26,7 +26,7 @@ export default function Dashboard({
     };
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        itemId: null,
+        itemId: null, //custom hoook so we can delete the wishlistitem
     });
     const submit = (e) => {
         e.preventDefault();

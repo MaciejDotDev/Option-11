@@ -71,6 +71,9 @@ Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])-
 
 Route::get('/accessory/{productid}', [ShowAccessoriesController::class, 'showIndividual'])->name('individualAccessory');
 
+Route::get('/bike/{bikeid}', [ShowBikesController::class, 'showIndividual'])->name('individualBike');
+
+
 
 
 Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');

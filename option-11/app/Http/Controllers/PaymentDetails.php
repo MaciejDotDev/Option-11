@@ -55,8 +55,8 @@ class PaymentDetails extends Controller
 
 
 
-        ]);
-        foreach ($basket as $product) {
+        ]); // allows to createa customer so tey can be identified through their emiail and cus_id
+        foreach ($basket as $product) { // going through the basket and creating a data strocutre to the requirements of stripe
 
             $lineItems[] = [
                 'price_data' => [
@@ -73,14 +73,14 @@ class PaymentDetails extends Controller
 
 
 
-        $session = \Stripe\Checkout\Session::create([
-            'shipping_address_collection' => ['allowed_countries' => ['GB']],
+        $session = \Stripe\Checkout\Session::create([ //prepares data to be sent through the api
+            'shipping_address_collection' => ['allowed_countries' => ['GB']], //allows to create  a shipping address for  users in GB.
             'line_items' => $lineItems,
             'customer' => $customer->id,
-            "metadata" => array("cus_id" => $customer->id,"userid" =>auth()->user()->userid ),
+            "metadata" => array("cus_id" => $customer->id,"userid" =>auth()->user()->userid ), // we send the cus_id and userid, for cus because then we can track customers with their transactions and user id because webhooks can't detect the current session
             'mode' => 'payment',
-            'success_url' => route('success') . "?session_id={CHECKOUT_SESSION_ID}",
-            'cancel_url' => route('cancel') . "?session_id={CHECKOUT_SESSION_ID}",
+            'success_url' => route('success') . "?session_id={CHECKOUT_SESSION_ID}", //  this is the route if the payment is succesfful we send the checkout session id to confirm that is stripe sending webhook event
+            'cancel_url' => route('cancel') . "?session_id={CHECKOUT_SESSION_ID}", /// if the user clicsk on cancel this is where they go
         ]);
 
 
@@ -89,7 +89,7 @@ class PaymentDetails extends Controller
 
 
 
-        return Inertia::location($session->url);
+        return Inertia::location($session->url); // specific function allowing users to go outside the website, preventing cross-origin
 
 
 
@@ -99,7 +99,7 @@ class PaymentDetails extends Controller
     }
 
     public function cancel(Request $request) {
-
+        //cleaning up by removing any order associated with the sessionid
 
         $sessionId = $request->get('session_id');
 
@@ -119,7 +119,7 @@ class PaymentDetails extends Controller
         $session = \Stripe\Checkout\Session::retrieve($sessionId);
         try {
 
-            if(!$session) {
+            if(!$session) { //ensures that a sessionid is valid before keeping going
 
                 throw new NotFoundHttpException;
 
@@ -139,7 +139,7 @@ class PaymentDetails extends Controller
 
 
     public function webhook()
-    {
+    { // triggers from the stripe website
 
         $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
 
@@ -162,11 +162,11 @@ class PaymentDetails extends Controller
 
         switch ($event->type) {
             case 'checkout.session.completed':
-                $session = $event->data->object;
+                $session = $event->data->object; // all the json data of the webhook call
 
 
 
-
+//below we're getting all data associated with stripe and storing it in the db
                 $sessionId =  $session->id;
                 $paymentIntent =  $session->payment_intent;
                 $customerid = $session->metadata->cus_id;
@@ -229,7 +229,7 @@ class PaymentDetails extends Controller
                 $notification->notification_description = "New order created by user: $userid, with order id: $orderid, at $orderTime";
                 $notification->save();
 
-                event(new OrderPlacedEvent($notification->notification_description));
+                event(new OrderPlacedEvent($notification->notification_description)); // creates an event which allows live notification with event controllers and using pusher
 
                 $basket = Basket::with('products')->where('userid', $userid)->where('status', 'open')->get();
                 foreach ($basket as $product) {
@@ -239,7 +239,7 @@ class PaymentDetails extends Controller
                     $orderItem->quantity = $product->quantity;
                     $orderItem->totalprice = $product->totalprice;
                     $orderItem->save();
-                    $productHistory = new ProductHistory();
+                    $productHistory = new ProductHistory(); //we're creating product history to log sold products
                     $product1 = Categories::where('categoryid', $product->products->categoryid)->first();
                     $productHistory->productname = $product->products->productname;
 
@@ -264,7 +264,7 @@ class PaymentDetails extends Controller
                 $orderItems = OrderItem::where('orderid', $order->orderid)->get();
                 foreach ($orderItems as $item) {
                     $product = Products::where('productid', $item->productid)->first();
-                    $product->stockquantity -= $item->quantity;
+                    $product->stockquantity -= $item->quantity; //removing stock from products
                     $product->save();
 
                 }

@@ -22,7 +22,8 @@ class OrderPlacedEvent implements ShouldBroadcast
 
     public function __construct($orderid)
     {
-        $this->orderid = $orderid;
+        $this->orderid = $orderid; // paremeter to crete a new event
+
 
     }
 
@@ -34,12 +35,12 @@ class OrderPlacedEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('notification-channel'),
+            new Channel('notification-channel'), //name of the comments
         ];
     }
 
     public function broadcastAs() {
 
-        return 'order-placed';
+        return 'order-placed'; // triggers the order-placed channel
     }
 }

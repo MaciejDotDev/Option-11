@@ -4,7 +4,7 @@ import InputError from "@/Components/InputError";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { AiFillStar, AiOutlineForm } from "react-icons/ai";
 
-export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,openModal }) {
+export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,openModal,productid }) {
     const [reviewform, setReviewForm] = useState(false);
 
     const [starNum, setStarNum] = useState(0);
@@ -120,6 +120,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
         stars: null,
         title: "",
         description: "",
+        productid: productid,
     });
 
     const submit = (e) => {
@@ -312,7 +313,138 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                             <div>
 
                             <h5 class="card-title reviewTitle" style={{textAlign:"center"}}>No reviews yet</h5>
+                            {auth.user ? (
+                            <>
+                               <button
+                    type="button"
+                    class="btn btn-dark"
+                    style={{
+                        fontSize: "0.8rem",
+                        borderRadius: "0.3rem",
+                        color: "white",
+                    }}
+                    onClick={() => {
+                        setOpen();
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                        }}
+                    >
+                        <AiOutlineForm
+                            style={{
+                                marginRight: "0.5rem",
+                                marginTop: "0.2rem",
+                            }}
+                        />{" "}
+                        Write a review
+                    </div>
+                </button>
+
+                <div className="reviewProducts">
+                    <div
+                        className={
+                            "reviewBox " + (reviewform ? "expand" : "closed")
+                        }
+                    >
+                        <div className="card-open">
+                            <form onSubmit={submit}>
+                                <div
+                                    style={{
+                                        display: "block",
+                                    }}
+                                >
+                                    <label style={{ color: "white" }}>
+                                        Rating
+                                    </label>
+                                    <div className="stars-container">
+                                        {rate()}
+                                    </div>
+                                    <InputError
+                                        message={errors.stars}
+                                        className="mt-2"
+                                    />
+
+                                    <label style={{ color: "white" }}>
+                                        Title
+                                    </label>
+
+                                    <input
+                                        class="form-control"
+                                        id="title"
+                                        value={data.title}
+                                        onChange={(e) =>
+                                            setData("title", e.target.value)
+                                        }
+                                        type="text"
+                                    ></input>
+                                    <InputError
+                                        message={errors.title}
+                                        className="mt-2"
+                                    />
+
+                                    <label style={{ color: "white" }}>
+                                        Description
+                                    </label>
+                                    <textarea
+                                        class="form-control"
+                                        id="description"
+                                        value={data.description}
+                                        onChange={(e) =>
+                                            setData(
+                                                "description",
+                                                e.target.value
+                                            )
+                                        }
+                                        rows="3"
+                                    ></textarea>
+
+                                    <InputError
+                                        message={errors.description}
+                                        className="mt-2"
+                                    />
+                                    <h1 style={{ color: "white" }}> </h1>
+                                    <button
+                                        class="btn btn-outline-primary"
+                                        type="submit"
+                                    >
+                                        submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                            </>
+                        ) : (
+                            <button
+                            type="button"
+                            class="btn btn-dark"
+                            style={{
+                                fontSize: "0.8rem",
+                                borderRadius: "0.3rem",
+                                color: "white",
+                            }}
+                            onClick={onClickPreventDefault}
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                }}
+                            >
+                                <AiOutlineForm
+                                    style={{
+                                        marginRight: "0.5rem",
+                                        marginTop: "0.2rem",
+                                    }}
+                                />{" "}
+                                Write a review
                             </div>
+                        </button>
+                        )}
+                            </div>
+
 
                           )}
 

@@ -12,6 +12,6 @@ class UsersAllExport implements FromCollection
     */
     public function collection()
     {
-        return User::all();
+        return User::all(); //returns the entire collection from the database
     }
 }
