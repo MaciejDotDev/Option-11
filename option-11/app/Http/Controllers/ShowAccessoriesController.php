@@ -11,7 +11,7 @@ use App\Models\Accessory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-
+use App\Models\Reviews;
 class ShowAccessoriesController extends ManageBasketController
 {
      /**
@@ -40,11 +40,36 @@ class ShowAccessoriesController extends ManageBasketController
 
     public function showIndividual($productid) {
 
-                $accessory =  Accessory::where('productid', $productid)->first();
+        $bike = Accessory::with('products')->where('productid', $productid)->first();
 
-                $product =  Products::where('productid', $$accessory->productid)->first();
+        $reviews = Reviews::with('user')->where('productid', $productid)->orderBy('created_at', 'DESC')
+            ->get(); // this one is the one in actual production changed so now it also gets based on the product id
 
-        return Inertia::render('IndividualProductPage', ['accessory' => $accessory, 'product'  =>$product  ]);
+        $stars = Reviews::where('productid', $productid)->get();
+
+
+        $starTotal = [];
+
+        foreach ($stars as $item) {
+
+            $starTotal[] = $item->stars;
+
+        }
+        if ($starTotal == null) {
+
+            return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews]);
+        }
+        $starsAvg = round(array_sum($starTotal) / $stars->count(), 1);
+
+        $commentsCount = $stars->count();
+
+
+
+
+
+
+        return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
+
 
     }
 

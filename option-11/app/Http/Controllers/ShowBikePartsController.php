@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Basket;
 use App\Models\BikePart;
 use Inertia\Inertia;
-
+use App\Models\Reviews;
 class ShowBikePartsController extends ManageBasketController
 {
     /**
@@ -25,20 +25,47 @@ class ShowBikePartsController extends ManageBasketController
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function showAll() {
+    public function showAll()
+    {
 
-        $bikeparts =  BikePart::with('products')->get();
+        $bikeparts = BikePart::with('products')->get();
 
         return Inertia::render('BikeParts', ['bikePart' => $bikeparts]); // Corrected the key to 'bikeParts'
     }
 
-    public function showIndividual(Request $request) {
+    public function showIndividual($productid)
+    {
 
+        $bike = BikePart::with('products')->where('productid', $productid)->first();
+
+        $reviews = Reviews::with('user')->where('productid', $productid)->orderBy('created_at', 'DESC')
+            ->get(); // this one is the one in actual production changed so now it also gets based on the product id
+
+        $stars = Reviews::where('productid', $productid)->get();
+
+
+        $starTotal = [];
+
+        foreach ($stars as $item) {
+
+            $starTotal[] = $item->stars;
+
+        }
+        if ($starTotal == null) {
+
+            return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews]);
+        }
+        $starsAvg = round(array_sum($starTotal) / $stars->count(), 1);
+
+        $commentsCount = $stars->count();
+
+
+
+
+
+
+        return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
 
 
     }
-
-
-
-
 }
