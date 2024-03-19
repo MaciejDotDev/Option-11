@@ -22,6 +22,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
 
     // Filter bikes based on category, price, and search query
     const filteredBikes = bikes.filter((bike) => {
+        // console.log(bike); Testing, ignore this please.
         const categoryFilter =
             filter === "All Bikes" || bike.category === filter;
         const priceFilterCondition =
@@ -156,7 +157,7 @@ const Bike = ({ bikes, auth, openModal, filter, priceFilter }) => {
             <form onSubmit={submit}>
                 <div className="container">
                     <div className="row mt-4 flex justify-center">
-                        {/* Search input field */}
+                        {/* Below is the search input field to dynamically render bikes*/}
                         <input
                             type="text"
                             className="form-control w-25"

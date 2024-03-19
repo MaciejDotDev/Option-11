@@ -136,15 +136,12 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )}
-                    <InertiaLink
-                        href=""
+                    <a
+                        href={`/product/accessory/${accessory.accessoryid}`}  // Update the URL with the correct accessory ID
                         className="btn btn-outline-primary"
-                        onClick={() =>
-                            navigateToIndividualProduct(accessory.productname)
-                        }
                     >
                         View Details
-                    </InertiaLink>
+                    </a>
                 </Card.Footer>
             </Card>
         </Col>

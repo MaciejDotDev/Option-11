@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import-normalize;
+
 @font-face {
     font-family: "Koulen";
     src: url("../fonts/Koulen-Regular.ttf") format("truetype");
@@ -42,6 +43,32 @@ body {
 
 .footer {
     background-color: #1f2124;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 3px;
+}
+
+
+
+::-webkit-scrollbar-track {
+    background-color: #646464;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #666;
+    border-radius: 3px;
+}
+
+
+::-webkit-resizer {
+    background-color: #666;
 }
 
 /* Navbar Styling */
@@ -112,12 +139,10 @@ body {
 
 .image-text span:last-child {
     font-weight: bold;
-    background: linear-gradient(
-        90deg,
-        rgb(255, 0, 38),
-        rgb(158, 36, 44),
-        rgb(53, 0, 53)
-    );
+    background: linear-gradient(90deg,
+            rgb(255, 0, 38),
+            rgb(158, 36, 44),
+            rgb(53, 0, 53));
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 }
@@ -149,6 +174,7 @@ body {
 
 /* Decrease category placeholder image sizes for mobile versions */
 @media (max-width: 767px) {
+
     .ctg-image,
     .card {
         max-width: 16rem;
@@ -164,7 +190,7 @@ body {
 
 /* farhan css below */
 .basketContainer {
-    width: clamp(200px,70%,1000px);
+    width: clamp(200px, 70%, 1000px);
     margin: 0 auto;
     padding: 2px;
     padding-bottom: 7rem;
@@ -188,6 +214,7 @@ body {
     margin-bottom: 10px;
     font-size: 20px;
 }
+
 .item-details {
     flex-grow: 1;
 }
@@ -223,7 +250,8 @@ body {
 }
 
 .total {
-    text-align: right; /* Align text to the left inside the .total div */
+    text-align: right;
+    /* Align text to the left inside the .total div */
     margin-bottom: 20px;
     color: white;
     font-size: 20px;
@@ -307,6 +335,7 @@ body {
     box-sizing: border-box;
     justify-content: space-between;
 }
+
 .dashboardContainer {
     flex: 1;
 
@@ -337,8 +366,9 @@ body {
 }
 
 .dashboardContainer.open {
-    height:2.3rem;
+    height: 2.3rem;
 }
+
 .close:hover,
 .close:focus {
     color: #000;
@@ -354,6 +384,7 @@ body {
     text-align: center;
     justify-content: center;
 }
+
 .arrowContainer {
 
 
@@ -372,12 +403,13 @@ body {
     transition: all 500ms ease-in-out;
 }
 
-.arrowIcon:hover{
+.arrowIcon:hover {
 
     color: #aaaaaa;
 
 
 }
+
 .arrowContainer.closed {
 
 
@@ -404,6 +436,7 @@ div.expand {
     font-family: "Koulen", sans-serif;
     font-size: x-large;
 }
+
 .dashboard-container {
     display: block;
 
@@ -412,6 +445,7 @@ div.expand {
     text-align: left;
     padding-bottom: 15rem;
 }
+
 .dashboard-groups {
     display: flex;
     margin: 0 auto;
@@ -423,6 +457,7 @@ div.expand {
     display: block;
     overflow: hidden;
 }
+
 .adminDashboard-container {
     display: flex;
     max-width: 1230px;
@@ -435,22 +470,25 @@ div.expand {
         display: block;
         max-width: 400px;
     }
+
     .dashboardContainer {
         margin: 2rem auto;
     }
 
-    .adminDashboard-container{
+    .adminDashboard-container {
         display: block;
         max-width: 400px;
 
     }
+
     .editProducts {
 
-        font-size:0.6rem;
+        font-size: 0.6rem;
 
     }
-    .ordersTable{
-        font-size:0.6rem;
+
+    .ordersTable {
+        font-size: 0.6rem;
     }
 }
 
@@ -460,12 +498,14 @@ div.expand {
 
         width: fit-content;
     }
+
     .editDescription {
 
         text-indent: 0.4em;
     }
 
 }
+
 @media (max-width: 600px) {
     .dashboard-container {
         display: block;
@@ -476,26 +516,28 @@ div.expand {
     .card-title.dashboard p {
         font-size: large;
     }
+
     .dashboardContainer {
         margin: 2rem auto;
     }
 
-    .adminDashboard-container{
+    .adminDashboard-container {
         display: block;
         max-width: 400px;
 
 
     }
+
     .editProducts {
 
-        font-size:0.4rem;
+        font-size: 0.4rem;
 
 
     }
 
     .ordersTable {
 
-        font-size:0.3rem;
+        font-size: 0.3rem;
 
 
     }
@@ -503,8 +545,9 @@ div.expand {
 
 }
 
-.dashboard-container > div {
-    margin-right: 10px; /* Adjust the spacing as needed */
+.dashboard-container>div {
+    margin-right: 10px;
+    /* Adjust the spacing as needed */
 }
 
 /* dropdowwn for update*/
@@ -563,6 +606,7 @@ div.expand {
 .review {
     margin: 0 3%;
 }
+
 .reviewCard {
     flex: 100%;
     margin: 0px 20px;
