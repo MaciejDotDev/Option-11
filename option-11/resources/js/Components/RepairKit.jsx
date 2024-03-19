@@ -1,26 +1,40 @@
 import { useForm } from "@inertiajs/react";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
+import axios from 'axios';
+const RepairKit = ({ filter, priceFilter }) => {
+    const { flash } = usePage().props;
 
-const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
 
-
-    // State to store the search query input from the user.
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearchChange = (e) => {
         // console.log(e)
         setSearchQuery(e.target.value);
     };
+    const [searchResults, setSearchResults] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/api/repairKitsearch');
+                setSearchResults(response.data);
 
 
 
+            } catch (error) {
+                console.error('Error fetching data:', error);
+
+            }
+        };
+
+        fetchData();
+    }, []);
 
     // Apply filter based on the selected filter and/or the search query :D
-    const filteredRepairKits = repairKit.filter((kit) => {
+    const filteredRepairKits = searchResults.filter((kit) => {
         const categoryFilter =
             filter === "All Repair Kits" || kit.category === filter;
         const priceFilterCondition =
@@ -50,8 +64,9 @@ const RepairKit = ({ repairKit, auth, openModal, filter, priceFilter }) => {
                     </Card.Title>
                     <Card.Text>{kit.products.description}</Card.Text>
                     <Card.Text>
-                        <strong>Price:</strong> £{kit.products.price}
+                        <strong>Price:</strong> Â£{kit.products.price}
                     </Card.Text>
+
 
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">

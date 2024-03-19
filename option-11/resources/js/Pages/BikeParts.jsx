@@ -90,14 +90,7 @@ const BikeParts = ({ auth, bikePart }) => {
                     priceFilter={priceFilter}
                 />
 
-                <div className="text-center mt-4">
-                    <InertiaLink
-                        className="btn btn-light"
-                        href={route("basket")}
-                    >
-                        Go to Basket
-                    </InertiaLink>
-                </div>
+
             </AnimateModal>
         </div>
     );

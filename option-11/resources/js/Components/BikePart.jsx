@@ -1,11 +1,11 @@
 import { useForm } from "@inertiajs/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card, Button, Container, Row } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
-
-const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
+import axios from 'axios';
+const BikePart = ({  filter, priceFilter }) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearchChange = (e) => {
@@ -13,13 +13,33 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
     };
 
 
+    const [searchResults, setSearchResults] = useState([]);
 
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/api/productsparts');
+                setSearchResults(response.data);
+
+
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+
+            }
+        };
+
+        fetchData();
+    }, []);
 
 
 
 
     // Apply filter based on the selected option
-    const filteredBikeParts = bikePart.filter((part) => {
+    const filteredBikeParts = searchResults.filter((part) => {
         const categoryFilter =
             filter === "All Parts" || part.category === filter;
         const priceFilterCondition =

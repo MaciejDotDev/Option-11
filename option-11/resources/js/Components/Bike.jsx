@@ -6,7 +6,7 @@ import { Card, Button } from "react-bootstrap";
 import { Inertia } from "@inertiajs/inertia";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import axios from 'axios';
-const Bike = ({ auth, openModal, filter, priceFilter }) => {
+const Bike = ({ filter, priceFilter }) => {
 
      // State to store search query
 

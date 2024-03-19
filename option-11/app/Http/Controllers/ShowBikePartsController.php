@@ -25,7 +25,7 @@ class ShowBikePartsController extends ManageBasketController
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function showBikeProducts()
+    public function showAll()
     {
 
         $bikeparts = BikePart::with('products')->get();

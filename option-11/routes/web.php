@@ -28,7 +28,7 @@ use App\Http\Controllers\AdminEditAddress;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\AdminStockUpdate;
-
+use App\Http\Controllers\PartCheckController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,7 +67,7 @@ Route::get('/updateAccount', function () {
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 
-Route::get('/api/bikesearch', [ShowBikesController::class, 'search'])->name('bikesearch');
+
 
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
 
@@ -77,13 +77,14 @@ Route::get('/api/accessorieSearch', [ShowAccessoriesController::class, 'search']
 
 
 
+Route::get('/api/repairKitsearch', [ShowRepairKitsController::class, 'search'])->name('repairKitsearch');
 
 Route::get('/accessory/{productid}', [ShowAccessoriesController::class, 'showIndividual'])->name('individualAccessory');
 
 Route::get('/bike/{bikeid}', [ShowBikesController::class, 'showIndividual'])->name('individualBike');
 
-
-
+Route::get('/api/productsparts', [ShowBikePartsController::class, 'search'])->name('productsparts');
+Route::get('/api/bikesearch', [ShowBikesController::class, 'search'])->name('bikesearch');
 
 Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');
 Route::match(['get', 'post'],'update', [ManageAccount::class, 'update'])->name('update');
@@ -153,6 +154,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
 
     Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
+
+
     Route::get('/api/adminNotifications', [AdminDashboardController::class, 'notifications'])->name('adminNotifications');
 
     Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
@@ -242,7 +245,7 @@ Route::middleware('auth')->group(function () {
 
     Route::match (['get', 'post'], '/success', 'App\Http\Controllers\PaymentDetails@finalizeOrder')->name('success');
     Route::match (['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
-
+    Route::get('/api/bikecheck', [PartCheckController::class, 'check'])->name('bikecheck');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

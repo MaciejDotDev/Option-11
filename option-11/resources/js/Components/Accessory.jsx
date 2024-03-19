@@ -6,7 +6,7 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 
 import axios from 'axios';
 
-const Accessory = ({  auth, openModal, filter, priceFilter }) => {
+const Accessory = ({  filter, priceFilter }) => {
 
 
     const [selectedAccessory, setSelectedAccessory] = useState("");

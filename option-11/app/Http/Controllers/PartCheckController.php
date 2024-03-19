@@ -9,11 +9,12 @@ class PartCheckController extends Controller
 
 
 
-    public function check() {
+    public function check($product) {
 
-        $comp = $product->compatibility()->get()
+        $comp = $product->compatibility()->get();
 
-         ///  add here the code to return to a specifics page  return Inertia::render('', ['comp' => $comp]);
+        return response()->json($comp);
+
 
     }
 }
