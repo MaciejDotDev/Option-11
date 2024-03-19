@@ -26,7 +26,7 @@ class ManageBasketController extends Controller
     protected $basket;
 
 
-    public function search()
+    public function getBasket()
     {
 
 

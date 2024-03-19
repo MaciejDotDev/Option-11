@@ -31,8 +31,14 @@ class ShowRepairKitsController extends ManageBasketController
     public function showAll()
     {
 
-        $repairkits =  RepairKit::with('products')->get();
-        return Inertia::render('RepairKits', ['repairKit' => $repairkits]); // Corrected the key to 'repairKits'
+         RepairKit::with('products')->get();
+        return Inertia::render('RepairKits'); // Corrected the key to 'repairKits'
+    }
+
+    public function search (){
+
+        $bikes =  RepairKit::with('products')->get();
+        return response()->json($bikes);
     }
 
     public function showIndividual($productid) {

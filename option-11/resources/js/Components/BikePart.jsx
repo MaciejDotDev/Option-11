@@ -6,36 +6,17 @@ import { Card, Button, Container, Row } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
 
 const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
-    const { flash } = usePage().props;
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        product_hidden: "",
-        quantity: "",
-    });
-
-    const [selectedBikePartId, setSelectedBikePartId] = useState("");
-    const [bikePartQuantities, setBikePartQuantities] = useState({});
-
-    const submit = (e) => {
-        e.preventDefault();
-        post("/addBasketPart", {
-            ...data,
-            quantity: bikePartQuantities[data.bikepartid_hidden],
-        });
+    const [searchQuery, setSearchQuery] = useState("");
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
     };
 
-    const onClickPreventDefault = (e) => {
-        openModal();
-        e.preventDefault();
-    };
 
-    const handleQuantityChange = (bikePartId, quantity) => {
-        setBikePartQuantities({
-            ...bikePartQuantities,
-            [bikePartId]: quantity,
-        });
-        setData("quantity", quantity);
-    };
+
+
+
+
 
     // Apply filter based on the selected option
     const filteredBikeParts = bikePart.filter((part) => {
@@ -68,50 +49,7 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
                     <p className="card-text">
                         <strong>Price:</strong> Â£{part.products.price}
                     </p>
-                    <p className="card-text">
-                        <strong>Category:</strong> {part.category}
-                    </p>
-                    <p className="card-text">
-                        <strong>Colour:</strong> {part.color}
-                    </p>
-                    <p className="card-text">
-                        <strong>Size:</strong> {part.size}
-                    </p>
-                    <p className="card-text">
-                        <strong>Compatible with:</strong>{" "}
-                        {part.CompatibleWithType}
-                    </p>
 
-                    <p className="card-text">
-                        <strong>Stock quantity:</strong>{" "}
-                        {part.products.stockquantity}
-                    </p>
-                    <div className="form-group">
-                        <label htmlFor={`quantity_${part.bikepartsid}`}>
-                            Quantity
-                        </label>
-                        <input
-                            id={`quantity_${part.products.bikepartsid}`}
-                            className="form-control"
-                            min="0"
-                            type="number"
-                            value={bikePartQuantities[part.bikepartsid]}
-                            name={`quantity_${part.bikepartsid}`}
-                            onChange={(e) =>
-                                handleQuantityChange(
-                                    part.bikepartsid,
-                                    parseInt(e.target.value)
-                                )
-                            }
-                        />
-                        <InputError
-                            message={errors.quantity}
-                            className="mt-2"
-                        />
-                        {selectedBikePartId === part.bikepartsid && (
-                            <p className="text-black">{flash.message}</p>
-                        )}
-                    </div>
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
                     {/* {auth.user ? (
@@ -143,11 +81,21 @@ const BikePart = ({ bikePart, auth, openModal, filter, priceFilter }) => {
     ));
 
     return (
-        <form onSubmit={submit}>
-            <Container className=" mt-8">
-                <Row>{bikePartList}</Row>
-            </Container>
-        </form>
+
+        <Container className="mt-8">
+            <Row className="mt-4 flex justify-center mb-4">
+                <input
+                    type="text"
+                    className="form-control w-25"
+                    placeholder="Search bike parts..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
+            </Row>
+            <Row>{bikePartList}</Row>
+        </Container>
+
+
     );
 };
 

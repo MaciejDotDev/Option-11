@@ -21,3 +21,4 @@ class CompatibilityTableSeeder extends Seeder
 
     }
 }
+

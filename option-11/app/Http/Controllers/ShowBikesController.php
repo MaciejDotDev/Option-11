@@ -52,6 +52,13 @@ public function showAll() {
 
 }
 
+
+public function search (){
+
+    $bikes =  Bikes::with('products')->get();
+    return response()->json($bikes);
+}
+
 public function showIndividual($productid) {
 
     $bike =  Bikes::with('products')->where('productid', $productid)->first();

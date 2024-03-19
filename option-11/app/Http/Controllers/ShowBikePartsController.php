@@ -25,12 +25,21 @@ class ShowBikePartsController extends ManageBasketController
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function showAll()
+    public function showBikeProducts()
     {
 
         $bikeparts = BikePart::with('products')->get();
 
-        return Inertia::render('BikeParts', ['bikePart' => $bikeparts]); // Corrected the key to 'bikeParts'
+        return Inertia::render('BikeParts');
+
+
+
+    }
+
+    public function search () {
+
+        $bikes =  BikePart::with('products')->get();
+        return response()->json($bikes);// Corrected the key to 'bikeParts'
     }
 
     public function showIndividual($productid)

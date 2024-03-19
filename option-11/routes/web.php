@@ -67,7 +67,16 @@ Route::get('/updateAccount', function () {
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 
+Route::get('/api/bikesearch', [ShowBikesController::class, 'search'])->name('bikesearch');
+
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
+
+Route::get('/api/accessorieSearch', [ShowAccessoriesController::class, 'search'])->name('accessoriessearch');
+
+
+
+
+
 
 Route::get('/accessory/{productid}', [ShowAccessoriesController::class, 'showIndividual'])->name('individualAccessory');
 
@@ -209,7 +218,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [ManageAccount::class, 'create'])
         ->name('dashboard');
-    Route::get('/basket', [ManageBasketController::class, 'search'])->name('basket');
+    Route::get('/basket', [ManageBasketController::class, 'getBasket'])->name('basket');
     Route::match (['get', 'post'], '/addBasket', 'App\Http\Controllers\ManageBasketController@addBasket')->name('addBasket');
 
 

@@ -1,47 +1,49 @@
+import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
-import React, { useState } from "react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
-const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
-    const { flash } = usePage().props;
-    const { data, setData, post, processing, errors, reset } = useForm({
-        product_hidden: "",
-        quantity: "",
-    });
+import axios from 'axios';
+
+const Accessory = ({  auth, openModal, filter, priceFilter }) => {
+
 
     const [selectedAccessory, setSelectedAccessory] = useState("");
     const [accessoryQuantities, setAccessoryQuantities] = useState({});
+    // State to store the search query input from the user.
+    const [searchQuery, setSearchQuery] = useState("");
 
-    const submit = (e) => {
-        e.preventDefault();
-        post("/addBasketAccessory", {
-            ...data,
-            quantity: accessoryQuantities[data.accessoryid_hidden],
-        });
+    const handleSearchChange = (e) => {
+        // console.log(e)
+        setSearchQuery(e.target.value);
     };
 
-    const onClickPreventDefault = (e) => {
-        openModal();
-        e.preventDefault();
-    };
 
-    const handleQuantityChange = (accessoryId, quantity) => {
-        setAccessoryQuantities({
-            ...accessoryQuantities,
-            [accessoryId]: quantity,
-        });
-        setData("quantity", quantity);
-    };
+    const [searchResults, setSearchResults] = useState([]);
 
-    const navigateToIndividualProduct = (productname) => {
-        // Add logic to navigate to the "IndividualProduct" page with the selected productname
-    };
 
-    // Filter accessories based on selected options
-    const filteredAccessories = accessories.filter((accessory) => {
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/api/accessorieSearch');
+                setSearchResults(response.data);
+
+
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Filter accessories based on selected options: filters and search query
+    const filteredAccessories = searchResults.filter((accessory) => {
         const categoryFilter =
             filter === "All Accessories" || accessory.category === filter;
         const priceFilterCondition =
@@ -49,10 +51,11 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
             (accessory.products.price >=
                 parseInt(priceFilter.split("-")[0], 10) &&
                 accessory.products.price <=
-                    parseInt(priceFilter.split("-")[1], 10));
-
-        return categoryFilter && priceFilterCondition;
+                parseInt(priceFilter.split("-")[1], 10));
+        const searchFilter = accessory.products.productname.toLowerCase().includes(searchQuery.toLowerCase()); // Filter based on search query
+        return categoryFilter && priceFilterCondition && searchFilter;
     });
+
 
     // Array that will be used to store only unique accessories based on the product name.
     const distinctAccessories = [
@@ -67,11 +70,10 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
             className="col-lg-4 col-md-6 mb-4"
         >
             <Card
-                className={`text-center ${
-                    selectedAccessory === accessory.accessoryid
-                        ? "selected-accessory"
-                        : ""
-                }`}
+                className={`text-center ${selectedAccessory === accessory.accessoryid
+                    ? "selected-accessory"
+                    : ""
+                    }`}
                 onClick={() => {
                     setSelectedAccessory(accessory.accessoryid);
                     setData("accessoryid_hidden", accessory.accessoryid);
@@ -86,45 +88,7 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
                     <Card.Text>
                         <strong>Price:</strong> Â£{accessory.products.price}
                     </Card.Text>
-                    <Card.Text>
-                        <strong>Category:</strong> {accessory.category}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Size:</strong> View Details for size info
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Colour:</strong> {accessory.colour}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Quantity:</strong>{" "}
-                        {accessory.products.stockquantity}
-                    </Card.Text>
-                    <div className="form-group">
-                        <label htmlFor={`quantity_${accessory.accessoryid}`}>
-                            Quantity
-                        </label>
-                        <input
-                            id={`quantity_${accessory.products.productid}`}
-                            className="form-control"
-                            min="0"
-                            type="number"
-                            value={accessoryQuantities[accessory.accessoryid]}
-                            name={`quantity_${accessory.accessoryid}`}
-                            onChange={(e) =>
-                                handleQuantityChange(
-                                    accessory.accessoryid,
-                                    parseInt(e.target.value)
-                                )
-                            }
-                        />
-                        <InputError
-                            message={errors.quantity}
-                            className="mt-2"
-                        />
-                        {selectedAccessory === accessory.accessoryid && (
-                            <p className="text-black">{flash.message}</p>
-                        )}
-                    </div>
+
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
                     {/* {auth.user ? (
@@ -152,11 +116,20 @@ const Accessory = ({ accessories, auth, openModal, filter, priceFilter }) => {
     ));
 
     return (
-        <form onSubmit={submit}>
-            <Container className=" mt-8">
+
+            <Container className="mt-8">
+                <Row className="mt-4 flex justify-center mb-4">
+                    <input
+                        type="text"
+                        className="form-control w-25"
+                        placeholder="Search accessories..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                    />
+                </Row>
                 <Row>{accessoryList}</Row>
             </Container>
-        </form>
+
     );
 };
 

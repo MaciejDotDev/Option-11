@@ -23,7 +23,7 @@ const Login = ({ status,auth}) => {
 
   return (
 <div>
- 
+
 
     <Container
       className="d-flex align-items-center justify-content-center "
@@ -84,7 +84,7 @@ const Login = ({ status,auth}) => {
                         >
                             Not Registered? Click here to sign-up!
                         </Link>
-                        
+
                         <Button
                             variant="primary"
                             type="submit"
@@ -93,8 +93,9 @@ const Login = ({ status,auth}) => {
                         >
                             Log in
                         </Button>
+
                     </div>
-            
+
                         <Link
                             href={route('password.request')}
                             className="text-center link-info"

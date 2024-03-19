@@ -41,7 +41,7 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
 
     const submit = (e) => {
         e.preventDefault();
-      
+
         post(route("login"));
     };
 
@@ -68,7 +68,7 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
                     className="p-5 rounded shadow-sm bg-dark text-light"
                     onSubmit={submit}
                 >
-                      
+
                     <Head title="Log in" />
 
                     <h2 className="pt-4 mb-4 text-center h2">Log in</h2>
@@ -85,7 +85,7 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
                             type="email"
                             name="email"
                             value={data.email}
-                          
+
                             className="block w-full mt-1"
                             autoComplete="username"
                             onChange={(e) => setData("email", e.target.value)}
@@ -130,7 +130,7 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
                         >
                             Not Registered? Click here to sign-up!
                         </Link>
-                        
+
                         <Button
                             variant="primary"
                             type="submit"
@@ -139,19 +139,20 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
                         >
                             Log in
                         </Button>
+
                     </div>
-            
+
                         <Link
                             href={route('password.request')}
                             className="text-center link-info"
                         >
                             Forgot your password?
                         </Link>
-                   
+
                 </Form>
-                
+
              </Container>
-               
+
             </motion.div>
         </Backdrop>
     );

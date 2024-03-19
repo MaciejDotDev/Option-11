@@ -31,11 +31,15 @@ class ShowAccessoriesController extends ManageBasketController
     {
 
         $accessories = Accessory::with('products')->get();
-        return Inertia::render('AccessoryProducts', ['accessories' => $accessories]);
+        return Inertia::render('AccessoryProducts');
     }
 
 
+    public function search () {
 
+        $bikes =  Accessory::with('products')->get();
+        return response()->json($bikes);// Corrected the key to 'bikeParts'
+    }
 
 
     public function showIndividual($productid) {

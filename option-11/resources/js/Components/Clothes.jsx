@@ -1,23 +1,28 @@
-import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
 
+
 const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
-    // Create a state object to store quantities for each bike
-    const [clothQuantities, setClothQuantities] = useState({});
 
-    const { flash } = usePage().props;
-    const { data, setData, post, processing, errors, reset } = useForm({
-        product_hidden: "",
-        quantity: "",
-    });
 
-    const [selectedClothes, setSelectedClothes] = useState("");
 
-    // Apply filter based on the selected option
+    // State to store the search query input from the user.
+    const [searchQuery, setSearchQuery] = useState("");
+
+    // Will handle updating the search query
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+
+
+
+
+    // Apply filter based on the selected option: category, price, and/or search query
     const filteredClothes = clothes.filter((clothing) => {
         const categoryFilter =
             filter === "All Clothes" || clothing.category === filter;
@@ -26,29 +31,13 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
             (clothing.products.price >=
                 parseInt(priceFilter.split("-")[0], 10) &&
                 clothing.products.price <=
-                    parseInt(priceFilter.split("-")[1], 10));
-
-        return categoryFilter && priceFilterCondition;
+                parseInt(priceFilter.split("-")[1], 10));
+        const searchFilter = clothing.products.productname.toLowerCase().includes(searchQuery.toLowerCase()); // Filter based on search query
+        return categoryFilter && priceFilterCondition && searchFilter;
     });
 
-    const submit = (e) => {
-        e.preventDefault();
-        post("/addBasketClothing", {
-            ...data,
-            quantity: clothQuantities[data.clothingid_hidden],
-        });
-    };
 
-    // State object that will store the quantity the user selects for each clothing.
-    const handleQuantityChange = (clothingid, quantity) => {
-        setClothQuantities({ ...clothQuantities, [clothingid]: quantity });
-        setData("quantity", quantity);
-    };
 
-    const onClickPreventDefault = (e) => {
-        openModal();
-        e.preventDefault();
-    };
 
     const clothesList = filteredClothes.map((clothing) => (
         <div
@@ -67,44 +56,9 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                     </Card.Title>
                     <Card.Text>{clothing.products.description}</Card.Text>
                     <Card.Text>
-                        <strong>Price:</strong> Â£{clothing.products.price}
+                        <strong>Price:</strong> £{clothing.products.price}
                     </Card.Text>
-                    <Card.Text>
-                        <strong>Category:</strong> {clothing.category}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Colour:</strong> {clothing.colour}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Stock Quantity:</strong>{" "}
-                        {clothing.products.stockquantity}
-                    </Card.Text>
-                    <div className="form-group">
-                        <label htmlFor={`quantity_${clothing.clothingid}`}>
-                            Quantity
-                        </label>
-                        <input
-                            id={`quantity_${clothing.products.productid}`}
-                            className="form-control"
-                            min="0"
-                            type="number"
-                            value={clothQuantities[clothing.clothingid]}
-                            name={`quantity_${clothing.clothingid}`}
-                            onChange={(e) =>
-                                handleQuantityChange(
-                                    clothing.clothingid,
-                                    parseInt(e.target.value)
-                                )
-                            }
-                        />
-                        <InputError
-                            message={errors.quantity}
-                            className="mt-2"
-                        />
-                        {selectedClothes === clothing.clothingid && (
-                            <p className="text-black">{flash.message}</p>
-                        )}
-                    </div>
+
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
                     {/* {auth.user ? (
@@ -134,11 +88,22 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
 
     return (
         <div>
-            <form onSubmit={submit}>
+
                 <div className="container">
-                    <div className="row mt-8">{clothesList}</div>
+                    <div className="row mt-4 flex justify-center">
+                        {/* Search input field user can use to query */}
+                        <input
+                            type="text"
+                            className="form-control w-25"
+                            placeholder="Search clothes..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                    </div>
+                    <div className="row mt-4">{clothesList}</div>
                 </div>
-            </form>
+
+
         </div>
     );
 };

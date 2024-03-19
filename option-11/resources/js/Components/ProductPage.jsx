@@ -145,9 +145,28 @@ export default function ProductPage({
                         </a>
                         <div>
                             {auth.user ? (
-                                <Button type="submit" variant="outline-primary">
-                                    Add to basket
-                                </Button>
+                                <form onSubmit={submit}>
+                                    <Button
+                                        type="submit"
+                                        variant="outline-primary"
+                                    >
+                                        Add to basket
+                                    </Button>
+                                    <p
+                                style={{ color: "green" }}
+                                className="block font-medium text-sm text-gray-700"
+                            >
+                                {flash.message}
+                            </p>
+                            <InputError
+                                message={errors.stock}
+                                className="mt-2"
+                            />
+                            <InputError
+                                message={errors.quantity}
+                                className="mt-2"
+                            />
+                                </form>
                             ) : (
                                 <Button
                                     type="submit"
@@ -156,19 +175,10 @@ export default function ProductPage({
                                 >
                                     Add to basket
                                 </Button>
+
                             )}
 
-                            <p
-                                style={{ color: "green" }}
-                                className="block font-medium text-sm text-gray-700"
-                            >
-                                {flash.message}
-                            </p>
 
-                            <InputError
-                                message={errors.quantity}
-                                className="mt-2"
-                            />
                         </div>
                     </Col>
                 </Row>
@@ -180,7 +190,7 @@ export default function ProductPage({
                         margin: "0 auto",
                         marginTop: "2rem",
                         borderRadius: "12px",
-                        paddingBottom: "4rem"
+                        paddingBottom: "4rem",
                     }}
                 >
                     <Tabs
@@ -243,8 +253,8 @@ export default function ProductPage({
 
             {/* Size Guide Modal */}
             <Modal show={showSizeGuideModal} onHide={handleSizeGuideModalClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Size Guide</Modal.Title>
+                <Modal.Header closeButton style={{  paddingBottom:"1rem" }}>
+                    <Modal.Title >Size Guide</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Image
