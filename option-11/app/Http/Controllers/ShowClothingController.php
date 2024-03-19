@@ -32,6 +32,9 @@ class ShowClothingController extends ManageBasketController
         $clothes =  Clothes::with('products')->get();
         return Inertia::render('Clothing', ['clothes' => $clothes]);
     }
+
+
+
     public function showIndividual(Request $request) {
 
 

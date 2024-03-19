@@ -33,6 +33,27 @@ export default function ProductPage({
         quantity: "",
     });
 
+    const handleSubmit = (e) => {
+
+        try {
+
+
+            e.preventDefault();
+            const userData = {
+              email: data.email,
+              password: data.password
+            };
+            axios.post("/api/wishlist/add", userData).then((response) => {
+
+            });
+        } catch (error) {
+
+            console.error('Error adding to wishlist', error)
+
+
+        }
+
+      };
     // This is the state we are using to control the visibility of the size guide modal.
     const [showSizeGuideModal, setShowSizeGuideModal] = useState(false);
 

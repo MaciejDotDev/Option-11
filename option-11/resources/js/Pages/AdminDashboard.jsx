@@ -15,19 +15,54 @@ const AdminDashboard = ({ auth, notifications }) => {
 
     const [data, setData] = useState([]);
 
+
+
     useEffect(() => {
+
         const fetchData = async () => {
-            try {
-                const response = await axios.get('/api/adminNotifications');
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+          try {
+            const response = await fetch('/api/adminNotifications');
+            const data = await response.json();
+            setData(data);
+          } catch (error) {
+            console.error('Error getting notification:', error);
+          }
         };
 
-        fetchData();
-    }, []);
 
+        fetchData();
+
+
+        const intervalId = setInterval(fetchData, 5000);
+
+
+        return () => clearInterval(intervalId);
+     }, []); ///The useEffect hook has an empty dependency array ([]), which means it will only run once when the component mounts and will not re-run when any state or props change. This ensures that the interval is set up only once.
+
+
+     const [logs, setLogs] = useState([]);
+
+     useEffect(() => {
+
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/api/adminLogs');
+            const data = await response.json();
+            setLogs(data);
+          } catch (error) {
+            console.error('Error getting logs:', error);
+          }
+        };
+
+
+        fetchData();
+
+
+        const intervalId = setInterval(fetchData, 5000);
+
+
+        return () => clearInterval(intervalId);
+     }, []);
 
 
     return (

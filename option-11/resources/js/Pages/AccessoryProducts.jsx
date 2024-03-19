@@ -3,7 +3,7 @@ import { InertiaLink } from "@inertiajs/inertia-react";
 import Accessory from "@/Components/Accessory";
 import AnimateModal from "@/Components/AnimateModal";
 
-const AccessoryProducts = ({ auth, accessories }) => {
+const AccessoryProducts = ({ auth }) => {
     const [filter, setFilter] = useState("All Accessories");
     const [priceFilter, setPriceFilter] = useState("All Prices");
 
@@ -76,7 +76,7 @@ const AccessoryProducts = ({ auth, accessories }) => {
                 </div>
 
                 <Accessory
-                    accessories={accessories}
+
                     auth={auth}
                     filter={filter}
                     priceFilter={priceFilter}

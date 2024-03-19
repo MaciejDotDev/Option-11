@@ -60,6 +60,7 @@ class ShowBikePartsController extends ManageBasketController
             $starTotal[] = $item->stars;
 
         }
+
         if ($starTotal == null) {
 
             return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews]);
