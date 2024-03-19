@@ -8,14 +8,7 @@ class PartCheckController extends Controller
 {
 
 
-public function show() {
 
-
-    return render
-
-
-
-}
     public function check() {
 
         $comp = $product->compatibility()->get()

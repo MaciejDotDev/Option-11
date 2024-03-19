@@ -14,6 +14,7 @@ import {
     Modal,
 } from "react-bootstrap";
 import ReviewProducts from "@/Pages/ReviewProducts";
+import clothesSGuide from '../../assets/clothes-size.png'
 
 import toastr from "toastr";
 import AnimateModal from "@/Components/AnimateModal";
@@ -259,6 +260,11 @@ export default function ProductPage({
                 <Modal.Body>
                     <Image
                         src="https://www.oemhelmet.com/uploads/knowledge/general%20size.jpg"
+                        alt="Size Guide"
+                        fluid
+                    />
+                                        <Image
+                        src={clothesSGuide}
                         alt="Size Guide"
                         fluid
                     />
