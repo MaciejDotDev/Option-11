@@ -3,27 +3,35 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Products;
+use Illuminate\Support\Facades\Log;
+
 
 class AdminStockUpdate extends Controller
 {
     public function update(Request $request)
     {
-        $selectedProductType = $request->input('productType');
-        $quantity = $request->input('quantity');
         
-        // Perform validation on $quantity if necessary
+        $selectedProductType = $request->input('productid');
+        $quantity = $request->input('stockquantity');
         
-        // Perform stock update operations here
-        // For example, update the stock quantity in the database
-        // Assuming you have a Product model with a stock column
-        $product = Product::where('type', $selectedProductType)->first();
+        
+        $product = Products::where('productid', $selectedProductType)->first();
         if ($product) {
-            $product->stock += $quantity;
+            $product->stockquantity += $quantity;
             $product->save();
-            return response()->json(['message' => "Stock updated for $selectedProductType"]);
+            return Inertia::render('AdminStockUpdate'); 
         } else {
-            return response()->json(['error' => "Product not found"], 404);
+            return Inertia::render('AdminStockUpdate');
         }
     }
+    public function show(Request $request)
+{
+    $products = Products::all();
+
+    return Inertia::render('AdminStockUpdate', ['products' => $products]);
+}
+
+    
 
 }
