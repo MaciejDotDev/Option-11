@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useForm, usePage, Head } from "@inertiajs/react";
-
+import axios from 'axios';
 import { useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
@@ -15,27 +15,6 @@ export default function UpdateAccount({ auth, baskIcon }) {
     const [closed, setClosed] = useState(false);
     //below is a form template, needs to be replaced
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        firstname: auth.user.firstname,
-        lastname: auth.user.lastname,
-        email: auth.user.email,
-        phonenumber: auth.user.phonenumber,
-
-    });
-
-
-
-    // Example usage: reset the 'email' field
-
-    const first = auth.user.firstname;
-    const last = auth.user.lastname;
-    const phone = auth.user.phonenumber;
-    const email = auth.user.email;
-
-    const submit = (e) => {
-        e.preventDefault();
-        post(route("update")).then(() => reset());
-    };
     useEffect(() => {
         if (closed == true) {
 
@@ -46,22 +25,36 @@ export default function UpdateAccount({ auth, baskIcon }) {
         return () => {};
     }, [closed]); // the closed at the end  is used to specify which variables the effect depends on. If any of the variables in this array change, the effect will run again.
 
-    const addToWishlist = (bikeId) => {
-        Inertia.post(
-            route("update"),
-            { itemId: bikeId }
-        ).then(() => setSuccessMessage("Item successfully added to wishlist."));
-    };
+const [firstName, setFirstName] = useState(auth.user.firstname);
+const [lastName, setLastName] = useState(auth.user.lastname);
+const [phoneNumber, setPhoneNumber] = useState(auth.user.phonenumber);
+const [emailAddress, setEmailAddress] = useState(auth.user.email);
+
+    ///need to finish the errors
+    const [errors, setErrors] = useState("");
+    const editDetails = (detail, type) => {
+        axios.post('/api/user/update', { detail: detail, type:type }) // using axios to post data to make it more simple and straigthfroward
+        .then(response => {
+
+                      console.log(response.data);
+                      window.location.reload(); // reloads to refresh the information
+        })
+        .catch(error => {
+
+                        setErrors(error.response.data.message);
+
+        });
+    }
     return (
         <AnimateModal auth={auth} baskIcon={baskIcon}>
-            <div className="updateContainer" style={{ width:"50%", margin:"0 auto", paddingBottom:"5rem" }} >
-                <Form
-                    className="p-5 rounded shadow-sm bg-dark text-light"
-                    onSubmit={submit}
-                >
+            <div className="updateContainer" style={{ width:"50%", margin:"0 auto", paddingBottom:"5rem",color:"white" }} >
+
                     <h2 className="pt-4 mb-4 text-center h2" style={{  paddingBottom:"2rem" }}>
                         Personal Information
                     </h2>
+                   {errors  === "" ? <div></div>   : <div className="alert alert-danger" role="alert">
+  {errors}
+</div>  }
                     <Row className="mb-3">
                         <Col md={6} className="pr-md-2" style={{ margin:"0 auto" }} >
                             <FormDropdown
@@ -69,8 +62,10 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                 cardName={"First Name"}
                                 state={state}
                                 setState={setState}
-                                processing={processing}
+                                submit={editDetails}
+                                data={firstName}
                                 setClosed={setClosed}
+                                type="firstname"
 
                             >
                                 <Form.Group controlId="formFirstName">
@@ -78,18 +73,22 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                         id="firstname"
                                         type="firstname"
                                         name="firstname"
-                                        value={data.firstname}
+                                        value={firstName}
                                         key={auth.user.firstname}
                                         className="block w-full mt-1"
                                         autoComplete="email"
                                         onChange={(e) =>
-                                            setData("firstname", e.target.value)
+                                            setFirstName( e.target.value)
                                         }
+
                                     />
-                                    <InputError
+                                   {/*
+
+                                   } <InputError
                                         message={errors.firstname}
                                         className="mt-2"
                                     />
+                                */}
                                     <div className="flex items-center justify-end mt-4"></div>
                                 </Form.Group>
                             </FormDropdown>
@@ -104,8 +103,10 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                     cardName={"Last Name"}
                                     state={state}
                                     setState={setState}
-                                    processing={processing}
+                                    submit={editDetails}
+                                    data={lastName}
                                     setClosed={setClosed}
+                                    type="lastname"
 
                                 >
                                     <Form.Control
@@ -113,20 +114,25 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                         type="lastname"
                                         name="lastname"
                                         key={auth.user.lastname}
-                                        value={data.lastname}
+                                        value={lastName}
                                         className="block w-full mt-1"
                                         autoComplete="lastname"
                                         onChange={(e) =>
-                                            setData("lastname", e.target.value)
+                                            setLastName( e.target.value)
                                         }
                                         required
                                     />
-                                    <InputError
+
+                                    {/*  <InputError
                                         message={errors.lastname}
                                         className="mt-2"
-                                    />
+                                    /> */}
 
-                                    <div className="flex items-center justify-end mt-4"></div>
+
+<InputError
+                                            message={errors}
+                                            className="mt-2"
+                                        />
                                 </FormDropdown>
                             </Form.Group>
                         </Col>
@@ -139,9 +145,10 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                     cardName={"Email"}
                                     state={state}
                                     setState={setState}
-                                    processing={processing}
+                                    submit={editDetails}
+                                    data={emailAddress}
                                     setClosed={setClosed}
-
+                                    type="email"
 
                                 >
                                     <Form.Group controlId="formBasicEmail">
@@ -149,19 +156,23 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                             id="email"
                                             type="email"
                                             name="email"
-                                            value={data.email}
+                                            value={emailAddress}
                                             className="block w-full mt-1"
                                             autoComplete="email"
                                             onChange={(e) =>
-                                                setData("email", e.target.value)
+                                                setEmailAddress( e.target.value)
                                             }
                                             key={auth.user.email}
                                         />
-                                        <InputError
+                                          {/*  <InputError
                                             message={errors.email}
                                             className="mt-2"
-                                        />
-                                        <div className="flex items-center justify-end mt-4"></div>
+                                        /> */}
+
+<InputError
+                                        message={errors}
+                                        className="mt-2"
+                                    />
                                     </Form.Group>
                                 </FormDropdown>
                             </Col>
@@ -175,31 +186,31 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                         cardName={"Phone number"}
                                         state={state}
                                         setState={setState}
-                                        processing={processing}
+                                        submit={editDetails}
+                                        data={phoneNumber}
                                         setClosed={setClosed}
-
+                                        type="phonenumber"
 
                                     >
                                         <Form.Control
                                             id="phonenumber"
                                             type="text"
                                             name="phonenumber"
-                                            value={data.phonenumber}
+                                            value={phoneNumber}
                                             key={auth.user.phonenumber}
                                             className="block w-full mt-1"
                                             autoComplete="phonenumber"
                                             onChange={(e) =>
-                                                setData(
-                                                    "phonenumber",
-                                                    e.target.value
-                                                )
+                                                setPhoneNumber( e.target.value)
                                             }
                                             required
                                         />
-                                        <InputError
+
+                                          {/* <InputError
                                             message={errors.phonenumber}
                                             className="mt-2"
-                                        />
+                                        /> */}
+
 
                                         <div className="flex items-center justify-end mt-4"></div>
                                     </FormDropdown>
@@ -207,7 +218,7 @@ export default function UpdateAccount({ auth, baskIcon }) {
                             </Col>
                         </Row>
 
-                </Form>
+
             </div>
             <Footer />
         </AnimateModal>

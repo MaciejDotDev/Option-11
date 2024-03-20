@@ -28,7 +28,7 @@ class ShowBikePartsController extends ManageBasketController
     public function showAll()
     {
 
-        $bikeparts = BikePart::with('products')->get();
+
 
         return Inertia::render('BikeParts');
 
@@ -63,7 +63,7 @@ class ShowBikePartsController extends ManageBasketController
 
         if ($starTotal == null) {
 
-            return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews]);
+            return Inertia::render('ShowBikePartPage', ['product' => $bike, 'reviews' => $reviews]);
         }
         $starsAvg = round(array_sum($starTotal) / $stars->count(), 1);
 
@@ -74,7 +74,7 @@ class ShowBikePartsController extends ManageBasketController
 
 
 
-        return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
+        return Inertia::render('ShowBikePartPage', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
 
 
     }

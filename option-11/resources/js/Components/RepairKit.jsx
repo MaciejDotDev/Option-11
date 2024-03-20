@@ -83,13 +83,13 @@ const RepairKit = ({ filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )} */}
-                    <InertiaLink
-                        // href={route("productDetails", { id: kit.kitid })}
-                        href=""
+                     <a
+                        // href={route("productDetails", { id: bike.bikeid })}
+                        href={`repairkit/${kit.productid}`}
                         className="btn btn-outline-primary"
                     >
                         View Details
-                    </InertiaLink>
+                    </a>
                 </Card.Footer>
             </Card>
         </Col>

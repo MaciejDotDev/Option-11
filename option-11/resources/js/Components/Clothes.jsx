@@ -74,13 +74,13 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )} */}
-                    <InertiaLink
-                        // href={route("productDetails", { id: clothing.clothingid })}
-                        href=""
+                     <a
+                        // href={route("productDetails", { id: bike.bikeid })}
+                        href={`clothing/${clothing.productid}`}
                         className="btn btn-outline-primary"
                     >
                         View Details
-                    </InertiaLink>
+                    </a>
                 </Card.Footer>
             </Card>
         </div>

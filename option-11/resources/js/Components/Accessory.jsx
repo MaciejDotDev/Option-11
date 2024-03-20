@@ -58,12 +58,8 @@ const Accessory = ({  filter, priceFilter }) => {
 
 
     // Array that will be used to store only unique accessories based on the product name.
-    const distinctAccessories = [
-        ...new Map(
-            filteredAccessories.map((item) => [item.products.productname, item])
-        ).values(),
-    ];
-    const accessoryList = distinctAccessories.map((accessory) => (
+
+    const accessoryList = filteredAccessories.map((accessory) => (
         <Col
             key={accessory.accessoryid}
             md={6}
@@ -104,12 +100,13 @@ const Accessory = ({  filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )} */}
-                    <a
-                        href={`/product/accessory/${accessory.accessoryid}`} // Update the URL with the correct accessory ID
+                      <a
+                        href={`/accessory/${accessory.productid}`} // Update the URL with the correct accessory ID
                         className="btn btn-outline-primary"
                     >
                         View Details
                     </a>
+
                 </Card.Footer>
             </Card>
         </Col>

@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\Notification;
 
 class AdminStockUpdate extends Controller
 {
@@ -29,6 +29,15 @@ class AdminStockUpdate extends Controller
             if ($product) {
                 $product->stockquantity += $quantity;
                 $product->save();
+                $notification = new Notification();
+                $notification->notification_type = "log";
+                $notification->notification_title = "Stock has been changhed!";
+                $orderTime = \Carbon\Carbon::parse($product->created_at)->format('d/m/Y H:i:s');
+
+                $productid = $product->productid;
+
+                $notification->notification_description = "Product $productid stocck has been changed at $orderTime";
+                $notification->save();
                 return $this->show($request);
             } else {
                 return $this->show($request);

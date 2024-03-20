@@ -83,11 +83,20 @@ Route::get('/accessory/{productid}', [ShowAccessoriesController::class, 'showInd
 
 Route::get('/bike/{bikeid}', [ShowBikesController::class, 'showIndividual'])->name('individualBike');
 
+Route::get('/clothing/{productid}', [ShowClothingController::class, 'showIndividual'])->name('individualClothing');
+Route::get('/bikepart/{productid}', [ShowBikePartsController::class, 'showIndividual'])->name('individualBikePart');
+Route::get('/repairkit/{productid}', [ShowRepairKitsController::class, 'showIndividual'])->name('individualRepairKit');
+
+
+
+
+
+
 Route::get('/api/productsparts', [ShowBikePartsController::class, 'search'])->name('productsparts');
 Route::get('/api/bikesearch', [ShowBikesController::class, 'search'])->name('bikesearch');
 
 Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');
-Route::match(['get', 'post'],'update', [ManageAccount::class, 'update'])->name('update');
+
 
 
 
@@ -117,8 +126,8 @@ Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('cloth
 
 
 Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
-Route::get('/product/{id}', [IndividualProductController::class, 'product'])->name('product');
 
+Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -158,6 +167,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/api/adminNotifications', [AdminDashboardController::class, 'notifications'])->name('adminNotifications');
 
+
+    Route::get('/api/adminLogs', [AdminDashboardController::class, 'logs'])->name('adminLogs');
+
     Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
     Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');
 
@@ -167,7 +179,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
 
-    Route::post('/updateUser', [AdminEditUsersController::class, 'update'])->name('adminUpdateUser');
+    Route::post('/admin/user/update', [AdminEditUsersController::class, 'update'])->name('adminUpdateUser');
+
+
 
     Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
 
@@ -251,7 +265,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist');
+    Route::post('/api/wishlist/add/', [WishlistController::class, 'add'])->name('wishlist');
 
     Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 

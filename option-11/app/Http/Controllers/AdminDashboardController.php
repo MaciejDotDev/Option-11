@@ -28,8 +28,8 @@ class AdminDashboardController extends Controller
     public function logs() {
 
 
-        $logs = Notification::orderBy('created_at', 'desc')->where('notification_type', 'logs')->get();
-        return response()->json($logs);
+        $notifications = Notification::orderBy('created_at', 'desc')->where('notification_type', '!=', 'log')->get();
+        return response()->json($notifications);
 
 }
 }

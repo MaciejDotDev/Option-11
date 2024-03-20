@@ -39,11 +39,11 @@ class ReviewsController extends Controller
     }
 
 
-public function showAll() {
+public function showAll($productid) {
     $reviews = Reviews::with('user')->orderBy('created_at', 'DESC')
     ->get();
 
-    $stars = Reviews::where('productid',13)->get();
+    $stars = Reviews::where('productid',$productid)->get();
 
 
     $starTotal = [];
@@ -65,7 +65,7 @@ public function showAll() {
 
 
 
-    return Inertia::render('ReviewProducts',['reviews' => $reviews,'starsAvg' => $starsAvg,'commentsCount' => $commentsCount]);
+    return ['reviews' => $reviews,'starsAvg' => $starsAvg,'commentsCount' => $commentsCount];
 
 
 

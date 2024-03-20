@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-const FormDropdown = ({ cardName, children, state, setState, processing,cardId,setClosed  }) => {
+const FormDropdown = ({ cardName, children, state, setState, processing,cardId,setClosed, data, submit, type  }) => {
     const [dropdownstate, setDropdownopen] = useState(false);
 
     const setOpen = () => {
@@ -58,6 +58,9 @@ const FormDropdown = ({ cardName, children, state, setState, processing,cardId,s
                         type="submit"
                         className="text-white btn btn-dark"
                         disabled={processing}
+                        onClick={() => {
+                            submit(data, type)
+                        }}
                     >
                         Update
                     </Button>

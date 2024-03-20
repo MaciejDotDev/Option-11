@@ -11,7 +11,7 @@ use App\Models\RepairKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-
+use App\Models\Reviews;
 class ShowRepairKitsController extends ManageBasketController
 {
     /**
@@ -41,11 +41,41 @@ class ShowRepairKitsController extends ManageBasketController
         return response()->json($bikes);
     }
 
-    public function showIndividual($productid) {
+    public function showIndividual( $productid) {
 
-        $repairkits =  RepairKit::with('products')->get();
+        $bike =  RepairKit::with('products')->where('productid', $productid)->first();
+
+        $reviews = Reviews::with('user')->where('productid', $productid)->orderBy('created_at', 'DESC')
+        ->get(); // this one is the one in actual production changed so now it also gets based on the product id
+
+    $stars = Reviews::where('productid',$productid)->get();
+
+
+    $starTotal = [];
+
+    foreach ($stars as $item) {
+
+        $starTotal[] =  $item->stars;
 
     }
+   if ($starTotal == null)
+   {
+
+    return Inertia::render('ShowRepairKit',['product' => $bike, 'reviews' => $reviews]);
+   }
+    $starsAvg  = round(array_sum($starTotal)/ $stars->count(),1);
+
+    $commentsCount = $stars->count();
+
+
+
+
+
+
+return Inertia::render('ShowRepairKit', ['product' => $bike,  'reviews' => $reviews, 'starsAvg' => $starsAvg,'commentsCount' => $commentsCount ]);
+
+    }
+
 
 
 }

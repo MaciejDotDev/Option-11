@@ -79,7 +79,7 @@ public function showIndividual($productid) {
    if ($starTotal == null)
    {
 
-    return Inertia::render('IndividualProductPage',['product' => $bike, 'reviews' => $reviews]);
+    return Inertia::render('ShowBikePage',['product' => $bike, 'reviews' => $reviews]);
    }
     $starsAvg  = round(array_sum($starTotal)/ $stars->count(),1);
 
@@ -90,7 +90,7 @@ public function showIndividual($productid) {
 
 
 
-return Inertia::render('IndividualProductPage', ['product' => $bike,  'reviews' => $reviews, 'starsAvg' => $starsAvg,'commentsCount' => $commentsCount ]);
+return Inertia::render('ShowBikePage', ['product' => $bike,  'reviews' => $reviews, 'starsAvg' => $starsAvg,'commentsCount' => $commentsCount ]);
 
 }
 

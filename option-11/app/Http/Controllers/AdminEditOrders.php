@@ -10,12 +10,11 @@ use App\Models\Products;
 use App\Models\Transactions;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Redirect;
+
 use Inertia\Inertia;
 use Stripe\Customer;
 use Stripe\Stripe;
-
+use App\Models\Notification;
 class AdminEditOrders extends Controller
 {
 
@@ -81,8 +80,20 @@ class AdminEditOrders extends Controller
                 'paymentIntent' => $request->transactionid,
                 'customerid' => $request->customerId,
             ]);
+        } else {
+
+            return redirect()->with('error','something has gone wrong');
         }
 
+        $order = Orders::where('orderid', $request->orderid)->first();
+        $notification = new Notification();
+        $notification->notification_type = "log";
+        $notification->notification_title = "Order has been modified";
+        $orderTime = \Carbon\Carbon::parse( $order->created_at)->format('d/m/Y H:i:s');
+
+        $notification->notification_description = "Order $order->orderid  of user $order->userid has been modified at $orderTime";
+
+        $notification->save();
 
         return $this->show();
     }
@@ -90,7 +101,7 @@ class AdminEditOrders extends Controller
 
 
 
-    public function updateAddress(Request $request)
+ /*   public function updateAddress(Request $request)
     {
 
 
@@ -114,12 +125,23 @@ class AdminEditOrders extends Controller
             ]
         );
     }
-
+*/
     public function deleteOrder($orderid)
     {
 
 
-        Orders::where('orderid', $orderid)->delete();
+       $order =  Orders::where('orderid', $orderid)->first();
+
+        $notification = new Notification();
+        $notification->notification_type = "log";
+        $notification->notification_title = "Order has been deleted";
+        $orderTime = \Carbon\Carbon::parse( $order->created_at)->format('d/m/Y H:i:s');
+
+        $notification->notification_description = "Order $order->orderid  of user $order->userid has been deleted at $orderTime";
+
+        $notification->save();
+
+        $order->delete();
 
         return $this->show();
 
@@ -181,6 +203,14 @@ class AdminEditOrders extends Controller
                 $product->stockquantity -= $ordersItem->quantity;
                 $product->save();
                 $ordersItem->save();
+
+                $notification = new Notification();
+                $notification->notification_type = "log";
+                $notification->notification_title = "Order items have been modified";
+                $orderTime = \Carbon\Carbon::parse($ordersItem->created_at)->format('d/m/Y H:i:s');
+
+                $notification->notification_description = " Order item $ordersItem->orderItemid of $ordersItem->orderid, at $orderTime has been modified";
+                $notification->save();
                 return $this->getOrderItems($ordersItem->orderid);
 
             } else {

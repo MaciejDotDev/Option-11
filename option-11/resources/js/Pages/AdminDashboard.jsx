@@ -12,43 +12,26 @@ const AdminDashboard = ({ auth, notifications }) => {
 
     const myArray = [];
 
-
     const [data, setData] = useState([]);
 
 
+    const [logs, setLogs] = useState([]);
 
     useEffect(() => {
 
         const fetchData = async () => {
           try {
             const response = await fetch('/api/adminNotifications');
-            const data = await response.json();
-            setData(data);
+            const data1 = await response.json();
+            setData(data1);
           } catch (error) {
             console.error('Error getting notification:', error);
           }
-        };
 
-
-        fetchData();
-
-
-        const intervalId = setInterval(fetchData, 5000);
-
-
-        return () => clearInterval(intervalId);
-     }, []); ///The useEffect hook has an empty dependency array ([]), which means it will only run once when the component mounts and will not re-run when any state or props change. This ensures that the interval is set up only once.
-
-
-     const [logs, setLogs] = useState([]);
-
-     useEffect(() => {
-
-        const fetchData = async () => {
           try {
             const response = await fetch('/api/adminLogs');
-            const data = await response.json();
-            setLogs(data);
+            const logsData = await response.json();
+            setLogs(logsData);
           } catch (error) {
             console.error('Error getting logs:', error);
           }
@@ -62,18 +45,117 @@ const AdminDashboard = ({ auth, notifications }) => {
 
 
         return () => clearInterval(intervalId);
-     }, []);
+     }, []); ///The useEffect hook has an empty dependency array ([]), which means it will only run once when the component mounts and will not re-run when any state or props change. This ensures that the interval is set up only once.
+
+     const countNot = () => {
+        //onnly shows the icon if there is an item in the basket
+        if (logs.length > 0) {
+            return (
+                <div
+                    className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
+                    style={{
+                        width: "1.5rem",
+                        height: "1.5rem",
+                        position: "absolute",
+                        top: "150px",  // Adjust the top value as needed
+                        left: "200px", // Adjust the right value as needed
+                    }}
+                >
+                    <span style={{ color: "#fff", fontSize: "1.2rem" }}>
+                        {logs.length}
+                    </span>
+                </div>
+            );
+        }
+    };
+
+    const countLog = () => {
+        //onnly shows the icon if there is an item in the basket
+        if (data.length > 0) {
+            return (
+                <div
+                    className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
+                    style={{
+                        width: "1.5rem",
+                        height: "1.5rem",
+                        position: "absolute",
+                        top: "150px",  // Adjust the top value as needed
+                        left: "820px", // Adjust the right value as needed
+                    }}
+                >
+                    <span style={{ color: "#fff", fontSize: "1.2rem" }}>
+                        {data.length}
+                    </span>
+                </div>
+            );
+        }
+    };
+
 
 
     return (
         <div>
             <AdminNavbar />
 
-            <div class="adminDashboard-container">
-                <DashboardCard cardName="Notifications">
+            <div class="adminDashboard-container" >
+                <DashboardCard cardName="Notifications  ">
 
-
+                {countNot()}
                     <List
+                        sx={{
+                            width: "100%",
+                            maxWidth: 2000,
+                            bgcolor: "#212529",
+
+                            overflow: "auto",
+                            maxHeight: 200,
+                        }}
+                        subheader={<li />}
+                    >
+                        {logs.length > 0 ? (
+                            logs.map((orderItem, index) => (
+                                <div style={{ backgroundColor: "#212529" }} key={index}>
+                                    <h4
+                                        style={{
+                                            fontSize: "1.5rem",
+                                        }}
+                                        className="h2basket"
+                                    >
+                                        {orderItem.notification_title}
+                                    </h4>
+
+                                    <p><strong>Type:</strong> {orderItem.notification_type}</p>
+                                     <p style={{ wordWrap: "break-word", overflowWrap: "break-word" }}><strong>description: </strong>{orderItem. notification_description} </p>
+
+
+
+
+                                    <p
+                                        style={{
+                                            fontSize: "10px",
+
+                                            color: "grey",
+                                            paddingBottom:"1rem"
+                                        }}
+                                    >
+                                        {new Date(
+                                            orderItem.created_at
+                                        ).toLocaleDateString()}
+                                    </p>
+                                    <div className="line"></div>
+                                </div>
+
+                            ))
+                        ) : (
+                            <p style={{ textAlign: "center" }}>
+                                You have not notifications yet
+                            </p>
+                        )}
+                    </List>
+                </DashboardCard>
+                <DashboardCard cardName="Logs">
+                {countLog()}
+                <List
                         sx={{
                             width: "100%",
                             maxWidth: 2000,
@@ -124,20 +206,6 @@ const AdminDashboard = ({ auth, notifications }) => {
                             </p>
                         )}
                     </List>
-                </DashboardCard>
-                <DashboardCard cardName="Logs">
-                    <Link
-                        href={route("logout")}
-                        className="px-4 py-2 text-center text-white bg-yellow-500 rounded-md "
-                    >
-                        Logout
-                    </Link>
-                    <Link
-                        href={route("updateAccount")}
-                        className="px-4 py-2 text-center text-white bg-blue-500 rounded-md "
-                    >
-                        Update Account
-                    </Link>
                 </DashboardCard>
             </div>
         </div>

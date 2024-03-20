@@ -4,6 +4,7 @@ import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { InertiaLink } from "@inertiajs/inertia-react";
 import {
     Container,
     Row,
@@ -14,12 +15,13 @@ import {
     Modal,
 } from "react-bootstrap";
 import ReviewProducts from "@/Pages/ReviewProducts";
-import clothesSGuide from '../../assets/clothes-size.png'
-
+import clothesSGuide from "../../assets/clothes-size.png";
+import axios from 'axios';
 import toastr from "toastr";
 import AnimateModal from "@/Components/AnimateModal";
+import { Link } from "@mui/icons-material";
 
-export default function ProductPage({
+export default function IndividualAccessoryPage({
     product,
     auth,
     reviews,
@@ -33,27 +35,6 @@ export default function ProductPage({
         quantity: "",
     });
 
-    const handleSubmit = (e) => {
-
-        try {
-
-
-            e.preventDefault();
-            const userData = {
-              email: data.email,
-              password: data.password
-            };
-            axios.post("/api/wishlist/add", userData).then((response) => {
-
-            });
-        } catch (error) {
-
-            console.error('Error adding to wishlist', error)
-
-
-        }
-
-      };
     // This is the state we are using to control the visibility of the size guide modal.
     const [showSizeGuideModal, setShowSizeGuideModal] = useState(false);
 
@@ -94,9 +75,28 @@ export default function ProductPage({
         openModal();
         e.preventDefault();
     };
+    const [wishlist, setWishList] = useState("");
+
+    const [wishlistError, setWishlistError] = useState("");
+
+const addToWishlist = (productid) => {
+    axios.post('/api/wishlist/add/', { productid: productid })
+    .then(response => {
+        setWishList(response.data.message);
+        if (response.data.error) {
+
+            setWishlistError(response.data.error);
+        }
+
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
     return (
         <>
-            <Container className="mt-4">
+            <Container className="mt-4" style={{ paddingBottom: "3rem" }}>
                 <Row className="justify-content-center align-items-center gap-16">
                     <Col md={4}>
                         <Image
@@ -167,28 +167,45 @@ export default function ProductPage({
                         </a>
                         <div>
                             {auth.user ? (
-                                <form onSubmit={submit}>
+                                <div>
+                                    <form onSubmit={submit}>
+                                        <Button
+                                            type="submit"
+                                            variant="outline-primary"
+                                        >
+                                            Add to basket
+                                        </Button>
+                                        <p
+                                            style={{ color: "green" }}
+                                            className="block font-medium text-sm text-gray-700"
+                                        >
+                                            {flash.message}
+                                        </p>
+
+                                        <InputError
+                                            message={errors.stock}
+                                            className="mt-2"
+                                        />
+                                        <InputError
+                                            message={errors.quantity}
+                                            className="mt-2"
+                                        />
+                                    </form>
                                     <Button
-                                        type="submit"
-                                        variant="outline-primary"
+                                        // href={route("productDetails", { id: bike.bikeid })}
+                                       onClick={() => addToWishlist(product.productid)}
+                                        className="btn btn-outline-primary"
                                     >
-                                        Add to basket
+                                        add to wishlist
                                     </Button>
-                                    <p
-                                style={{ color: "green" }}
-                                className="block font-medium text-sm text-gray-700"
-                            >
-                                {flash.message}
-                            </p>
-                            <InputError
-                                message={errors.stock}
-                                className="mt-2"
-                            />
-                            <InputError
-                                message={errors.quantity}
-                                className="mt-2"
-                            />
-                                </form>
+                                    <p style={{ color: "green" }}
+                                            className="block font-medium text-sm text-gray-700">{wishlist}</p>
+                                            <InputError
+                                            message={wishlistError}
+                                            className="mt-2"
+                                        />
+
+                                </div>
                             ) : (
                                 <Button
                                     type="submit"
@@ -197,10 +214,7 @@ export default function ProductPage({
                                 >
                                     Add to basket
                                 </Button>
-
                             )}
-
-
                         </div>
                     </Col>
                 </Row>
@@ -275,8 +289,8 @@ export default function ProductPage({
 
             {/* Size Guide Modal */}
             <Modal show={showSizeGuideModal} onHide={handleSizeGuideModalClose}>
-                <Modal.Header closeButton style={{  paddingBottom:"1rem" }}>
-                    <Modal.Title >Size Guide</Modal.Title>
+                <Modal.Header closeButton style={{ paddingBottom: "1rem" }}>
+                    <Modal.Title>Size Guide</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Image
@@ -284,11 +298,7 @@ export default function ProductPage({
                         alt="Size Guide"
                         fluid
                     />
-                                        <Image
-                        src={clothesSGuide}
-                        alt="Size Guide"
-                        fluid
-                    />
+                    <Image src={clothesSGuide} alt="Size Guide" fluid />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button

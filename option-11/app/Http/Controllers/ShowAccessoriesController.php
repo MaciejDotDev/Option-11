@@ -61,7 +61,7 @@ class ShowAccessoriesController extends ManageBasketController
         }
         if ($starTotal == null) {
 
-            return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews]);
+            return Inertia::render('ShowAccessory', ['product' => $bike, 'reviews' => $reviews]);
         }
         $starsAvg = round(array_sum($starTotal) / $stars->count(), 1);
 
@@ -72,7 +72,7 @@ class ShowAccessoriesController extends ManageBasketController
 
 
 
-        return Inertia::render('IndividualProductPage', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
+        return Inertia::render('ShowAccessory', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
 
 
     }

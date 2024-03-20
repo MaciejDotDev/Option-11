@@ -23,30 +23,34 @@ class WishlistController extends Controller
 
     public function add(Request $request)
     {
-        $request->validate([
-
-            'itemId' => 'required|integer',
-        ]);
 
 
 
 
+        $productid = $request->input('productid');
 
 
-        $item = Products::find($request->itemId);
+       $checkWish =  Wishlist::where('productid', $productid)->where('userid', auth()->user()->userid)->first();
+        if ($checkWish) {
+
+
+            return response()->json(['error' => "Item is already in the wishlist!"]);
+        }
+        $item = Products::find($productid);
         if (!$item) {
-            return redirect()->back()->with('success', 'Item not found');
+
+            return response()->json(['error' => 'Item not found']);
         }
 
         // Create wishlist entry
         Wishlist::create([
             'userid' => auth()->user()->userid,
-            'productid' => $request->itemId,
+            'productid' => $productid,
         ]);
 
 
 
-        return redirect()->back()->with('wishlist', "Item successfully added to wishlist!");
+        return response()->json(['message' => "Item successfully added to wishlist!"]);
     }
 
 

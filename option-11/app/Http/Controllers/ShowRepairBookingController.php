@@ -17,6 +17,8 @@ class ShowRepairBookingController extends Controller{
         $bikes = Bikes::with('products')->get();
         return Inertia::render('RepairBooking', ['bikes' => $bikes]);
     }
+
+
 }
 
 ?>

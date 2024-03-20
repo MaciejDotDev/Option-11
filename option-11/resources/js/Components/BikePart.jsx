@@ -4,39 +4,27 @@ import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card, Button, Container, Row } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
-import axios from 'axios';
-const BikePart = ({  filter, priceFilter }) => {
-
+import axios from "axios";
+const BikePart = ({ filter, priceFilter }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-
     const [searchResults, setSearchResults] = useState([]);
-
-
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('/api/productsparts');
+                const response = await axios.get("/api/productsparts");
                 setSearchResults(response.data);
-
-
-
             } catch (error) {
-                console.error('Error fetching data:', error);
-
+                console.error("Error fetching data:", error);
             }
         };
 
         fetchData();
     }, []);
-
-
-
 
     // Apply filter based on the selected option
     const filteredBikeParts = searchResults.filter((part) => {
@@ -47,7 +35,10 @@ const BikePart = ({  filter, priceFilter }) => {
             (part.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
                 part.products.price <= parseInt(priceFilter.split("-")[1], 10));
 
-        return categoryFilter && priceFilterCondition;
+        const searchFilter = part.products.productname
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()); // Filter based on search query
+        return categoryFilter && priceFilterCondition && searchFilter;
     });
 
     const bikePartList = filteredBikeParts.map((part) => (
@@ -69,7 +60,6 @@ const BikePart = ({  filter, priceFilter }) => {
                     <p className="card-text">
                         <strong>Price:</strong> Â£{part.products.price}
                     </p>
-
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
                     {/* {auth.user ? (
@@ -88,20 +78,19 @@ const BikePart = ({  filter, priceFilter }) => {
                             Add to basket
                         </Button>
                     )} */}
-                    <InertiaLink
-                        // href={route("productDetails", { id: part.bikepartid })}
-                        href=""
+                    <a
+                        // href={route("productDetails", { id: bike.bikeid })}
+                        href={`bikepart/${part.productid}`}
                         className="btn btn-outline-primary"
                     >
                         View Details
-                    </InertiaLink>
+                    </a>
                 </Card.Footer>
             </Card>
         </div>
     ));
 
     return (
-
         <Container className="mt-8">
             <Row className="mt-4 flex justify-center mb-4">
                 <input
@@ -114,8 +103,6 @@ const BikePart = ({  filter, priceFilter }) => {
             </Row>
             <Row>{bikePartList}</Row>
         </Container>
-
-
     );
 };
 

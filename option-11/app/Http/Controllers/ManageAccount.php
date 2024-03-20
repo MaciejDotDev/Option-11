@@ -45,22 +45,10 @@ class ManageAccount extends Controller
             $query->where('userid', auth()->user()->userid);
         })->with('products', 'orders')->get();
 
-        if ($wishlist == null && $ordersItems != null) {
-
-            return Inertia::render('Dashboard', ['orderItems' => $ordersItems]);
-        }
-        if ($ordersItems == null && $wishlist) {
-
-            return Inertia::render('Dashboard', ['wishlistItems' => $wishlist,]);
-        } elseif ($ordersItems == null && $wishlist == null) {
-
-            return Inertia::render('Dashboard');
-
-        }
 
 
 
-        return Inertia::render('Dashboard', ['orderItems' => $ordersItems, 'wishlistItems' => $wishlist]);
+        return Inertia::render('Dashboard', ['orderItems' => $ordersItems ?? [], 'wishlistItems' => $wishlist ?? []]);
 
 
 
@@ -91,58 +79,122 @@ class ManageAccount extends Controller
 
 
     }
-    public function update(Request $request): RedirectResponse
+    public function updateAccount(Request $request)
     {
-        $user = $request->user();
-        $userID = $user->userid;
-        $firstname = $request->firstname ?? auth()->user()->firstname; // this means if  $request->firstname is null then use whatver is after ?? if not use it directly
-        $lastname = $request->lastname ?? auth()->user()->lastname;
-        $phonenumber = $request->phonenumber ?? auth()->user()->phonenumber;
-        $email = $request->email ?? auth()->user()->email;
+
+        switch ($request->input('type')) {
+            case 'firstname':
+
+                $validateInput = $request->validate([
+                    'detail' => 'required|string|max:255|regex:/^[a-zA-Z ]+$/',
 
 
 
+                ]);
+                if ($validateInput) {
+                    User::where('userid', $request->user()->userid)->update([
+                        'firstname' => $request->input('detail'),
 
 
 
-        $validateInput = $request->validate([
-            'firstname' => 'required|string|max:255|regex:/^[a-zA-Z ]+$/',
-            'lastname' => 'required|string|max:255|regex:/^[a-zA-Z ]+$/',
-            'phonenumber' => 'required|string|min:10|max:12|regex:/[0-9]{9}/',
-            'email' => 'required|string|lowercase|email|max:255',
+                    ]);
+
+                    return response()->json(['success' => "first name updated"]);
 
 
-        ]);
+                } else {
 
-
-
-
-
-
-        if ($validateInput) {
-
-            User::where('userid', $userID)->update([
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'phonenumber' => $phonenumber,
-                'email' => $email,
+                    return response()->json(['errors' => $validateInput->errors()]);
+                }
 
 
 
+            case 'lastname':
 
-            ]);
-            // ManageAccount.php
-            return redirect('updateAccount');
-
-
+                $validateInput = $request->validate([
+                    'detail' =>  'required|string|max:255|regex:/^[a-zA-Z ]+$/',
 
 
 
-        } else {
+                ]);
+                if ($validateInput) {
+                    User::where('userid', $request->user()->userid)->update([
+                        'lastname' => $request->input('detail'),
 
-            return redirect()->back()->withErrors(['errors' => 'something has gone wrong']);
+
+
+                    ]);
+
+                    return response()->json(['errors' => $validateInput->errors()]);
+
+
+                } else {
+
+                    return response()->json(['errors' => $validateInput->errors()]);
+                }
+            case 'email':
+
+                $validateInput = $request->validate([
+                    'detail' => 'required|string|lowercase|email|max:255',
+
+
+
+                ]);
+                if ($validateInput) {
+                    User::where('userid', $request->user()->userid)->update([
+                        'email' => $request->input('detail'),
+
+
+
+                    ]);
+
+                    return response()->json(['success' => "Email name updated"]);
+
+
+                } else {
+
+                    return response()->json(['errors' => $validateInput->errors()]);
+                }
+            case 'phonenumber':
+
+                $validateInput = $request->validate([
+                    'detail' => 'required|string|min:10|max:12|regex:/[0-9]{9}/',
+
+
+
+                ]);
+                if ($validateInput) {
+                    User::where('userid', $request->user()->userid)->update([
+                        'phonenumber' => $request->input('detail'),
+
+
+
+                    ]);
+
+                    return response()->json(['success' => "Phone number name updated"]);
+
+
+                } else {
+
+                    return response()->json(['errors' => $validateInput->errors()]);
+                }
+            default:
+                return response()->json(['error' => "Missing field"]);
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 

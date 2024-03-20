@@ -94,7 +94,9 @@ export default function Dashboard({
                         <p>
                             Stock left: {wishlistItem.products.stockquantity}{" "}
                         </p>
+                        <a   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={`bike/${wishlistItem.productid}`}>View item</a>
                         <p>
+
                             <button
                                 class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                                 data-value="someValue"

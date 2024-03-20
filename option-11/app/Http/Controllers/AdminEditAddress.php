@@ -53,8 +53,10 @@ class AdminEditAddress extends Controller
         $notification->notification_title = "Address has been modified";
         $orderTime = \Carbon\Carbon::parse( $address->created_at)->format('d/m/Y H:i:s');
 
-        $notification->notification_description = "address of $address->userid has been changed $orderTime";
+        $notification->notification_description = "address $address->addressid of user $address->userid has been changed at $orderTime";
         $notification->save();
+
+
 
         return Redirect::route('address');
 

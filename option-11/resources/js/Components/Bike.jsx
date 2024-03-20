@@ -56,21 +56,13 @@ const Bike = ({ filter, priceFilter }) => {
 
 
 
-    const addToWishlist = (bikeId) => {
-        Inertia.post(
-            "/wishlist/add",
-            { itemId: bikeId }
-        ).then(() => setSuccessMessage("Item successfully added to wishlist."));
-    };
+
     const bikeList = filteredBikes.map((bike) => (
 
         <div
             key={bike.bikeid}
             className="col-lg-4 col-md-6 mb-4"
-            onClick={() => {
-                setSelectedBikeId(bike.products.productid);
-                setData("product_hidden", bike.products.productid);
-            }}
+
         >
             {/* <Card style={{ width: "28rem" }}> */}
             <Card>
@@ -87,13 +79,13 @@ const Bike = ({ filter, priceFilter }) => {
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">
 
-                    <InertiaLink
+                    <a
                         // href={route("productDetails", { id: bike.bikeid })}
                         href={`bike/${bike.productid}`}
                         className="btn btn-outline-primary"
                     >
                         View Details
-                    </InertiaLink>
+                    </a>
                 </Card.Footer>
             </Card>
         </div>

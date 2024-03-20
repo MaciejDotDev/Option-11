@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Notification;
 class AdminEditUsersController extends Controller
 {
     public function show(Request $request)
@@ -38,8 +39,7 @@ class AdminEditUsersController extends Controller
 
 
 
-
-
+        if ($validateInput) {
 
 
             User::where('userid',$request->userid)->update([
@@ -52,6 +52,28 @@ class AdminEditUsersController extends Controller
 
 
             ]);
+
+            $user = User::where('userid',$request->userid)->first();
+
+            $notification = new Notification();
+            $notification->notification_type = "log";
+            $notification->notification_title = "User has modified";
+            $orderTime = \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s');
+
+            $product = $user->userid;
+
+            $notification->notification_description = " User $product, at $orderTime has been modified";
+            $notification->save();
+
+        }
+
+
+
+
+
+
+
+
             return  Redirect::to('/adminUsers');
     }
 
@@ -61,7 +83,19 @@ class AdminEditUsersController extends Controller
 
         $user = User::where('userid', $userid);
 
+
+
+
         $user->delete();
+        $notification = new Notification();
+        $notification->notification_type = "log";
+        $notification->notification_title = "User has deleted";
+        $orderTime = \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s');
+
+        $product = $user->userid;
+
+        $notification->notification_description = " User $product, at $orderTime has been deleted";
+        $notification->save();
 
         return  Redirect::to('/adminUsers');
     }

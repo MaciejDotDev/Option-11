@@ -12,6 +12,7 @@ const RemoveEditProduct = ({ auth,products }) => {
         productname: products.productname,
         productdescription: products.description,
         action: "",
+        imageURL: products.imageURL,
         productprice: products.price,
         category: products.products.name,
 
@@ -76,6 +77,37 @@ const RemoveEditProduct = ({ auth,products }) => {
                             </Form.Group>
                         </Col>
                     </Row>
+                    <Row>
+                            <Col md={6}>
+                                <Form.Group
+                                    controlId="formBasicImageURL"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Image URL
+                                    </Form.Label>
+                                    <Form.Control
+                                        id="imageURL"
+                                        name="imageURL"
+                                        value={data.imageURL}
+                                        className="mt-1 form-control-lg"
+                                        autoComplete="imageURL"
+                                        onChange={(e) =>
+                                            setData(
+                                                "imageURL",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.productname}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
                     <Row>
                             <Col md={6}>
                             <Form.Label className="text-white">Category</Form.Label>
