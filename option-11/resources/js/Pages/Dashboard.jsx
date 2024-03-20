@@ -48,9 +48,8 @@ export default function Dashboard({
                     <p>
                         Tracking Code:{" "}
                         <a
-                            href={route("orderTrack", {
-                                trackingid: orderItem.orders.trackingcode,
-                            })}
+                            href={`/orderTrack/${orderItem.orders.trackingcode}/${orderItem.productid}`}
+
                             class="text-blue-500 hover:text-blue-700"
                             style={{}}
                         >

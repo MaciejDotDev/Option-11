@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Inertia } from "@inertiajs/inertia";
@@ -6,26 +6,24 @@ import NavBar from "@/Components/NavBar";
 import { HSquareFill } from "react-bootstrap-icons";
 import { Link } from "@inertiajs/react";
 import AdminNavbar from '@/Pages/AdminNavbar';
+
 const AdminEditUsers = ({ users }) => {
 
-    const [searchResults, setSearchResults] = useState([]);
 
+    const [searchQuery, setSearchQuery] = useState("");
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
     // Apply filter based on the selected option
-    const filteredBikeParts = searchResults.filter((part) => {
-        const categoryFilter =
-            filter === "All Parts" || part.category === filter;
-        const priceFilterCondition =
-            priceFilter === "All Prices" ||
-            (part.products.price >= parseInt(priceFilter.split("-")[0], 10) &&
-                part.products.price <= parseInt(priceFilter.split("-")[1], 10));
+    const filteredBikeParts = users.filter((user) => {
 
-        const searchFilter = part.products.productname
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()); // Filter based on search query
-        return categoryFilter && priceFilterCondition && searchFilter;
+        const searchFilterid = user.userid.toString().includes(searchQuery);
+        const searchFilterfirstname = user.firstname.toLowerCase().includes(searchQuery.toLowerCase()); // Filter based on search query
+        const searchFilterlastname = user.lastname.toLowerCase().includes(searchQuery.toLowerCase()); // Filter based on search query
+        return  searchFilterid || searchFilterfirstname || searchFilterlastname ;
     });
 
-    const bikePartList = users.map((user) => {
+    const bikePartList = filteredBikeParts.map((user) => {
         const date = new Date(user.created_at);
 
         // Format date using toLocaleDateString and toLocaleTimeString
@@ -65,10 +63,13 @@ const AdminEditUsers = ({ users }) => {
         <h2 className="text-light h2 text-center pt-3">All users</h2>
         <input
                     type="text"
-                    className="form-control w-25 "
-                    placeholder="Search users..."
-                    value=""
-                    onChange=""
+                    className="form-control w-25"
+                    placeholder="Search users by ID or name"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    style={{
+                        margin: "0 auto"
+                     }}
                 />
             <table class="table table-bordered ">
                 <thead>

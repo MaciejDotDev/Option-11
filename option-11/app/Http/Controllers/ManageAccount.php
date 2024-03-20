@@ -125,7 +125,7 @@ class ManageAccount extends Controller
 
                     ]);
 
-                    return response()->json(['errors' => $validateInput->errors()]);
+                    return response()->json(['success' => "Last name updated"]);
 
 
                 } else {
@@ -148,7 +148,7 @@ class ManageAccount extends Controller
 
                     ]);
 
-                    return response()->json(['success' => "Email name updated"]);
+                    return response()->json(['success' => "Email updated"]);
 
 
                 } else {

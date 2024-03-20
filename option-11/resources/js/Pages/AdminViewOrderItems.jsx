@@ -14,16 +14,31 @@ import Button from "@mui/material/Button";
 import AdminNavbar from "@/Pages/AdminNavbar";
 import Typography from "@mui/material/Typography";
 export default function AdminViewOrderItems({ ordersItems, auth }) {
-    const style = {
-        p: 0,
-        width: "100%",
 
-        borderRadius: 2,
-        border: "1px solid",
-        borderColor: "divider",
-        backgroundColor: "background.paper",
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filter, setFilter] = useState("All orders");
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
     };
-    const bikePartList = ordersItems.map((orderItem) => {
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+    // Apply filter based on the selected option
+    const filteredBikeParts = ordersItems.filter((user) => {
+
+
+
+        const searchFilterid = user.orderitemid == searchQuery|| user.productid == searchQuery ||  user.products.productname
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ;
+        // Filter based on search query
+         // Filter based on search query
+        return searchFilterid  ;
+    });
+
+
+    const bikePartList = filteredBikeParts.map((orderItem) => {
         const date = new Date(orderItem.created_at);
 
         // Format date using toLocaleDateString and toLocaleTimeString
@@ -63,6 +78,21 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
         <div>
             <AdminNavbar auth={auth} />
             <h2 className="text-light h2 text-center pt-3">All order items</h2>
+
+        <div style={{  display:"flex", alignItems:"center"  }}>
+<input
+  style={{ margin:"0 auto" }}
+                type="text"
+                className="form-control w-25"
+                placeholder="Search orders by order id, cus id, user id or tracking code"
+                value={searchQuery}
+                onChange={handleSearchChange}
+
+            />
+
+
+
+</div>
             <table class="table table-bordered" >
                 <thead>
                     <tr>
@@ -71,8 +101,8 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
                         <th scope="col">ID</th>
                         <th scope="col">Product name</th>
                         <th scope="col">Product ID</th>
-                        <th scope="col">Total price</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Total price</th>
                         <th scope="col">Date created</th>
                         <th scope="col">Action</th>
 

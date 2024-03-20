@@ -46,7 +46,7 @@ const OrderTrack = ({ auth,orderItem, status }) => {
 
             </CardContent>
             <CardActions>
-                                <Button size="small"   href={`bike/${orderItem.productid}`} sx={{color: 'white'}}>View Product</Button>
+                                <Button size="small"   href={`/viewProduct/${orderItem.productid}`} sx={{color: 'white'}}>View Product</Button>
             </CardActions>
         </React.Fragment>
     );

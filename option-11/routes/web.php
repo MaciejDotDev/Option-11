@@ -244,9 +244,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-    Route::get('/orderTrack{trackingid}', [TrackingController::class, 'show'])->name('orderTrack');
+    Route::get('/orderTrack/{trackingid}/{productid}', [TrackingController::class, 'show'])->name('orderTrack');
 
-
+    Route::get('/viewProduct/{productid}', [TrackingController::class, 'viewProduct'])->name('viewProduct');
     Route::post('/createReview', [ReviewsController::class, 'createReview'])->name('createReview');
     Route::match (['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
 

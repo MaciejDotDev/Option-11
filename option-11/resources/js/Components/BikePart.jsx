@@ -45,10 +45,7 @@ const BikePart = ({ filter, priceFilter }) => {
         <div
             key={part.bikepartsid}
             className="col-lg-4 col-md-6 mb-4"
-            onClick={() => {
-                setSelectedBikePartId(part.products.productid);
-                setData("product_hidden", part.products.productid);
-            }}
+
         >
             <Card>
                 <Card.Img variant="top" src={part.products.imageURL} />
