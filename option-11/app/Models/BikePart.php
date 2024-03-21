@@ -24,7 +24,7 @@ class BikePart extends Model
     protected $fillable = [
         'productid',
         'category',
-        'color',
+        'colour',
         'size',
         'CompatibleWithType'
     ];
