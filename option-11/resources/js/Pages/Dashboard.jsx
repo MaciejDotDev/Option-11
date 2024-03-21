@@ -93,7 +93,7 @@ export default function Dashboard({
                         <p>
                             Stock left: {wishlistItem.products.stockquantity}{" "}
                         </p>
-                        <a   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={`bike/${wishlistItem.productid}`}>View item</a>
+                        <a   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={`viewProduct/${wishlistItem.productid}`}>View item</a>
                         <p>
 
                             <button
@@ -164,18 +164,7 @@ export default function Dashboard({
                                     Personal information
                                 </Link>
 
-                                <Link
-                                    href={route("addresses")}
-                                    className="text-white btn btn-dark"
-                                    style={{
-                                        justifyContent: "flex-start",
-                                        width: "100%",
-                                        textAlign: "left",
-                                        marginBottom: "1rem",
-                                    }}
-                                >
-                                    Manage my addresses
-                                </Link>
+
                                 <Link
                                     href={route("logout")}
                                     className="text-warning btn btn-dark"
@@ -253,18 +242,7 @@ export default function Dashboard({
                             >
                                 Report a problem
                             </Link>
-                            <Link
-                                href={route("updateAccount")}
-                                className="text-white btn btn-dark"
-                                style={{
-                                    justifyContent: "flex-start",
-                                    width: "100%",
-                                    textAlign: "left",
-                                    marginBottom: "1rem",
-                                }}
-                            >
-                                Check part compatability
-                            </Link>
+
                         </DashboardCard>
                     </div>
                 </div>

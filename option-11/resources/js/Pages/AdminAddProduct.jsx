@@ -1,6 +1,6 @@
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import InputError from "@/Components/InputError";
 
@@ -14,6 +14,10 @@ const AdminAddProduct = ({ auth }) => {
         productprice: "",
         stockquantity: "",
         imageURL: "",
+        colour: "",
+        size: "",
+        productCategory: "",
+        compatibleWith: "",
     });
 
     useEffect(() => {
@@ -34,6 +38,208 @@ const AdminAddProduct = ({ auth }) => {
         e.preventDefault();
         post(route("createProduct"));
     };
+
+    const [type, setType] = useState("");
+
+    const showAdditionalForm = () => {
+        switch (type) {
+            case "repairkit":
+                return (
+                    <div>
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group
+                                    controlId="formBasicProductCategory"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Product category
+                                    </Form.Label>
+                                    <Form.Control
+
+                                        id="productCategory"
+                                        name="productCategory"
+                                        value={data.productCategory}
+                                        className="form-control-lg"
+                                        autoComplete="productCategory"
+                                        onChange={(e) =>
+                                            setData(
+                                                "productCategory",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.productCategory}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group
+                                    controlId="formBasicProductDescription"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Compatible with
+                                    </Form.Label>
+                                    <Form.Control
+
+                                        id="compatibleWith"
+                                        name="compatibleWith"
+                                        value={data.compatibleWith}
+                                        className="form-control-lg"
+                                        autoComplete="compatibleWith"
+                                        onChange={(e) =>
+                                            setData(
+                                                "compatibleWith",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.compatibleWith}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </div>
+                );
+            default:
+                return (
+                    <div>
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group
+                                    controlId="formBasicProductDescription"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Product category
+                                    </Form.Label>
+                                    <Form.Control
+
+                                        id="productCategory"
+                                        name="productCategory"
+                                        value={data.productCategory}
+                                        className="form-control-lg"
+                                        autoComplete="productCategory"
+                                        onChange={(e) =>
+                                            setData(
+                                                "productCategory",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.productCategory}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group
+                                    controlId="formBasicProductDescription"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Colour
+                                    </Form.Label>
+                                    <Form.Control
+
+                                        id="colour"
+                                        name="colour"
+                                        value={data.colour}
+                                        className="form-control-lg"
+                                        autoComplete="colour"
+                                        onChange={(e) =>
+                                            setData(
+                                                "colour",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.colour}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group
+                                    controlId="formBasicProductDescription"
+                                    className="mb-3"
+                                >
+                                    <Form.Label className="text-white">
+                                        Size
+                                    </Form.Label>
+                                    <Form.Control
+
+                                        id="size"
+                                        name="size"
+                                        value={data.size}
+                                        className="form-control-lg"
+                                        autoComplete="size"
+                                        onChange={(e) =>
+                                            setData(
+                                                "size",
+                                                e.target.value
+                                            )
+                                        }
+                                        required
+                                        style={{ width: "20rem" }}
+                                    />
+                                    <InputError
+                                        message={errors.size}
+                                        className="mt-2"
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </div>
+                );
+        }
+    };
+
+    useEffect(() => {
+        switch (data.category) {
+            case "bike":
+                setType("bike");
+                break;
+            case "bikepart":
+                setType("bikepart");
+                break;
+            case "accessory":
+                setType("accessory");
+                break;
+            case "clothing":
+                setType("clothing");
+                break;
+            case "repairkit":
+                setType("repairkit");
+                break;
+            default:
+                setType("");
+        }
+    }, [data.category]);
 
     return (
         <div>
@@ -228,13 +434,15 @@ const AdminAddProduct = ({ auth }) => {
                                             setData("imageURL", e.target.value)
                                         }
                                         required
-                                        style={{ width: "10rem" }}
+                                        style={{ width: "20rem" }}
                                     />
                                     <InputError
                                         message={errors.imageURL}
                                         className="mt-2"
                                     />
                                 </Form.Group>
+
+                                {showAdditionalForm()}
                             </Col>
                         </Row>
                         <Row className="mb-4">
