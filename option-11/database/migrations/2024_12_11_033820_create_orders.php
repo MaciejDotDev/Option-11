@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('orderid')->unsigned();
             $table->unsignedBigInteger('userid');
-            $table->foreign('userid')->references('userid')->on('users');
+            $table->foreign('userid')->references('userid')->on('users')->onDelete('cascade');
             $table->string('trackingcode')->nullable();
             $table->string('sessionid');
             $table->unsignedBigInteger('addressid')->nullable();
-            $table->foreign('addressid')->references('addressid')->on('address');
+            $table->foreign('addressid')->references('addressid')->on('address')->onDelete('cascade');
             $table->decimal('totalprice',8, 2);
             $table->enum('status', ['unpaid','paid', 'dispatched', 'delivered']);
             $table->timestamps();

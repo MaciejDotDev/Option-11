@@ -57,8 +57,8 @@ const AdminDashboard = ({ auth, notifications }) => {
                         width: "1.5rem",
                         height: "1.5rem",
                         position: "absolute",
-                        top: "150px",  // Adjust the top value as needed
-                        left: "200px", // Adjust the right value as needed
+                        display:"inline-flex",
+                        transform: "translateY(-300%)"
                     }}
                 >
                     <span style={{ color: "#fff", fontSize: "1.2rem" }}>
@@ -68,6 +68,8 @@ const AdminDashboard = ({ auth, notifications }) => {
             );
         }
     };
+
+
 
     const countLog = () => {
         //onnly shows the icon if there is an item in the basket
@@ -79,8 +81,10 @@ const AdminDashboard = ({ auth, notifications }) => {
                         width: "1.5rem",
                         height: "1.5rem",
                         position: "absolute",
-                        top: "150px",  // Adjust the top value as needed
-                        left: "820px", // Adjust the right value as needed
+                       // top: "150px",  // Adjust the top value as needed
+                       // left: "820px",
+                        display:"inline-flex",
+                        transform: "translateY(-300%)",// Adjust the right value as needed
                     }}
                 >
                     <span style={{ color: "#fff", fontSize: "1.2rem" }}>
@@ -98,7 +102,7 @@ const AdminDashboard = ({ auth, notifications }) => {
             <AdminNavbar />
 
             <div class="adminDashboard-container" >
-                <DashboardCard cardName="Notifications  ">
+                <DashboardCard style={{ display:"inline-flex"}} cardName="Notifications  ">
 
                 {countNot()}
                     <List
@@ -112,8 +116,8 @@ const AdminDashboard = ({ auth, notifications }) => {
                         }}
                         subheader={<li />}
                     >
-                        {logs.length > 0 ? (
-                            logs.map((orderItem, index) => (
+                        {data.length > 0 ? (
+                            data.map((orderItem, index) => (
                                 <div style={{ backgroundColor: "#212529" }} key={index}>
                                     <h4
                                         style={{
@@ -166,8 +170,8 @@ const AdminDashboard = ({ auth, notifications }) => {
                         }}
                         subheader={<li />}
                     >
-                        {data.length > 0 ? (
-                            data.map((orderItem, index) => (
+                        {logs.length > 0 ? (
+                            logs.map((orderItem, index) => (
                                 <div style={{ backgroundColor: "#212529" }} key={index}>
                                     <h4
                                         style={{

@@ -27,10 +27,11 @@ if (!wishlistAmount == 0) {
         style={{
             width: "2rem",
             height: "2rem",
-            position: "absolute",
+           // position: "absolute",
             marginLeft: "18rem",
             marginBottom: "20rem",
             transform: "translateY(-100%)",
+            display:"inline-flex"
         }}
     >
         <span style={{ color: "#fff", fontSize: "1rem" }}>

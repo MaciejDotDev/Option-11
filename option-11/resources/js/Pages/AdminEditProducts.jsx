@@ -13,15 +13,15 @@ const AdminEditProducts = ({ products }) => {
     };
     // Apply filter based on the selected option
     const filteredBikeParts = products.filter((user) => {
-
-
-
-        const searchFilterid = user.productid == searchQuery ||  user.productname
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) && (filter === "All products" || user.products.name === filter) ;
+        const searchFilterid =
+            user.productid == searchQuery ||
+            (user.productname
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) &&
+                (filter === "All products" || user.products.name === filter));
         // Filter based on search query
-         // Filter based on search query
-        return searchFilterid  ;
+        // Filter based on search query
+        return searchFilterid;
     });
 
     const bikePartList = filteredBikeParts.map((product) => {
@@ -63,39 +63,34 @@ const AdminEditProducts = ({ products }) => {
     });
 
     return (
-        <div>
+        <div style={{ padding:"20px", borderRadius:"10px", margin:"5px" }}>
             {" "}
             <AdminNavbar />
-            <h2 className="text-light h2 text-center pt-3">Products</h2>
-<div style={{  display:"flex", alignItems:"center"  }}>
-<input
-                type="text"
-                className="form-control w-25"
-                placeholder="Search users by ID or name"
-                value={searchQuery}
-                onChange={handleSearchChange}
+            <h2 className="text-light h2 text-center pt-3 ">Products</h2>
+            <div className="flex align-middle justify-center items-center p-6 mr-2" >
+                <input class=" inline-flex p-2 mr-3 rounded-md"
 
-            />
+                    type="text"
+                    className="flex s "
+                    placeholder="Search users by ID or name"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
 
-<select
-
-                id="part-filters"
-                value={filter}
-                onChange={handleFilterChange}
-                className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-24 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-                <option value="All products">All</option>
-                <option value="bike">Bikes</option>
-                <option value="accessory">Accessory</option>
-                <option value="bikepart">Bike Part</option>
-                <option value="repairkit">RepairKit</option>
-            </select>
-
-
-</div>
-
-
-            <table class="table table-bordered editProducts">
+                <select
+                    id="part-filters"
+                    value={filter}
+                    onChange={handleFilterChange}
+                    className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-24 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                    <option value="All products">All</option>
+                    <option value="bike">Bikes</option>
+                    <option value="accessory">Accessory</option>
+                    <option value="bikepart">Bike Part</option>
+                    <option value="repairkit">RepairKit</option>
+                </select>
+            </div>
+            <table class="table table-bordered editProducts" style={{ margin:"16px auto", padding:"10px 5px" }}>
                 <thead>
                     <tr>
                         <th scope="col">ID</th>

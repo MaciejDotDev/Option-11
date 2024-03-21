@@ -1,15 +1,22 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import axios from "axios";
+import { useRef, useState } from 'react';
 import AnimateModal from "@/Components/AnimateModal";
 import DashboardCard from "@/Components/DashboardCard";
 import { router } from "@inertiajs/react";
-
+import { Button } from 'react-bootstrap';
+import Modal from '@/Components/Modal';
 import { Inertia } from "@inertiajs/inertia";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import Footer from "@/Components/Footer";
 import List from "@mui/material/List";
 import { useForm } from "@inertiajs/react";
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+import SecondaryButton from '@/Components/SecondaryButton';
+import DangerButton from '@/Components/DangerButton';
 export default function Dashboard({
     auth,
     baskIcon,
@@ -17,20 +24,67 @@ export default function Dashboard({
     wishlistItems,
     wishlistAmount,
 }) {
-    const handleDeleteConfirmation = (e) => { // not needed yer
-        if (window.confirm("Are you sure you wish to delete your account?")) {
-            this.onCancel(item);
-        } else {
-            e.preventDefault();
-        }
-    };
+    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+    const [confirmingUpdateForm, setConfirmingUpdate] = useState(false);
+    const passwordInput = useRef();
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post,put, reset, processing, recentlySuccessful, delete: destroy, errors } = useForm({
         itemId: null, //custom hoook so we can delete the wishlistitem
+        password: '',
+        current_password: '',
+        password: '',
+        password_confirmation: '',
     });
     const submit = (e) => {
         e.preventDefault();
         post(route("wishlist.remove"));
+    };
+
+    const updatePassword = (e) => {
+        e.preventDefault();
+
+        put(route('password.update'), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+            onError: (errors) => {
+                if (errors.password) {
+                    reset('password', 'password_confirmation');
+                    passwordInput.current.focus();
+                }
+
+                if (errors.current_password) {
+                    reset('current_password');
+                    currentPasswordInput.current.focus();
+                }
+            },
+        });
+    };
+
+    const confirmUserDeletion = () => {
+        setConfirmingUserDeletion(true);
+    };
+
+    const deleteUser = (e) => {
+        e.preventDefault();
+
+        destroy(route('profile.destroy'), {
+            preserveScroll: true,
+            onSuccess: () => closeModal(),
+            onError: () => passwordInput.current.focus(),
+            onFinish: () => reset(),
+        });
+    };
+
+    const closeModal = () => {
+        setConfirmingUserDeletion(false);
+
+        reset();
+    };
+
+    const closeModalUpdateAccount = () => {
+        setConfirmingUpdate(false);
+
+        reset();
     };
     const orderItemsList =
         orderItems.length > 0 ? (
@@ -177,8 +231,8 @@ export default function Dashboard({
                                 >
                                     Logout
                                 </Link>
-                                <Link
-                                    href={route("logout")}
+                                <Button
+                                    onClick={confirmUserDeletion}
                                     className="text-danger btn btn-dark"
                                     style={{
                                         justifyContent: "flex-start",
@@ -188,9 +242,60 @@ export default function Dashboard({
                                     }}
                                 >
                                     Delete account
-                                </Link>
+                                </Button>
+                                <Button
+
+                                    className="text-danger btn btn-dark"
+                                    style={{
+                                        justifyContent: "flex-start",
+                                        width: "100%",
+                                        textAlign: "left",
+                                        marginBottom: "1rem",
+                                    }}
+                                >
+                                    Change your password
+                                </Button>
                             </div>
                         </DashboardCard>
+
+                        <Modal show={confirmingUserDeletion} onClose={closeModal}>
+                <form onSubmit={deleteUser} className="p-6">
+                    <h2 className="text-lg font-medium text-gray-900">
+                        Are you sure you want to delete your account?
+                    </h2>
+
+                    <p className="mt-1 text-sm text-gray-600">
+                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
+                        enter your password to confirm you would like to permanently delete your account.
+                    </p>
+
+                    <div className="mt-6">
+                        <InputLabel htmlFor="password" value="Password" className="sr-only" />
+
+                        <TextInput
+                            id="password"
+                            type="password"
+                            name="password"
+                            ref={passwordInput}
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            className="mt-1 block w-3/4"
+                            isFocused
+                            placeholder="Password"
+                        />
+
+                        <InputError message={errors.password} className="mt-2" />
+                    </div>
+
+                    <div className="mt-6 flex justify-end">
+                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+
+                        <DangerButton className="ms-3" disabled={processing}>
+                            Delete Account
+                        </DangerButton>
+                    </div>
+                </form>
+            </Modal>
                     </div>
                     <div className="dashboard-container">
                         <DashboardCard

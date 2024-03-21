@@ -29,6 +29,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\AdminStockUpdate;
 use App\Http\Controllers\PartCheckController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,7 +40,6 @@ use App\Http\Controllers\PartCheckController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -128,85 +128,73 @@ Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('cloth
 Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
 
 Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
-
-Route::group(['middleware' => ['admin']], function () {
-
-
-    Route::get('/addProduct', function () {
-        return Inertia::render('AdminAddProduct');
-    })->name('addProduct');
+Route::group(['middleware' => 'fw-block-blacklisted'], function () {
+    Route::group(['middleware' => ['admin']], function () {
 
 
+        Route::get('/addProduct', function () {
+            return Inertia::render('AdminAddProduct');
+        })->name('addProduct');
 
-    Route::get('/editOrder{orderid}', [AdminEditOrders::class, 'editOrder'])->name('editOrder');
+        Route::get('/editOrder{orderid}', [AdminEditOrders::class, 'editOrder'])->name('editOrder');
 
-    Route::post('/updateOrder', [AdminEditOrders::class, 'updateOrder'])->name('updateOrder');
+        Route::post('/updateOrder', [AdminEditOrders::class, 'updateOrder'])->name('updateOrder');
 
 
 
-    Route::match (['get', 'post'], '/deleteOrder{orderid}', [AdminEditOrders::class, 'deleteOrder'])->name('deleteOrder');
+        Route::match (['get', 'post'], '/deleteOrder{orderid}', [AdminEditOrders::class, 'deleteOrder'])->name('deleteOrder');
 
-    Route::get('/admin/orders', [AdminEditOrders::class, 'show'])->name('orders');
+        Route::get('/admin/orders', [AdminEditOrders::class, 'show'])->name('orders');
 
-    Route::get('/ordersItems{orderid}', [AdminEditOrders::class, 'getOrderItems'])->name('viewOrderItems');
-
-
-    Route::get('/ordersItem/Item{itemOrderid}', [AdminEditOrders::class, 'editItemOrderPage'])->name('editItemOrderPage');
-
-    Route::post('/ordersItem/Item/update', [AdminEditOrders::class, 'editOrderItem'])->name('editOrderItem');
-
-    Route::get('/addressView{addressid}', [AdminEditAddress::class, 'show'])->name('addressView');
-
-    Route::get('/address', [AdminEditAddress::class, 'view'])->name('address');
-
-    Route::post('/updateAddress', [AdminEditAddress::class, 'update'])->name('updateAddress');
-    Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
-
-    Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
+        Route::get('/ordersItems{orderid}', [AdminEditOrders::class, 'getOrderItems'])->name('viewOrderItems');
 
 
-    Route::get('/api/adminNotifications', [AdminDashboardController::class, 'notifications'])->name('adminNotifications');
+        Route::get('/ordersItem/Item{itemOrderid}', [AdminEditOrders::class, 'editItemOrderPage'])->name('editItemOrderPage');
+
+        Route::post('/ordersItem/Item/update', [AdminEditOrders::class, 'editOrderItem'])->name('editOrderItem');
+
+        Route::get('/addressView{addressid}', [AdminEditAddress::class, 'show'])->name('addressView');
+
+        Route::get('/address', [AdminEditAddress::class, 'view'])->name('address');
+
+        Route::post('/updateAddress', [AdminEditAddress::class, 'update'])->name('updateAddress');
+        Route::post('/createProduct', [AdminEditProductsController::class, 'create'])->name('createProduct');
+
+        Route::get('/adminDashboard', [AdminDashboardController::class, 'dashboard'])->name('adminDashboard');
 
 
-    Route::get('/api/adminLogs', [AdminDashboardController::class, 'logs'])->name('adminLogs');
-
-    Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
-    Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');
-
-    Route::match (['get', 'post'], '/remEditProduct', [AdminEditProductsController::class, 'userManageAction'])->name('remEditProduct');
-
-    Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
-
-    Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
-
-    Route::post('/admin/user/update', [AdminEditUsersController::class, 'update'])->name('adminUpdateUser');
+        Route::get('/api/adminNotifications', [AdminDashboardController::class, 'notifications'])->name('adminNotifications');
 
 
+        Route::get('/api/adminLogs', [AdminDashboardController::class, 'logs'])->name('adminLogs');
 
-    Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
+        Route::get('/adminUsers', [AdminEditUsersController::class, 'show'])->name('adminUsers');
+        Route::get('/adminProducts', [AdminEditProductsController::class, 'show'])->name('adminProducts');
+
+        Route::match (['get', 'post'], '/remEditProduct', [AdminEditProductsController::class, 'userManageAction'])->name('remEditProduct');
+
+        Route::get('/adminDeleteUsers{userid}', [AdminEditUsersController::class, 'delete'])->name('adminDeleteUsers');
+
+        Route::get('/adminViewUser{userid}', [AdminEditUsersController::class, 'viewUser'])->name('adminViewUser');
+
+        Route::post('/admin/user/update', [AdminEditUsersController::class, 'update'])->name('adminUpdateUser');
+        Route::get('/editProducts{productid}', [AdminEditProductsController::class, 'updateShow'])->name('editProducts');
+        Route::get('users/all/export/', [AdminReportsController::class, 'exportStatsUsers']);
+        Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
+        Route::get('users/stats/export/', [AdminReportsController::class, 'exportUsersStats']);
+        Route::get('products/stats/export/', [AdminReportsController::class, 'exportStatsProducts']);
+
+        Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
 
 
-
-
-    Route::get('users/all/export/', [AdminReportsController::class, 'exportStatsUsers']);
-    Route::get('products/export/', [AdminReportsController::class, 'exportProducts']);
-    Route::get('users/stats/export/', [AdminReportsController::class, 'exportUsersStats']);
-    Route::get('products/stats/export/', [AdminReportsController::class, 'exportStatsProducts']);
-
-    Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
-
-
-    Route::match (['get', 'post'], '/adminLogout', [AdminLoginController::class, 'destroy'])
-        ->name('adminLogout');
-
+        Route::match (['get', 'post'], '/adminLogout', [AdminLoginController::class, 'destroy'])
+            ->name('adminLogout');
         Route::post('/adminStockUpdate', [AdminStockUpdate::class, 'update'])->name('adminStockUpdate');
+        Route::get('/adminStockUpdateshow', [AdminStockUpdate::class, 'show'])->name('adminStockUpdateshow');
 
-
-
-
-    Route::get('/adminStockUpdateshow', [AdminStockUpdate::class, 'show'])->name('adminStockUpdateshow');
-
+    });
 });
+
 Route::group(['middleware' => ['admin.guest']], function () {
 
 
@@ -224,9 +212,11 @@ Route::group(['middleware' => ['admin.guest']], function () {
 
 Route::match(['get', 'post'], '/webhook', [PaymentDetails::class, 'webhook'])->name('webhook');
 
+Route::middleware('firewall')->group(function () {
+    Route::get('/reviews', [ReviewsController::class, 'showAll'])->name('reviews');
+});
 
-
-Route::get('/reviews', [ReviewsController::class, 'showAll'])->name('reviews'); // to add to teh middleware later
+// to add to teh middleware later
 
 Route::middleware('auth')->group(function () {
 
@@ -261,7 +251,7 @@ Route::middleware('auth')->group(function () {
     Route::match (['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
     Route::get('/api/bikecheck', [PartCheckController::class, 'check'])->name('bikecheck');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profileEdit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 

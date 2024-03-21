@@ -80,7 +80,7 @@ const AdminViewOrder = ({ orders }) => {
 
         <div style={{  display:"flex", alignItems:"center"  }}>
 <input
-  style={{ margin:"0 auto" }}
+ style={{ margin:"0 auto" }}
                 type="text"
                 className="form-control w-25"
                 placeholder="Search orders by order id, cus id, user id or tracking code"
