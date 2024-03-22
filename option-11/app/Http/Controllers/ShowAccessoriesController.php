@@ -37,8 +37,23 @@ class ShowAccessoriesController extends ManageBasketController
 
     public function search () {
 
-        $bikes =  Accessory::with('products')->get();
-        return response()->json($bikes);// Corrected the key to 'bikeParts'
+                $product =[];
+
+                $products =[];
+                $bikes =  Accessory::with('products')->get();
+
+
+                foreach ($bikes as $bike) {
+
+                    if (!in_array($bike->products->productname, $product)) {
+                        $product[] = $bike->products->productname;
+                        $products[] = $bike;
+
+                    }
+
+
+                }
+        return response()->json($products);// Corrected the key to 'bikeParts'
     }
 
 

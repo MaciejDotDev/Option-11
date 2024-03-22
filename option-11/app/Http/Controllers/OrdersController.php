@@ -1,17 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+
 use App\Models\Payment;
 use App\Models\Basket;
 use App\Models\Orders;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Redirect;
+
 use Inertia\Inertia;
 use Faker\Factory as Faker;
 
@@ -24,12 +18,12 @@ use App\Models\Accessory;
 class OrdersController extends Controller
 {
 
-    
+
     public function makeOrder () {
 
-        $basket = Basket::where('userid', auth()->user()->userid)->get(); 
+        $basket = Basket::where('userid', auth()->user()->userid)->get();
 
-        
+
         $totalPrice = Basket::where('userid', auth()->user()->userid)->sum('totalprice');
         $faker = Faker::create();
 
@@ -44,13 +38,13 @@ class OrdersController extends Controller
             $orders->basketid = $item->basketid;
             $orders->payment_id = $payment->payment_id;
             $orders->totalprice = $totalPrice;
-                
+
             $orders->status = 'paid';
             $item->status = 'closed';
             $orders->trackingcode = 'Not provided yet';
             $item->save();
             $orders->save();
-            
+
 
 
 
@@ -58,17 +52,17 @@ class OrdersController extends Controller
 
         return redirect('/');
 
-       
-     
 
-        
-                
+
+
+
+
 
 
     }
 
-    
-    
+
+
     public function showAll () {
 
         $orders = Orders::where('userid',  auth()->user()->userid)->get();
@@ -76,7 +70,7 @@ class OrdersController extends Controller
         $total = Orders::where('userid',  auth()->user()->userid)->first();
         $basketitems = [];
 
-      
+
 
         foreach ($orders as $item) {
             $basket = Basket::where('basketid', $item->basketid)->first();
@@ -92,39 +86,39 @@ class OrdersController extends Controller
                 $repairkits = RepairKit::where('repairkitsid', $item1->repairkitsid)->first();
                 $accessory = Accessory::where('accessoryid', $item1->accessoryid)->first();
                 if ($bike) {
-        
-        
+
+
                     $bikes[] = $bike;
-                    
+
                 } else if ($bikePart) {
-        
+
                     $bikes[] = $bikePart;
-        
-        
+
+
                 } else if ($clothes) {
-        
-        
+
+
                     $bikes[] = $clothes;
-        
-        
-                    
+
+
+
                 }  else if ($repairkits) {
-        
-        
+
+
                     $bikes[] = $repairkits;
-        
-        
-                    
+
+
+
                 }  else if ($accessory) {
-        
-        
+
+
                     $bikes[] = $accessory;
-        
-        
-                    
+
+
+
                 } else {
 
-                  
+
 
 
                 }
@@ -132,8 +126,8 @@ class OrdersController extends Controller
 
 
         }
-      
-       
+
+
         if ( count($basketitems) > 0){
 
             return Inertia::render('OrdersHistory', ['orders' => $orders, 'basketitems' => $basketitems, 'bikes' => $bikes, 'total' => $total]);
@@ -148,9 +142,9 @@ class OrdersController extends Controller
 
         }
 
-   
-        
-        
+
+
+
 
 
 

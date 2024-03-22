@@ -63,15 +63,15 @@ const AdminEditProducts = ({ products }) => {
     });
 
     return (
-        <div style={{ padding:"20px", borderRadius:"10px", margin:"5px" }}>
+        <div style={{  borderRadius:"10px" }}>
             {" "}
             <AdminNavbar />
             <h2 className="text-light h2 text-center pt-3 ">Products</h2>
             <div className="flex align-middle justify-center items-center p-6 mr-2" >
-                <input class=" inline-flex p-2 mr-3 rounded-md"
-
+                <input class=" inline-flex p-2 mr-3 rounded-md "
+                    style={{ width:"30%" }}
                     type="text"
-                    className="flex s "
+                    className="flex s"
                     placeholder="Search users by ID or name"
                     value={searchQuery}
                     onChange={handleSearchChange}

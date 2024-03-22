@@ -74,7 +74,7 @@ Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])-
 Route::get('/api/accessorieSearch', [ShowAccessoriesController::class, 'search'])->name('accessoriessearch');
 
 
-
+Route::get('/api/clothingsearch', [ShowClothingController::class, 'search'])->name('clothingsearch');
 
 
 Route::get('/api/repairKitsearch', [ShowRepairKitsController::class, 'search'])->name('repairKitsearch');
