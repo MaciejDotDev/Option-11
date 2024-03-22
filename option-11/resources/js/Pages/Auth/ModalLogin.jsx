@@ -5,7 +5,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import NavBar from "@/Components/NavBar";
 import Backdrop from "@/Components/Backdrop";
 
-const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
+const ModalLogin = ({ handleClose, auth, canResetPassword }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -14,7 +14,7 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
     //manipulate this to get different animations of pop in
     const dropIn = {
         hidden: {
-          y: "-100vh",
+            y: "-100vh",
             opacity: 0,
         },
         visible: {
@@ -62,85 +62,96 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
                 exit="exit"
                 margin="auto"
             >
-             <Container>
-             <span class="close"  onClick={handleClose}>&times;</span>
-             <Form
-                    className="p-5 rounded shadow-sm bg-dark text-light"
-                    onSubmit={submit}
-                >
+                <Container>
+                    <span class="close" onClick={handleClose}>&times;</span>
+                    <Form
+                        className="p-5 rounded shadow-sm bg-dark text-light"
+                        onSubmit={submit}
+                    >
 
-                    <Head title="Log in" />
+                        <Head title="Log in" />
 
-                    <h2 className="pt-4 mb-4 text-center h2">Log in</h2>
-
-                    {status && (
-                        <div className="mb-4 text-sm font-medium text-green-600">
-                            {status}
+                        <div className="pt-4 mb-4 flex justify-center flex-col">
+                            <h2 className=" text-center h2">Log in</h2>
+                            <a
+                                href="/adminLogin"
+                                className=" link-info text-center"
+                            >
+                                Staff? Click here to login
+                            </a>
                         </div>
-                    )}
 
-                    <div>
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={data.email}
 
-                            className="block w-full mt-1"
-                            autoComplete="username"
-                            onChange={(e) => setData("email", e.target.value)}
-                        />
-                        <Form.Text className="text-danger">
-                            {errors.email}
-                        </Form.Text>
-                    </div>
+                        {status && (
+                            <div className="mb-4 text-sm font-medium text-green-600">
+                                {status}
+                            </div>
+                        )}
 
-                    <div className="mt-4">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            value={data.password}
-                            autoComplete="current-password"
-                            onChange={(e) =>
-                                setData("password", e.target.value)
-                            }
-                        />
-                        <Form.Text className="text-danger">
-                            {errors.password}
-                        </Form.Text>
-                    </div>
+                        <div>
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={data.email}
 
-                    <div className="block mt-4">
-                        <Form.Check
-                            type="checkbox"
-                            label="Remember me"
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData("remember", e.target.checked)
-                            }
-                        />
-                    </div>
+                                className="block w-full mt-1"
+                                autoComplete="username"
+                                onChange={(e) => setData("email", e.target.value)}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.email}
+                            </Form.Text>
+                        </div>
 
-                    <div className="flex items-center justify-end mt-4">
-                        <Link
-                            href="/register"
-                            className="text-center link-info"
-                        >
-                            Not Registered? Click here to sign-up!
-                        </Link>
+                        <div className="mt-4">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={data.password}
+                                autoComplete="current-password"
+                                onChange={(e) =>
+                                    setData("password", e.target.value)
+                                }
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.password}
+                            </Form.Text>
+                        </div>
 
-                        <Button
-                            variant="primary"
-                            type="submit"
-                            className="ms-4"
-                            disabled={processing}
-                        >
-                            Log in
-                        </Button>
+                        <div className="block mt-4">
+                            <Form.Check
+                                type="checkbox"
+                                label="Remember me"
+                                name="remember"
+                                checked={data.remember}
+                                onChange={(e) =>
+                                    setData("remember", e.target.checked)
+                                }
+                            />
+                        </div>
 
-                    </div>
+                        <div className="flex items-center justify-end mt-4">
+                            <div className=" flex flex-col">
+                                <Link
+                                    href="/register"
+                                    className=" link-info"
+                                >
+                                    Not Registered? Click here to sign-up!
+                                </Link>
+
+                            </div>
+
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                className="ms-4"
+                                disabled={processing}
+                            >
+                                Log in
+                            </Button>
+                        </div>
 
                         <Link
                             href={route('password.request')}
@@ -149,9 +160,9 @@ const ModalLogin = ({ handleClose, auth,canResetPassword }) => {
                             Forgot your password?
                         </Link>
 
-                </Form>
+                    </Form>
 
-             </Container>
+                </Container>
 
             </motion.div>
         </Backdrop>

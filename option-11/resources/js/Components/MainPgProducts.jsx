@@ -14,7 +14,7 @@ const FeaturedProductCard = ({
             <div className="card">
                 <img src={image} className="card-img-top" alt="Product" />
                 <div className="card-body text-center">
-                    <h4 className="card-title fw">{title}</h4>
+                    <h4 className="card-title fs-5 fw-bold">{title}</h4>
                     <p className="card-title">{description}</p>
                     {salePrice ? (
                         <>
@@ -26,6 +26,25 @@ const FeaturedProductCard = ({
                         </>
                     ) : (
                         <p className="card-text fw-bold">Price: {price}</p>
+                    )}
+                </div>
+                <div className=" flex justify-center">
+                    {title === "Summit Strider" && (
+                        <a href={`bike/6`} className="btn btn-outline-dark mb-2">
+                            View Details
+                        </a>
+                    )}
+
+                    {title === "RetroRide Classic" && (
+                        <a href={`bike/7`} className="btn btn-outline-dark mb-2">
+                            View Details
+                        </a>
+                    )}
+
+                    {title === "ShadowGuard MTB Helmet" && (
+                        <a href={`accessory/9`} className="btn btn-outline-dark mb-2">
+                            View Details
+                        </a>
                     )}
                 </div>
             </div>

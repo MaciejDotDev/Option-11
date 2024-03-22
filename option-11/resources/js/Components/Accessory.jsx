@@ -25,6 +25,7 @@ const Accessory = ({  filter, priceFilter }) => {
 
 
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -82,7 +83,7 @@ const Accessory = ({  filter, priceFilter }) => {
                     </Card.Title>
 
                     <Card.Text>
-                        <strong>Price:</strong> Â£{accessory.products.price}
+                        <strong>Price:</strong> £{accessory.products.price}
                     </Card.Text>
 
                 </Card.Body>

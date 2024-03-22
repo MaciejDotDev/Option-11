@@ -64,6 +64,25 @@ class ProductsSeeder extends Seeder
             'categoryid'=> $bike->categoryid,
         ]);
 
+
+        Products::create([
+            'productname' => 'Summit Strider - Mountain Bike',
+            'description' => 'Crafted for thrill-seekers and outdoor enthusiasts.',
+            'price' => 1499,
+            'stockquantity' => 10,
+            'imageURL' => 'product-images/bike-products/summitStrider.png',
+            'categoryid'=> $bike->categoryid,
+        ]);
+
+        Products::create([
+            'productname' => 'RetroRide Classic - Road Bike',
+            'description' => 'A vintage bike that marries elegance with nostalgia.',
+            'price' => 499,
+            'stockquantity' => 10,
+            'imageURL' => 'product-images/bike-products/vintageBike.png',
+            'categoryid'=> $bike->categoryid,
+        ]);
+
         Products::create([
             'productname' => 'Helmet',
             'description' => 'A helmet to protect your head.',
@@ -72,6 +91,17 @@ class ProductsSeeder extends Seeder
             'imageURL' => 'product-images/accessory-products/helmet-1.jpg',
             'categoryid'=> $accessory->categoryid,
         ]);
+
+
+        Products::create([
+            'productname' => 'ShadowGuard MTB Helmet',
+            'description' => 'Sleek black helmet with state-of-the-art style, safety, ventilation.',
+            'price' => 100,
+            'stockquantity' => 10,
+            'imageURL' => 'product-images/accessory-products/bikeHelmet.png',
+            'categoryid'=> $accessory->categoryid,
+        ]);
+
         Products::create([
             'productname' => 'Helmet',
             'description' => 'A helmet to protect your head.',
