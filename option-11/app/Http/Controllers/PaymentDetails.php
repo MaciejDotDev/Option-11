@@ -23,25 +23,10 @@ use Inertia\Inertia;
 class PaymentDetails extends Controller
 {
 
-    public function payment () {
-
-        $basket = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->first();
-
-
-        if(is_null($basket)) {
-            return redirect()->back();
-
-        }else {
-            return Inertia::render('Checkout');
-        }
 
 
 
-    }
-
-
-
-    public function addPayment (Request $request) {
+    public function stripeCheckout (Request $request) {
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 

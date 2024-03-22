@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
     BikesTableSeeder::class,
     ClothingSeeder::class,
     UsersTableSeeder::class,
+
     ProductsHistorySeeder::class,
 
     //Removing unused seeder with no table
@@ -29,7 +30,7 @@ class DatabaseSeeder extends Seeder
 
     // make sure the order on top remains
     ReviewsTableSeeder::class,
-    ProductsPartsCheck::class,
+
     CompatibilityTableSeeder::class,
     ]);
     }

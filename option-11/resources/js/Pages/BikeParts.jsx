@@ -28,7 +28,9 @@ const BikeParts = ({ auth, bikePart }) => {
     return (
         <div>
             <AnimateModal auth={auth}>
-                <div className="heading backdrop-brightness-90 my-2">
+                <div className="heading backdrop-brightness-90 my-2"   style={{    backgroundColor: '#17191b',
+
+}}>
                     <h1 className="display-4 text-white text-center py-2">
                         Bike Parts Section
                     </h1>

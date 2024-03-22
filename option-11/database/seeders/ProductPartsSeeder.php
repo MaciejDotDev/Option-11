@@ -20,7 +20,7 @@ class ProductPartsSeeder extends Seeder
 
         $accessories = Products::where('categoryid', $categories->categoryid)->get();
 
-        $mountainBike = Bikes::where('category', "Mountain")->first();
+
 
         $uniqueid = [];
         foreach ($accessories as $item) {
@@ -32,7 +32,7 @@ class ProductPartsSeeder extends Seeder
         BikePart::create([
             'productid' => $uniqueid[0],
             'category' => 'Chain',
-            'color' => 'Silver',
+            'colour' => 'Silver',
             'size' => 'Standard',
 
         ]);
@@ -40,7 +40,7 @@ class ProductPartsSeeder extends Seeder
         BikePart::create([
             'productid' => $uniqueid[1],
             'category' => 'Pedals',
-            'color' => 'Black',
+            'colour' => 'Black',
             'size' => 'Standard',
 
         ]);
@@ -48,7 +48,7 @@ class ProductPartsSeeder extends Seeder
         BikePart::create([
             'productid' => $uniqueid[2],
             'category' => 'Grips',
-            'color' => 'Red',
+            'colour' => 'Red',
             'size' => 'Standard',
 
         ]);
@@ -56,7 +56,7 @@ class ProductPartsSeeder extends Seeder
         BikePart::create([
             'productid' => $uniqueid[3],
             'category' => 'Saddle',
-            'color' => 'Brown',
+            'colour' => 'Brown',
             'size' => 'Standard',
 
         ]);
@@ -65,7 +65,7 @@ class ProductPartsSeeder extends Seeder
             'productid' => $uniqueid[4],
 
             'category' => 'Lights',
-            'color' => 'White',
+            'colour' => 'White',
             'size' => 'Standard',
 
         ]);

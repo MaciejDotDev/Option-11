@@ -66,36 +66,25 @@ Route::get('/updateAccount', function () {
 
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
-
-
-
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
 
-Route::get('/api/accessorieSearch', [ShowAccessoriesController::class, 'search'])->name('accessoriessearch');
 
-
-Route::get('/api/clothingsearch', [ShowClothingController::class, 'search'])->name('clothingsearch');
-
-
-Route::get('/api/repairKitsearch', [ShowRepairKitsController::class, 'search'])->name('repairKitsearch');
-
+//get indivudal products
 Route::get('/accessory/{productid}', [ShowAccessoriesController::class, 'showIndividual'])->name('individualAccessory');
-
 Route::get('/bike/{bikeid}', [ShowBikesController::class, 'showIndividual'])->name('individualBike');
-
 Route::get('/clothing/{productid}', [ShowClothingController::class, 'showIndividual'])->name('individualClothing');
 Route::get('/bikepart/{productid}', [ShowBikePartsController::class, 'showIndividual'])->name('individualBikePart');
 Route::get('/repairkit/{productid}', [ShowRepairKitsController::class, 'showIndividual'])->name('individualRepairKit');
 
 
 
-
-
-
+//get bike data through axios
+Route::get('/api/accessorieSearch', [ShowAccessoriesController::class, 'search'])->name('accessoriessearch');
+Route::get('/api/clothingsearch', [ShowClothingController::class, 'search'])->name('clothingsearch');
+Route::get('/api/repairKitsearch', [ShowRepairKitsController::class, 'search'])->name('repairKitsearch');
 Route::get('/api/productsparts', [ShowBikePartsController::class, 'search'])->name('productsparts');
 Route::get('/api/bikesearch', [ShowBikesController::class, 'search'])->name('bikesearch');
 
-Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesController@filter')->name('filter');
 
 
 
@@ -104,9 +93,8 @@ Route::match(['get', 'post'], '/filter/{type}', 'App\Http\Controllers\ShowBikesC
 
 
 
-Route::get('/addresses', function () {
-    return Inertia::render('ViewAddress');
-})->middleware(['auth', 'verified'])->name('addresses');
+
+
 
 
 Route::get('/aboutus', function () {
@@ -114,6 +102,7 @@ Route::get('/aboutus', function () {
 });
 
 //squob work below
+
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
 
@@ -125,12 +114,69 @@ Route::get('/RepairKits', [ShowRepairKitsController::class, 'showAll'])->name('r
 
 Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('clothing');
 
+
+//bikeid check
 Route::get('/api/bikecheck/{id}', [PartCheckController::class, 'check'])->name('bikecheck');
 
 
-Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
 
-Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
+
+
+
+//webhook for webhook calls transactions
+Route::match(['get', 'post'], '/webhook', [PaymentDetails::class, 'webhook'])->name('webhook');
+
+
+
+// to add to teh middleware later
+
+Route::middleware('auth')->group(function () {
+
+    //using axios
+    Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
+
+
+    Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
+    Route::get('deleteAccount', [ManageAccount::class, 'destroy'])->name('deleteAccount');
+    Route::get('/dashboard', [ManageAccount::class, 'create'])->name('dashboard');
+
+
+    Route::get('/basket', [ManageBasketController::class, 'getBasket'])->name('basket');
+    Route::match (['get', 'post'], '/addBasket', 'App\Http\Controllers\ManageBasketController@addBasket')->name('addBasket');
+    Route::match (['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
+    Route::post('/basket/action', [ManageBasketController::class, 'addRemItem'])->name('basketAction');
+
+    Route::match (['get', 'post'], '/addPayment', [PaymentDetails::class, 'stripeCheckout'])->name('addPayment');
+
+
+    Route::get('/orderTrack/{trackingid}/{productid}', [TrackingController::class, 'show'])->name('orderTrack');
+    Route::get('/viewProduct/{productid}', [TrackingController::class, 'viewProduct'])->name('viewProduct');
+
+    Route::post('/createReview', [ReviewsController::class, 'createReview'])->name('createReview');
+
+
+
+    Route::match (['get', 'post'], '/success', 'App\Http\Controllers\PaymentDetails@finalizeOrder')->name('success');
+    Route::match (['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
+
+
+    Route::get('/profileEdit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/api/wishlist/add/', [WishlistController::class, 'add'])->name('wishlist');
+
+    Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
+
+});
+
+
+
+
+
+
+
+///admin middleware below
 Route::group(['middleware' => 'fw-block-blacklisted'], function () {
     Route::group(['middleware' => ['admin']], function () {
 
@@ -188,8 +234,6 @@ Route::group(['middleware' => 'fw-block-blacklisted'], function () {
         Route::get('products/stats/export/', [AdminReportsController::class, 'exportStatsProducts']);
 
         Route::get('/adminReports', [AdminReportsController::class, 'show'])->name('adminReports');
-
-
         Route::match (['get', 'post'], '/adminLogout', [AdminLoginController::class, 'destroy'])
             ->name('adminLogout');
         Route::post('/adminStockUpdate', [AdminStockUpdate::class, 'update'])->name('adminStockUpdate');
@@ -212,56 +256,5 @@ Route::group(['middleware' => ['admin.guest']], function () {
 
 });
 
-
-Route::match(['get', 'post'], '/webhook', [PaymentDetails::class, 'webhook'])->name('webhook');
-
-Route::middleware('firewall')->group(function () {
-    Route::get('/reviews', [ReviewsController::class, 'showAll'])->name('reviews');
-});
-
-// to add to teh middleware later
-
-Route::middleware('auth')->group(function () {
-
-    Route::get('deleteAccount', [ManageAccount::class, 'destroy'])
-        ->name('deleteAccount');
-
-    Route::get('/dashboard', [ManageAccount::class, 'create'])
-        ->name('dashboard');
-    Route::get('/basket', [ManageBasketController::class, 'getBasket'])->name('basket');
-    Route::match (['get', 'post'], '/addBasket', 'App\Http\Controllers\ManageBasketController@addBasket')->name('addBasket');
-
-
-
-    Route::match (['get', 'post'], '/addPayment', [PaymentDetails::class, 'addPayment'])->name('addPayment');
-
-
-
-    Route::get('/orderTrack/{trackingid}/{productid}', [TrackingController::class, 'show'])->name('orderTrack');
-
-    Route::get('/viewProduct/{productid}', [TrackingController::class, 'viewProduct'])->name('viewProduct');
-    Route::post('/createReview', [ReviewsController::class, 'createReview'])->name('createReview');
-    Route::match (['get', 'post'], '/deleteProduct', 'App\Http\Controllers\ManageBasketController@deleteProduct')->name('deleteProduct');
-
-    Route::post('/basket/action', [ManageBasketController::class, 'addRemItem'])->name('basketAction');
-
-
-
-
-    Route::match (['get', 'post'], '/checkout', 'App\Http\Controllers\PaymentDetails@payment')->name('checkout');
-
-    Route::match (['get', 'post'], '/success', 'App\Http\Controllers\PaymentDetails@finalizeOrder')->name('success');
-    Route::match (['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
-
-
-    Route::get('/profileEdit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::post('/api/wishlist/add/', [WishlistController::class, 'add'])->name('wishlist');
-
-    Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
-
-});
 
 require __DIR__ . '/auth.php';
