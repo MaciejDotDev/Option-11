@@ -17,6 +17,11 @@ class Products extends Model
         return $this->belongsTo(Categories::class, 'categoryid');
     }
 
+    public function compatability()
+    {
+        return $this->belongsToMany(Products::class, 'products_parts_compatibility', 'product_id', 'part_id');
+    }
+
     protected $fillable = [
         'productname',
         'description',

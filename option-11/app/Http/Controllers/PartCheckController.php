@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Products;
 
 class PartCheckController extends Controller
 {
 
 
 
-    public function check($product) {
+    public function check($id) {
 
-        $comp = $product->compatibility()->get();
+        $comp = Products::find($id);
 
-        return response()->json($comp);
-
-
+        dd($comp->compatability()->get());
     }
 }

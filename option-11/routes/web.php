@@ -113,9 +113,10 @@ Route::get('/aboutus', function () {
     return Inertia::render('AboutUs');
 });
 
+//squob work below
 
 Route::get('/BikeProducts', [ShowBikesController::class, 'showAll'])->name('products');
-//squob work below
+
 Route::get('/BikeParts', [ShowBikePartsController::class, 'showAll'])->name('BikeParts');
 
 Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])->name('accessoryProducts');
@@ -123,6 +124,8 @@ Route::get('/AccessoryProducts', [ShowAccessoriesController::class, 'showAll'])-
 Route::get('/RepairKits', [ShowRepairKitsController::class, 'showAll'])->name('repairKits');
 
 Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('clothing');
+
+Route::get('/api/bikecheck/{id}', [PartCheckController::class, 'check'])->name('bikecheck');
 
 
 Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
@@ -249,7 +252,7 @@ Route::middleware('auth')->group(function () {
 
     Route::match (['get', 'post'], '/success', 'App\Http\Controllers\PaymentDetails@finalizeOrder')->name('success');
     Route::match (['get', 'post'], '/cancel', 'App\Http\Controllers\PaymentDetails@cancel')->name('cancel');
-    Route::get('/api/bikecheck', [PartCheckController::class, 'check'])->name('bikecheck');
+
 
     Route::get('/profileEdit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

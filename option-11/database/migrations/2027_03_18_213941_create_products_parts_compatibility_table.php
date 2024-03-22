@@ -10,12 +10,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products_parts_compatibility', function (Blueprint $table) {
-            $table->bigIncrements('partscompatibilityid');
-            $table->unsignedBigInteger('bikepartsid');
-            $table->foreign('bikepartsid')->references('bikepartsid')->on('bikeparts')->onDelete('cascade');
-            $table->unsignedBigInteger('bikeid');
-            $table->foreign('bikeid')->references('bikeid')->on('bikes')->onDelete('cascade');
-            $table->timestamps();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('part_id');
+            $table->foreign('product_id')->references('productid')->on('products')->onDelete('cascade');
+            $table->foreign('part_id')->references('productid')->on('products')->onDelete('cascade');
+
         });
     }
 

@@ -27,9 +27,6 @@ class ProductPartsSeeder extends Seeder
 
             $uniqueid[] = $item->productid;
 
-
-
-
         }
 
         BikePart::create([

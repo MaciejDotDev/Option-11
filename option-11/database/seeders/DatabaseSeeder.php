@@ -23,11 +23,14 @@ class DatabaseSeeder extends Seeder
     ClothingSeeder::class,
     UsersTableSeeder::class,
     ProductsHistorySeeder::class,
-    ProductPartsSeeder::class,
+
+    //Removing unused seeder with no table
+    //ProductPartsSeeder::class,
 
     // make sure the order on top remains
     ReviewsTableSeeder::class,
     ProductsPartsCheck::class,
+    CompatibilityTableSeeder::class,
     ]);
     }
 }
