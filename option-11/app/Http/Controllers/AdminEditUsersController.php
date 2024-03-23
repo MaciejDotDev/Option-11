@@ -62,7 +62,7 @@ class AdminEditUsersController extends Controller
 
             $product = $user->userid;
 
-            $notification->notification_description = " User $product, at $orderTime has been modified";
+            $notification->notification_description = "User $product, at $orderTime has been modified";
             $notification->save();
 
         }

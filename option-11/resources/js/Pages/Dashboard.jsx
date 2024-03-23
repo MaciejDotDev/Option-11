@@ -17,6 +17,8 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import SecondaryButton from '@/Components/SecondaryButton';
 import DangerButton from '@/Components/DangerButton';
+import PrimaryButton from '@/Components/PrimaryButton';
+import { Transition } from '@headlessui/react'
 export default function Dashboard({
     auth,
     baskIcon,
@@ -28,17 +30,9 @@ export default function Dashboard({
     const [confirmingUpdateForm, setConfirmingUpdate] = useState(false);
     const passwordInput = useRef();
 
-    const { data, setData, post,put, reset, processing, recentlySuccessful, delete: destroy, errors } = useForm({
-        itemId: null, //custom hoook so we can delete the wishlistitem
-        password: '',
-        current_password: '',
-        password: '',
-        password_confirmation: '',
-    });
-    const submit = (e) => {
-        e.preventDefault();
-        post(route("wishlist.remove"));
-    };
+    const currentPasswordInput = useRef();
+
+
 
     const updatePassword = (e) => {
         e.preventDefault();
@@ -59,9 +53,26 @@ export default function Dashboard({
             },
         });
     };
+    const { data, setData, post,put, reset, processing, recentlySuccessful, delete: destroy, errors } = useForm({
+        itemId: null, //custom hoook so we can delete the wishlistitem
+        password: '',
+        current_password: '',
+
+        password_confirmation: '',
+    });
+    const submit = (e) => {
+        e.preventDefault();
+        post(route("wishlist.remove"));
+    };
+
+
 
     const confirmUserDeletion = () => {
         setConfirmingUserDeletion(true);
+    };
+
+    const confirmUserDeletionUpdate = () => {
+        setConfirmingUpdate(true);
     };
 
     const deleteUser = (e) => {
@@ -219,6 +230,20 @@ export default function Dashboard({
                                 </Link>
 
 
+
+
+                                <Button
+                                onClick={confirmUserDeletionUpdate}
+                                className="text-white btn btn-dark"
+                                    style={{
+                                        justifyContent: "flex-start",
+                                        width: "100%",
+                                        textAlign: "left",
+                                        marginBottom: "1rem",
+                                    }}
+                                >
+                                    Change your password
+                                </Button>
                                 <Link
                                     href={route("logout")}
                                     className="text-warning btn btn-dark"
@@ -243,59 +268,87 @@ export default function Dashboard({
                                 >
                                     Delete account
                                 </Button>
-                                <Button
-
-                                    className="text-danger btn btn-dark"
-                                    style={{
-                                        justifyContent: "flex-start",
-                                        width: "100%",
-                                        textAlign: "left",
-                                        marginBottom: "1rem",
-                                    }}
-                                >
-                                    Change your password
-                                </Button>
                             </div>
                         </DashboardCard>
+                                    <Modal show={confirmingUpdateForm} onClose={closeModalUpdateAccount} style={{  }}>
+                                <div style={{ padding:"3rem", backgroundColor:"#212529" }}>
+                                <header>
+                                <h2 className="text-lg font-medium text-white">Update Password</h2>
 
-                        <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
-                    </h2>
+                                <p className="mt-1 text-sm text-white">
+                                    Ensure your account is using a long, random password to stay secure.
+                                </p>
+            </header>
 
-                    <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                        enter your password to confirm you would like to permanently delete your account.
-                    </p>
+            <form onSubmit={updatePassword} className="mt-6 space-y-6">
+                <div >
+                    <InputLabel htmlFor="current_password" value="Current Password" className="text-white" />
 
-                    <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Password" className="sr-only" />
+                    <TextInput
+                        id="current_password"
+                        ref={currentPasswordInput}
+                        value={data.current_password}
+                        onChange={(e) => setData('current_password', e.target.value)}
+                        type="password"
+                        className="mt-1 block w-full"
+                        autoComplete="current-password"
+                    />
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
+                    <InputError message={errors.current_password} className="mt-2"  />
+                </div>
 
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
+                <div>
+                    <InputLabel htmlFor="password" value="New Password" className="text-white" />
 
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                    <TextInput
+                        id="password"
+                        ref={passwordInput}
+                        value={data.password}
+                        onChange={(e) => setData('password', e.target.value)}
+                        type="password"
+                        className="mt-1 block w-full"
+                        autoComplete="new-password"
+                    />
 
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" className="text-white" />
+
+                    <TextInput
+                        id="password_confirmation"
+                        value={data.password_confirmation}
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        type="password"
+                        className="mt-1 block w-full"
+                        autoComplete="new-password"
+                    />
+
+                    <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
+
+                <div className="flex items-center gap-4">
+                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <Button className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" onClick={closeModalUpdateAccount}>Cancel</Button>
+                    <Transition
+                        show={recentlySuccessful}
+                        enter="transition ease-in-out"
+                        enterFrom="opacity-0"
+                        leave="transition ease-in-out"
+                        leaveTo="opacity-0"
+                    >
+                        <p className="text-sm text-white">Saved.</p>
+                    </Transition>
+                </div>
+
+            </form>
+
+
+                                </div>
+
+                        </Modal>
+
                     </div>
                     <div className="dashboard-container">
                         <DashboardCard
@@ -352,6 +405,44 @@ export default function Dashboard({
                     </div>
                 </div>
                 <Footer />
+                <Modal show={confirmingUserDeletion} onClose={closeModal}>
+                <form onSubmit={deleteUser} className="p-6 bg-dark">
+                    <h2 className="text-lg font-medium text-white">
+                        Are you sure you want to delete your account?
+                    </h2>
+
+                    <p className="mt-1 text-sm text-white">
+                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
+                        enter your password to confirm you would like to permanently delete your account.
+                    </p>
+
+                    <div className="mt-6 flex justify-center">
+                        <InputLabel htmlFor="password" value="Password" className="sr-only" />
+
+                        <TextInput
+                            id="password"
+                            type="password"
+                            name="password"
+                            ref={passwordInput}
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            className="mt-1 block w-3/4 "
+                            isFocused
+                            placeholder="Password"
+                        />
+
+                        <InputError message={errors.password} className="mt-2" />
+                    </div>
+
+                    <div className="mt-6 flex justify-end">
+                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+
+                        <DangerButton className="ms-3" disabled={processing}>
+                            Delete Account
+                        </DangerButton>
+                    </div>
+                </form>
+            </Modal>
             </AnimateModal>
         </>
     );

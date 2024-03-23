@@ -16,7 +16,7 @@ class BikesTableSeeder extends Seeder
      */
     public function run()
     {
-      
+
 
         $categories = Categories::where('name','bike')->first(); // go optimmise later on to use hasmany or hasone in the model
 
@@ -27,13 +27,13 @@ class BikesTableSeeder extends Seeder
 
             $uniqueid[] = $item->productid;
 
-        
+
 
 
         }
-       
-      
-     
+
+
+
         Bikes::create([
             'productid' => $uniqueid[0],
             'category' => 'Mountain',
@@ -68,6 +68,20 @@ class BikesTableSeeder extends Seeder
             'colour' => 'red',
             'size' => 'red',
         ]);
-        
+
+        Bikes::create([
+            'productid' => $uniqueid[5],
+            'category' => 'Mpuntain',
+            'colour' => 'Black',
+            'size' => 'Medium',
+        ]);
+
+        Bikes::create([
+            'productid' => $uniqueid[6],
+            'category' => 'Road',
+            'colour' => 'White',
+            'size' => 'Small',
+        ]);
+
     }
 }

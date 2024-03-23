@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "@/Components/NavBar";
 import { Inertia } from "@inertiajs/inertia";
 import { AnimatePresence } from "framer-motion";
-import Login from "@/Pages/Auth/Login";
+import InputError from "@/Components/InputError";
 import Footer from "@/Components/Footer";
 import { usePage } from "@inertiajs/react";
 import AnimateModal from "@/Components/AnimateModal";
@@ -19,6 +19,9 @@ export default function Basket({ auth, basket, totalprice }) {
         e.preventDefault();
         setData("basketid", basketid);
     };
+
+const [selectedProduct, setSelectedProduct] = useState("");
+
 
     useEffect(() => {
         const removeItem = async () => {
@@ -37,21 +40,24 @@ export default function Basket({ auth, basket, totalprice }) {
 
                 <body className="basketbody">
                     <div className="basketContainer" style={{ fontFamily: "Koulen, sans-serif"  }}>
-                        <h1 className="h1basket">Shopping Basket</h1>
+                        <h1 className="h1basket"  >Shopping Basket</h1>
 
-                        <div className="basketClass">
+                        <div className="basketClass"  >
                             {basket.length > 0 ? (
                                 <div>
                                     {basket.map((item, index) => (
-                                        <div className="basketitem" key={index}>
+                                        <div className="basketitem" key={index}   onClick={() => {
+                                            setSelectedProduct( item.products
+                                                .productid)
+                                        }}>
                                             <div
                                                 className={
                                                     index % 2 === 0 ? "" : ""
                                                 }
                                                 key={item.basketid}
                                             >
-                                                <div className="item-details">
-                                                    <h2 className="h2basket">
+                                                <div  className="item-details" >
+                                                    <h2 className="h2basket"  style={{ fontFamily: "Koulen, sans-serif"  }}>
                                                         {
                                                             item.products
                                                                 .productname
@@ -146,11 +152,21 @@ export default function Basket({ auth, basket, totalprice }) {
                                                             >
                                                                 Remove
                                                             </button>
+
+
+
                                                         </div>
                                                     </form>
 {/* add error here for stock */}
                                                 </div>
+                                                {item.productid == selectedProduct && (
+                                                              <InputError
+                                                                  message={errors.stock}
+                                                                  className="mt-2"
+                                                              />
+                                                            ) }
                                             </div>
+
                                         </div>
                                     ))}
 

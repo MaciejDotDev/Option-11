@@ -37,8 +37,23 @@ class ShowRepairKitsController extends ManageBasketController
 
     public function search (){
 
+        $product =[];
+
+        $products =[];
         $bikes =  RepairKit::with('products')->get();
-        return response()->json($bikes);
+
+
+        foreach ($bikes as $bike) {
+
+            if (!in_array($bike->products->productname, $product)) {
+                $product[] = $bike->products->productname;
+                $products[] = $bike;
+
+            }
+
+
+        }
+    return response()->json($products);// Corrected the key to 'bikeParts'
     }
 
     public function showIndividual( $productid) {

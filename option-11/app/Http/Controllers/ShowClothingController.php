@@ -33,7 +33,26 @@ class ShowClothingController extends ManageBasketController
         return Inertia::render('Clothing', ['clothes' => $clothes]);
     }
 
+    public function search (){
 
+        $product =[];
+
+        $products =[];
+        $bikes =  Clothes::with('products')->get();
+
+
+        foreach ($bikes as $bike) {
+
+            if (!in_array($bike->products->productname, $product)) {
+                $product[] = $bike->products->productname;
+                $products[] = $bike;
+
+            }
+
+
+        }
+    return response()->json($products);// Corrected the key to 'bikeParts'
+    }
 
     public function showIndividual( $productid) {
 

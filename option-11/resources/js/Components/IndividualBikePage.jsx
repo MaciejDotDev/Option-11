@@ -65,9 +65,9 @@ export default function IndividualBikePage({
         setData("size", value);
     };
 
-    useEffect(() => {
-        toastr.error(flash.success);
-    }, [flash.success]);
+
+
+
     const [placeHolderImage, setPlaceHolderImage] = useState(null);
 
     useEffect(() => {
@@ -133,10 +133,7 @@ const addToWishlist = (productid) => {
                         <h1 className="text-center text-white fs-2 mb-10">
                             {product.products.productname}
                         </h1>
-                        <p className="mb-3">
-                            <strong>Description:</strong>{" "}
-                            {product.products.description}{" "}
-                        </p>
+
                         <p className="mb-4">
                             <strong>Price:</strong> £{product.products.price}
                         </p>
@@ -187,47 +184,54 @@ const addToWishlist = (productid) => {
                         >
                             Size Guide
                         </a>
-                        <div>
+                        <div style={{ display:"flex",marginTop:"1rem" }}>
                             {auth.user ? (
                                 <div>
-                                    <form onSubmit={submit}>
+ <div style={{ display: "flex" }}>
+                                    <form onSubmit={submit} style={{ marginRight: "1rem" }}>
                                         <Button
                                             type="submit"
                                             variant="outline-primary"
                                         >
                                             Add to basket
                                         </Button>
-                                        <p
-                                            style={{ color: "green" }}
-                                            className="block font-medium text-sm text-gray-700"
-                                        >
-                                            {flash.message}
-                                        </p>
 
-                                        <InputError
-                                            message={errors.stock}
-                                            className="mt-2"
-                                        />
-                                        <InputError
-                                            message={errors.quantity}
-                                            className="mt-2"
-                                        />
                                     </form>
-                                    <Button
-                                        // href={route("productDetails", { id: bike.bikeid })}
-                                       onClick={() => addToWishlist(product.productid)}
-                                        className="btn btn-outline-primary"
-                                    >
-                                        add to wishlist
-                                    </Button>
-                                    <p style={{ color: "green" }}
-                                            className="block font-medium text-sm text-gray-700">{wishlist}</p>
-                                            <InputError
-                                            message={wishlistError}
-                                            className="mt-2"
-                                        />
+                                    <div>
+                                      <Button
+                                          // href={route("productDetails", { id: bike.bikeid })}
+                                         onClick={() => addToWishlist(product.productid)}
+                                          className="btn btn-outline-primary"
+                                      >
+                                          add to wishlist
+                                      </Button>
+
+                                    </div>
 
                                 </div>
+                                 <p style={{ color: "green" }}
+                                 className="block font-medium text-sm text-gray-700">{wishlist}</p>
+                                 <InputError
+                                 message={wishlistError}
+                                 className="mt-2"
+                             />
+                       <p
+                               style={{ color: "green" }}
+                               className="block font-medium text-sm text-gray-700"
+                           >
+                               {flash.message}
+                           </p>
+
+                           <InputError
+                               message={errors.stock}
+                               className="mt-2"
+                           />
+                           <InputError
+                               message={errors.quantity}
+                               className="mt-2"
+                           />
+                                </div>
+
                             ) : (
                                 <Button
                                     type="submit"
@@ -244,15 +248,18 @@ const addToWishlist = (productid) => {
                 <div
                     style={{
                         backgroundColor: "#212529",
-                        width: "60%",
+
+
                         margin: "0 auto",
                         marginTop: "2rem",
                         borderRadius: "12px",
                         paddingBottom: "4rem",
+
                     }}
+                    className="productabs"
                 >
                     <Tabs
-                        defaultActiveKey="profile"
+                        defaultActiveKey="description"
                         id="uncontrolled-tab-example"
                         className="mb-3"
                         style={{
@@ -266,7 +273,7 @@ const addToWishlist = (productid) => {
                             title="Description"
                             style={{
                                 width: "60%",
-                                margin: "0 auto",
+                                margin: "0 3rem",
                                 color: "white",
                                 paddingBottom: "2rem",
                             }}
@@ -278,7 +285,7 @@ const addToWishlist = (productid) => {
                             title="Delivery options"
                             style={{
                                 width: "60%",
-                                margin: "0 auto",
+                                margin: "0 3rem",
                                 color: "white",
                                 paddingBottom: "2rem",
                             }}
@@ -290,7 +297,7 @@ const addToWishlist = (productid) => {
                             title="Contact"
                             style={{
                                 width: "60%",
-                                margin: "0 auto",
+                                margin: "0 3rem",
                                 color: "white",
                                 paddingBottom: "2rem",
                             }}

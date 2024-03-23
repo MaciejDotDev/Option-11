@@ -38,8 +38,23 @@ class ShowBikePartsController extends ManageBasketController
 
     public function search () {
 
+        $product =[];
+
+        $products =[];
         $bikes =  BikePart::with('products')->get();
-        return response()->json($bikes);// Corrected the key to 'bikeParts'
+
+
+        foreach ($bikes as $bike) {
+
+            if (!in_array($bike->products->productname, $product)) {
+                $product[] = $bike->products->productname;
+                $products[] = $bike;
+
+            }
+
+
+        }
+return response()->json($products);// Corrected the key to 'bikeParts'
     }
 
     public function showIndividual($productid)

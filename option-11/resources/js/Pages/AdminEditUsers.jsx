@@ -63,7 +63,7 @@ const AdminEditUsers = ({ users }) => {
         <h2 className="text-light h2 text-center pt-3">All users</h2>
         <input
                     type="text"
-                    className="form-control w-25"
+                    className="form-control w-25 "
                     placeholder="Search users by ID or name"
                     value={searchQuery}
                     onChange={handleSearchChange}

@@ -2,7 +2,37 @@ import { Container, Nav, Navbar, Image, NavDropdown } from "react-bootstrap";
 import krakenLogo from "../../assets/Kraken_logo.png";
 import basketIcon from "../../assets/basket-icon.png";
 import { usePage } from '@inertiajs/react'
+import React, { useEffect } from 'react';
+import Pusher from 'pusher-js';
+
+
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 const NavBar = ({ auth, openModal }) => {
+
+    useEffect(() => {
+
+        const pusher = new Pusher('e090badc6993a1fe1e83', {
+          cluster: 'eu', //because we're in the europe we define cluser as eu
+        });
+
+
+        const channel = pusher.subscribe('stock-channel');
+
+  // create channel name that pusher dashboard uses, if two applications with the same pusher key will result into double notifcation
+        channel.bind('low-stock', (data) => {
+
+
+            toastr.success(data.productid); //  send notifcation to admin
+        });
+
+
+
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        };
+     }, []);
     const { baskIcon } = usePage().props
     const itemBasket = () => {
         //onnly shows the icon if there is an item in the basket

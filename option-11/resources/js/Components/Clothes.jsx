@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/react";
 import { Card } from "react-bootstrap";
 import { InertiaLink } from "@inertiajs/inertia-react";
-
+import axios from 'axios';
 
 const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
 
@@ -17,13 +17,28 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
+    const [searchResults, setSearchResults] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/api/clothingsearch');
+                setSearchResults(response.data);
 
 
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+
+            }
+        };
+
+        fetchData();
+    }, []);
 
 
 
     // Apply filter based on the selected option: category, price, and/or search query
-    const filteredClothes = clothes.filter((clothing) => {
+    const filteredClothes = searchResults.filter((clothing) => {
         const categoryFilter =
             filter === "All Clothes" || clothing.category === filter;
         const priceFilterCondition =
@@ -54,7 +69,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                     <Card.Title className="text-center h4">
                         {clothing.products.productname}
                     </Card.Title>
-                    <Card.Text>{clothing.products.description}</Card.Text>
+
                     <Card.Text>
                         <strong>Price:</strong> £{clothing.products.price}
                     </Card.Text>

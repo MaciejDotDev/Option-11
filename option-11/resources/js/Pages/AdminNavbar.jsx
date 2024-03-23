@@ -70,12 +70,6 @@ const AdminNavbar = ({ auth, openModal }) => {
                         </Nav.Link>
 
 
-                        <Nav.Link
-                                    className="px-4 text-black bg-info rounded-2 "
-                                    href="/adminLogout"
-                                >
-                                    Logout
-                                </Nav.Link>
 
 
                     </Nav>
