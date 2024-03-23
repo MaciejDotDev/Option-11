@@ -14,6 +14,8 @@ class PartCheckController extends Controller
 
         $comp = Products::find($id);
 
-        dd($comp->compatability()->get());
+        //dd($comp->compatability()->get());
+        $compatibleProducts = $comp->compatability()->get();
+        return response()->json($compatibleProducts);
     }
 }

@@ -35,6 +35,28 @@ export default function IndividualBikePage({
         quantity: "",
     });
 
+     // State for compatible products , this will be used to store the compatible products
+     const [compatibleProducts, setCompatibleProducts] = useState([]);
+
+     // Function to fetch compatible products
+     const fetchCompatibleProducts = (productId) => {
+        //we use axios to fetch the compatible products from our web.php route
+         axios.get(`/api/bikecheck/${productId}`)
+             .then(response => {
+                //  we set the compatible products to the response data which is an array of products
+                 setCompatibleProducts(response.data);
+                 console.log(response.data);
+             })
+             .catch(error => {
+                 console.error('Error fetching compatible products:', error);
+             });
+     };
+
+        // We use useEffect to call the fetchCompatibleProducts function when the product id changes
+     useEffect(() => {
+            fetchCompatibleProducts(product.productid);
+        }, [product.productid]);
+
     // This is the state we are using to control the visibility of the size guide modal.
     const [showSizeGuideModal, setShowSizeGuideModal] = useState(false);
 
@@ -309,6 +331,20 @@ const addToWishlist = (productid) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            <div>
+                <h1>{product.products.productname}</h1>
+                <h2>Compatible Products</h2>
+                <ul>
+                    {compatibleProducts.map((product) => (
+                        <li key={product.productid}>
+
+                                {product.productname}
+
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     );
 }
