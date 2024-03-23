@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminPasswordController;
 use App\Http\Controllers\ManageAccount;
 use App\Http\Controllers\ManageBasketController;
 use App\Http\Controllers\ShowBikesController;
@@ -29,7 +30,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\AdminStockUpdate;
 use App\Http\Controllers\PartCheckController;
-
+use App\Http\Controllers\ReturnProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +54,10 @@ Route::get('/', function () {
 
 Route::get('/contactUs', function () {
     return Inertia::render('Contactus');
+});
+
+Route::get('/returnProduct', function () {
+    return Inertia::render('ReturnProduct');
 });
 Route::get('/updateAccount', function () {
 
@@ -135,6 +140,8 @@ Route::middleware('auth')->group(function () {
     //using axios
     Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
 
+    Route::get('/refund/{itemid}', [ReturnProductController::class, 'showReturnForm'])->name('showReturnForm');
+    Route::post('/create/refund', [ReturnProductController::class, 'createRefund'])->name('createRefund');
 
     Route::get('/RepairBooking', [ShowRepairBookingController::class, 'showAll'])->name('repairBooking');
     Route::get('deleteAccount', [ManageAccount::class, 'destroy'])->name('deleteAccount');
@@ -181,6 +188,8 @@ Route::group(['middleware' => 'fw-block-blacklisted'], function () {
     Route::group(['middleware' => ['admin']], function () {
 
 
+        Route::put('/admin/password', [AdminPasswordController::class, 'update'])->name('admin.password.update');
+
         Route::get('/addProduct', function () {
             return Inertia::render('AdminAddProduct');
         })->name('addProduct');
@@ -201,6 +210,8 @@ Route::group(['middleware' => 'fw-block-blacklisted'], function () {
         Route::get('/ordersItem/Item{itemOrderid}', [AdminEditOrders::class, 'editItemOrderPage'])->name('editItemOrderPage');
 
         Route::post('/ordersItem/Item/update', [AdminEditOrders::class, 'editOrderItem'])->name('editOrderItem');
+
+        Route::post('/ordersItem/Item/delete', [AdminEditOrders::class, 'deleteOrderItem'])->name('deleteOrderItem');
 
         Route::get('/addressView{addressid}', [AdminEditAddress::class, 'show'])->name('addressView');
 

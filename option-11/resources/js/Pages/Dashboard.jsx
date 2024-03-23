@@ -57,7 +57,7 @@ export default function Dashboard({
         itemId: null, //custom hoook so we can delete the wishlistitem
         password: '',
         current_password: '',
-        password: '',
+
         password_confirmation: '',
     });
     const submit = (e) => {
@@ -330,7 +330,7 @@ export default function Dashboard({
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>Save</PrimaryButton>
-                    <PrimaryButton onClick={closeModalUpdateAccount}>Cancel</PrimaryButton>
+                    <Button className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" onClick={closeModalUpdateAccount}>Cancel</Button>
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
@@ -411,7 +411,7 @@ export default function Dashboard({
                         Are you sure you want to delete your account?
                     </h2>
 
-                    <p className="mt-1 text-sm text-gray-600">
+                    <p className="mt-1 text-sm text-white">
                         Once your account is deleted, all of its resources and data will be permanently deleted. Please
                         enter your password to confirm you would like to permanently delete your account.
                     </p>

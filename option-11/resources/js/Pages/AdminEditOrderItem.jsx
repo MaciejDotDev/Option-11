@@ -19,6 +19,10 @@ function AdminEditOrderItem({products,product, auth}) {
         post(route("editOrderItem"));
     };
 
+    const submit2 = (e) => {
+        e.preventDefault();
+        post(route("deleteOrderItem"));
+    };
   return (
     <div>
  <AdminNavbar auth={auth} />
@@ -84,7 +88,7 @@ function AdminEditOrderItem({products,product, auth}) {
 
 
                         <Row className="mb-4">
-                            <Col className="mt-2" md={6}>
+                            <Col className="mt-2 flex" md={6}>
                                 <Button
                                     variant="primary"
                                     type="submit"
@@ -93,6 +97,19 @@ function AdminEditOrderItem({products,product, auth}) {
                                 >
                                     Update
                                 </Button>
+
+                                <Button
+                                    variant="danger"
+                                    type="button"
+                                    className="mt-2 mr-2 float-left"
+                                    disabled={processing}
+                                    onClick={submit2}
+                                >
+                                    remove
+                                </Button>
+
+
+
 
                             </Col>
 

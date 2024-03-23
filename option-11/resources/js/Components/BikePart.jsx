@@ -53,9 +53,9 @@ const BikePart = ({ filter, priceFilter }) => {
                     <h5 className="text-center card-title h4">
                         {part.products.productname}
                     </h5>
-                    <p className="card-text">{part.products.description}</p>
+
                     <p className="card-text">
-                        <strong>Price:</strong> Â£{part.products.price}
+                        <strong>Price:</strong> £{part.products.price}
                     </p>
                 </Card.Body>
                 <Card.Footer className=" flex gap-3">

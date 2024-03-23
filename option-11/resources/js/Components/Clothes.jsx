@@ -69,7 +69,7 @@ const Clothes = ({ clothes, auth, openModal, filter, priceFilter }) => {
                     <Card.Title className="text-center h4">
                         {clothing.products.productname}
                     </Card.Title>
-                    <Card.Text>{clothing.products.description}</Card.Text>
+
                     <Card.Text>
                         <strong>Price:</strong> £{clothing.products.price}
                     </Card.Text>

@@ -13,7 +13,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Footer from "@/Components/Footer";
-import CardMedia from '@mui/material/CardMedia';
+import CardMedia from "@mui/material/CardMedia";
 import {
     Select,
     MenuItem,
@@ -22,50 +22,69 @@ import {
     TextField,
     LinearProgress,
 } from "@mui/material";
-const OrderTrack = ({ auth,orderItem, status }) => {
+const OrderTrack = ({ auth, orderItem, status }) => {
     const card = (
         <React.Fragment>
             <CardContent>
-                <Typography
-                    sx={{ fontSize: 25, color: "white" }}
-                    color="text.primary"
-                    gutterBottom
-                >
-                    {orderItem.products.productname}
-                </Typography>
+                <div>
+                    <Typography
+                        sx={{ fontSize: 25, color: "white" }}
+                        color="text.primary"
+                        gutterBottom
+                    >
+                        {orderItem.products.productname}
+                    </Typography>
 
-                <Typography sx={{ mb: 1.5, fontSize: 15, color: "white"  }} color="text.secondary">
-                Total price: {orderItem.totalprice}
-                </Typography>
-                <Typography sx={{ mb: 1.5, fontSize: 15 , color: "white" }} color="text.secondary">
-                Quantity: {orderItem.quantity}
-                </Typography>
-                <Typography sx={{ mb: 1.5, fontSize: 15 , color: "white" }} color="text.secondary">
-                Status: {status}
-                </Typography>
-
+                    <Typography
+                        sx={{ mb: 1.5, fontSize: 15, color: "white" }}
+                        color="text.secondary"
+                    >
+                        Total price: {orderItem.totalprice}
+                    </Typography>
+                    <Typography
+                        sx={{ mb: 1.5, fontSize: 15, color: "white" }}
+                        color="text.secondary"
+                    >
+                        Quantity: {orderItem.quantity}
+                    </Typography>
+                    <Typography
+                        sx={{ mb: 1.5, fontSize: 15, color: "white" }}
+                        color="text.secondary"
+                    >
+                        Status: {status}
+                    </Typography>
+                </div>
             </CardContent>
             <CardActions>
-                                <Button size="small"   href={`/viewProduct/${orderItem.productid}`} sx={{color: 'white'}}>View Product</Button>
+                <Button
+                    size="small"
+                    href={`/viewProduct/${orderItem.productid}`}
+                    sx={{ color: "white" }}
+                >
+                    View Product
+                </Button>
+                <Button
+                    size="small"
+                    href={`/refund/${orderItem.orderitemid}`}
+                    sx={{ color: "white" }}
+                >
+                    Return Product
+                </Button>
             </CardActions>
         </React.Fragment>
     );
 
+    const [orderStatus, setOrderStatus] = useState(0);
 
-
-
-        const [orderStatus, setOrderStatus] = useState(0);
-
-        useEffect(() => {
-          if (status === "paid") {
+    useEffect(() => {
+        if (status === "paid") {
             setOrderStatus(20);
-          } else if(status === "dispatched") {
+        } else if (status === "dispatched") {
             setOrderStatus(50);
-          } else if ( status === "delivered") {
-
+        } else if (status === "delivered") {
             setOrderStatus(100);
-          }
-        }, [status]);
+        }
+    }, [status]);
     return (
         <div>
             {/* Navigation */}
@@ -74,17 +93,14 @@ const OrderTrack = ({ auth,orderItem, status }) => {
                     <Card
                         style={{
                             margin: "0 auto",
-                            width: "30%",
+                            width: "40%",
                             marginBottom: "3rem",
-                            backgroundColor: "#212529"
+                            backgroundColor: "#212529",
                         }}
                         variant="outlined"
                     >
                         {card}
-
-
                     </Card>
-
                 </Box>
                 <div
                     style={{
@@ -145,12 +161,14 @@ const OrderTrack = ({ auth,orderItem, status }) => {
                             textAlign: "center",
                         }}
                     >
-                        Your order has been paid now waiting for shipping.....
+                        {orderStatus == 50
+                            ? "Order has been shipped you should expect your product in a couple of weeks"
+                            : orderStatus == 100
+                            ? "Order has been delivered"
+                            : "Your order has been paid now waiting for shipping....."}
                     </p>
-
-
                 </div>
-                <Footer  />
+                <Footer />
             </AnimateModal>
         </div>
     );

@@ -3,6 +3,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
 import { Link } from "@inertiajs/react";
+import { Button } from 'react-bootstrap';
 import AdminNavbar from "@/Pages/AdminNavbar";
 import DashboardCard from "@/Components/DashboardCard";
 import { useState, useEffect,useRef } from "react";
@@ -19,7 +20,7 @@ const AdminDashboard = ({ auth, notifications }) => {
         itemId: null, //custom hoook so we can delete the wishlistitem
         password: '',
         current_password: '',
-        password: '',
+
         password_confirmation: '',
     });
     const [confirmingUpdateForm, setConfirmingUpdate] = useState(false);
@@ -28,6 +29,27 @@ const AdminDashboard = ({ auth, notifications }) => {
 
     const confirmUserDeletionUpdate = () => {
         setConfirmingUpdate(true);
+    };
+
+
+    const updatePassword = (e) => {
+        e.preventDefault();
+
+        put(route('admin.password.update'), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+            onError: (errors) => {
+                if (errors.password) {
+                    reset('password', 'password_confirmation');
+                    passwordInput.current.focus();
+                }
+
+                if (errors.current_password) {
+                    reset('current_password');
+                    currentPasswordInput.current.focus();
+                }
+            },
+        });
     };
     const [notification, setNotification] = useState([]);
 
@@ -244,13 +266,13 @@ const AdminDashboard = ({ auth, notifications }) => {
                             ))
                         ) : (
                             <p style={{ textAlign: "center" }}>
-                                You have not notifications yet
+                                You have not logs yet
                             </p>
                         )}
                     </List>
                 </DashboardCard>
                 <DashboardCard cardName="Settings">
-                    <Link
+                    <Button
 
                         onClick={confirmUserDeletionUpdate}
                         className="text-white btn btn-dark"
@@ -262,9 +284,9 @@ const AdminDashboard = ({ auth, notifications }) => {
                         }}
                     >
                        Change password
-                    </Link>
+                    </Button>
                     <Link
-                        href={route("updateAccount")}
+                       href="/adminLogout"
                         className="text-white btn btn-dark"
                         style={{
                             justifyContent: "flex-start",
@@ -301,7 +323,7 @@ const AdminDashboard = ({ auth, notifications }) => {
                                 </p>
             </header>
 
-            <form  className="mt-6 space-y-6">
+            <form onSubmit={updatePassword}  className="mt-6 space-y-6">
                 <div >
                     <InputLabel htmlFor="current_password" value="Current Password" className="text-white" />
 
@@ -351,7 +373,7 @@ const AdminDashboard = ({ auth, notifications }) => {
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>Save</PrimaryButton>
-                    <PrimaryButton onClick={closeModalUpdateAccount}>Cancel</PrimaryButton>
+                    <Button className="`inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" onClick={closeModalUpdateAccount}>Cancel</Button>
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"

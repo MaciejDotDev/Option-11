@@ -15,6 +15,7 @@ use Inertia\Inertia;
 use Stripe\Customer;
 use Stripe\Stripe;
 use App\Models\Notification;
+
 class AdminEditOrders extends Controller
 {
 
@@ -82,14 +83,14 @@ class AdminEditOrders extends Controller
             ]);
         } else {
 
-            return redirect()->with('error','something has gone wrong');
+            return redirect()->with('error', 'something has gone wrong');
         }
 
         $order = Orders::where('orderid', $request->orderid)->first();
         $notification = new Notification();
         $notification->notification_type = "log";
         $notification->notification_title = "Order has been modified";
-        $orderTime = \Carbon\Carbon::parse( $order->created_at)->format('d/m/Y H:i:s');
+        $orderTime = \Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s');
 
         $notification->notification_description = "Order $order->orderid  of user $order->userid has been modified at $orderTime";
 
@@ -101,41 +102,41 @@ class AdminEditOrders extends Controller
 
 
 
- /*   public function updateAddress(Request $request)
-    {
+    /*   public function updateAddress(Request $request)
+       {
 
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        $transaction = Transactions::where('orderid', $request->orderid)->first();
+           \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+           $transaction = Transactions::where('orderid', $request->orderid)->first();
 
 
-        $paymentMethod = \Stripe\PaymentMethod::update(
-            $transaction->paymentIntent, // Replace with the actual payment method ID
-            [
-                'billing_details' => [
-                    'address' => [
-                        'line1' => $request->street + $request->housenum,
+           $paymentMethod = \Stripe\PaymentMethod::update(
+               $transaction->paymentIntent, // Replace with the actual payment method ID
+               [
+                   'billing_details' => [
+                       'address' => [
+                           'line1' => $request->street + $request->housenum,
 
-                        'city' => $request->city,
-                        'state' => $request->state,
-                        'postal_code' => $request->postalcode,
-                        'country' => $request->country,
-                    ],
-                ],
-            ]
-        );
-    }
-*/
+                           'city' => $request->city,
+                           'state' => $request->state,
+                           'postal_code' => $request->postalcode,
+                           'country' => $request->country,
+                       ],
+                   ],
+               ]
+           );
+       }
+   */
     public function deleteOrder($orderid)
     {
 
 
-       $order =  Orders::where('orderid', $orderid)->first();
+        $order = Orders::where('orderid', $orderid)->first();
 
         $notification = new Notification();
         $notification->notification_type = "log";
         $notification->notification_title = "Order has been deleted";
-        $orderTime = \Carbon\Carbon::parse( $order->created_at)->format('d/m/Y H:i:s');
+        $orderTime = \Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s');
 
         $notification->notification_description = "Order $order->orderid  of user $order->userid has been deleted at $orderTime";
 
@@ -189,7 +190,7 @@ class AdminEditOrders extends Controller
 
         if ($validateInput) {
             $product = Products::where('productid', $request->productid)->first();
-            if ($product->stockquantity -request('quantity') >= 0 ) {
+            if ($product->stockquantity - request('quantity') >= 0) {
 
                 $ordersItem = OrderItem::with('products')->where('orderitemid', $request->itemid)->first();
 
@@ -197,13 +198,13 @@ class AdminEditOrders extends Controller
 
                 $ordersItem->productid = $request->productid;
 
-                $bike = Products::where('productid',$request->productid)->first();
-                $ordersItem->totalprice = $request->quantity * $bike->price;
+
+                $ordersItem->totalprice = $request->quantity * $product->price;
 
                 $product->stockquantity -= $ordersItem->quantity;
                 $product->save();
                 $ordersItem->save();
-
+                $this->updateTotalPrice($ordersItem->orderid);
                 $notification = new Notification();
                 $notification->notification_type = "log";
                 $notification->notification_title = "Order items have been modified";
@@ -225,5 +226,32 @@ class AdminEditOrders extends Controller
 
 
 
+    }
+
+    public function deleteOrderItem (Request $request) {
+
+        $ordersItem = OrderItem::with('products')->where('orderitemid', $request->itemid)->first();
+        $bike = Products::where('productid', $ordersItem->productid)->first();
+        $ordersItem->totalprice = $request->quantity * $bike->price;
+
+        $bike->stockquantity -= $ordersItem->quantity;
+        $this->updateTotalPrice($ordersItem->orderid);
+        $bike->save();
+        $ordersItem->delete();
+
+        return $this->getOrderItems($ordersItem->orderid);
+
+    }
+
+    public function updateTotalPrice($orderid)
+    {
+
+        $totalPrice = OrderItem::where('orderid', $orderid)->get()->sum('totalprice');
+
+        $order = Orders::where('orderid', $orderid)->first();
+
+        $order->totalprice = $totalPrice;
+
+        $order->save();
     }
 }

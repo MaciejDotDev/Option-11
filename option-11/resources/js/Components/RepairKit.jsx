@@ -62,9 +62,9 @@ const RepairKit = ({ filter, priceFilter }) => {
                     <Card.Title className="h4 text-center">
                         {kit.products.productname}
                     </Card.Title>
-                    <Card.Text>{kit.products.description}</Card.Text>
+
                     <Card.Text>
-                        <strong>Price:</strong> Â£{kit.products.price}
+                        <strong>Price:</strong> £{kit.products.price}
                     </Card.Text>
 
 

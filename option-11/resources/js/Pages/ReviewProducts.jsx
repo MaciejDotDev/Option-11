@@ -210,6 +210,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                                 <div
                                     style={{
                                         display: "block",
+                                        paddingBottom:"5rem"
                                     }}
                                 >
                                     <label style={{ color: "white" }}>
@@ -265,6 +266,7 @@ export default function ReviewProducts({ reviews, starsAvg, commentsCount,auth,o
                                     <button
                                         class="btn btn-outline-primary"
                                         type="submit"
+                                        style={{  marginTop:"1rem" }}
                                     >
                                         submit
                                     </button>

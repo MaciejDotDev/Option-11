@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\Products;
-use App\Models\User;
-use App\Models\Bikes;
-class Basket extends Model
+
+class Refunds extends Model
 {
+    use HasFactory;
 
     protected $primaryKey = 'basketid';
     protected $connection = 'mysql';
 
+    protected $table = 'refunds';
 
     public function user()
     {
@@ -25,7 +24,7 @@ class Basket extends Model
         return $this->belongsTo(Products::class, 'productid');
     }
     protected $fillable = [
-        'basketid',
+        'refundid',
         'productid',
         'userid',
         'quantity',
@@ -34,5 +33,4 @@ class Basket extends Model
 
 
     ];
-
 }

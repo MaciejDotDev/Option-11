@@ -111,10 +111,7 @@ const addToWishlist = (productid) => {
                         <h1 className="text-center text-white fs-2 mb-10">
                             {product.products.productname}
                         </h1>
-                        <p className="mb-3">
-                            <strong>Description:</strong>{" "}
-                            {product.products.description}{" "}
-                        </p>
+
                         <p className="mb-4">
                             <strong>Price:</strong> £{product.products.price}
                         </p>
@@ -122,25 +119,16 @@ const addToWishlist = (productid) => {
                             <strong>Category:</strong> {product.category}
                         </p>
                         <p className="mb-4">
-                            <strong>Colour:</strong> {product.colour}
+                            <strong>Compatible with:</strong> {product.CompatibleWithType}
                         </p>
+
                         <p className="mb-4">
                             <strong>Stock Quantity:</strong>{" "}
                             {product.products.stockquantity}
                         </p>
                         {/* Size selector */}
                         <Form.Group controlId="sizeSelect" className="mb-4">
-                            <Form.Label>Select Size:</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={handleSizeChange}
-                                value={data.size}
-                            >
-                                <option value="">-- Select --</option>
-                                <option value="Small">Small</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Large">Large</option>
-                            </Form.Control>
+
                             {/* Size Guide link */}
                             <div className=" pt-2">
                                 <label htmlFor={`quantity`}>Quantity</label>
@@ -229,15 +217,16 @@ const addToWishlist = (productid) => {
                 <div
                     style={{
                         backgroundColor: "#212529",
-                        width: "60%",
+
                         margin: "0 auto",
                         marginTop: "2rem",
                         borderRadius: "12px",
                         paddingBottom: "4rem",
                     }}
+                    className="productabs"
                 >
                     <Tabs
-                        defaultActiveKey="profile"
+                        defaultActiveKey="description"
                         id="uncontrolled-tab-example"
                         className="mb-3"
                         style={{
@@ -251,7 +240,7 @@ const addToWishlist = (productid) => {
                             title="Description"
                             style={{
                                 width: "60%",
-                                margin: "0 auto",
+                                margin: "0 3rem",
                                 color: "white",
                                 paddingBottom: "2rem",
                             }}
@@ -263,7 +252,7 @@ const addToWishlist = (productid) => {
                             title="Delivery options"
                             style={{
                                 width: "60%",
-                                margin: "0 auto",
+                                margin: "0 3rem",
                                 color: "white",
                                 paddingBottom: "2rem",
                             }}
@@ -275,7 +264,7 @@ const addToWishlist = (productid) => {
                             title="Contact"
                             style={{
                                 width: "60%",
-                                margin: "0 auto",
+                                margin: "0 3rem",
                                 color: "white",
                                 paddingBottom: "2rem",
                             }}
