@@ -26,7 +26,7 @@ class Products extends Model
         // it listens for sevents cotninuslsy by checking the condition in model
         static::updated(function ($product) {
             if ($product->stockquantity < 5) {
-                event(new \App\Events\StockLowEvent($product));
+                event(new \App\Events\StockLowEvent($product->productid));
             }
         });
     }

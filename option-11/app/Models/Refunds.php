@@ -9,7 +9,7 @@ class Refunds extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'basketid';
+    protected $primaryKey = 'refundid';
     protected $connection = 'mysql';
 
     protected $table = 'refunds';

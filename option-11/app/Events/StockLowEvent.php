@@ -21,11 +21,11 @@ class StockLowEvent implements ShouldBroadcast
      * Create a new event instance.
      */
 
-     public $orderid;
+     public $productid;
 
-    public function __construct($orderid)
+    public function __construct($productid)
     {
-        $this->orderid = $orderid; // paremeter to crete a new event
+        $this->productid = $productid; // paremeter to crete a new event
 
 
     }

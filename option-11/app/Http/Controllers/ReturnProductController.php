@@ -16,9 +16,19 @@ class ReturnProductController extends Controller
 
         $orderItem = OrderItem::find($itemid);
 
+        $refund = Refunds::find($itemid);
+
 
         if ($orderItem) {
-            return Inertia::render('ReturnProduct', ['orderitem' => $orderItem]);
+            if (!$refund) {
+                return Inertia::render('ReturnProduct', ['orderitem' => $orderItem]);
+            } else {
+
+
+
+            }
+
+
 
         } else {
 
@@ -49,7 +59,7 @@ class ReturnProductController extends Controller
         $orderitem = OrderItem::where('orderitemid', $validated['orderItemid'])->first();
         $refund = new Refunds();
 
-        $refund->productid = $orderitem->productid;
+        $refund->orderitemid = $validated['orderItemid'];
         $refund->userid = auth()->user()->userid;
         $refund->totalprice =$orderitem->totalprice;
         $refund->quantity = $orderitem->quantity;

@@ -3,15 +3,15 @@
 namespace App\Listeners;
 
 use App\Events\StockLowEvent;
+use App\Models\Wishlist;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class BroadCastLowStockEvent implements ShouldQueue // we're setting up a listerr that triggers events if the condition in the model returns a event
+class BroadCastLowStockEvent
 {
     /**
      * Create the event listener.
      */
-    use InteractsWithQueue;
     public function __construct()
     {
         //
@@ -22,6 +22,15 @@ class BroadCastLowStockEvent implements ShouldQueue // we're setting up a lister
      */
     public function handle(StockLowEvent $event): void
     {
-        //
+
+        $wishlist = Wishlist::where('productid',$event->productid)->where('userid',auth()->user()->userid)->first();
+        if ($wishlist) {
+            broadcast(new StockLowEvent($event->productid));
+
+        } else {
+
+
+        }
+
     }
 }

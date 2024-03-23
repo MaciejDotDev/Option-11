@@ -43,9 +43,7 @@ export default function IndividualRepairKitPage({
         setData("size", value);
     };
 
-    useEffect(() => {
-        toastr.error(flash.success);
-    }, [flash.success]);
+
     const [placeHolderImage, setPlaceHolderImage] = useState(null);
 
     useEffect(() => {

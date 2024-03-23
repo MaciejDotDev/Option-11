@@ -43,9 +43,7 @@ export default function IndividualBikePage({
         setData("size", value);
     };
 
-        useEffect(() => {
-            toastr.error(flash.message);
-        }, [flash]);
+
 
 
     const [placeHolderImage, setPlaceHolderImage] = useState(null);
