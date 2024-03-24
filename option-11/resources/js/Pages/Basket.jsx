@@ -9,8 +9,13 @@ import Footer from "@/Components/Footer";
 import { usePage } from "@inertiajs/react";
 import AnimateModal from "@/Components/AnimateModal";
 import AddRemBasket from "@/Components/AddRemBasket";
+import axios from "axios";
+
+
 export default function Basket({ auth, basket, totalprice }) {
     const { errors } = usePage().props;
+    const [compatibilityData, setCompatibilityData] = useState([]);
+    const [compatibilityResults, setCompatibilityResults] = useState(null);
     const { data, setData, post, processing } = useForm({
         basketid: null,
     });
@@ -19,6 +24,38 @@ export default function Basket({ auth, basket, totalprice }) {
         e.preventDefault();
         setData("basketid", basketid);
     };
+
+    //useEffect to fetch compatibility data
+    useEffect(() => {
+        const fetchCompatibility = async () => {
+        const compResponse = await axios.get('/api/bikecheck/${item.products.productid}');
+        setCompatibilityData(compResponse.data);
+    }
+    fetchCompatibility();
+    }, []);
+
+    //Function to check compatibility
+    const checkCompatibility = (itemA, itemB) => {
+      return compatibilityData.some(data => data.productid === itemA && data.itemB === itemB);
+    };
+
+    //Function to determine whether item is a bike
+    const isBike = (item) => {
+        const bikeTypes = ["Mountain Bike", "Road Bike", "Hybrid Bike", "Electric Bike", "Kids Bike"];
+        return bikeTypes.includes(item.products.productname);
+    }
+
+    //Handle Comp Check
+    const handleCompCheck = (itemA, itemB) => {
+        if (isBike(itemA) && isBike(itemB)) {
+            setCompatibilityResults(checkCompatibility(itemA, itemB));
+        } else {
+            setCompatibilityResults(null);
+        }
+    }
+
+
+
 
 const [selectedProduct, setSelectedProduct] = useState("");
 
@@ -41,6 +78,29 @@ const [selectedProduct, setSelectedProduct] = useState("");
                 <body className="basketbody">
                     <div className="basketContainer" style={{ fontFamily: "Koulen, sans-serif"  }}>
                         <h1 className="h1basket"  >Shopping Basket</h1>
+
+                        <h1>Check Compatibility</h1>
+                        <div>
+                            <select
+                                onChange={(e) => {
+                                    handleCompCheck(e.target.value, selectedProduct);
+                                }}
+                            >
+                                <option value="">Select Product</option>
+                                {basket.map((item, index) => (
+                                    <option key={index} value={item.products.productid}>
+                                        {item.products.productname}
+                                    </option>
+                                ))}
+                            </select>
+                            {compatibilityResults !== null ? (
+                                <p>Products are compatible</p>
+                            ) : compatibilityResults === null ? (
+                                <p>Products are not compatible</p>
+                            ) : (
+                                <p>Select a product to check compatibility</p>
+                            )}
+                        </div>
 
                         <div className="basketClass"  >
                             {basket.length > 0 ? (
