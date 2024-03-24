@@ -23,14 +23,22 @@ class BroadCastLowStockEvent
     public function handle(StockLowEvent $event): void
     {
 
-        $wishlist = Wishlist::where('productid',$event->productid)->where('userid',auth()->user()->userid)->first();
-        if ($wishlist) {
-            broadcast(new StockLowEvent($event->productid));
+        if (auth()->check()) {
 
-        } else {
+            $userId = auth()->id();
 
 
+            if ($event->productid) {
+                // Check if the product exists in the user's wishlist
+                $wishlist = Wishlist::where('productid', $event->productid)
+                                    ->where('userid', $userId)
+                                    ->first();
+
+                // If the product exists in the user's wishlist, broadcast the event
+                if ($wishlist) {
+                    broadcast(new StockLowEvent($event->productid));
+                }
+            }
         }
-
     }
 }

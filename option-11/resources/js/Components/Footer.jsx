@@ -6,6 +6,7 @@ const CustomFooter = ({position}) => {
         <footer className='bg-dark text-white text-center p-4'  style={{ position:position,
         left: 0,
         bottom: 0,
+
         width: "100%",
         backgroundColor: "red",
         color: "white",

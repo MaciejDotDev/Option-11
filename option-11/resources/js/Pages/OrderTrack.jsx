@@ -13,20 +13,20 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Footer from "@/Components/Footer";
-import CardMedia from "@mui/material/CardMedia";
-import {
-    Select,
-    MenuItem,
-    FormControl,
-    InputLabel,
-    TextField,
-    LinearProgress,
-} from "@mui/material";
-const OrderTrack = ({ auth, orderItem, status }) => {
+import Alert from "@mui/material/Alert";
+const OrderTrack = ({ auth, orderItem, status, errors }) => {
     const card = (
         <React.Fragment>
             <CardContent>
                 <div>
+                    {errors.refund && (
+                        <Alert
+                            severity="error"
+                            style={{ marginBottom: "1rem" }}
+                        >
+                            {errors.refund}
+                        </Alert>
+                    )}
                     <Typography
                         sx={{ fontSize: 25, color: "white" }}
                         color="text.primary"
@@ -63,13 +63,16 @@ const OrderTrack = ({ auth, orderItem, status }) => {
                 >
                     View Product
                 </Button>
-                <Button
-                    size="small"
-                    href={`/refund/${orderItem.orderitemid}`}
-                    sx={{ color: "white" }}
-                >
-                    Return Product
-                </Button>
+
+                {status == "delivered" && (
+                    <Button
+                        size="small"
+                        href={`/refund/${orderItem.orderitemid}`}
+                        sx={{ color: "white" }}
+                    >
+                        Return Product
+                    </Button>
+                )}
             </CardActions>
         </React.Fragment>
     );
@@ -89,86 +92,106 @@ const OrderTrack = ({ auth, orderItem, status }) => {
         <div>
             {/* Navigation */}
             <AnimateModal auth={auth}>
-                <Box sx={{ maxWidth: 1000 }} style={{ margin: "0 auto" }}>
-                    <Card
+                <div>
+                    <Box sx={{ maxWidth: 1000 }} style={{ margin: "0 auto" }}>
+                        <div
+                            className="orderTrack"
+                            style={{
+
+
+                            }}
+                        >
+                            <Card
+                                style={{
+                                    backgroundColor: "#212529",
+                                }}
+                                variant="outlined"
+                            >
+                                {card}
+                            </Card>
+                        </div>
+                    </Box>
+                    <div
                         style={{
-                            margin: "0 auto",
-                            width: "40%",
-                            marginBottom: "3rem",
-                            backgroundColor: "#212529",
+
                         }}
-                        variant="outlined"
+
+                        className="orderProgressBar"
                     >
-                        {card}
-                    </Card>
-                </Box>
-                <div
-                    style={{
-                        margin: "0 auto",
-                        backgroundColor: "#17191B",
-                        width: "50%",
-                        paddingBottom: "10rem",
-                    }}
-                >
-                    <ProgressBar percent={orderStatus}>
-                        <Step>
-                            {({ accomplished }) => (
-                                <div>
-                                    {" "}
+
+
+
+                        <ProgressBar percent={orderStatus}>
+                            <Step>
+                                {({ accomplished }) => (
+                                    <div>
+                                        {" "}
+                                        <div
+                                            style={{
+                                                backgroundColor: "#b8011b",
+
+                                                borderColor: "#b8011b",
+                                            }}
+                                            className="step"
+                                        ></div>
+                                    </div>
+                                )}
+                            </Step>
+                            <Step>
+                                {({ accomplished }) => (
                                     <div
                                         style={{
-                                            backgroundColor: "#b8011b",
-
-                                            borderColor: "#b8011b",
+                                            backgroundColor:
+                                                orderStatus >= 50
+                                                    ? "#b8011b"
+                                                    : "",
+                                            borderColor:
+                                                orderStatus >= 50
+                                                    ? "#b8011b"
+                                                    : "",
                                         }}
                                         className="step"
                                     ></div>
-                                </div>
-                            )}
-                        </Step>
-                        <Step>
-                            {({ accomplished }) => (
-                                <div
-                                    style={{
-                                        backgroundColor:
-                                            orderStatus >= 50 ? "#b8011b" : "",
-                                        borderColor:
-                                            orderStatus >= 50 ? "#b8011b" : "",
-                                    }}
-                                    className="step"
-                                ></div>
-                            )}
-                        </Step>
-                        <Step>
-                            {({ accomplished }) => (
-                                <div
-                                    style={{
-                                        backgroundColor:
-                                            orderStatus >= 100 ? "#b8011b" : "",
-                                        borderColor:
-                                            orderStatus >= 100 ? "#b8011b" : "",
-                                    }}
-                                    className="step"
-                                ></div>
-                            )}
-                        </Step>
-                    </ProgressBar>
-                    <p
-                        style={{
-                            marginTop: "3rem",
-                            marginBottom: "3rem",
-                            color: "white",
-                            textAlign: "center",
-                        }}
-                    >
-                        {orderStatus == 50
-                            ? "Order has been shipped you should expect your product in a couple of weeks"
-                            : orderStatus == 100
-                            ? "Order has been delivered"
-                            : "Your order has been paid now waiting for shipping....."}
-                    </p>
+                                )}
+                            </Step>
+                            <Step>
+                                {({ accomplished }) => (
+                                    <div
+                                        style={{
+                                            backgroundColor:
+                                                orderStatus >= 100
+                                                    ? "#b8011b"
+                                                    : "",
+                                            borderColor:
+                                                orderStatus >= 100
+                                                    ? "#b8011b"
+                                                    : "",
+                                        }}
+                                        className="step"
+                                    ></div>
+                                )}
+                            </Step>
+                        </ProgressBar>
+                    </div>
+
+                        <p
+                            style={{
+                                marginTop: "3rem",
+                                marginBottom: "3rem",
+                                color: "white",
+                                textAlign: "center",
+                            }}
+                        >
+                            {orderStatus == 50
+                                ? "Order has been shipped you should expect your product in a couple of weeks"
+                                : orderStatus == 100
+                                ? "Order has been delivered"
+                                : "Your order has been paid now waiting for shipping....."}
+                        </p>
+
                 </div>
-                <Footer />
+
+                <Footer  position="absolute"/>
             </AnimateModal>
         </div>
     );

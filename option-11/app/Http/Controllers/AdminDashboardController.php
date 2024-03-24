@@ -9,8 +9,6 @@ class AdminDashboardController extends Controller
     public function dashboard(Request $request)
     {
 
-
-
         return Inertia::render('AdminDashboard');
 
     }
@@ -18,18 +16,31 @@ class AdminDashboardController extends Controller
 
     public function notifications() {
 
+        try {
+            $notifications = Notification::orderBy('created_at', 'desc')->where('notification_type', '!=', 'log')->get();
+            return response()->json($notifications);
 
-        $notifications = Notification::orderBy('created_at', 'desc')->where('notification_type', '!=', 'log')->get();
-                return response()->json($notifications);
+        } catch (\Exception $e) {
+
+                return redirect()->back()->with('error', $e->getMessage());
+        }
+
 
     }
 
 
     public function logs() {
 
+        try  {
 
-        $notifications = Notification::orderBy('created_at', 'desc')->where('notification_type', 'log')->get();
-        return response()->json($notifications);
+            $notifications = Notification::orderBy('created_at', 'desc')->where('notification_type', 'log')->get();
+            return response()->json($notifications);
+
+        } catch(\Exception $e) {
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
 
 }
 }

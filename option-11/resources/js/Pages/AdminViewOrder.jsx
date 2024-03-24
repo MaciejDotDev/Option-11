@@ -56,7 +56,7 @@ const AdminViewOrder = ({ orders }) => {
             <td scope="row">{formattedDate} {formattedTime}</td>
 
             <td scope="row">
-                <a href={route("editOrder", { orderid: order.orderid })}>
+                <a  class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href={route("editOrder", { orderid: order.orderid })}>
                     View Order
                 </a>{" "}
 

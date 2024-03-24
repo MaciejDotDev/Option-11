@@ -9,11 +9,11 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
 
-    
-    public function checkUser () {
-        
 
-        return redirect('/dashboard')->with('success', $success);
+    public function checkUser () {
+
+
+
 
 
     }

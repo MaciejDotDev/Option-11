@@ -1,6 +1,9 @@
 <?php
 
+use App\Events\StockLowEvent;
+use App\Http\Controllers\AdminRefundsController;
 use App\Http\Controllers\Auth\AdminPasswordController;
+use App\Http\Controllers\CheckStock;
 use App\Http\Controllers\ManageAccount;
 use App\Http\Controllers\ManageBasketController;
 use App\Http\Controllers\ShowBikesController;
@@ -96,7 +99,9 @@ Route::get('/api/bikesearch', [ShowBikesController::class, 'search'])->name('bik
 
 
 
-
+Route::get('/confirmedOrder', function () {
+    return Inertia::render('ConfirmedReturnedOrder');
+});
 
 
 
@@ -133,10 +138,12 @@ Route::get('/api/checkCompatibility/{product1}/{product2}', [PartCheckController
 Route::match(['get', 'post'], '/webhook', [PaymentDetails::class, 'webhook'])->name('webhook');
 
 
-
+Route::get('/api/check/stock', [CheckStock::class, 'checkStock'])->name('checkstock');
 // to add to teh middleware later
 
 Route::middleware('auth')->group(function () {
+
+
 
     //using axios
     Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
@@ -180,14 +187,20 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::get('/low-stock', function() {
+        event(new StockLowEvent('Product low in stock'));
 
-
+})->name('low-stock');
 
 
 ///admin middleware below
 Route::group(['middleware' => 'fw-block-blacklisted'], function () {
     Route::group(['middleware' => ['admin']], function () {
 
+        Route::get('/admin/refunds', [AdminRefundsController::class,'AdminViewRedunds'])->name('adminReportsShow');
+        Route::get('/admin/refunds/edit/{refundid}', [AdminRefundsController::class,'updateShow'])->name('updateShowRefund');
+
+        Route::post('/admin/refunds/edit/update', [AdminRefundsController::class,'update'])->name('updateRefund');
 
         Route::put('/admin/password', [AdminPasswordController::class, 'update'])->name('admin.password.update');
 

@@ -7,7 +7,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import Footer from "./Components/Footer";
 import AdminLogin from "@/Pages/Auth/AdminLogin";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const appName = import.meta.env.VITE_APP_NAME || "Option-11";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

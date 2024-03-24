@@ -126,17 +126,7 @@ const addToWishlist = (productid) => {
                         </p>
                         {/* Size selector */}
                         <Form.Group controlId="sizeSelect" className="mb-4">
-                            <Form.Label>Select Size:</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={handleSizeChange}
-                                value={data.size}
-                            >
-                                <option value="">-- Select --</option>
-                                <option value="Small">Small</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Large">Large</option>
-                            </Form.Control>
+
                             {/* Size Guide link */}
                             <div className=" pt-2">
                                 <label htmlFor={`quantity`}>Quantity</label>

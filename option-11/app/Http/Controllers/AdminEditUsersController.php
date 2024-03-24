@@ -60,11 +60,14 @@ class AdminEditUsersController extends Controller
             $notification->notification_title = "User has modified";
             $orderTime = \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s');
 
-            $product = $user->userid;
+            $userid = $user->userid;
 
-            $notification->notification_description = "User $product, at $orderTime has been modified";
+            $notification->notification_description = "User $userid, at $orderTime has been modified";
             $notification->save();
 
+        } else {
+
+            return redirect()->back()->withErrors(['empty' => 'Invalid input!']);
         }
 
 
@@ -92,9 +95,9 @@ class AdminEditUsersController extends Controller
         $notification->notification_title = "User has deleted";
         $orderTime = \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s');
 
-        $product = $user->userid;
+        $userid = $user->userid;
 
-        $notification->notification_description = " User $product, at $orderTime has been deleted";
+        $notification->notification_description = "User $userid, at $orderTime has been deleted";
         $notification->save();
 
         return  Redirect::to('/adminUsers');

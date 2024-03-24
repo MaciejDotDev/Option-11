@@ -57,7 +57,7 @@ export default function AdminViewOrderItems({ ordersItems, auth }) {
             <td scope="row">{formattedDate} {formattedTime}</td>
 
             <td scope="row">
-                <a href={route("editItemOrderPage", { itemOrderid: orderItem.orderitemid })}>
+                <a   class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href={route("editItemOrderPage", { itemOrderid: orderItem.orderitemid })}>
                     View Item
                 </a>{" "}
 

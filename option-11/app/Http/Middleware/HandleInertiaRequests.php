@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Middleware;
+
+use App\Models\Products;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 use Inertia\Inertia;
 use App\Models\Basket;
+
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -41,26 +45,27 @@ class HandleInertiaRequests extends Middleware
         }
 
 
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
             ],
 
-            'ziggy' => fn () => [
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
             'flash' => [
 
-                'message' => fn () => $request->session()->get('success'),
-                'wishlist' => fn () => $request->session()->get('wishlist')
+                'message' => fn() => $request->session()->get('success'),
+                'wishlist' => fn() => $request->session()->get('wishlist')
             ],
 
             'baskIcon' => [
 
 
-                'basketCount'=>$basketCount,
+                'basketCount' => $basketCount,
 
             ]
         ];

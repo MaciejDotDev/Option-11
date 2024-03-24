@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\User;
+
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Products;
 use App\Models\Categories;

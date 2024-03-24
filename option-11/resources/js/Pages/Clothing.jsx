@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import NavBar from "@/Components/NavBar";
 import AnimateModal from "@/Components/AnimateModal";
-
+import Footer from "@/Components/Footer";
 const Clothing = ({ auth, clothes }) => {
     const [filter, setFilter] = useState("All Clothes");
     const [priceFilter, setPriceFilter] = useState("All Prices");
@@ -83,14 +83,7 @@ const Clothing = ({ auth, clothes }) => {
                     priceFilter={priceFilter}
                 />
 
-                <div className="text-center mt-4">
-                    <InertiaLink
-                        className="btn btn-light"
-                        href={route("basket")}
-                    >
-                        Go to Basket
-                    </InertiaLink>
-                </div>
+<Footer/>
             </AnimateModal>
         </div>
     );

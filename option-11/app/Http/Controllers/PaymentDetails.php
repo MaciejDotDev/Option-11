@@ -246,10 +246,10 @@ class PaymentDetails extends Controller
                 $transaction->save();
 
 
-                $orderItems = OrderItem::where('orderid', $order->orderid)->get();
-                foreach ($orderItems as $item) {
+
+                foreach ($basket as $item) {
                     $product = Products::where('productid', $item->productid)->first();
-                    $product->stockquantity -= $item->quantity; //removing stock from products
+                    $product->stockquantity  = $product->stockquantity - $item->quantity; //removing stock from products
                     $product->save();
 
                 }

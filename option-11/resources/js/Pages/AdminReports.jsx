@@ -59,7 +59,7 @@ const AdminReports = ({ auth }) => {
                         <td scope="row">User</td>
                         <td scope="row">
                             {" "}
-                            <a href="users/stats/export/">Download</a>{" "}
+                            <a  class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="users/stats/export/">Download</a>{" "}
                         </td>
                     </tr>
                 </tbody>
@@ -72,7 +72,7 @@ const AdminReports = ({ auth }) => {
                         <td scope="row">ProductHistory</td>
                         <td scope="row">
                             {" "}
-                            <a href="products/stats/export/">Download</a>{" "}
+                            <a  class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="products/stats/export/">Download</a>{" "}
                         </td>
                     </tr>
                 </tbody>

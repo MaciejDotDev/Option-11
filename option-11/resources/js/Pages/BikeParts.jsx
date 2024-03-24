@@ -11,7 +11,7 @@ import AnimateModal from "@/Components/AnimateModal";
 // In React, we use a function to create a component, which can be a page or a component
 // In this case, this is a page, so we create a function called BikeParts
 // In the page bikeparts, we pass in the props auth and bikeparts, which we get from the controller, to use in the page
-
+import Footer from "@/Components/Footer";
 const BikeParts = ({ auth, bikePart }) => {
     // State for parts filtering process, with default value set to all parts.
     const [filter, setFilter] = useState("All Parts");
@@ -92,7 +92,7 @@ const BikeParts = ({ auth, bikePart }) => {
                     priceFilter={priceFilter}
                 />
 
-
+<Footer/>
             </AnimateModal>
         </div>
     );

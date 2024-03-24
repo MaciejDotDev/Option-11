@@ -213,7 +213,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Cycling Jersey',
             'description' => 'A comfortable jersey for your cycling adventures.',
             'price' => rand(50, 150),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/clothing-products/Jersey-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
@@ -222,7 +222,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Biking Shorts',
             'description' => 'Durable shorts for a smooth ride.',
             'price' => rand(30, 80),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/clothing-products/shorts-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
@@ -231,7 +231,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Cycling Jacket',
             'description' => 'A lightweight jacket for changing weather conditions.',
             'price' => rand(60, 120),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/clothing-products/jacket-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
@@ -240,7 +240,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Biking Tights',
             'description' => 'Tights for aero efficiency during rides.',
             'price' => rand(40, 100),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/clothing-products/tights-1.jpg',
             'categoryid'=> $clothing->categoryid,
         ]);
@@ -296,7 +296,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Bike Pedals',
             'description' => 'Quality pedals for a comfortable ride.',
             'price' => rand(20, 50),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/bike-pedals.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -305,7 +305,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Handlebar Grips',
             'description' => 'Comfortable grips for better control.',
             'price' => rand(10, 30),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/red-grips.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -314,7 +314,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Bike Saddle',
             'description' => 'An ergonomic saddle for a smooth ride.',
             'price' => rand(30, 70),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' =>20,
             'imageURL' => 'product-images/parts-products/bike-seat.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -323,7 +323,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Bike Lights Set',
             'description' => 'A set of lights for safety during night rides.',
             'price' => rand(15, 40),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/lights-set.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -333,7 +333,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Electric Frame',
             'description' => 'A frame for building your own electric bike.',
             'price' => rand(100, 200),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/electric-frame.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -342,7 +342,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Road Frame',
             'description' => 'A frame for building your own road bike.',
             'price' => rand(100, 200),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/road-frame.png',
             'categoryid'=> $bikepart->categoryid,
 
@@ -352,7 +352,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Mountain Frame',
             'description' => 'A frame for building your own mountain bike.',
             'price' => rand(100, 200),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' =>20,
             'imageURL' => 'product-images/parts-products/mountain-frame.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -361,7 +361,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Hybrid Frame',
             'description' => 'A frame for building your own hybrid bike.',
             'price' => rand(100, 200),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/hybrid-frame.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
@@ -370,7 +370,7 @@ class ProductsSeeder extends Seeder
             'productname' => 'Kids Frame',
             'description' => 'A frame for building your own kids bike.',
             'price' => rand(100, 200),
-            'stockquantity' => rand(5, 20),
+            'stockquantity' => 20,
             'imageURL' => 'product-images/parts-products/kids-frame.png',
             'categoryid'=> $bikepart->categoryid,
         ]);
