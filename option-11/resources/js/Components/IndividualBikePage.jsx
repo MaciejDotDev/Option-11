@@ -35,6 +35,28 @@ export default function IndividualBikePage({
         quantity: "",
     });
 
+    // State for compatible products , this will be used to store the compatible products
+    const [compatibleProducts, setCompatibleProducts] = useState([]);
+
+    // Function to fetch compatible products
+    const fetchCompatibleProducts = (productId) => {
+        //we use axios to fetch the compatible products from our web.php route
+        axios.get(`/api/bikecheck/${productId}`)
+            .then(response => {
+                //  we set the compatible products to the response data which is an array of products
+                setCompatibleProducts(response.data);
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching compatible products:', error);
+            });
+    };
+
+    // We use useEffect to call the fetchCompatibleProducts function when the product id changes
+    useEffect(() => {
+        fetchCompatibleProducts(product.productid);
+    }, [product.productid]);
+
     // This is the state we are using to control the visibility of the size guide modal.
     const [showSizeGuideModal, setShowSizeGuideModal] = useState(false);
 
@@ -79,20 +101,20 @@ export default function IndividualBikePage({
 
     const [wishlistError, setWishlistError] = useState("");
 
-const addToWishlist = (productid) => {
-    axios.post('/api/wishlist/add/', { productid: productid })
-    .then(response => {
-        setWishList(response.data.message);
-        if (response.data.error) {
+    const addToWishlist = (productid) => {
+        axios.post('/api/wishlist/add/', { productid: productid })
+            .then(response => {
+                setWishList(response.data.message);
+                if (response.data.error) {
 
-            setWishlistError(response.data.error);
-        }
+                    setWishlistError(response.data.error);
+                }
 
-    })
-    .catch(error => {
-        console.log(error);
-    });
-}
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
     return (
         <>
@@ -152,52 +174,52 @@ const addToWishlist = (productid) => {
                         >
                             Size Guide
                         </a>
-                        <div style={{ display:"flex",marginTop:"1rem" }}>
+                        <div style={{ display: "flex", marginTop: "1rem" }}>
                             {auth.user ? (
                                 <div>
- <div style={{ display: "flex" }}>
-                                    <form onSubmit={submit} style={{ marginRight: "1rem" }}>
-                                        <Button
-                                            type="submit"
-                                            variant="outline-primary"
-                                        >
-                                            Add to basket
-                                        </Button>
+                                    <div style={{ display: "flex" }}>
+                                        <form onSubmit={submit} style={{ marginRight: "1rem" }}>
+                                            <Button
+                                                type="submit"
+                                                variant="outline-primary"
+                                            >
+                                                Add to basket
+                                            </Button>
 
-                                    </form>
-                                    <div>
-                                      <Button
-                                          // href={route("productDetails", { id: bike.bikeid })}
-                                         onClick={() => addToWishlist(product.productid)}
-                                          className="btn btn-outline-primary"
-                                      >
-                                          add to wishlist
-                                      </Button>
+                                        </form>
+                                        <div>
+                                            <Button
+                                                // href={route("productDetails", { id: bike.bikeid })}
+                                                onClick={() => addToWishlist(product.productid)}
+                                                className="btn btn-outline-primary"
+                                            >
+                                                add to wishlist
+                                            </Button>
+
+                                        </div>
 
                                     </div>
+                                    <p style={{ color: "green" }}
+                                        className="block font-medium text-sm text-gray-700">{wishlist}</p>
+                                    <InputError
+                                        message={wishlistError}
+                                        className="mt-2"
+                                    />
+                                    <p
+                                        style={{ color: "green" }}
+                                        className="block font-medium text-sm text-gray-700"
+                                    >
+                                        {flash.message}
+                                    </p>
 
-                                </div>
-                                 <p style={{ color: "green" }}
-                                 className="block font-medium text-sm text-gray-700">{wishlist}</p>
-                                 <InputError
-                                 message={wishlistError}
-                                 className="mt-2"
-                             />
-                       <p
-                               style={{ color: "green" }}
-                               className="block font-medium text-sm text-gray-700"
-                           >
-                               {flash.message}
-                           </p>
-
-                           <InputError
-                               message={errors.stock}
-                               className="mt-2"
-                           />
-                           <InputError
-                               message={errors.quantity}
-                               className="mt-2"
-                           />
+                                    <InputError
+                                        message={errors.stock}
+                                        className="mt-2"
+                                    />
+                                    <InputError
+                                        message={errors.quantity}
+                                        className="mt-2"
+                                    />
                                 </div>
 
                             ) : (
@@ -272,6 +294,28 @@ const addToWishlist = (productid) => {
                         >
                             Tab content for Contact
                         </Tab>
+
+                        <Tab
+                            eventKey={"Compatible Products"}
+                            title={"Compatible Products"}
+                            style={{
+                                width: "60%",
+                                margin: "0 3rem",
+                                color: "white",
+                                paddingBottom: "2rem",
+                            }}
+                        >
+                            <h2>Compatible Products</h2>
+                            <ul></ul>
+                            <ul>
+                                {compatibleProducts.map((product) => (
+                                    <li key={product.productid}>
+                                        {product.productname}
+                                    </li>
+                                ))}
+                            </ul>
+                        </Tab>
+
                     </Tabs>
                 </div>
             </Container>

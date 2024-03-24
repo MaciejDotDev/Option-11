@@ -15,6 +15,17 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
+
+        //Uni Staff Account normal user ( testing purpose )
+        user::create([
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+            'email' => 'john@doe.com',
+            'phonenumber' => '1234567890',
+            'password' => Hash::make('password123'),
+        ]);
+
+
         $faker = Faker::create();
 
         // Dummy data for users
