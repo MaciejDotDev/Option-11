@@ -10,11 +10,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class BikePart extends Model
 {
     //This is the table name
-    protected $table = 'bikeparts';
+    protected $table = 'products';
     //This is the primary key
-    protected $primaryKey = 'bikepartsid';
+    protected $primaryKey = 'productid';
     //This is the connection name
     protected $connection = 'mysql';
+
+    //We only want to show the products who's product name ends in or contains "frame"
+    public function scopeFrame($query)
+    {
+        return $query->where('productname', 'like', '%frame%');
+    }
+
+
     //These are the fillable fields , they represent the columns in the table
 
     public function products()

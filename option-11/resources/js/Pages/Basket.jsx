@@ -16,6 +16,8 @@ export default function Basket({ auth, basket, totalprice }) {
     const { errors } = usePage().props;
     const [compatibilityData, setCompatibilityData] = useState([]);
     const [compatibilityResults, setCompatibilityResults] = useState(null);
+    const [selectedProduct2, setSelectedProduct2] = useState("");
+
     const { data, setData, post, processing } = useForm({
         basketid: null,
     });
@@ -25,35 +27,24 @@ export default function Basket({ auth, basket, totalprice }) {
         setData("basketid", basketid);
     };
 
-    //useEffect to fetch compatibility data
-    useEffect(() => {
-        const fetchCompatibility = async () => {
-        const compResponse = await axios.get('/api/bikecheck/${item.products.productid}');
-        setCompatibilityData(compResponse.data);
-    }
-    fetchCompatibility();
-    }, []);
+//Functionality of checking compatibility
+const handleCompCheck = async (productId1, productId2) => {
+    try {
+        const response = await axios.get(`/api/checkCompatibility/${productId1}/${productId2}`);
+        const { compatible } = response.data;
 
-    //Function to check compatibility
-    const checkCompatibility = (itemA, itemB) => {
-      return compatibilityData.some(data => data.productid === itemA && data.itemB === itemB);
-    };
-
-    //Function to determine whether item is a bike
-    const isBike = (item) => {
-        const bikeTypes = ["Mountain Bike", "Road Bike", "Hybrid Bike", "Electric Bike", "Kids Bike"];
-        return bikeTypes.includes(item.products.productname);
-    }
-
-    //Handle Comp Check
-    const handleCompCheck = (itemA, itemB) => {
-        if (isBike(itemA) && isBike(itemB)) {
-            setCompatibilityResults(checkCompatibility(itemA, itemB));
+        // Handle compatibility result
+        if (compatible) {
+            console.log('Products are compatible');
+            return setCompatibilityResults(true);
         } else {
-            setCompatibilityResults(null);
+            console.log('Products are not compatible');
+            return setCompatibilityResults(false);
         }
+    } catch (error) {
+        console.error('Error checking compatibility:', error);
     }
-
+}
 
 
 
@@ -80,27 +71,44 @@ const [selectedProduct, setSelectedProduct] = useState("");
                         <h1 className="h1basket"  >Shopping Basket</h1>
 
                         <h1>Check Compatibility</h1>
-                        <div>
-                            <select
-                                onChange={(e) => {
-                                    handleCompCheck(e.target.value, selectedProduct);
-                                }}
-                            >
-                                <option value="">Select Product</option>
-                                {basket.map((item, index) => (
-                                    <option key={index} value={item.products.productid}>
-                                        {item.products.productname}
-                                    </option>
-                                ))}
-                            </select>
-                            {compatibilityResults !== null ? (
-                                <p>Products are compatible</p>
-                            ) : compatibilityResults === null ? (
-                                <p>Products are not compatible</p>
-                            ) : (
-                                <p>Select a product to check compatibility</p>
-                            )}
-                        </div>
+<div>
+    <select style={{color: "black"}}
+        value={selectedProduct}
+        onChange={(e) => setSelectedProduct(e.target.value)}
+    >
+        <option value="">Select Product</option>
+        {basket.map((item, index) => (
+            <option key={index} value={item.products.productid}>
+                {item.products.productname}
+            </option>
+        ))}
+    </select>
+    <select style={{color: "black"}}
+        value={selectedProduct2}
+        onChange={(e) => setSelectedProduct2(e.target.value)}
+    >
+        <option value="">Select Product</option>
+        {basket.map((item, index) => (
+            <option key={index} value={item.products.productid}>
+                {item.products.productname}
+            </option>
+        ))}
+    </select>
+    <button onClick={() => handleCompCheck(selectedProduct, selectedProduct2)}>Check Compatibility</button>
+
+    {console.log(compatibilityResults)};
+    {console.log(selectedProduct)};
+    {console.log(selectedProduct2)};
+
+    {compatibilityResults === true ? (
+        <p>Products are compatible</p>
+    ) : compatibilityResults === false ? (
+        <p>Products are not compatible</p>
+    ) : (
+        <p>Select two products to check compatibility</p>
+    )}
+</div>
+
 
                         <div className="basketClass"  >
                             {basket.length > 0 ? (

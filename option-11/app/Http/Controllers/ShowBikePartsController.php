@@ -1,96 +1,66 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ManageBasketController;
-use App\Models\Products;
-use App\Models\Categories;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\Basket;
 use App\Models\BikePart;
-use Inertia\Inertia;
 use App\Models\Reviews;
+use Inertia\Inertia;
+
 class ShowBikePartsController extends ManageBasketController
 {
     /**
-     * Create a new controller instance.
+     * Show all bike parts.
      *
-     * @return void
-     */
-
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Inertia\Response
      */
     public function showAll()
     {
+        // Retrieve all bike parts whose product name contains the word "frame"
+        $bikeParts = BikePart::frame()->with('products')->get();
 
-
-
-        return Inertia::render('BikeParts');
-
-
-
+        return Inertia::render('BikeParts', ['bikeParts' => $bikeParts]);
     }
 
-    public function search () {
+    /**
+     * Search bike parts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        // Retrieve all bike parts whose product name contains the word "frame"
+        $bikeParts = BikePart::frame()->with('products')->get();
 
-        $product =[];
-
-        $products =[];
-        $bikes =  BikePart::with('products')->get();
-
-
-        foreach ($bikes as $bike) {
-
-            if (!in_array($bike->products->productname, $product)) {
-                $product[] = $bike->products->productname;
-                $products[] = $bike;
-
-            }
-
-
-        }
-return response()->json($products);// Corrected the key to 'bikeParts'
+        return response()->json($bikeParts);
     }
 
+    /**
+     * Show an individual bike part.
+     *
+     * @param  int  $productid
+     * @return \Inertia\Response
+     */
     public function showIndividual($productid)
     {
-
         $bike = BikePart::with('products')->where('productid', $productid)->first();
 
-        $reviews = Reviews::with('user')->where('productid', $productid)->orderBy('created_at', 'DESC')
-            ->get(); // this one is the one in actual production changed so now it also gets based on the product id
+        $reviews = Reviews::with('user')->where('productid', $productid)
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         $stars = Reviews::where('productid', $productid)->get();
 
+        $starTotal = $stars->pluck('stars')->toArray();
+        $starsAvg = $starTotal ? round(array_sum($starTotal) / count($starTotal), 1) : null;
+        $commentsCount = count($stars);
 
-        $starTotal = [];
-
-        foreach ($stars as $item) {
-
-            $starTotal[] = $item->stars;
-
-        }
-
-        if ($starTotal == null) {
-
-            return Inertia::render('ShowBikePartPage', ['product' => $bike, 'reviews' => $reviews]);
-        }
-        $starsAvg = round(array_sum($starTotal) / $stars->count(), 1);
-
-        $commentsCount = $stars->count();
-
-
-
-
-
-
-        return Inertia::render('ShowBikePartPage', ['product' => $bike, 'reviews' => $reviews, 'starsAvg' => $starsAvg, 'commentsCount' => $commentsCount]);
-
-
+        return Inertia::render('ShowBikePartPage', [
+            'product' => $bike,
+            'reviews' => $reviews,
+            'starsAvg' => $starsAvg,
+            'commentsCount' => $commentsCount
+        ]);
     }
 }
+?>

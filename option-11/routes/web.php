@@ -123,6 +123,7 @@ Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('cloth
 //bikeid check
 Route::get('/api/bikecheck/{id}', [PartCheckController::class, 'check'])->name('bikecheck');
 
+Route::get('/api/checkCompatibility/{product1}/{product2}', [PartCheckController::class, 'checkCompatibility']);
 
 
 
