@@ -50,7 +50,7 @@ const AdminEditProducts = ({ products }) => {
                 </td>
                 <td scope="row">
                     {" "}
-                    <a
+                    <a  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         href={route("editProducts", {
                             productid: product.productid,
                         })}

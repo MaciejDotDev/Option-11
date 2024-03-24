@@ -40,7 +40,7 @@ const AdminEditUsers = ({ users }) => {
             <td scope="row">{formattedDate} {formattedTime}</td>
 
             <td scope="row">
-                <a href={route("adminViewUser", { userid: user.userid })}>
+                <a  class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href={route("adminViewUser", { userid: user.userid })}>
                     View User
                 </a>{" "}
 
@@ -87,7 +87,7 @@ const AdminEditUsers = ({ users }) => {
                 <tbody>{bikePartList}</tbody>
 
             </table>
-            <a   className="px-4 py-2 text-center text-white bg-blue-500 rounded-md" href="users/export/" >Export</a>
+
         </div>
         </div>
 

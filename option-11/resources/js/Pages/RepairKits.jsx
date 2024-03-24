@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import RepairKit from "@/Components/RepairKit";
 import AnimateModal from "@/Components/AnimateModal";
-
+import Footer from "@/Components/Footer";
 const RepairKits = ({ auth, repairKit }) => {
     const [filter, setFilter] = useState("All Repair Kits");
     const [priceFilter, setPriceFilter] = useState("All Prices");
@@ -79,7 +79,7 @@ const RepairKits = ({ auth, repairKit }) => {
                     priceFilter={priceFilter}
                 />
 
-
+    <Footer/>
             </AnimateModal>
         </div>
     );

@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import ReviewProducts from "@/Pages/ReviewProducts";
 import clothesSGuide from "../../assets/clothes-size.png";
-import axios from 'axios';
+import axios from "axios";
 import toastr from "toastr";
 import AnimateModal from "@/Components/AnimateModal";
 import { Link } from "@mui/icons-material";
@@ -42,7 +42,6 @@ export default function IndividualRepairKitPage({
         const { value } = e.target;
         setData("size", value);
     };
-
 
     const [placeHolderImage, setPlaceHolderImage] = useState(null);
 
@@ -77,20 +76,19 @@ export default function IndividualRepairKitPage({
 
     const [wishlistError, setWishlistError] = useState("");
 
-const addToWishlist = (productid) => {
-    axios.post('/api/wishlist/add/', { productid: productid })
-    .then(response => {
-        setWishList(response.data.message);
-        if (response.data.error) {
-
-            setWishlistError(response.data.error);
-        }
-
-    })
-    .catch(error => {
-        console.log(error);
-    });
-}
+    const addToWishlist = (productid) => {
+        axios
+            .post("/api/wishlist/add/", { productid: productid })
+            .then((response) => {
+                setWishList(response.data.message);
+                if (response.data.error) {
+                    setWishlistError(response.data.error);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <>
@@ -117,7 +115,8 @@ const addToWishlist = (productid) => {
                             <strong>Category:</strong> {product.category}
                         </p>
                         <p className="mb-4">
-                            <strong>Compatible with:</strong> {product.CompatibleWithType}
+                            <strong>Compatible with:</strong>{" "}
+                            {product.CompatibleWithType}
                         </p>
 
                         <p className="mb-4">
@@ -126,7 +125,6 @@ const addToWishlist = (productid) => {
                         </p>
                         {/* Size selector */}
                         <Form.Group controlId="sizeSelect" className="mb-4">
-
                             {/* Size Guide link */}
                             <div className=" pt-2">
                                 <label htmlFor={`quantity`}>Quantity</label>
@@ -151,54 +149,61 @@ const addToWishlist = (productid) => {
                         >
                             Size Guide
                         </a>
-                        <div style={{ display:"flex",marginTop:"1rem" }}>
+                        <div style={{ display: "flex", marginTop: "1rem" }}>
                             {auth.user ? (
                                 <div>
- <div style={{ display: "flex" }}>
-                                    <form onSubmit={submit} style={{ marginRight: "1rem" }}>
-                                        <Button
-                                            type="submit"
-                                            variant="outline-primary"
+                                    <div style={{ display: "flex" }}>
+                                        <form
+                                            onSubmit={submit}
+                                            style={{ marginRight: "1rem" }}
                                         >
-                                            Add to basket
-                                        </Button>
-
-                                    </form>
-                                    <div>
-                                      <Button
-                                          // href={route("productDetails", { id: bike.bikeid })}
-                                         onClick={() => addToWishlist(product.productid)}
-                                          className="btn btn-outline-primary"
-                                      >
-                                          add to wishlist
-                                      </Button>
-
+                                            <Button
+                                                type="submit"
+                                                variant="outline-primary"
+                                            >
+                                                Add to basket
+                                            </Button>
+                                        </form>
+                                        <div>
+                                            <Button
+                                                // href={route("productDetails", { id: bike.bikeid })}
+                                                onClick={() =>
+                                                    addToWishlist(
+                                                        product.productid
+                                                    )
+                                                }
+                                                className="btn btn-outline-primary"
+                                            >
+                                                add to wishlist
+                                            </Button>
+                                        </div>
                                     </div>
+                                    <p
+                                        style={{ color: "green" }}
+                                        className="block font-medium text-sm text-gray-700"
+                                    >
+                                        {wishlist}
+                                    </p>
+                                    <InputError
+                                        message={wishlistError}
+                                        className="mt-2"
+                                    />
+                                    <p
+                                        style={{ color: "green" }}
+                                        className="block font-medium text-sm text-gray-700"
+                                    >
+                                        {flash.message}
+                                    </p>
 
+                                    <InputError
+                                        message={errors.stock}
+                                        className="mt-2"
+                                    />
+                                    <InputError
+                                        message={errors.quantity}
+                                        className="mt-2"
+                                    />
                                 </div>
-                                 <p style={{ color: "green" }}
-                                 className="block font-medium text-sm text-gray-700">{wishlist}</p>
-                                 <InputError
-                                 message={wishlistError}
-                                 className="mt-2"
-                             />
-                       <p
-                               style={{ color: "green" }}
-                               className="block font-medium text-sm text-gray-700"
-                           >
-                               {flash.message}
-                           </p>
-
-                           <InputError
-                               message={errors.stock}
-                               className="mt-2"
-                           />
-                           <InputError
-                               message={errors.quantity}
-                               className="mt-2"
-                           />
-                                </div>
-
                             ) : (
                                 <Button
                                     type="submit"

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Basket;
+
 use App\Models\OrderItem;
 use App\Models\Orders;
 use App\Models\Products;
@@ -12,8 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 use Inertia\Inertia;
-use Stripe\Customer;
-use Stripe\Stripe;
+
 use App\Models\Notification;
 
 class AdminEditOrders extends Controller
@@ -102,31 +101,6 @@ class AdminEditOrders extends Controller
 
 
 
-    /*   public function updateAddress(Request $request)
-       {
-
-
-           \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-           $transaction = Transactions::where('orderid', $request->orderid)->first();
-
-
-           $paymentMethod = \Stripe\PaymentMethod::update(
-               $transaction->paymentIntent, // Replace with the actual payment method ID
-               [
-                   'billing_details' => [
-                       'address' => [
-                           'line1' => $request->street + $request->housenum,
-
-                           'city' => $request->city,
-                           'state' => $request->state,
-                           'postal_code' => $request->postalcode,
-                           'country' => $request->country,
-                       ],
-                   ],
-               ]
-           );
-       }
-   */
     public function deleteOrder($orderid)
     {
 
@@ -193,14 +167,9 @@ class AdminEditOrders extends Controller
             if ($product->stockquantity - request('quantity') >= 0) {
 
                 $ordersItem = OrderItem::with('products')->where('orderitemid', $request->itemid)->first();
-
                 $ordersItem->quantity = $request->quantity;
-
                 $ordersItem->productid = $request->productid;
-
-
                 $ordersItem->totalprice = $request->quantity * $product->price;
-
                 $product->stockquantity -= $ordersItem->quantity;
                 $product->save();
                 $ordersItem->save();

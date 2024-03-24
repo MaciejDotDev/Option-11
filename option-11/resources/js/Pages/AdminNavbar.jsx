@@ -68,6 +68,9 @@ const AdminNavbar = ({ auth, openModal }) => {
                         <Nav.Link className="text-grey "  href={route('orders')}>
                         Orders
                         </Nav.Link>
+                        <Nav.Link className="text-grey "  href="/admin/refunds">
+                        Refunds
+                        </Nav.Link>
 
 
 

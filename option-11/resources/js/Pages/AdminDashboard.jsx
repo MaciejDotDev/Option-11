@@ -298,18 +298,7 @@ const AdminDashboard = ({ auth, notifications }) => {
                        Log out
                     </Link>
 
-                    <Link
-                        href={route("updateAccount")}
-                        className="text-white btn btn-dark"
-                        style={{
-                            justifyContent: "flex-start",
-                            width: "100%",
-                            textAlign: "left",
-                            marginBottom: "1rem",
-                        }}
-                    >
-                       Create new admin
-                    </Link>
+
                 </DashboardCard>
             </div>
 

@@ -11,28 +11,30 @@ import 'toastr/build/toastr.min.css';
 const NavBar = ({ auth, openModal }) => {
 
     useEffect(() => {
-
-        const pusher = new Pusher('e090badc6993a1fe1e83', {
-          cluster: 'eu', //because we're in the europe we define cluser as eu
-        });
-
-
-        const channel = pusher.subscribe('stock-channel');
-
-  // create channel name that pusher dashboard uses, if two applications with the same pusher key will result into double notifcation
-        channel.bind('low-stock', (data) => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/check/stock");
+                const data1 = await response.json();
 
 
-            toastr.success(data.productid); //  send notifcation to admin
-        });
+                    for (let entry of data1) {
+                        toastr.info(entry);
+                    }
 
 
+            } catch (error) {
+                console.error("Error getting notification:", error);
+            }
 
-        return () => {
-          channel.unbind_all();
-          channel.unsubscribe();
+
         };
-     }, []);
+
+        fetchData();
+
+        const intervalId = setInterval(fetchData, 120000);
+
+        return () => clearInterval(intervalId);
+    }, []);
     const { baskIcon } = usePage().props
     const itemBasket = () => {
         //onnly shows the icon if there is an item in the basket

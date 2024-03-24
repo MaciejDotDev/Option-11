@@ -22,32 +22,9 @@ class ManageBasketController extends Controller
     public function getBasket()
     {
 
-
-
         $this->basket = Basket::with('products')->where('userid', auth()->user()->userid)->where('status', 'open')->get();
-
-        $bikes = [];
-
-        foreach ($this->basket as $item) {
-
-
-            $bikes[] = $item;
-
-
-
-
-
-
-
-
-
-
-        }
-
         $totalPrice = Basket::where('userid', auth()->user()->userid)->where('status', 'open')->sum('totalprice');
-
-
-        return Inertia::render('Basket', ['basket' => $bikes, 'totalprice' => $totalPrice]);
+        return Inertia::render('Basket', ['basket' =>  $this->basket, 'totalprice' => $totalPrice]);
     }
 
 
@@ -60,15 +37,9 @@ class ManageBasketController extends Controller
 
 
         switch ($request->action) {
-
             case "delete":
                 $basket = Basket::where('basketid', $request->basketid)->first();
-
-
                 $basket->delete();
-
-
-
                 return Redirect::route('basket');
             case "add":
 

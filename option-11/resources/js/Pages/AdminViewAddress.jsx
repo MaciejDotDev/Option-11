@@ -112,12 +112,7 @@ const AdminViewProducts = ({ address }) => {
                 </thead>
                 <tbody>{bikePartList}</tbody>
             </table>
-            <a
-                className="px-4 py-2 text-center text-white bg-blue-500 rounded-md"
-                href="users/export/"
-            >
-                Export
-            </a>
+
         </div>
     );
 };
