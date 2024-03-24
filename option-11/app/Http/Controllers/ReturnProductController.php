@@ -69,13 +69,8 @@ class ReturnProductController extends Controller
         $refund->quantity = $orderitem->quantity;
         $refund->status = "dispatched";
         $refund->is_refunded = false;
-
         $refund->reason_refund = $validated['refundReason'] . "-" . $request->other;
-
         $refund->save();
-
-
-
         return redirect()->route('dashboard')->with('success', "Thank you! Your refund is being process, you will soon recieve an email, for further information");
     }
 
