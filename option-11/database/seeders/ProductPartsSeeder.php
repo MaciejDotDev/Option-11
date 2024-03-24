@@ -29,6 +29,7 @@ class ProductPartsSeeder extends Seeder
 
         }
 
+
         BikePart::create([
             'productid' => $uniqueid[0],
             'category' => 'Chain',

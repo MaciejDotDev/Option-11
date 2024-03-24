@@ -71,7 +71,7 @@ const Bike = ({ filter, priceFilter }) => {
                     <Card.Title className="text-center h4">
                         {bike.products.productname}
                     </Card.Title>
-                    <Card.Text>{bike.products.description}</Card.Text>
+
                     <Card.Text>
                         <strong>Price:</strong> £{bike.products.price}
                     </Card.Text>

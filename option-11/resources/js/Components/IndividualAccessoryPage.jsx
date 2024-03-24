@@ -43,7 +43,6 @@ export default function IndividualAccessoryPage({
         setData("size", value);
     };
 
-
     const [placeHolderImage, setPlaceHolderImage] = useState(null);
 
     useEffect(() => {
@@ -124,7 +123,6 @@ export default function IndividualAccessoryPage({
                         </p>
                         {/* Size selector */}
                         <Form.Group controlId="sizeSelect" className="mb-4">
-
                             {/* Size Guide link */}
                             <div className=" pt-2">
                                 <label htmlFor={`quantity`}>Quantity</label>
@@ -179,7 +177,7 @@ export default function IndividualAccessoryPage({
                                         </div>
                                     </div>
                                     <p
-                                        style={{ color: "green" }}
+                                        style={{ color: "green", paddingTop:"1rem"  }}
                                         className="block font-medium text-sm text-gray-700"
                                     >
                                         {wishlist}
@@ -227,7 +225,6 @@ export default function IndividualAccessoryPage({
                         paddingBottom: "4rem",
                     }}
                     className="productabs"
-
                 >
                     <Tabs
                         defaultActiveKey="description"
@@ -238,7 +235,6 @@ export default function IndividualAccessoryPage({
                             margin: "0 auto",
                             paddingTop: "1rem",
                         }}
-
                     >
                         <Tab
                             eventKey="description"
@@ -262,7 +258,20 @@ export default function IndividualAccessoryPage({
                                 paddingBottom: "2rem",
                             }}
                         >
-                            Tab content for Profile
+                            For all your biking needs, we offer a range of
+                            delivery options to ensure your purchase arrives
+                            safely and conveniently to your door. Whether you're
+                            in a rush to get your new bike for the next big race
+                            or prefer a more cost-effective option, we've got
+                            you covered. Choose from our express delivery for
+                            speedy delivery within 1-2 business days, standard
+                            delivery that gets your bike to you within 3-5
+                            business days, or our flexible pick-up option that
+                            allows you to collect your bike at a time that suits
+                            you from our designated pick-up points. Each
+                            delivery option is designed with your convenience
+                            and peace of mind at the forefront, ensuring that
+                            your bike arrives ready for your next adventure.
                         </Tab>
                         <Tab
                             eventKey="contact"

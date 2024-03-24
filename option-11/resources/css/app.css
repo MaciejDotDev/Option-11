@@ -667,10 +667,10 @@ div.expand {
     max-width: 1230px;
 
     padding: 2px;
-    width: 70%;
+    width: 50%;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
     .review-container {
         margin: 0px 10px;
     }

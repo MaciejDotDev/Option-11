@@ -30,7 +30,7 @@ class CheckStock extends Controller
                         $notifiedStockCreate->userid = $userId;
                         $notifiedStockCreate->wishlistid = $item->wishlistid;
                         $notifiedStockCreate->save();
-                        $outOfStockProducts[] = "Quick! {$item->products->productname} is nearly out of stock!";
+                        $outOfStockProducts[] = "Quick! {$item->products->productname}, in your wishlist is nearly out of stock!";
                     }
 
                 }
