@@ -1,0 +1,825 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import-normalize;
+@font-face {
+    font-family: "Koulen";
+    src: url("../fonts/Koulen-Regular.ttf") format("truetype");
+}
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #17191b;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000000e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+.modal {
+    margin: auto;
+    padding: 0 2rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer {
+
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 3px;
+}
+
+
+
+::-webkit-scrollbar-track {
+    background-color: #646464;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #666;
+    border-radius: 3px;
+}
+
+
+::-webkit-resizer {
+    background-color: #666;
+}
+
+/* Navbar Styling */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-links {
+    font-family: "Koulen", sans-serif;
+}
+
+.nav-link:hover {
+    background: #0d0a0a;
+    border-radius: 5px;
+}
+
+.nav-logo {
+    font-family: "Koulen", sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+.kraken-logo {
+    margin-left: 1.5rem;
+    max-width: 6vw;
+}
+
+.basket-icon {
+    max-width: 2.5rem;
+}
+
+/* ------- END of Navbar Styling ------- */
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.smaller-img {
+    width: 100%;
+    height: auto;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+}
+
+.image-text {
+    font-family: "Koulen", sans-serif;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+
+    font-size: 5vw;
+}
+
+.image-text span:first-child {
+    text-decoration: underline;
+}
+
+.image-text span:last-child {
+    font-weight: bold;
+    background: linear-gradient(
+        90deg,
+        rgb(255, 0, 38),
+        rgb(158, 36, 44),
+        rgb(53, 0, 53)
+    );
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.categories h2 {
+    font-family: "Koulen", sans-serif;
+}
+
+.shadow-text {
+    text-shadow: 10px 5px 1px #333;
+}
+
+.ctg-image {
+    max-width: 26rem;
+    margin: 2rem auto;
+    font-family: "Koulen", sans-serif;
+    transition: 0.3s ease-in-out;
+}
+
+.ctg-image:hover {
+    transform: scale(1.1);
+    transition: 0.3s ease-in-out;
+}
+
+.categories h2:hover {
+    text-shadow: 20px 5px 1px #870101;
+    transition: 0.3s ease-in-out;
+}
+
+/* Decrease category placeholder image sizes for mobile versions */
+@media (max-width: 767px) {
+    .ctg-image,
+    .card {
+        max-width: 16rem;
+        margin: 2rem auto;
+    }
+}
+
+/* MainPgProducts */
+
+.featured-products h2 {
+    font-family: "Koulen", sans-serif;
+}
+
+/* farhan css below */
+.basketContainer {
+    width: clamp(200px,70%,1000px);
+    margin: 0 auto;
+    padding: 2px;
+    padding-bottom: 10.5rem;
+}
+
+.basketContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+.basketClass {
+    border-radius: 5px;
+    border: 1px solid #212529;
+    padding: 15px;
+    background-color: #212529;
+
+
+
+}
+
+.basketitem {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.item-details {
+    flex-grow: 1;
+}
+
+.h1basket {
+    text-align: center;
+    font-family: "Koulen", sans-serif;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
+.h2basket {
+    font-size: 30px;
+}
+
+.basketbody {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #17191b;
+    color: white;
+    position: relative;
+    padding-bottom: 17.5rem;
+min-height: 100%;
+
+}
+
+.checkout-btn {
+    padding: 4px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+
+
+}
+
+.total {
+    text-align: right; /* Align text to the left inside the .total div */
+    margin-bottom: 20px;
+    color: white;
+    font-size: 20px;
+    display: block;
+}
+
+.checkout-btn:hover {
+    background-color: #0056b3;
+}
+
+.checkoutcontainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+}
+
+#checkoutContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+}
+
+#bodyCheckout {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #17191b;
+    color: white;
+    font-family: "Koulen", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#checkoutForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.checkoutlabel,
+.inputCheckout,
+.checkoutBtn {
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.inputCheckout,
+.checkoutBtn {
+    padding: 8px;
+}
+
+.checkoutBtn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.checkoutBtn:hover {
+    background-color: #0056b3;
+}
+
+#checkoutTitle {
+    text-align: center;
+    font-family: "Koulen", sans-serif;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+/* below is css for dashboard card */
+
+.dashboardcard {
+    flex: 100%;
+    min-width: 100px;
+    margin: 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+.dashboardContainer {
+    flex: 1;
+
+    overflow: hidden;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 40px;
+
+    background: #212529;
+
+    color: white;
+
+    transition: all 500ms ease-in-out;
+}
+
+
+.close {
+    color: #aaaaaa;
+
+    float: right;
+    margin-right: 4%;
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.dashboardContainer.closed {
+    height: 5.3rem;
+}
+
+.dashboardContainer.open {
+    height:2.3rem;
+
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card-title.dashboard {
+    transition: all 300ms ease-in-out;
+    height: 20px;
+    width: 100%;
+    padding: 10px;
+
+    text-align: center;
+    justify-content: center;
+}
+.arrowContainer {
+
+
+
+
+    display: flex;
+    justify-content: center;
+
+
+
+}
+
+.arrowContainer.open {
+
+    transform: translate(0px, 290px);
+
+    position: relative;
+    transition: all 500ms ease-in-out;
+}
+
+.arrowIcon:hover{
+
+    color: #aaaaaa;
+
+
+}
+.arrowContainer.closed {
+
+    transform: translateY(30%);
+
+
+    transition: all 500ms ease-in-out;
+}
+
+.arrowContainer:hover {
+
+    text-decoration: none;
+
+}
+
+div.expand {
+    height: 360px;
+}
+
+.card-open {
+    padding: 40px;
+    padding-top: 1rem;
+}
+
+.card-title.dashboard p {
+    text-align: center;
+    font-family: "Koulen", sans-serif;
+    font-size: x-large;
+}
+.dashboard-container {
+    display: block;
+
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+
+}
+.dashboard-groups {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1000px;
+    padding-bottom: 20rem;
+
+}
+
+.has {
+    justify-content: center;
+    display: block;
+    overflow: hidden;
+}
+.adminDashboard-container {
+    display: flex;
+    max-width: 1230px;
+    margin: 0 auto;
+    padding: 2px;
+}
+
+@media (max-width: 700px) {
+    .dashboard-groups {
+        display: block;
+        max-width: 400px;
+    }
+
+    .dashboardContainer {
+        margin: 2rem auto;
+    }
+
+    .adminDashboard-container{
+        display: block;
+        max-width: 400px;
+
+    }
+    .editProducts {
+
+        font-size:0.6rem;
+
+    }
+    .ordersTable{
+        font-size:0.6rem;
+    }
+    .updateContainer{
+
+        width: 90%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .editProducts {
+
+
+        width: fit-content;
+    }
+    .editDescription {
+
+        text-indent: 0.4em;
+    }
+
+}
+
+
+
+@media (max-width: 600px) {
+    .dashboard-container {
+        display: block;
+        max-width: 400px;
+        /* Make boxes take up 100% width when window size is below 600px */
+
+    }
+
+
+    .card-title.dashboard p {
+        font-size: large;
+    }
+    .dashboardContainer {
+        margin: 2rem auto;
+    }
+
+    .adminDashboard-container{
+        display: block;
+        max-width: 400px;
+
+
+    }
+    .editProducts {
+
+        font-size:0.4rem;
+
+
+    }
+
+    .ordersTable {
+
+        font-size:0.3rem;
+
+
+    }
+
+
+}
+
+.dashboard-container > div {
+    margin-right: 10px; /* Adjust the spacing as needed */
+}
+
+/* dropdowwn for update*/
+
+.dropdowncontainer {
+    flex: 1;
+
+    overflow: hidden;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 70px;
+}
+
+.card-title.dropdown {
+    height: 30px;
+    width: 100%;
+
+    text-align: center;
+}
+
+.dropdowncontainer.expand {
+    height: 300px;
+}
+
+.card-open.dropdown {
+    padding: 40px;
+}
+
+.card-title.dropdown p {
+    text-align: center;
+}
+
+.dropdownUpdate {
+    display: flex;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2px;
+}
+
+@media (max-width: 600px) {
+    .dropdowncontainer {
+
+    }
+}
+
+/*   review css below */
+
+.review-container {
+    margin: 0px 100px;
+
+    padding-bottom: 2rem;
+
+    justify-content: space-between;
+}
+
+.review {
+    margin: 0 3%;
+}
+.reviewCard {
+    flex: 100%;
+    margin: 0px 20px;
+    margin-bottom: 20px;
+    color: white;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.line {
+    border-bottom: 1px solid #ffffffe1;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+
+.reviewTitle {
+    font-size: x-large;
+    color: white;
+    margin-bottom: 20px;
+    padding-top: 20px;
+
+}
+
+.review-description {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 700px) {
+    .review-container {
+        margin: 0px 10px;
+    }
+}
+
+.reviewBox {
+    flex: 1;
+
+    overflow: hidden;
+
+    height: 0px;
+}
+
+.reviewBox.expand {
+    height: 450px;
+
+}
+
+.card-open.dropdown {
+    padding: 40px;
+
+}
+
+.reviewProducts {
+    display: flex;
+    max-width: 1230px;
+
+    padding: 2px;
+    width: 50%;
+}
+
+@media (max-width: 1000px) {
+    .review-container {
+        margin: 0px 10px;
+    }
+    .reviewProducts {
+
+        width: 70%;
+    }
+}
+.stars-container {
+    display: flex;
+}
+
+.ordersTable {
+
+    padding-top: 1rem;
+
+
+}
+
+
+/* progress bar css */
+
+
+.RSPBprogressBar {
+    height: 10px;
+    width: 50%;
+    line-height: 1;
+    border-radius: 10px;
+    position: relative;
+    background-color: rgb(207, 207, 207);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 0;
+    margin: 20px auto;
+  }
+
+  .RSPBprogressBar .RSPBstep {
+
+
+    z-index: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    transition-property: all;
+    transition-timing-function: ease;
+  }
+
+  .RSPBprogressBar .RSPBprogressBarText {
+    color: white;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .RSPBprogressBar .RSPBprogression {
+    position: absolute;
+    transition: width 0.3s ease;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 10px;
+    background: #b8011b;
+
+  }
+
+  .step {
+
+    width: 30px;
+    height: 30px;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+
+    border-width: 1px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+
+.productabs {
+        margin: 0 auto;
+        width: clamp(400px,70%,1000px); /* Minimum width: 200px, preferred width: 70% of the container, maximum width: 700px */
+}
+
+
+@media (max-width: 430px) {
+
+    .productabs {
+
+       font-size: small;
+        width: 100%;
+    }
+    .reviewProducts {
+
+        width: 100%;
+    }
+
+}
+.orderTrack{
+    margin: 0 auto;
+                                    width: 40%;
+                                    margin-bottom: 3rem;
+}
+
+.orderProgressBar {
+
+    margin: 0 auto;
+    background-color: #17191B;
+    width: 50%;
+
+}
+@media (max-width: 500px) {
+    .orderTrack {
+        width: 80%;
+
+    }
+
+    .orderProgressBar {
+
+        width: 80%;
+    }
+
+
+
+
+
+}
+
+
+
+    .updateContainer {
+
+
+
+
+    }
+
+
+
+
+
