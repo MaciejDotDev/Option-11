@@ -17,7 +17,7 @@ class ShowBikePartsController extends ManageBasketController
     public function showAll()
     {
         // Retrieve all bike parts whose product name contains the word "frame"
-        $bikeParts = BikePart::frame()->with('products')->get();
+        $bikeParts = BikePart::with('products')->get();
 
         return Inertia::render('BikeParts', ['bikeParts' => $bikeParts]);
     }
@@ -30,7 +30,7 @@ class ShowBikePartsController extends ManageBasketController
     public function search()
     {
         // Retrieve all bike parts whose product name contains the word "frame"
-        $bikeParts = BikePart::frame()->with('products')->get();
+        $bikeParts = BikePart::with('products')->get();
 
         return response()->json($bikeParts);
     }

@@ -30,6 +30,7 @@ class ProductPartsSeeder extends Seeder
         }
 
 
+
         BikePart::create([
             'productid' => $uniqueid[0],
             'category' => 'Chain',
@@ -67,6 +68,47 @@ class ProductPartsSeeder extends Seeder
 
             'category' => 'Lights',
             'colour' => 'White',
+            'size' => 'Standard',
+
+        ]);
+
+        BikePart::create([
+            'productid' => $uniqueid[5],
+
+            'category' => 'Frame',
+            'colour' => 'Black',
+            'size' => 'Standard',
+
+        ]);
+        BikePart::create([
+            'productid' => $uniqueid[6],
+
+            'category' => 'Frame',
+            'colour' => 'Black',
+            'size' => 'Standard',
+
+        ]);
+        BikePart::create([
+            'productid' => $uniqueid[7],
+
+            'category' => 'Frame',
+            'colour' => 'Black',
+            'size' => 'Standard',
+
+        ]);
+        BikePart::create([
+            'productid' => $uniqueid[8],
+
+            'category' => 'Frame',
+            'colour' => 'Black',
+            'size' => 'Standard',
+
+        ]);
+        BikePart::create([
+            'productid' => $uniqueid[9],
+
+            'category' => 'Frame',
+            'colour' => 'Black',
             'size' => 'Standard',
 
         ]);

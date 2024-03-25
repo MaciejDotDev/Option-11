@@ -12,9 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Reviews;
+
 class ShowAccessoriesController extends ManageBasketController
 {
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -35,29 +36,19 @@ class ShowAccessoriesController extends ManageBasketController
     }
 
 
-    public function search () {
-
-                $product =[];
-
-                $products =[];
-                $bikes =  Accessory::with('products')->get();
+    public function search()
+    {
 
 
-                foreach ($bikes as $bike) {
-
-                    if (!in_array($bike->products->productname, $product)) {
-                        $product[] = $bike->products->productname;
-                        $products[] = $bike;
-
-                    }
+        $products = Accessory::with('products')->get();
 
 
-                }
         return response()->json($products);// Corrected the key to 'bikeParts'
     }
 
 
-    public function showIndividual($productid) {
+    public function showIndividual($productid)
+    {
 
         $bike = Accessory::with('products')->where('productid', $productid)->first();
 

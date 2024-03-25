@@ -14,16 +14,11 @@ class AdminLoginController extends Controller
     public function create(Request $request) {
         //allows only login requests from a specific ip address, when in production change this to your device ip address
 
-       if ($request->ip() != "127.0.0.1")  {
-
-
-            throw new NotFoundHttpException();
-        } else {
 
             return Inertia::render('Auth/AdminLogin');
 
 
-        }
+
 
 
 

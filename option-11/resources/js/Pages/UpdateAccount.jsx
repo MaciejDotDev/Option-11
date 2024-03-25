@@ -49,6 +49,7 @@ export default function UpdateAccount({ auth, baskIcon }) {
                     margin: "0 auto",
                     paddingBottom: "5rem",
                     color: "white",
+
                 }}
             >
                 <h2
@@ -121,6 +122,7 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                 data={lastName}
                                 setClosed={setClosed}
                                 type="lastname"
+
                             >
                                 <Form.Control
                                     id="lastname"
@@ -134,6 +136,9 @@ export default function UpdateAccount({ auth, baskIcon }) {
                                         setLastName(e.target.value)
                                     }
                                     required
+                                    style= {{
+                                        paddingBottom:"1rem"
+                                     }}
                                 />
 
                                 {/*  <InputError

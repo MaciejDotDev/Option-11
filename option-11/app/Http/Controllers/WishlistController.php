@@ -21,28 +21,28 @@ class WishlistController extends Controller
 {
 
 
-    public function add(Request $request)
+    public function add(Request $request, $productid)
     {
 
 
 
 
-        $productid = $request->input('productid');
 
 
-       $checkWish =  Wishlist::where('productid', $productid)->where('userid', auth()->user()->userid)->first();
+
+        $checkWish = Wishlist::where('productid', $productid)->where('userid', auth()->user()->userid)->first();
         if ($checkWish) {
 
 
-            return response()->json(['error' => "Item is already in the wishlist!"]);
+            return redirect()->back()->with('error', "Item is already in the wishlist!");
         }
-        $item = Products::find($productid);
+        $item = Products::where("productid", $productid)->first();
         if (!$item) {
 
-            return response()->json(['error' => 'Item not found']);
+            return redirect()->back()->with('error', "Item not found!");
         }
 
-        // Create wishlist entry
+
         Wishlist::create([
             'userid' => auth()->user()->userid,
             'productid' => $productid,
@@ -50,7 +50,7 @@ class WishlistController extends Controller
 
 
 
-        return response()->json(['message' => "Item successfully added to wishlist!"]);
+        return redirect()->back()->with('wishlist', "Item successfully added to wishlist!");
     }
 
 
@@ -71,7 +71,7 @@ class WishlistController extends Controller
         } else {
 
 
-        return redirect()->back()->withErrors('erros', "Something went wrong!");
+            return redirect()->back()->withErrors('erros', "Something went wrong!");
         }
 
 

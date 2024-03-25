@@ -55,22 +55,11 @@ public function showAll() {
 
 public function search (){
 
-    $product =[];
 
-    $products =[];
-    $bikes =  Bikes::with('products')->get();
+    $products =  Bikes::with('products')->get();
 
 
-    foreach ($bikes as $bike) {
 
-        if (!in_array($bike->products->productname, $product)) {
-            $product[] = $bike->products->productname;
-            $products[] = $bike;
-
-        }
-
-
-    }
 return response()->json($products);// Corrected the key to 'bikeParts'
 }
 public function showIndividual($productid) {

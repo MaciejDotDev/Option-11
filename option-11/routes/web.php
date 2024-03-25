@@ -125,8 +125,7 @@ Route::get('/RepairKits', [ShowRepairKitsController::class, 'showAll'])->name('r
 Route::get('/Clothing', [ShowClothingController::class, 'showAll'])->name('clothing');
 
 
-//bikeid check
-Route::get('/api/bikecheck/{id}', [PartCheckController::class, 'check'])->name('bikecheck');
+
 
 Route::get('/api/checkCompatibility/{product1}/{product2}', [PartCheckController::class, 'checkCompatibility']);
 
@@ -138,12 +137,13 @@ Route::get('/api/checkCompatibility/{product1}/{product2}', [PartCheckController
 Route::match(['get', 'post'], '/webhook', [PaymentDetails::class, 'webhook'])->name('webhook');
 
 
-Route::get('/api/check/stock', [CheckStock::class, 'checkStock'])->name('checkstock');
+
 // to add to teh middleware later
 
 Route::middleware('auth')->group(function () {
-
-
+//bikeid check
+Route::get('/api/bikecheck/{id}', [PartCheckController::class, 'check'])->name('bikecheck');
+    Route::get('/api/check/stock', [CheckStock::class, 'checkStock'])->name('checkstock');
 
     //using axios
     Route::post('/api/user/update', [ManageAccount::class, 'updateAccount'])->name('adminUpdateUser');
@@ -179,7 +179,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/api/wishlist/add/', [WishlistController::class, 'add'])->name('wishlist');
+    Route::get('/wishlist/add/{productid}', [WishlistController::class, 'add'])->name('wishlist');
 
     Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
@@ -187,10 +187,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/low-stock', function() {
-        event(new StockLowEvent('Product low in stock'));
 
-})->name('low-stock');
 
 
 ///admin middleware below

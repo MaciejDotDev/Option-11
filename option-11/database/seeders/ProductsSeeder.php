@@ -294,7 +294,52 @@ class ProductsSeeder extends Seeder
             'categoryid' => $bikepart->categoryid,
         ]);
 
+        //Bikes to Parts
+        Products::create([ // 29
+            'productname' => 'Electric Frame',
+            'description' => 'A highly adaptable and customisable frame specifically intended for enthusiasts looking to construct their own electric bike. This frame offers an excellent foundation for building a truly bespoke electric bicycle that can cater to personal preferences in aesthetics, functionality, and performance.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/EletricFrame.png',
+            'categoryid' => $bikepart->categoryid,
+        ]);
 
+        Products::create([ // 30
+            'productname' => 'Road Frame',
+            'description' => 'An ideal road bike frame for DIY enthusiasts and professional builders alike. This meticulously designed frame provides a solid foundation for creating a customized road bike tailored to your cycling preferences and performance requirements.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/RoadFrame.png',
+            'categoryid' => $bikepart->categoryid,
+
+        ]);
+
+        Products::create([ // 31
+            'productname' => 'Mountain Frame',
+            'description' => 'A premium quality frame engineered specifically for those looking to construct a custom mountain bike tailored to their unique preferences and riding style. This frame provides a robust foundation that supports a wide range of customizations, from the choice of wheels and suspension systems to gears and finishes, allowing for a fully personalized mountain biking experience.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/MountainFrame.png',
+            'categoryid' => $bikepart->categoryid,
+        ]);
+
+        Products::create([ // 32
+            'productname' => 'Hybrid Frame',
+            'description' => 'Engineered for cyclists aspiring to build a custom hybrid bike, this frame offers flexibility, durability, and an ideal platform for combining the attributes of both road and mountain bikes into a unique hybrid design. Perfect for crafting a bike tailored to individual riding preferences and needs, ensuring a comfortable and versatile cycling experience across various terrains.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/HybridFrame.png',
+            'categoryid' => $bikepart->categoryid,
+        ]);
+
+        Products::create([ // 33
+            'productname' => 'Kids Frame',
+            'description' => 'This frame provides a customizable, robust starting point for constructing a bicycle specifically for children, combining elements of safety, durability, and fun in design to create an encouraging and enjoyable first biking experience for young riders.',
+            'price' => rand(100, 200),
+            'stockquantity' => rand(5, 20),
+            'imageURL' => 'product-images/parts-products/KidsFrame.png',
+            'categoryid' => $bikepart->categoryid,
+        ]);
 
     }
 }

@@ -18,6 +18,10 @@ class Products extends Model
     {
         return $this->belongsTo(Categories::class, 'categoryid');
     }
+    public function scopeFrame($query)
+    {
+        return $query->where('productname', 'like', '%frame%');
+    }
 
 
     public function compatability()

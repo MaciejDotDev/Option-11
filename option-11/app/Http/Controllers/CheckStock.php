@@ -6,7 +6,7 @@ use App\Models\NotifiedOfStock;
 use App\Models\Products;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
-
+use App\Providers\RouteServiceProvider;
 class CheckStock extends Controller
 {
     public function checkStock(Request $request) {
@@ -35,8 +35,16 @@ class CheckStock extends Controller
 
                 }
             }
+            if (empty($outOfStockProducts)) {
 
-            return response()->json($outOfStockProducts);
+                return redirect()->intended(RouteServiceProvider::HOME);
+            } else {
+
+                return response()->json($outOfStockProducts);
+            }
+
+
+
 
 
     }}

@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import ReviewProducts from "@/Pages/ReviewProducts";
 import clothesSGuide from "../../assets/clothes-size.png";
-import axios from 'axios';
+import axios from "axios";
 import toastr from "toastr";
 import AnimateModal from "@/Components/AnimateModal";
 import { Link } from "@mui/icons-material";
@@ -43,17 +43,9 @@ export default function IndividualClothingPage({
         setData("size", value);
     };
 
-
     const [placeHolderImage, setPlaceHolderImage] = useState(null);
 
-    useEffect(() => {
-        // because reeact doesn't  allow static imports we're importing them dybamically and then setting it to the placeholder state
-        import(`../../../public/${product.products.imageURL}`).then(
-            (module) => {
-                setPlaceHolderImage(module.default);
-            }
-        );
-    }, [product.products.imageURL]); // ensuring that the useeffect occurs when the change of the value is heppning
+    // ensuring that the useeffect occurs when the change of the value is heppning
 
     const submit = (e) => {
         e.preventDefault();
@@ -73,24 +65,11 @@ export default function IndividualClothingPage({
         openModal();
         e.preventDefault();
     };
-    const [wishlist, setWishList] = useState("");
 
-    const [wishlistError, setWishlistError] = useState("");
 
-const addToWishlist = (productid) => {
-    axios.post('/api/wishlist/add/', { productid: productid })
-    .then(response => {
-        setWishList(response.data.message);
-        if (response.data.error) {
 
-            setWishlistError(response.data.error);
-        }
 
-    })
-    .catch(error => {
-        console.log(error);
-    });
-}
+
 
     return (
         <>
@@ -98,7 +77,7 @@ const addToWishlist = (productid) => {
                 <Row className="justify-content-center align-items-center gap-16">
                     <Col md={4}>
                         <Image
-                            src={placeHolderImage}
+                            src={`/${product.products.imageURL}`}
                             alt={product.products.productname}
                             className="img-fluid mb-4 rounded"
                             rounded
@@ -125,7 +104,6 @@ const addToWishlist = (productid) => {
                         </p>
                         {/* Size selector */}
                         <Form.Group controlId="sizeSelect" className="mb-4">
-
                             {/* Size Guide link */}
                             <div className=" pt-2">
                                 <label htmlFor={`quantity`}>Quantity</label>
@@ -150,54 +128,62 @@ const addToWishlist = (productid) => {
                         >
                             Size Guide
                         </a>
-                        <div style={{ display:"flex",marginTop:"1rem" }}>
+                        <div style={{ display: "flex", marginTop: "1rem" }}>
                             {auth.user ? (
                                 <div>
- <div style={{ display: "flex" }}>
-                                    <form onSubmit={submit} style={{ marginRight: "1rem" }}>
-                                        <Button
-                                            type="submit"
-                                            variant="outline-primary"
+                                    <div style={{ display: "flex" }}>
+                                        <form
+                                            onSubmit={submit}
+                                            style={{ marginRight: "1rem" }}
                                         >
-                                            Add to basket
-                                        </Button>
+                                            <Button
+                                                type="submit"
+                                                variant="outline-primary"
+                                            >
+                                                Add to basket
+                                            </Button>
+                                        </form>
+                                        <div>
+                                        <Button
+                                                // href={route("productDetails", { id: bike.bikeid })}
+                                                href={`/wishlist/add/${product.productid}`}
+                                                variant="outline-primary"
+                                            >
+                                                add to wishlist
+                                            </Button>
 
-                                    </form>
-                                    <div>
-                                      <Button
-                                          // href={route("productDetails", { id: bike.bikeid })}
-                                         onClick={() => addToWishlist(product.productid)}
-                                          className="btn btn-outline-primary"
-                                      >
-                                          add to wishlist
-                                      </Button>
-
+                                        </div>
                                     </div>
+                                    <p
+                                        style={{
+                                            color: "green",
+                                            paddingTop: "1rem",
+                                        }}
+                                        className="block font-medium text-sm text-gray-700"
+                                    >
+                                        {flash.wishlist}
+                                    </p>
 
+                                    <InputError
+                                        message={flash.error}
+                                        className="mt-2"
+                                    />
+                                    <p
+                                        style={{ color: "green" }}
+                                        className="block font-medium text-sm text-gray-700"
+                                    >
+                                        {flash.message}
+                                    </p>
+
+                                    <InputError
+                                        message={errors.stock}
+                                        className="mt-2"
+                                    />
+                                    <InputError
+                                        message={errors.quantity}
+                                        className="mt-2"
+                                    />
                                 </div>
-                                 <p style={{ color: "green", paddingTop:"1rem" }}
-                                 className="block font-medium text-sm text-gray-700">{wishlist}</p>
-                                 <InputError
-                                 message={wishlistError}
-                                 className="mt-2"
-                             />
-                       <p
-                               style={{ color: "green" }}
-                               className="block font-medium text-sm text-gray-700"
-                           >
-                               {flash.message}
-                           </p>
-
-                           <InputError
-                               message={errors.stock}
-                               className="mt-2"
-                           />
-                           <InputError
-                               message={errors.quantity}
-                               className="mt-2"
-                           />
-                                </div>
-
                             ) : (
                                 <Button
                                     type="submit"
@@ -254,7 +240,7 @@ const addToWishlist = (productid) => {
                                 paddingBottom: "2rem",
                             }}
                         >
-                           For all your biking needs, we offer a range of
+                            For all your biking needs, we offer a range of
                             delivery options to ensure your purchase arrives
                             safely and conveniently to your door. Whether you're
                             in a rush to get your new bike for the next big race
@@ -268,18 +254,6 @@ const addToWishlist = (productid) => {
                             delivery option is designed with your convenience
                             and peace of mind at the forefront, ensuring that
                             your bike arrives ready for your next adventure.
-                        </Tab>
-                        <Tab
-                            eventKey="contact"
-                            title="Contact"
-                            style={{
-                                width: "60%",
-                                margin: "0 3rem",
-                                color: "white",
-                                paddingBottom: "2rem",
-                            }}
-                        >
-                            Tab content for Contact
                         </Tab>
                     </Tabs>
                 </div>

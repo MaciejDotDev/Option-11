@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
     ProductsHistorySeeder::class,
 
     //Removing unused seeder with no table
-    //ProductPartsSeeder::class,
+    ProductPartsSeeder::class,
 
     // make sure the order on top remains
     ReviewsTableSeeder::class,

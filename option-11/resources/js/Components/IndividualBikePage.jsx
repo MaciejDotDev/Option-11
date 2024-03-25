@@ -68,16 +68,7 @@ export default function IndividualBikePage({
 
 
 
-    const [placeHolderImage, setPlaceHolderImage] = useState(null);
-
-    useEffect(() => {
-        // because reeact doesn't  allow static imports we're importing them dybamically and then setting it to the placeholder state
-        import(`../../../public/${product.products.imageURL}`).then(
-            (module) => {
-                setPlaceHolderImage(module.default);
-            }
-        );
-    }, [product.products.imageURL]); // ensuring that the useeffect occurs when the change of the value is heppning
+     // ensuring that the useeffect occurs when the change of the value is heppning
 
     const submit = (e) => {
         e.preventDefault();
@@ -97,24 +88,7 @@ export default function IndividualBikePage({
         openModal();
         e.preventDefault();
     };
-    const [wishlist, setWishList] = useState("");
 
-    const [wishlistError, setWishlistError] = useState("");
-
-    const addToWishlist = (productid) => {
-        axios.post('/api/wishlist/add/', { productid: productid })
-            .then(response => {
-                setWishList(response.data.message);
-                if (response.data.error) {
-
-                    setWishlistError(response.data.error);
-                }
-
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
 
     return (
         <>
@@ -122,7 +96,7 @@ export default function IndividualBikePage({
                 <Row className="justify-content-center align-items-center gap-16">
                     <Col md={4}>
                         <Image
-                            src={placeHolderImage}
+                               src={`/${product.products.imageURL}`}
                             alt={product.products.productname}
                             className="img-fluid mb-4 rounded"
                             rounded
@@ -188,10 +162,10 @@ export default function IndividualBikePage({
 
                                         </form>
                                         <div>
-                                            <Button
+                                        <Button
                                                 // href={route("productDetails", { id: bike.bikeid })}
-                                                onClick={() => addToWishlist(product.productid)}
-                                                className="btn btn-outline-primary"
+                                                href={`/wishlist/add/${product.productid}`}
+                                                variant="outline-primary"
                                             >
                                                 add to wishlist
                                             </Button>
@@ -199,10 +173,18 @@ export default function IndividualBikePage({
                                         </div>
 
                                     </div>
-                                    <p style={{ color: "green" , paddingTop:"1rem"  }}
-                                        className="block font-medium text-sm text-gray-700">{wishlist}</p>
+                                    <p
+                                        style={{
+                                            color: "green",
+                                            paddingTop: "1rem",
+                                        }}
+                                        className="block font-medium text-sm text-gray-700"
+                                    >
+                                        {flash.wishlist}
+                                    </p>
+
                                     <InputError
-                                        message={wishlistError}
+                                        message={flash.error}
                                         className="mt-2"
                                     />
                                     <p
@@ -295,18 +277,7 @@ export default function IndividualBikePage({
                             and peace of mind at the forefront, ensuring that
                             your bike arrives ready for your next adventure.
                         </Tab>
-                        <Tab
-                            eventKey="contact"
-                            title="Contact"
-                            style={{
-                                width: "60%",
-                                margin: "0 3rem",
-                                color: "white",
-                                paddingBottom: "2rem",
-                            }}
-                        >
-                            Tab content for Contact
-                        </Tab>
+
 
                         <Tab
                             eventKey={"Compatible Products"}

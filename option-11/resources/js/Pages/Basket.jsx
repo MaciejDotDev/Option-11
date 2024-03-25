@@ -10,8 +10,7 @@ import { usePage } from "@inertiajs/react";
 import AnimateModal from "@/Components/AnimateModal";
 import AddRemBasket from "@/Components/AddRemBasket";
 import axios from "axios";
-
-
+import Button from "@mui/material/Button";
 export default function Basket({ auth, basket, totalprice }) {
     const { errors } = usePage().props;
     const [compatibilityData, setCompatibilityData] = useState([]);
@@ -27,29 +26,28 @@ export default function Basket({ auth, basket, totalprice }) {
         setData("basketid", basketid);
     };
 
-//Functionality of checking compatibility
-const handleCompCheck = async (productId1, productId2) => {
-    try {
-        const response = await axios.get(`/api/checkCompatibility/${productId1}/${productId2}`);
-        const { compatible } = response.data;
+    //Functionality of checking compatibility
+    const handleCompCheck = async (productId1, productId2) => {
+        try {
+            const response = await axios.get(
+                `/api/checkCompatibility/${productId1}/${productId2}`
+            );
+            const { compatible } = response.data;
 
-        // Handle compatibility result
-        if (compatible) {
-            console.log('Products are compatible');
-            return setCompatibilityResults(true);
-        } else {
-            console.log('Products are not compatible');
-            return setCompatibilityResults(false);
+            // Handle compatibility result
+            if (compatible) {
+                console.log("Products are compatible");
+                return setCompatibilityResults(true);
+            } else {
+                console.log("Products are not compatible");
+                return setCompatibilityResults(false);
+            }
+        } catch (error) {
+            console.error("Error checking compatibility:", error);
         }
-    } catch (error) {
-        console.error('Error checking compatibility:', error);
-    }
-}
+    };
 
-
-
-const [selectedProduct, setSelectedProduct] = useState("");
-
+    const [selectedProduct, setSelectedProduct] = useState("");
 
     useEffect(() => {
         const removeItem = async () => {
@@ -67,65 +65,98 @@ const [selectedProduct, setSelectedProduct] = useState("");
                 <Head title="Basket" />
 
                 <body className="basketbody">
-                    <div className="basketContainer" style={{ fontFamily: "Koulen, sans-serif"  }}>
-                        <h1 className="h1basket"  >Shopping Basket</h1>
+                    <div
+                        className="basketContainer"
+                        style={{ fontFamily: "Koulen, sans-serif" }}
+                    >
+                        <h1 className="h1basket">Shopping Basket</h1>
 
-                        <h1>Check Compatibility</h1>
-<div>
-    <select style={{color: "black"}}
-        value={selectedProduct}
-        onChange={(e) => setSelectedProduct(e.target.value)}
-    >
-        <option value="">Select Product</option>
-        {basket.map((item, index) => (
-            <option key={index} value={item.products.productid}>
-                {item.products.productname}
-            </option>
-        ))}
-    </select>
-    <select style={{color: "black"}}
-        value={selectedProduct2}
-        onChange={(e) => setSelectedProduct2(e.target.value)}
-    >
-        <option value="">Select Product</option>
-        {basket.map((item, index) => (
-            <option key={index} value={item.products.productid}>
-                {item.products.productname}
-            </option>
-        ))}
-    </select>
-    <button onClick={() => handleCompCheck(selectedProduct, selectedProduct2)}>Check Compatibility</button>
+                        <h1>Check Compatibility:</h1>
+                        <div>
+                            <select
+                                style={{ color: "black" }}
+                                value={selectedProduct}
+                                onChange={(e) =>
+                                    setSelectedProduct(e.target.value)
+                                }
+                            >
+                                <option value="">Select Product</option>
+                                {basket.map((item, index) => (
+                                    <option
+                                        key={index}
+                                        value={item.products.productid}
+                                    >
+                                        {item.products.productname}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                style={{ color: "black" }}
+                                value={selectedProduct2}
+                                onChange={(e) =>
+                                    setSelectedProduct2(e.target.value)
+                                }
+                            >
+                                <option value="">Select Product</option>
+                                {basket.map((item, index) => (
+                                    <option
+                                        key={index}
+                                        value={item.products.productid}
+                                    >
+                                        {item.products.productname}
+                                    </option>
+                                ))}
+                            </select>
+                            <Button variant="outlined"
+                            style={{  marginLeft:"1rem", color:"white" }}
+                                onClick={() =>
+                                    handleCompCheck(
+                                        selectedProduct,
+                                        selectedProduct2
+                                    )
+                                }
+                            >
+                                Check Compatibility
+                            </Button>
 
-    {console.log(compatibilityResults)};
-    {console.log(selectedProduct)};
-    {console.log(selectedProduct2)};
+                            {compatibilityResults === true ? (
+                                <p>Products are compatible</p>
+                            ) : compatibilityResults === false ? (
+                                <p>Products are not compatible</p>
+                            ) : (
+                                <p>
+                                    Select two products to check compatibility
+                                </p>
+                            )}
+                        </div>
 
-    {compatibilityResults === true ? (
-        <p>Products are compatible</p>
-    ) : compatibilityResults === false ? (
-        <p>Products are not compatible</p>
-    ) : (
-        <p>Select two products to check compatibility</p>
-    )}
-</div>
-
-
-                        <div className="basketClass"  >
+                        <div className="basketClass">
                             {basket.length > 0 ? (
                                 <div>
                                     {basket.map((item, index) => (
-                                        <div className="basketitem" key={index}   onClick={() => {
-                                            setSelectedProduct( item.products
-                                                .productid)
-                                        }}>
+                                        <div
+                                            className="basketitem"
+                                            key={index}
+                                            onClick={() => {
+                                                setSelectedProduct(
+                                                    item.products.productid
+                                                );
+                                            }}
+                                        >
                                             <div
                                                 className={
                                                     index % 2 === 0 ? "" : ""
                                                 }
                                                 key={item.basketid}
                                             >
-                                                <div  className="item-details" >
-                                                    <h2 className="h2basket"  style={{ fontFamily: "Koulen, sans-serif"  }}>
+                                                <div className="item-details">
+                                                    <h2
+                                                        className="h2basket"
+                                                        style={{
+                                                            fontFamily:
+                                                                "Koulen, sans-serif",
+                                                        }}
+                                                    >
                                                         {
                                                             item.products
                                                                 .productname
@@ -220,21 +251,18 @@ const [selectedProduct, setSelectedProduct] = useState("");
                                                             >
                                                                 Remove
                                                             </button>
-
-
-
                                                         </div>
                                                     </form>
-{/* add error here for stock */}
+                                                    {/* add error here for stock */}
                                                 </div>
-                                                {item.productid == selectedProduct && (
-                                                              <InputError
-                                                                  message={errors.stock}
-                                                                  className="mt-2"
-                                                              />
-                                                            ) }
+                                                {item.productid ==
+                                                    selectedProduct && (
+                                                    <InputError
+                                                        message={errors.stock}
+                                                        className="mt-2"
+                                                    />
+                                                )}
                                             </div>
-
                                         </div>
                                     ))}
 
@@ -263,9 +291,8 @@ const [selectedProduct, setSelectedProduct] = useState("");
                             )}
                         </div>
                     </div>
-                    <Footer  position="absolute"  />
+                    <Footer position="absolute" />
                 </body>
-
             </AnimateModal>
         </>
     );

@@ -82,6 +82,7 @@ const Bike = ({ filter, priceFilter }) => {
                     <a
                         // href={route("productDetails", { id: bike.bikeid })}
                         href={`bike/${bike.productid}`}
+
                         className="btn btn-outline-primary"
                     >
                         View Details

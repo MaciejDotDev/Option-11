@@ -14,27 +14,28 @@ const NavBar = ({ auth, openModal }) => {
         const fetchData = async () => {
             try {
                 const response = await fetch("/api/check/stock");
-                const data1 = await response.json();
-
-
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    const data1 = await response.json();
                     for (let entry of data1) {
                         toastr.info(entry);
                     }
+                } else {
 
-
+                    console.error("Invalid response: Not JSON");
+                }
             } catch (error) {
                 console.error("Error getting notification:", error);
             }
-
-
         };
 
         fetchData();
 
-        const intervalId = setInterval(fetchData, 120000);
+        const intervalId = setInterval(fetchData, 15000);
 
         return () => clearInterval(intervalId);
     }, []);
+
     const { baskIcon } = usePage().props
     const itemBasket = () => {
         //onnly shows the icon if there is an item in the basket

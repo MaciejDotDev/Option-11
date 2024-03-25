@@ -22,7 +22,7 @@ const RepairBooking = ({ auth, baskIcon, bikes }) => {
                 <div
                     style={{
                         margin: "0  auto",
-                        width: "fit-content", // Ensures the div fits its content, preventing select stretch
+
                         backgroundColor: "#212529",
                         paddingRight: "5rem",
                         paddingLeft: "5rem",
