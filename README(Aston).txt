@@ -14,7 +14,9 @@ php artisan db:seed --class=DatabaseSeeder
 npm run build
 php artisan serve
 
-be aware that the stripe checkout may not work since you'll need the CLI, it only works in ther webserver
+be aware that the stripe checkout may not work since you'll need the CLI, it only works in the actual website
+
+to trigger low stock notification add an item to the wishlist through another account and decrease the stock by less than 5 by buying an item and see the notification from another account wait at least 20 sec
 
 Admin login is:
 
